@@ -1,0 +1,47 @@
+Member table
+1       ID              INT(10)                 AUTO INCREMENT
+2       First_Name      VARCHAR(50)             NOT NULL
+3       Last_Name       VARCHAR(50)             NOT NULL
+4       Phone           INT(10)
+6       Member_Type     ENUM {Seeker, Sitter, Admin}
+5       Email(ID)       VARCHAR(100)
+7       Address         VARCHAR(250)
+8
+9       Zip_code        INT(6)                  NOT NULL
+10      Status          ENUM {Active, Inactive} DEFAULT ACTIVE
+11      LAST_MODIFIED   TIME_STAMP              ON UPDATE
+12      Password        VARCHAR(30)             NOT NULL
+PrimaryKey (Email)
+
+Seeker
+1       (ID)            INT(10)         FOREIGN KEY MEMBER
+2       NO_CHILDREN     INT(3)
+3       SPOUSE_NAME     VARCHAR(50)
+PRIMARY KEY    (ID)
+
+Sitter
+1       (ID)            INT(10)         FOREIGN KEY MEMBER
+2       YEARS_EXPERIENCE INT(2)         NOT NULL
+3       Expected_pay    DECIMAL(5, 2)   NOT NULL
+PRIMARY KEY    (ID)
+
+Job
+1       ID              INT(10)
+2       Title           VARCHAR(100)
+3       Posted_by(Membe INT(10)         FOREIGN KEY SEEKER
+4       Start_Date      DATE            NOT NULL
+5       End_Date        DATE            NOT NULL
+6       DATE_CREATED    DATE            NOT NULL
+7       Status          ENUM {Active, Inactive} DEFAULT ACTIVE
+8       LAST_MODIFIED   TIME_STAMP      ON UPDATE
+PRIMARY KEY    (ID)
+
+Application
+1       ID              INT(10)
+2       Job_ID          INT(10)         FOREIGN KEY JOB
+3       Member_id(Appli INT(10)         FOREIGN KEY SITTER
+4       Expected_pay    DECIMAL(5,3)    NOT NULL
+5       Status          ENUM {ACTIVE, INACTIVE} DEFAULT ACTIVE
+6       DATE_CREATED    DATE            NOT NULL
+7       LAST_MODIFIED   TIME_STAMP      ON UPDATE
+PRIMARY KEY     (ID)
