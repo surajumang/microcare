@@ -9,5 +9,8 @@
         <module name="care" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="care" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
