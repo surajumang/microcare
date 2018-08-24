@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface EmailCheck {
-    String pattern() default "(\\w|\\d)+@\\w";
+public @interface PhoneCheck {
+    String pattern() default "\\d{10}";
 }

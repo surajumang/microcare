@@ -10,5 +10,5 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression;
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)
 public @interface NameCheck {
-    String pattern();
+    String pattern() default "\\w+";
 }

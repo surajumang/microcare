@@ -1,8 +1,0 @@
-/*
-        Handles Job postings by the Seeker.
-        The controller serlet will pass a session object which will be having
-        a cookie containing the UserID of the currently logged in user.
-
-        Need a mechanism to make sure that the user which requested this page
-        is authorized to make this request.
-*/

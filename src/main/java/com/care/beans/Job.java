@@ -1,70 +1,73 @@
 
 package com.care.beans;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Job {
         private int id;
         private String title;
         private int postedBy;
-        private Date startDate;
-        private Date endDate;
-        private String status;
-        private Date dateOfCreation;
+        private LocalDate startDate;
+        private LocalDate endDate;
 
-        public int getId() {
-                return id;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public void setId(int id) {
-                this.id = id;
-        }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        public String getTitle() {
-                return title;
-        }
+    public String getTitle() {
+        return title;
+    }
 
-        public void setTitle(String title) {
-                this.title = title;
-        }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-        public int getPostedBy() {
-                return postedBy;
-        }
+    public int getPostedBy() {
+        return postedBy;
+    }
 
-        public void setPostedBy(int postedBy) {
-                this.postedBy = postedBy;
-        }
+    public void setPostedBy(int postedBy) {
+        this.postedBy = postedBy;
+    }
 
-        public Date getStartDate() {
-                return startDate;
-        }
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
-        public void setStartDate(Date startDate) {
-                this.startDate = startDate;
-        }
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
 
-        public Date getEndDate() {
-                return endDate;
-        }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
-        public void setEndDate(Date endDate) {
-                this.endDate = endDate;
-        }
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 
-        public String getStatus() {
-                return status;
-        }
+    public String getStatus() {
+        return status;
+    }
 
-        public void setStatus(String status) {
-                this.status = status;
-        }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-        public Date getDateOfCreation() {
-                return dateOfCreation;
-        }
+    public LocalDate getDateOfCreation() {
+        return dateOfCreation;
+    }
 
-        public void setDateOfCreation(Date dateOfCreation) {
-                this.dateOfCreation = dateOfCreation;
-        }
+    public void setDateOfCreation(LocalDate dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
+    }
+
+    private String status;
+        private LocalDate dateOfCreation;
+
+
 }
