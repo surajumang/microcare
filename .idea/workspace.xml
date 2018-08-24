@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9bd3eae8-3c26-4a24-af78-7e7c662f1e98" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Members/CloseAccount.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Members/SearchSitter.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/care/dao/ApplicationDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/care/dao/ApplicationDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/care/dao/JobDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/care/dao/JobDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/care/service/ServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/care/service/ServiceFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/care/util/ConnectionUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/care/util/DbUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/care/util/MyUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/care/util/OracleConnUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/care/validation/ValidatorFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/care/validation/ValidatorFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/Jobs/ViewApplicants.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/Jobs/ViewApplicants.jsp" afterDir="false" />
-    </list>
+    <list default="true" id="9bd3eae8-3c26-4a24-af78-7e7c662f1e98" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,7 +72,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/care/validation/ValidatorFactory.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -168,7 +155,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="14" />
     <option name="y" value="24" />
     <option name="width" value="1346" />
@@ -319,8 +306,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="14" y="24" width="1346" height="688" extended-state="1" />
-    <editor active="true" />
+    <frame x="14" y="24" width="1346" height="688" extended-state="0" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -748,7 +734,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/care/validation/ValidatorFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
         </state>
       </provider>
     </entry>
