@@ -6,3 +6,9 @@
 */
 
 package com.care.beans;
+
+public enum Status {
+    ACTIVE,
+    INACTIVE,
+
+}

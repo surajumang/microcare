@@ -1,4 +1,4 @@
-package com.care.validator;
+package com.care.validation;
 
 /*This class will read the value of Date annotation and verify that the
  *Form object's value conforms to the regex provided.

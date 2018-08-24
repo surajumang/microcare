@@ -1,4 +1,4 @@
-package com.care.validator;
+package com.care.validation;
 
 import java.lang.annotation.Annotation;
 

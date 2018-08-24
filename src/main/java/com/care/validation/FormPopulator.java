@@ -1,9 +1,8 @@
-package com.care.validator;
+package com.care.validation;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import com.care.form.FormBean;
 
 public class FormPopulator {
     public static FormBean populate(HttpServletRequest request, Class<? extends FormBean> form){

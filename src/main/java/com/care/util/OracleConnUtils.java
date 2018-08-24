@@ -1,4 +1,4 @@
-package org.o7planning.simplewebapp.conn;
+package com.care.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,8 +12,8 @@ public class OracleConnUtils {
        // Note: Change the connection parameters accordingly.
        String hostName = "localhost";
        String sid = "db12c";
-       String userName = "mytest";
-       String password = "12345";
+       String userName = "careadmin";
+       String password = "ProjectPass123";
 
        return getOracleConnection(hostName, sid, userName, password);
    }
@@ -30,8 +30,7 @@ public class OracleConnUtils {
        // jdbc:oracle:thin:@//HOSTNAME:PORT/SERVICENAME
        String connectionURL = "jdbc:oracle:thin:@" + hostName + ":1521:" + sid;
 
-       Connection conn = DriverManager.getConnection(connectionURL, userName,
+       return DriverManager.getConnection(connectionURL, userName,
                password);
-       return conn;
    }
 }

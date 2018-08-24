@@ -5,3 +5,8 @@
         Used with Members.
 */
 package com.care.beans;
+public enum MemberType {
+    SEEKER,
+    SITTER,
+    ADMIN,
+}

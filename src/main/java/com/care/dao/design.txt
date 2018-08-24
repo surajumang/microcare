@@ -1,47 +1,66 @@
 Member table
 1       ID              INT(10)                 AUTO INCREMENT
-2       First_Name      VARCHAR(50)             NOT NULL
-3       Last_Name       VARCHAR(50)             NOT NULL
+2       First_Name      VARCHAR(100)             NOT NULL
+3       Last_Name       VARCHAR(100)             NOT NULL
 4       Phone           INT(10)
 6       Member_Type     ENUM {Seeker, Sitter, Admin}
 5       Email(ID)       VARCHAR(100)
 7       Address         VARCHAR(250)
-8
+
 9       Zip_code        INT(6)                  NOT NULL
 10      Status          ENUM {Active, Inactive} DEFAULT ACTIVE
-11      LAST_MODIFIED   TIME_STAMP              ON UPDATE
+11      LAST_MODIFIED   TIMESTAMP              ON UPDATE
 12      Password        VARCHAR(30)             NOT NULL
 PrimaryKey (Email)
 
-Seeker
-1       (ID)            INT(10)         FOREIGN KEY MEMBER
-2       NO_CHILDREN     INT(3)
-3       SPOUSE_NAME     VARCHAR(50)
-PRIMARY KEY    (ID)
+CREATE TABLE SEEKER(
+       ID              INT(10)  ,
+       NO_CHILDREN     INT(3)   ,
+       SPOUSE_NAME     VARCHAR(50),
+       FOREIGN KEY (ID) REFERENCES MEMBER(ID)
+);
 
-Sitter
-1       (ID)            INT(10)         FOREIGN KEY MEMBER
-2       YEARS_EXPERIENCE INT(2)         NOT NULL
-3       Expected_pay    DECIMAL(5, 2)   NOT NULL
-PRIMARY KEY    (ID)
+CREATE TABLE SITTER (
+       ID               INT(10)    ,
+       EXPERIENCE       INT(2)          NOT NULL,
+       EXPECTED_PAY     DECIMAL(5, 2)   NOT NULL,
+       FOREIGN KEY (ID) REFERENCES MEMBER(ID)
+);
 
-Job
-1       ID              INT(10)
-2       Title           VARCHAR(100)
-3       Posted_by(Membe INT(10)         FOREIGN KEY SEEKER
-4       Start_Date      DATE            NOT NULL
-5       End_Date        DATE            NOT NULL
-6       DATE_CREATED    DATE            NOT NULL
-7       Status          ENUM {Active, Inactive} DEFAULT ACTIVE
-8       LAST_MODIFIED   TIME_STAMP      ON UPDATE
-PRIMARY KEY    (ID)
+CREATE TABLE JOB (
+       ID              INT(10)         AUTO_INCREMENT PRIMARY KEY,
+       TITLE           VARCHAR(100)    NOT NULL,
+       POSTED_BY       INT(10),
+       START_DATE      DATE            NOT NULL,
+       END_DATE        DATE            NOT NULL,
+       DATE_CREATED    DATE            NOT NULL,
+       STATUS          ENUM ("ACTIVE", "INACTIVE") DEFAULT "ACTIVE" NOT NULL,
+       LAST_MODIFIED   TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+       FOREIGN KEY (POSTED_BY) REFERENCES SEEKER(ID)
+);
 
-Application
-1       ID              INT(10)
-2       Job_ID          INT(10)         FOREIGN KEY JOB
-3       Member_id(Appli INT(10)         FOREIGN KEY SITTER
-4       Expected_pay    DECIMAL(5,3)    NOT NULL
-5       Status          ENUM {ACTIVE, INACTIVE} DEFAULT ACTIVE
-6       DATE_CREATED    DATE            NOT NULL
-7       LAST_MODIFIED   TIME_STAMP      ON UPDATE
-PRIMARY KEY     (ID)
+CREATE TABLE APPLICATION(
+       ID              INT(10)         AUTO_INCREMENT PRIMARY KEY,
+       JOB_ID          INT(10)    ,
+       MEMBER_ID INT(10) ,
+       EXPECTED_PAY    DECIMAL(5,3)    NOT NULL,
+       STATUS         ENUM ("ACTIVE", "INACTIVE") DEFAULT "ACTIVE" NOT NULL ,
+       DATE_CREATED    DATE     NOT NULL ,
+       LAST_MODIFIED   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+       FOREIGN KEY (JOB_ID) REFERENCES JOB(ID),
+       FOREIGN KEY (MEMBER_ID) REFERENCES SITTER(ID)
+);
+
+create table MEMBER (
+        ID              INT(10)                 NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        FIRST_NAME      VARCHAR(100)             NOT NULL,
+        LAST_NAME      VARCHAR(100)             NOT NULL,
+        PHONE           INT(10)                 NOT NULL,
+        MENBER_TYPE     ENUM ("SEEKER", "SITTER", "ADMIN") DEFAULT "SEEKER" ,
+        EMAIL       VARCHAR(100)            UNIQUE,
+        ADDRESS         VARCHAR(250)  ,
+        ZIP_CODE        INT(6)                  NOT NULL,
+        STATUS        ENUM ("ACTIVE", "INACTIVE") DEFAULT "ACTIVE",
+        LAST_MODIFIED   TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PASSWORD        VARCHAR(30)             NOT NULL
+  );

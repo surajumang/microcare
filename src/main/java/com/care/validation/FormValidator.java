@@ -1,14 +1,11 @@
-package com.care.validator;
+package com.care.validation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.annotation.Annotation;
 
-import com.care.annotations.EmailCheck;
-import com.care.form.FormBean;
-
 /*
-    It will iterate through the form's methods(getters) and call the corresponding validator
+    It will iterate through the form's methods(getters) and call the corresponding validation
     depending upon the annotation.
  */
 public class FormValidator {

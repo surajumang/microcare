@@ -1,16 +1,22 @@
-package org.o7planning.simplewebapp.conn;
+package com.care.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class ConnectionUtils {
+public class ConnectionUtil {
 
     public static Connection getConnection()
-              throws ClassNotFoundException, SQLException {
+             {
 
         // Here I using Oracle Database.
         // (You can change to use another database.)
-        return OracleConnUtils.getOracleConnection();
+        try {
+            return OracleConnUtils.getOracleConnection();
+        }catch(SQLException e){
+
+        }catch(ClassNotFoundException e){
+
+        }
 
         // return OracleConnUtils.getOracleConnection();
         // return MySQLConnUtils.getMySQLConnection();
