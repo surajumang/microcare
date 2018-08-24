@@ -7,16 +7,16 @@ import com.care.annotations.EmailCheck;
 import com.care.annotations.NameCheck;
 
 public class ValidatorFactory {
-    private Validator;
+    private static Validator v;
 
     public static Validator getInstance(Class<? extends Annotation> t){
         if (t == DateCheck.class)
-            return DateValidator.getInstance();
+            v = DateValidator.getInstance();
         if (t == EmailCheck.class)
-            return EmailValidator.getInstance();
+            v = EmailValidator.getInstance();
         if (t == NameCheck.class)
-            return NameValidator.getInstance();
+            v = NameValidator.getInstance();
 
-
+        return v;
     }
 }

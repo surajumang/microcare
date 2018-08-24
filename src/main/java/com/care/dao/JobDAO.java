@@ -7,6 +7,6 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 
-public class MemberDAO {
+public class JobDAO {
 
 }
