@@ -5,9 +5,6 @@
         <title></title>
     </head>
     <body>
-        <%--
-        Will provide a form to the user and pass it to the proper servlet.
-     --%>
-
+        <h1>User Not found</h1>
     </body>
 </html>

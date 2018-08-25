@@ -5,6 +5,10 @@
                 <title></title>
         </head>
         <body>
+            <%--
+            Applicant will apply to a job.
+          --%>
+          
 
         </body>
 </html>

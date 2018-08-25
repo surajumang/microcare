@@ -6,8 +6,7 @@
     </head>
     <body>
         <%--
-        Will provide a form to the user and pass it to the proper servlet.
-     --%>
-
+        Shows a List of sitters. A row represents one Sitter.
+    --%>
     </body>
 </html>
