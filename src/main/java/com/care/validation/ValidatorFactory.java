@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import com.care.annotations.DateCheck;
 import com.care.annotations.EmailCheck;
 import com.care.annotations.NameCheck;
+import com.care.annotations.PhoneCheck;
 
 public class ValidatorFactory {
     private static Validator v = null;
@@ -16,7 +17,7 @@ public class ValidatorFactory {
             v = EmailValidator.getInstance();
         if (t == NameCheck.class)
             v = NameValidator.getInstance();
-        if (t == PhoneValidator.class)
+        if (t == PhoneCheck.class)
             v = PhoneValidator.getInstance();
 
         return v;

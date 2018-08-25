@@ -13,6 +13,10 @@ Member table
 12      Password        VARCHAR(30)             NOT NULL
 PrimaryKey (Email)
 
+Add cascade related info.
+If the member's status changes to inactive then all jobs posted by him and all jobs applied by him
+must also be marked inactive.
+
 CREATE TABLE SEEKER(
        ID              INT(10)  ,
        NO_CHILDREN     INT(3)   ,
@@ -41,7 +45,7 @@ CREATE TABLE JOB (
 
 CREATE TABLE APPLICATION(
        ID              INT(10)         AUTO_INCREMENT PRIMARY KEY,
-       JOB_ID          INT(10)    ,
+       JOB_ID          INT(10)    ,    AUTO_INCREMENT
        MEMBER_ID INT(10) ,
        EXPECTED_PAY    DECIMAL(5,3)    NOT NULL,
        STATUS         ENUM ("ACTIVE", "INACTIVE") DEFAULT "ACTIVE" NOT NULL ,

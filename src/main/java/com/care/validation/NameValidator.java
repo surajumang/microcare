@@ -4,7 +4,7 @@ import com.care.annotations.NameCheck;
 
 import java.lang.annotation.Annotation;
 
-public class NameValidator extends Validator{
+public final class NameValidator extends Validator{
     private static final NameValidator ourInstance = new NameValidator();
 
     public static NameValidator getInstance() {
