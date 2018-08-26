@@ -8,5 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface EmailCheck {
-    String pattern() default "(\\w|\\d)+@\\w";
+    String pattern() default "(\\w)+@([A-Za-z]+\\.?)+";
+    boolean required() default true;
 }

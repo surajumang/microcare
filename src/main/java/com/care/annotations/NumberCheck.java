@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface PhoneCheck {
+public @interface NumberCheck {
     String pattern() default "\\d{10}";
+    boolean required() default true;
 }

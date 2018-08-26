@@ -23,7 +23,8 @@ public class FormPopulator {
              ) {
             String methodName = method.getName();
             if (methodName.startsWith("set")){
-                String fieldName = methodName.substring(3).toLowerCase();
+                String fieldName = methodName.substring(3);
+                fieldName = fieldName.substring(0,1).toLowerCase() + fieldName.substring(1);
                 try {
                     method.invoke(ret,(String)request.getParameter(fieldName));
                 }catch (IllegalAccessException e){

@@ -8,5 +8,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DateCheck {
-    String pattern() default "";
+    String pattern() default "\\d{2}/\\d{2}/\\d{4}";
+    boolean required() default true;
 }

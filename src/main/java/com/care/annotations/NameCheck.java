@@ -7,8 +7,9 @@ import java.lang.annotation.Target;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression;
 
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface NameCheck {
-    String pattern() default "\\w+";
+    String pattern() default "[A-Za-z]+";
+    boolean required() default true;
 }

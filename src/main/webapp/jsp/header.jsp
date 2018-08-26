@@ -6,5 +6,5 @@
 </style>
 
 <p >
-        Welcome ${user.firstName} ${user.lastName}
+        Welcome ${user}
 </p>

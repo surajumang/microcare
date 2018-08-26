@@ -2,7 +2,12 @@ package com.care.validation;
 
 import com.care.annotations.NameCheck;
 
+
+import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class NameValidator extends Validator{
     private static final NameValidator ourInstance = new NameValidator();
@@ -15,14 +20,23 @@ public final class NameValidator extends Validator{
     }
 
     @Override
-    public void validate(String value, Annotation a) {
-        NameCheck namePattern = (NameCheck)a;
-        String pattern = namePattern.pattern();
-        /*
-        Write code to check if the given string conforms to the pattern
-        If not write an entry to the session object
-        The entry could be an ArrayList<Map<String>>.
-         */
+    public void validate(String value, Annotation a, HttpServletRequest req) {
+
+        String errvalue = "";
+        boolean flag = false;
+        NameCheck nameCheck = (NameCheck) a;
+        Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
+
+        if(value == null && nameCheck.required()){
+            errvalue += "Can't be null";
+            flag =true;
+        }
+        if(!value.matches(nameCheck.pattern())){
+            errvalue += "Not in proper format";
+            flag = true;
+        }
+        if (flag)
+            myErrors.put("name",errvalue);
 
     }
 }

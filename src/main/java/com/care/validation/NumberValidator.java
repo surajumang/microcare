@@ -1,6 +1,7 @@
 package com.care.validation;
 
-import com.care.annotations.EmailCheck;
+
+import com.care.annotations.NumberCheck;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
@@ -8,35 +9,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EmailValidator extends Validator {
-    private static final EmailValidator ourInstance = new EmailValidator();
+public class NumberValidator extends Validator {
+    private static final NumberValidator ourInstance = new NumberValidator();
 
-    public static EmailValidator getInstance() {
+    public static NumberValidator getInstance() {
         return ourInstance;
     }
 
-    private EmailValidator() {
+    private NumberValidator() {
     }
 
     @Override
     public void validate(String value, Annotation a, HttpServletRequest req) {
-
         String errvalue = "";
         boolean flag = false;
+        NumberCheck numberCheck = (NumberCheck) a;
 
-        EmailCheck emailCheck = (EmailCheck)a;
         Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
 
-        if(value == null && emailCheck.required()){
-            errvalue += "can't be null";
+        if(value == null && numberCheck.required()){
+            errvalue += " can't be NULL";
             flag = true;
         }
-        if(!value.matches(emailCheck.pattern())){
+        if(!value.matches(numberCheck.pattern())){
             errvalue += "Improper format";
             flag = true;
         }
-        if(flag)
-            myErrors.put("email", errvalue);
-
+        if (flag)
+            myErrors.put("number", errvalue);
     }
 }

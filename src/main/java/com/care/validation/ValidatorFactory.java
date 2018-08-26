@@ -5,20 +5,23 @@ import java.lang.annotation.Annotation;
 import com.care.annotations.DateCheck;
 import com.care.annotations.EmailCheck;
 import com.care.annotations.NameCheck;
-import com.care.annotations.PhoneCheck;
+import com.care.annotations.NumberCheck;
+import com.care.annotations.NumberCheck;
 
 public class ValidatorFactory {
     private static Validator v = null;
 
-    public static Validator getInstance(Class<? extends Annotation> t){
-        if (t == DateCheck.class)
+    public static Validator getInstance(Annotation t){
+
+        if (t instanceof DateCheck)
             v = DateValidator.getInstance();
-        if (t == EmailCheck.class)
+        if (t instanceof EmailCheck)
             v = EmailValidator.getInstance();
-        if (t == NameCheck.class)
+        if (t instanceof NameCheck)
             v = NameValidator.getInstance();
-        if (t == PhoneCheck.class)
-            v = PhoneValidator.getInstance();
+        if (t instanceof NumberCheck)
+            v = NumberValidator.getInstance();
+        System.err.println(v);
 
         return v;
     }

@@ -1,5 +1,8 @@
 package com.care.form;
 
+import com.care.annotations.EmailCheck;
+import com.care.annotations.NameCheck;
+import com.care.annotations.NumberCheck;
 import com.care.validation.FormBean;
 
 public class RegistrationForm extends FormBean{
@@ -9,6 +12,7 @@ public class RegistrationForm extends FormBean{
     private String zipcode;
     private String password;
 
+    @EmailCheck
     public String getEmail() {
         return email;
     }
@@ -17,6 +21,7 @@ public class RegistrationForm extends FormBean{
         this.email = email;
     }
 
+    @NameCheck
     public String getFirstname() {
         return firstname;
     }
@@ -24,7 +29,7 @@ public class RegistrationForm extends FormBean{
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
-
+    @NameCheck
     public String getLastname() {
         return lastname;
     }
@@ -32,7 +37,7 @@ public class RegistrationForm extends FormBean{
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-
+    @NumberCheck(pattern = "\\d{6}")
     public String getZipcode() {
         return zipcode;
     }

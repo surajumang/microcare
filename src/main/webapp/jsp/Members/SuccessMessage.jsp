@@ -27,30 +27,12 @@ tr:nth-child(even) {
 }
 </style>
     </head>
+
+    <jsp:include page="../header.jsp"/>
     <body>
         <h2>Successfully Done</h2>
         <p>Your details</p>
-        <%
-		List<String> str = new ArrayList<>();
-		str.add("Hello");
-		str.add("World");
-		str.add("Retire");
-		getServletContext().setAttribute("str", str);
-	    %>
-	<table>
-
-        <c:forEach var ="i" items="${str}">
-        <tr>
-            <td>${i}</td>
-            <td>${i}</td>
-            <td>${i}</td>
-        </tr>
-        </c:forEach>
-    </table>
-
-	<c:out value= "${pageContext.request.contextPath}"/>
         <table>
-
             <tr>
                 <td>${member.email}</td>
                 <td>${member.firstname}</td>
@@ -58,5 +40,19 @@ tr:nth-child(even) {
                 <td>${member.zipcode}</td>
             </tr>
         </table>
+        <br><br>
+            <table>
+                <c:forEach var = "entry" items = "${errors}">
+                        <tr>
+                            <td>${entry.key}</td>
+                            <td>${entry.value}</td>
+                        </tr>
+                </c:forEach>
+            </table>
+            <p>Take the user to the login page if it is successful</p>
+
+
+
     </body>
+    <jsp:include page="../footer.jsp"/>
 </html>
