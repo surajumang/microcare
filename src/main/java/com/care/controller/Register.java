@@ -1,22 +1,19 @@
 package com.care.controller;
 
-import com.care.form.RegistrationForm;
+import com.care.dto.form.RegistrationForm;
 import com.care.service.SeekerServiceImpl;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 import com.care.validation.FormValidator;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Register extends HttpServlet{
@@ -38,14 +35,10 @@ public class Register extends HttpServlet{
         System.err.print(rf);
         FormValidator.validate(rf, req);
 
-
         HttpSession currentSession = req.getSession();
         if(currentSession.isNew()){
             req.setAttribute("user", ((RegistrationForm)rf).getEmail());
         }
-
-
-
 
         System.err.println(m);
 

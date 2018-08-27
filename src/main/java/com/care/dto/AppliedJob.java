@@ -1,33 +1,16 @@
+package com.care.dto;
 
-package com.care.beans;
+import com.care.beans.Status;
 
 import java.util.Date;
 
-public class Job {
+public class AppliedJob {
     private int id;
     private String title;
     private int postedBy;
     private double hourlyPay;
     private Date startDate;
     private Date endDate;
-    private Status status;
-    private Date dateOfCreation;
-
-    public double getHourlyPay() {
-        return hourlyPay;
-    }
-
-    public void setHourlyPay(double hourlyPay) {
-        this.hourlyPay = hourlyPay;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -45,6 +28,14 @@ public class Job {
         this.postedBy = postedBy;
     }
 
+    public double getHourlyPay() {
+        return hourlyPay;
+    }
+
+    public void setHourlyPay(double hourlyPay) {
+        this.hourlyPay = hourlyPay;
+    }
+
     public Date getStartDate() {
         return startDate;
     }
@@ -60,21 +51,4 @@ public class Job {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Date getDateOfCreation() {
-        return dateOfCreation;
-    }
-
-    public void setDateOfCreation(Date dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
-    }
-
 }

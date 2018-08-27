@@ -26,23 +26,29 @@
             object.
          --%>
          <table>
-             <c:forEach var="job" items="jobsAvilable">
-                 <thead>
-
-                 </thead>
-                 <tbody>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                     <td>
-                         <form action="ApplyToJob" method="post">
-                             <input type="hidden" name="" value="${job.id}">
-                             <input type="submit" name="" value="Apply">
-                         </form>
-                     </td>
-                 </tbody>
-             </c:forEach>
+             <thead>
+                 <tr>
+                     <td>Title</td>
+                     <td>Hourly Pay</td>
+                     <td>Start Date</td>
+                     <td>End Date</td>
+                     <td>Apply Field</td>
+                 </tr>
+             </thead>
+             <c:forEach var="job" items="${allJobs}">
+             <tr>
+                 <td>${job.title}</td>
+                 <td>${job.hourlyPay}</td>
+                 <td>${job.startDate}</td>
+                 <td>${job.endDate}</td>
+                 <td>
+                     <form action="index.html" method="post">
+                         <input type="hidden" name="id" value="${job.id}">
+                         <input type="submit" name="" value="Apply">
+                     </form>
+                 </td>
+             </tr>
+         </c:forEach>
          </table>
 
         </body>

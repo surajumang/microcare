@@ -1,4 +1,4 @@
-package com.care.form;
+package com.care.dto.form;
 
 import com.care.validation.FormBean;
 

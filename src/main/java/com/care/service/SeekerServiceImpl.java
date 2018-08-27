@@ -4,7 +4,8 @@ import com.care.beans.Member;
 import com.care.beans.MemberType;
 import com.care.dao.ConnectionUtil;
 import com.care.dao.MemberDAO;
-import com.care.form.RegistrationForm;
+import com.care.dto.form.LoginDetails;
+import com.care.dto.form.RegistrationForm;
 
 public class SeekerServiceImpl implements SeekerService {
 
@@ -22,6 +23,10 @@ public class SeekerServiceImpl implements SeekerService {
 
 
         boolean b = MemberDAO.addMember(member, ConnectionUtil.getConnection());
-        System.err.println("b" + "Db query status");
+        System.err.println(b + " Db query status");
+    }
+    public static Member login(LoginDetails loginDetails){
+        return MemberDAO.checkMember(loginDetails, ConnectionUtil.getConnection());
+
     }
 }

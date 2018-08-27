@@ -1,16 +1,15 @@
-package com.care.form;
+package com.care.dto.form;
 
 import com.care.annotations.EmailCheck;
 import com.care.annotations.NameCheck;
 import com.care.annotations.NumberCheck;
-import com.care.beans.Member;
 import com.care.validation.FormBean;
 
 public class RegistrationForm extends FormBean{
     private String email;
-    private String firstname;
-    private String lastname;
-    private String zipcode;
+    private String firstName;
+    private String lastName;
+    private String zipCode;
     private String password;
     private String address;
     private String phone;
@@ -43,27 +42,27 @@ public class RegistrationForm extends FormBean{
 
     @NameCheck
     public String getFirstname() {
-        return firstname;
+        return firstName;
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        this.firstName = firstname;
     }
     @NameCheck
     public String getLastname() {
-        return lastname;
+        return lastName;
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastName = lastname;
     }
     @NumberCheck(pattern = "\\d{6}")
     public String getZipcode() {
-        return zipcode;
+        return zipCode;
     }
 
     public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+        this.zipCode = zipcode;
     }
 
     public String getPassword() {
@@ -79,9 +78,9 @@ public class RegistrationForm extends FormBean{
     public String toString() {
         return "RegistrationForm{" +
                 "email='" + email + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", zipcode='" + zipcode + '\'' +
+                ", firstname='" + firstName + '\'' +
+                ", lastname='" + lastName + '\'' +
+                ", zipcode='" + zipCode + '\'' +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +

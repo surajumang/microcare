@@ -30,27 +30,9 @@ tr:nth-child(even) {
 
     <jsp:include page="../header.jsp"/>
     <body>
-        <h2>Successfully Done</h2>
-        <p>Your details</p>
-        <table>
-            <tr>
-                <td>${member.email}</td>
-                <td>${member.firstname}</td>
-                <td>${member.lastname}</td>
-                <td>${member.zipcode}</td>
-            </tr>
-        </table>
-        <br><br>
-            <table>
-                <c:forEach var = "entry" items = "${errors}">
-                        <tr>
-                            <td>${entry.key}</td>
-                            <td>${entry.value}</td>
-                        </tr>
-                </c:forEach>
-            </table>
-            <p>Take the user to the login page if it is successful</p>
-
+            <p>Registration Successful</p>
+            You Can now login.
+            <a href="../index.jsp">
 
 
     </body>

@@ -12,7 +12,9 @@ public class Application {
         private int jobId;
         private int memberId;
         private double expectedPay;
-        private String status;
+        private Status status;
+        private Date dateOfCreation;
+        private Date lastModified;
 
         public int getId() {
                 return id;
@@ -46,11 +48,11 @@ public class Application {
                 this.expectedPay = expectedPay;
         }
 
-        public String getStatus() {
+        public Status getStatus() {
                 return status;
         }
 
-        public void setStatus(String status) {
+        public void setStatus(Status status) {
                 this.status = status;
         }
 
@@ -69,9 +71,5 @@ public class Application {
         public void setLastModified(Date lastModified) {
                 this.lastModified = lastModified;
         }
-
-        private Date dateOfCreation;
-        private Date lastModified;
-
 
 }

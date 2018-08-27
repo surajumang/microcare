@@ -9,7 +9,7 @@ public class ConnectionUtil {
 
     private static Connection connection;
     private static final String dburl = "jdbc:mysql://localhost:3306/sampledb";
-    private static final String username = "root";
+    private static final String username = "javaadmin";
     private static final String password = "qwerty";
 
     static {

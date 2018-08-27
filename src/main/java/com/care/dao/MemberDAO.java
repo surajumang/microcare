@@ -5,11 +5,10 @@
 package com.care.dao;
 
 import com.care.beans.Member;
+import com.care.beans.MemberType;
+import com.care.dto.form.LoginDetails;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
 public class MemberDAO {
     public static boolean addMember(Member member, Connection connection){
@@ -34,11 +33,37 @@ public class MemberDAO {
             System.err.println("Rows affected" + k);
 
         }catch (SQLException e){
-            e.getErrorCode();
-            System.err.println("Error");
-            e.printStackTrace();
+            e.getCause();
         }
         return k != 0;
     }
 
+    public static Member checkMember(LoginDetails user, Connection connection){
+        Member member = new Member();
+
+        try {
+            String pass = "";
+
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT PASSWORD FROM MEMBER WHERE EMAIL = ?");
+            preparedStatement.setString(1, user.getEmail());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                pass = resultSet.getString("PASSWORD");
+                if(pass.equals(user.getPassword())){
+                    member.setAddress(resultSet.getString("ADDRESS"));
+                    member.setEmail(resultSet.getString("EMAIL"));
+                    member.setFirstName(resultSet.getString("FIRSTNAME"));
+                    String mtype = resultSet.getString("MENBER_TYPE");
+                    member.setMemberType(MemberType.valueOf(mtype));
+
+                }
+            }
+
+        }catch(SQLException e){
+            e.getCause();
+        }
+        return member;
+    }
 }
