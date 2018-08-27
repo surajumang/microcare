@@ -17,10 +17,16 @@
         <%--
             ShowSitterServlet will pass the request to this page
             and handover the list of Sitters.
+            Transfer content from jsp to another jsp in this case.
       --%>
       Do not use it now.
-        <table>
+      <form  action="ShowSitters.do" method="post">
+          <input type="text" name="emailPattern" value="" placeholder="Enter Email">
+          <input type="text" name="zipCode" value="" placeholder="Zip Code">
+          <input type="submit" name="" value="Apply Filters">
+      </form>
 
+        <table>
             <c:forEach var ="sitter" items="${sitters}">
             <tr>
                 <td>${sitter.firstName}</td>
@@ -32,7 +38,5 @@
             </tr>
             </c:forEach>
         </table>
-        <c:out value= "${pageContext.request.contextPath}"/>
-
     </body>
 </html>

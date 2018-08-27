@@ -35,25 +35,16 @@ tr:nth-child(even) {
                     <td>First Name</td>
                     <td>Last Name</td>
                     <td>Title</td>
-                    <td>Hourly Pay</td>
-                    <td>Apply Field</td>
+                    <td>Expected Pay</td>
                 </tr>
             </thead>
-            <c:forEach var="job" items="${allJobs}">
+            <c:forEach var="app" items="${applications}">
             <tr>
-                <td>${job.email}</td>
-                <td>${job.firstName}</td>
-                <td>${job.lastName}</td>
-                <td>${job.title}</td>
-                <td>${job.hourlyPay}</td>
-                <td>${job.startDate}</td>
-                <td>${job.endDate}</td>
-                <td>
-                    <form action="index.html" method="post">
-                        <input type="hidden" name="id" value="${job.id}">
-                        <input type="submit" name="" value="Apply">
-                    </form>
-                </td>
+                <td>${app.email}</td>
+                <td>${app.firstName}</td>
+                <td>${app.lastName}</td>
+                <td>${app.title}</td>
+                <td>${app.expectedPay}</td>
             </tr>
         </c:forEach>
         </table>

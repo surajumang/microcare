@@ -27,6 +27,7 @@ public class Login extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         FormBean ld = FormPopulator.populate(req, LoginDetails.class);
 
         System.err.println(ld);

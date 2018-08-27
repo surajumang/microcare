@@ -56,6 +56,15 @@
             <url-pattern>/login.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+            <servlet-name>PostJob</servlet-name>
+            <servlet-class>com.care.controller.seeker.PostJob</servlet-class>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>PostJob</servlet-name>
+            <url-pattern>/PostJobServlet.do</url-pattern>
+    </servlet-mapping>
+
 
 
 

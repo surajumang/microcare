@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" errorPage="Error.jsp" language="java" %>
 <%@ taglib prefix="c"
        uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -36,20 +36,23 @@
                 <td>${job.startDate}</td>
                 <td>${job.endDate}</td>
                 <td>
-                    <form action="EditJobServlet.do" method="post">
-                        <input type="hidden" name="id" value="${job.id}">
+                    <form action="ShowJobToEdit.do" method="post">
+                        <%-- <input type="hidden" name="id" value="${job.id}"> --%>
+                        <c:set var="id" value="${job}" scope="session"/>
                         <input type="submit" name="" value="Edit">
                     </form>
                 </td>
                 <td>
-                    <form action="DeleteJobServlet.do" method="post">
-                        <input type="hidden" name="" value="${job.id}">
+                    <form action="DeleteJob.do" method="post">
+                        <%-- <input type="hidden" name="id" value="${job.id}"> --%>
+                        <c:set var="id" value="${job}" scope="session"/>
                         <input type="submit" name="" value="Delete">
                     </form>
                 </td>
                 <td>
-                    <form action="ViewApplicantsServlet.do" method="post">
-                        <input type="hidden" name="id" value="${job.id}">
+                    <form action="ViewApplicants.do" method="post">
+                        <%-- <input type="hidden" name="id" value="${job.id}"> --%>
+                        <c:set var="id" value="${job}" scope="session"/>
                         <input type="submit" name="" value="View Applications">
                     </form>
                 </td>

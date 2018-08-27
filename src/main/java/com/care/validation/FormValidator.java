@@ -15,8 +15,7 @@ public class FormValidator {
             if(!method.getName().startsWith("get")){
                 continue;
             }
-            for (Annotation annotation : method.getDeclaredAnnotations()
-                 ) {
+            for (Annotation annotation : method.getDeclaredAnnotations()) {
                 System.err.println(method.getName() + "done");
 //                System.err.println(annotation);
 
