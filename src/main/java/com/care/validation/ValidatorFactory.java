@@ -21,7 +21,7 @@ public class ValidatorFactory {
             v = NameValidator.getInstance();
         if (t instanceof NumberCheck)
             v = NumberValidator.getInstance();
-        System.err.println(v);
+//        System.err.println(v);
 
         return v;
     }

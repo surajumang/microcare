@@ -8,16 +8,22 @@ public class ConnectionUtil {
 
 
     private static Connection connection;
-    private static final String dburl = "jdbc:mysql:localhost:3306";
-    private static final String username = "";
-    private static final String password = "";
+    private static final String dburl = "jdbc:mysql://localhost:3306/sampledb";
+    private static final String username = "root";
+    private static final String password = "qwerty";
 
     static {
         try{
+            Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(dburl, username, password);
+            System.err.println(connection);
         }catch (SQLException e){
-            e.getErrorCode();
+            System.err.println("Can't create connection");
+            e.printStackTrace();
+        }catch (ClassNotFoundException e){
+            System.err.println("Unable to load the driver");
         }
+        System.err.println("Connection created");
 
     }
 
@@ -38,6 +44,7 @@ public class ConnectionUtil {
     }
 
     public static Connection getConnection() {
+        System.err.println(connection);
         return connection;
     }
 }

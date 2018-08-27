@@ -3,6 +3,7 @@ package com.care.form;
 import com.care.annotations.EmailCheck;
 import com.care.annotations.NameCheck;
 import com.care.annotations.NumberCheck;
+import com.care.beans.Member;
 import com.care.validation.FormBean;
 
 public class RegistrationForm extends FormBean{
@@ -11,6 +12,25 @@ public class RegistrationForm extends FormBean{
     private String lastname;
     private String zipcode;
     private String password;
+    private String address;
+    private String phone;
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    @NumberCheck
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     @EmailCheck
     public String getEmail() {
@@ -54,6 +74,7 @@ public class RegistrationForm extends FormBean{
         this.password = password;
     }
 
+
     @Override
     public String toString() {
         return "RegistrationForm{" +
@@ -62,6 +83,8 @@ public class RegistrationForm extends FormBean{
                 ", lastname='" + lastname + '\'' +
                 ", zipcode='" + zipcode + '\'' +
                 ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 

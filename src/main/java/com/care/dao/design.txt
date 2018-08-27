@@ -15,7 +15,7 @@ PrimaryKey (Email)
 
 Add cascade related info.
 If the member's status changes to inactive then all jobs posted by him and all jobs applied by him
-must also be marked inactive.
+must also be marked inactive.use triggers.
 
 CREATE TABLE SEEKER(
        ID              INT(10)  ,
@@ -60,7 +60,7 @@ create table MEMBER (
         FIRST_NAME      VARCHAR(100)             NOT NULL,
         LAST_NAME      VARCHAR(100)             NOT NULL,
         PHONE           INT(10)                 NOT NULL,
-        MENBER_TYPE     ENUM ("SEEKER", "SITTER", "ADMIN") DEFAULT "SEEKER" ,
+        MEMBER_TYPE     ENUM ("SEEKER", "SITTER", "ADMIN") DEFAULT "SEEKER" ,
         EMAIL       VARCHAR(100)            UNIQUE,
         ADDRESS         VARCHAR(250)  ,
         ZIP_CODE        INT(6)                  NOT NULL,
@@ -68,3 +68,5 @@ create table MEMBER (
         LAST_MODIFIED   TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PASSWORD        VARCHAR(30)             NOT NULL
   );
+insert into MEMBER(first_name, last_name, phone, email, zip_code, password)
+values("suraj", "kumar", 1234, "a@a", 234314, "efjnkj");

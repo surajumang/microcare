@@ -1,3 +1,10 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c"
+       uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ taglib prefix="fn"
+       uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
         <head>
@@ -18,6 +25,25 @@
             The servlet will pass a List of Jobs inside the scope/request
             object.
          --%>
-         
+         <table>
+             <c:forEach var="job" items="jobsAvilable">
+                 <thead>
+
+                 </thead>
+                 <tbody>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td>
+                         <form action="ApplyToJob" method="post">
+                             <input type="hidden" name="" value="${job.id}">
+                             <input type="submit" name="" value="Apply">
+                         </form>
+                     </td>
+                 </tbody>
+             </c:forEach>
+         </table>
+
         </body>
 </html>

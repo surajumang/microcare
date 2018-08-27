@@ -8,11 +8,10 @@ public class Member {
         private int id;
         private String firstName;
         private String lastName;
-        private String phone;
+        private int phone;
         private MemberType memberType;
         private String email;
-        private String addressLine1;
-        private String addressLine2;
+        private String address;
         private int zipCode;
         private Status status;
         private Date lastModified;
@@ -42,11 +41,11 @@ public class Member {
                 this.lastName = lastName;
         }
 
-        public String getPhone() {
+        public int getPhone() {
                 return phone;
         }
 
-        public void setPhone(String phone) {
+        public void setPhone(int phone) {
                 this.phone = phone;
         }
 
@@ -66,20 +65,12 @@ public class Member {
                 this.email = email;
         }
 
-        public String getAddressLine1() {
-                return addressLine1;
+        public String getAddress() {
+                return address;
         }
 
-        public void setAddressLine1(String addressLine1) {
-                this.addressLine1 = addressLine1;
-        }
-
-        public String getAddressLine2() {
-                return addressLine2;
-        }
-
-        public void setAddressLine2(String addressLine2) {
-                this.addressLine2 = addressLine2;
+        public void setAddress(String address) {
+                this.address = address;
         }
 
         public int getZipCode() {

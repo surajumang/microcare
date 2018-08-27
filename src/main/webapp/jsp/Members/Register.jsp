@@ -26,19 +26,25 @@
             </c:forEach>
         </table>
         <form class="Seeker" action="RegistrationServlet.do" method="post">
-            <input type="text" name="email" placeholder="Email" value="">
+            <input type="text" name="email" placeholder="Email" >
             <c:out value="${errors.email}"/>
             <br><br>
-            <input type="text" name="firstname" placeholder="First Name" value="">
+            <input type="text" name="firstname" placeholder="First Name" >
             <c:out value="${errors.name}"/>
             <br><br>
-            <input type="text" name="lastname" placeholder="Last Name" value="">
+            <input type="text" name="lastname" placeholder="Last Name">
             <c:out value="${errors.name}"/>
             <br><br>
-            <input type="text" name="zipcode" placeholder="Zip Code(Six digits)" value="">
+            <input type="text" name="address" placeholder="Address">
+            <c:out value="${errors.name}"/>
+            <br><br>
+                <input type="text" name="phone" placeholder="Phone">
+                <c:out value="${errors.phone}"/>
+                <br><br>
+            <input type="text" name="zipcode" placeholder="Zip Code(Six digits)">
             <c:out value="${errors.number}"/>
             <br><br>
-            <input type="password" name="password" placeholder="Password" value="">
+            <input type="password" name="password" placeholder="Password" >
             <c:out value="${errors.password}"/>
             <input type="submit" name="" value="Submit">
 

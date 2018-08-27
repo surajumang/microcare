@@ -17,8 +17,8 @@ public class FormValidator {
             }
             for (Annotation annotation : method.getDeclaredAnnotations()
                  ) {
-                System.err.println(method);
-                System.err.println(annotation);
+                System.err.println(method.getName() + "done");
+//                System.err.println(annotation);
 
                 Validator v = ValidatorFactory.getInstance(annotation);
                 System.err.print(v.getClass());
