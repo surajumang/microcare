@@ -29,7 +29,7 @@
                     <td>View Applications</td>
                 </tr>
             </thead>
-            <c:forEach var="job" items="${myjobs}">
+            <c:forEach var="job" items="${myJobs}">
             <tr>
                 <td>${job.title}</td>
                 <td>${job.hourlyPay}</td>

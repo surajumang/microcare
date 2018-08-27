@@ -31,5 +31,6 @@ public class FormValidator {
                 }
             }
         }
+        form.validate(req);
     }
 }

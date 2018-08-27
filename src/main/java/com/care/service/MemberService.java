@@ -1,5 +1,7 @@
 package com.care.service;
 
+import com.care.dto.form.RegistrationForm;
+
 public interface MemberService extends Service {
-    public void registerMember();
+    public boolean registerMember(RegistrationForm registrationForm);
 }

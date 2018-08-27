@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,6 @@ public class Login extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         FormBean ld = FormPopulator.populate(req, LoginDetails.class);
-        // fetch member from application context and compare the password.
 
         System.err.println(ld);
         Map<String, String> m = new HashMap<String, String>();
@@ -45,15 +45,21 @@ public class Login extends HttpServlet{
 
             if (lld.getEmail().equals(member.getEmail()))
                 if (lld.getPassword().equals(member.getPassword())) {
+
                     if (memberType == MemberType.SEEKER){
-                        page = "jsp/Members/Seeker/Home.jsp";
+                        page = "jsp/Members/seeker/Home.jsp";
                     }
                     else{
-                        page = "jsp/Members/Sitter/Home.jsp";
+                        page = "jsp/Members/sitter/Home.jsp";
                     }
                 }
         }
         RequestDispatcher rd = req.getRequestDispatcher(page);
         rd.forward(req, resp);
+    }
+
+    private void startSession(Member member, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.setAttribute("currentUser", member);
     }
 }

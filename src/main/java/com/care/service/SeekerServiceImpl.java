@@ -9,21 +9,22 @@ import com.care.dto.form.RegistrationForm;
 
 public class SeekerServiceImpl implements SeekerService {
 
-    public static void registerMember(RegistrationForm registrationForm){
+    public static boolean registerMember(RegistrationForm registrationForm){
 
         Member member = new Member();
-        member.setFirstName(registrationForm.getFirstname());
-        member.setLastName(registrationForm.getLastname());
+        member.setFirstName(registrationForm.getFirstName());
+        member.setLastName(registrationForm.getLastName());
         member.setEmail(registrationForm.getEmail());
         member.setAddress(registrationForm.getAddress());
         member.setPhone(Integer.parseInt(registrationForm.getPhone()));
         member.setPassword(registrationForm.getPassword());
-        member.setZipCode(Integer.parseInt(registrationForm.getZipcode()));
+        member.setZipCode(Integer.parseInt(registrationForm.getZipCode()));
         member.setMemberType(MemberType.SEEKER);
 
 
         boolean b = MemberDAO.addMember(member, ConnectionUtil.getConnection());
         System.err.println(b + " Db query status");
+        return b;
     }
     public static Member login(LoginDetails loginDetails){
         return MemberDAO.checkMember(loginDetails, ConnectionUtil.getConnection());

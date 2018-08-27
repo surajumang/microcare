@@ -1,37 +1,22 @@
 package com.care.dto.form;
 
-import com.care.annotations.EmailCheck;
-import com.care.annotations.NameCheck;
 import com.care.annotations.NumberCheck;
 import com.care.validation.FormBean;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
 public class RegistrationForm extends FormBean{
+
     private String email;
     private String firstName;
     private String lastName;
     private String zipCode;
     private String password;
+    private String password2;
     private String address;
     private String phone;
 
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    @NumberCheck
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    @EmailCheck
     public String getEmail() {
         return email;
     }
@@ -40,29 +25,28 @@ public class RegistrationForm extends FormBean{
         this.email = email;
     }
 
-    @NameCheck
-    public String getFirstname() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstName = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
-    @NameCheck
-    public String getLastname() {
+
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastName = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
-    @NumberCheck(pattern = "\\d{6}")
-    public String getZipcode() {
+
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipcode(String zipcode) {
-        this.zipCode = zipcode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getPassword() {
@@ -73,22 +57,43 @@ public class RegistrationForm extends FormBean{
         this.password = password;
     }
 
+    public String getPassword2() {
+        return password2;
+    }
 
-    @Override
-    public String toString() {
-        return "RegistrationForm{" +
-                "email='" + email + '\'' +
-                ", firstname='" + firstName + '\'' +
-                ", lastname='" + lastName + '\'' +
-                ", zipcode='" + zipCode + '\'' +
-                ", password='" + password + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
-    public void validate() {
+    public void validate(HttpServletRequest req) {
+        String errorvalue = "";
+        boolean flag = false;
 
+        Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
+
+        if(! password.equals(password2)){
+            errorvalue += " Passwords don't match";
+            flag = true;
+        }
+
+        if (flag)
+            myErrors.put("password2", errorvalue);
     }
 }
