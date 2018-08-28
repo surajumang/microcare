@@ -31,7 +31,7 @@ public class ShowApplictions extends HttpServlet {
         Need to collect all the applications which are posted on this Job.
         List<ApplicationsFormDTO > SeekerServiceImpl.getApplications(jobId);
         It will delegate the call to ApplicationServiceImpl.getApplications(jobId);
-        It will take care of calling ApplicationDAO to fetch actual data.
+        It will take care of calling ApplicationDAOImpl to fetch actual data.
          */
         req.setAttribute("applications", applications);
 

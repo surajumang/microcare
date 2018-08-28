@@ -41,7 +41,7 @@ public class Login extends HttpServlet{
 
         if (m.isEmpty()) {
             LoginDetails lld = (LoginDetails) ld;
-            Member member = SeekerServiceImpl.login(lld);
+            Member member = null;//SeekerServiceImpl.login(lld);
             MemberType memberType = member.getMemberType();
 
             if (lld.getEmail().equals(member.getEmail()))

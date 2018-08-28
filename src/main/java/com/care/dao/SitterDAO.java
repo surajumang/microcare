@@ -1,13 +1,10 @@
-/*
-
-*/
-
 package com.care.dao;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-
-public class SitterDAO {
+public interface SitterDAO extends MemberDAO {
+    // jobId needs to be existing
+    int applyToJob(int memberId, int jobId);
+    int getJobs();
+    int getJobs(int zipCode);
+    int closeApplication(int applicationId);
 
 }

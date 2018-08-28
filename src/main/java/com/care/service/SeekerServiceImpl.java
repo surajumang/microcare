@@ -3,13 +3,20 @@ package com.care.service;
 import com.care.beans.Member;
 import com.care.beans.MemberType;
 import com.care.dao.ConnectionUtil;
-import com.care.dao.MemberDAO;
+import com.care.dao.MemberDAOImpl;
 import com.care.dto.form.LoginDetails;
 import com.care.dto.form.RegistrationForm;
 
 public class SeekerServiceImpl implements SeekerService {
 
-    public static boolean registerMember(RegistrationForm registrationForm){
+    private static SeekerServiceImpl ourInstance = new SeekerServiceImpl();
+    private MemberService memberService = null;
+
+    private SeekerServiceImpl(){
+
+    }
+
+    public boolean registerMember(RegistrationForm registrationForm){
 
         Member member = new Member();
         member.setFirstName(registrationForm.getFirstName());
@@ -22,12 +29,12 @@ public class SeekerServiceImpl implements SeekerService {
         member.setMemberType(MemberType.SEEKER);
 
 
-        boolean b = MemberDAO.addMember(member, ConnectionUtil.getConnection());
+        boolean b = MemberDAOImpl.addMember(member, ConnectionUtil.getConnection());
         System.err.println(b + " Db query status");
         return b;
     }
-    public static Member login(LoginDetails loginDetails){
-        return MemberDAO.checkMember(loginDetails, ConnectionUtil.getConnection());
+    public Member login(LoginDetails loginDetails){
+        return MemberDAOImpl.checkMember(loginDetails, ConnectionUtil.getConnection());
 
     }
 }

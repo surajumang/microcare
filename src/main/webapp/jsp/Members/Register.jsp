@@ -17,10 +17,10 @@
     </head>
     <body>
 
-        <form action="${pageContext.request.contextPath}/Members/Seeker/Registration.jsp" method="post">
+        <form action="${pageContext.request.contextPath}/jsp/Members/Seeker/Registration.jsp" method="post">
             <input type="submit" name="" value="Submit">
         </form>
-        <form action="${pageContext.request.contextPath}/Members/Sitter/Registration.jsp" method="post">            
+        <form action="${pageContext.request.contextPath}/jsp/Members/Sitter/Registration.jsp" method="post">            
             <input type="submit" name="" value="Submit">
         </form>
 

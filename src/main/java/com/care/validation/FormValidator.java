@@ -22,7 +22,9 @@ public class FormValidator {
                 Validator v = ValidatorFactory.getInstance(annotation);
                 System.err.print(v.getClass());
                 try {
-                    v.validate((String)method.invoke(form), annotation, req);
+                    String value = (String)method.invoke(form);
+
+                    v.validate(value, annotation, req);
                 }catch (IllegalAccessException e){
                     e.getCause();
                 }catch (InvocationTargetException e){

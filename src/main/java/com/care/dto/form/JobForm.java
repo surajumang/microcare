@@ -1,18 +1,21 @@
 package com.care.dto.form;
 
+import com.care.annotations.Date;
 import com.care.annotations.Name;
 import com.care.annotations.Number;
 import com.care.validation.FormBean;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class PostJobForm extends FormBean {
+public class JobForm extends FormBean {
     private String title;
     private String hourlyPay;
+    // should be greater than current Date and time.
     private String startDate;
+    // should be greater than or equal to current Date and time.
     private String endDate;
 
-    @Name
+
     public String getTitle() {
         return title;
     }
@@ -28,7 +31,7 @@ public class PostJobForm extends FormBean {
     public void setHourlyPay(String hourlyPay) {
         this.hourlyPay = hourlyPay;
     }
-
+    @Date
     public String getStartDate() {
         return startDate;
     }
@@ -47,6 +50,6 @@ public class PostJobForm extends FormBean {
 
     @Override
     public void validateCustom(HttpServletRequest req) {
-
+        //check if end date is greater than start date.
     }
 }

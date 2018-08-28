@@ -1,5 +1,8 @@
 package com.care.dto.form;
 
+import com.care.annotations.Email;
+import com.care.annotations.Name;
+import com.care.annotations.Number;
 import com.care.validation.FormBean;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +19,7 @@ public class RegistrationForm extends FormBean{
     private String address;
     private String phone;
 
+    @Email
     public String getEmail() {
         return email;
     }
@@ -24,6 +28,7 @@ public class RegistrationForm extends FormBean{
         this.email = email;
     }
 
+    @Name
     public String getFirstName() {
         return firstName;
     }
@@ -32,6 +37,7 @@ public class RegistrationForm extends FormBean{
         this.firstName = firstName;
     }
 
+    @Name
     public String getLastName() {
         return lastName;
     }
@@ -40,6 +46,7 @@ public class RegistrationForm extends FormBean{
         this.lastName = lastName;
     }
 
+    @Number
     public String getZipCode() {
         return zipCode;
     }
@@ -72,6 +79,7 @@ public class RegistrationForm extends FormBean{
         this.address = address;
     }
 
+    @Number
     public String getPhone() {
         return phone;
     }

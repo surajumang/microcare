@@ -48,7 +48,7 @@ public class Register extends HttpServlet{
             RequestDispatcher rd = req.getRequestDispatcher("Register.jsp");
             rd.forward(req, resp);
         }
-        SeekerServiceImpl.registerMember((RegistrationForm)rf);
+        //SeekerServiceImpl.registerMember((RegistrationForm)rf);
         RequestDispatcher rd = req.getRequestDispatcher("SuccessMessage.jsp");
         rd.forward(req, resp);
     }

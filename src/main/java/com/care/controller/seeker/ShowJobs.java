@@ -2,8 +2,6 @@ package com.care.controller.seeker;
 
 import com.care.beans.Member;
 import com.care.dto.AppliedJob;
-import com.care.dto.form.Job;
-import com.care.service.SeekerServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,7 +36,7 @@ public class ShowJobs extends HttpServlet {
         Db call to fetch the jobs created by this user.
         List<Job> lj = SeekerServiceImpl.getJobs(member);
         SeekerService will simply delegate this call to JobServiceImpl(member.getId()) -> Job form object.
-        This will further be delegated to JobDAO which will give a model class Job.
+        This will further be delegated to JobDAOImpl which will give a model class Job.
          */
         req.setAttribute("myJobs", myJobs);
         RequestDispatcher rd = req.getRequestDispatcher("ShowJobs.jsp");

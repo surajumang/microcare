@@ -1,5 +1,6 @@
 package com.care.dto.form;
 
+import com.care.annotations.Email;
 import com.care.validation.FormBean;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ public class LoginDetails extends FormBean {
     private String email;
     private String password;
 
+    @Email
     public String getEmail() {
         return email;
     }

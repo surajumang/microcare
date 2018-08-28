@@ -15,11 +15,17 @@
             }
         </style>
     </head>
+
     <body>
+        <c:forEach var="i" begin="1" end ="7">
+            <c:out value="${i}"/>
+        </c:forEach>
         <h1>Enter Your Details</h1>
 
         <form  action="SeekerRegistration.do" method="post">
+            <label for="">Email
             <input type="text" name="email" placeholder="Email" >
+            </label>
             <c:out value="${errors.email}"/><br>
 
             <input type="text" name="firstName" placeholder="First Name" >

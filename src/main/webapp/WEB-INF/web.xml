@@ -31,7 +31,7 @@
 
     <servlet>
             <servlet-name>SeekerRegistration</servlet-name>
-            <servlet-class>com.care.controller.seeker.Register</servlet-class>
+            <servlet-class>com.care.controller.seeker.Registration</servlet-class>
     </servlet>
     <servlet-mapping>
             <servlet-name>SeekerRegistration</servlet-name>
@@ -40,7 +40,7 @@
 
     <servlet>
             <servlet-name>SitterRegistration</servlet-name>
-            <servlet-class>com.care.controller.sitter.Register</servlet-class>
+            <servlet-class>com.care.controller.sitter.Registration</servlet-class>
     </servlet>
     <servlet-mapping>
             <servlet-name>SitterRegistration</servlet-name>
