@@ -7,63 +7,78 @@ package com.care.dao;
 import com.care.beans.Member;
 import com.care.beans.MemberType;
 import com.care.dto.form.LoginDetails;
+import sun.dc.pr.PRError;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class MemberDAOImpl {
-    public static boolean addMember(Member member, Connection connection){
-        int k = 0;
+public class MemberDAOImpl implements MemberDAO {
+
+
+    private Logger logger = Logger.getLogger("MemberDAOImpl");
+
+    public Member getMember(String email, String password) {
+        Connection connection = ConnectionUtil.getConnection();
+        Member member = null;
+       try {
+           PreparedStatement preparedStatement = connection.prepareStatement("SELECT PASSWORD FROM MEMBER WHERE EMAIL=?");
+           preparedStatement.setString(1, email);
+
+           ResultSet rs = preparedStatement.executeQuery();
+
+       }catch (SQLException e){
+           logger.log(Level.SEVERE, "getMember", e);
+       }
+        return member;
+    }
+
+    public int addMember(Member member) {
+        Connection connection = ConnectionUtil.getConnection();
+
+        int rowsAffected = 0;
         try{
-            if(connection == null){
-                System.err.println("Null Connection");
-            }
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO MEMBER" +
-                    "(FIRST_NAME, LAST_NAME, PHONE, MENBER_TYPE, EMAIL, ADDRESS, ZIP_CODE, PASSWORD)" +
-                    "VALUES(?,?,?,?,?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO MEMBER(FIRST_NAME, LAST_NAME, PHONE, MEMBER_TYPE," +
+                    "EMAIL, ADDRESS, ZIP_CODE) VALUES(?,?,?,?,?,?,?)");
             preparedStatement.setString(1, member.getFirstName());
             preparedStatement.setString(2, member.getLastName());
             preparedStatement.setInt(3, member.getPhone());
             preparedStatement.setString(4, member.getMemberType().name());
             preparedStatement.setString(5, member.getEmail());
             preparedStatement.setString(6, member.getAddress());
-            preparedStatement.setInt(7,member.getZipCode());
-            preparedStatement.setString(8, member.getPassword());
+            preparedStatement.setInt(7, member.getZipCode());
 
-            k = preparedStatement.executeUpdate();
-            System.err.println("Rows affected" + k);
-
+            rowsAffected = preparedStatement.executeUpdate();
         }catch (SQLException e){
-            e.getCause();
+            logger.log(Level.SEVERE, "addMember", e);
         }
-        return k != 0;
+
     }
 
-    public static Member checkMember(LoginDetails user, Connection connection){
-        Member member = new Member();
+    public int editMember(int memberId, Member member) {
+        Connection connection = ConnectionUtil.getConnection();
 
-        try {
-            String pass = "";
+        int rowsAffected = 0;
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO MEMBER(FIRST_NAME, LAST_NAME, PHONE, MEMBER_TYPE," +
+                    "EMAIL, ADDRESS, ZIP_CODE) VALUES(?,?,?,?,?,?,?) WHERE ID = ?" );
+            preparedStatement.setString(1, member.getFirstName());
+            preparedStatement.setString(2, member.getLastName());
+            preparedStatement.setInt(3, member.getPhone());
+            preparedStatement.setString(4, member.getMemberType().name());
+            preparedStatement.setString(5, member.getEmail());
+            preparedStatement.setString(6, member.getAddress());
+            preparedStatement.setInt(7, member.getZipCode());
+            preparedStatement.setInt(8, memberId);
 
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT PASSWORD FROM MEMBER WHERE EMAIL = ?");
-            preparedStatement.setString(1, user.getEmail());
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if(resultSet.next()) {
-                pass = resultSet.getString("PASSWORD");
-                if(pass.equals(user.getPassword())){
-                    member.setAddress(resultSet.getString("ADDRESS"));
-                    member.setEmail(resultSet.getString("EMAIL"));
-                    member.setFirstName(resultSet.getString("FIRSTNAME"));
-                    String mtype = resultSet.getString("MENBER_TYPE");
-                    member.setMemberType(MemberType.valueOf(mtype));
-
-                }
-            }
-
-        }catch(SQLException e){
-            e.getCause();
+            rowsAffected = preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            logger.log(Level.SEVERE, "addMember", e);
         }
-        return member;
+        return rowsAffected;
+    }
+
+    public int deleteMember(int memberId) {
+        return 0;
     }
 }

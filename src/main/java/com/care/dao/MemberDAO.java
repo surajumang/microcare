@@ -3,9 +3,10 @@ package com.care.dao;
 import com.care.beans.Member;
 
 public interface MemberDAO extends DAO{
+    Member getMember(String email, String password);
     int addMember(Member member);
 
-    int editMember(int memberId);
+    int editMember(int memberId, Member member);
     int deleteMember(int memberId);
 
 

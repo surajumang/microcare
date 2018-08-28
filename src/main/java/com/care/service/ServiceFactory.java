@@ -1,9 +1,14 @@
 package com.care.service;
 
+import sun.rmi.runtime.Log;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ServiceFactory {
+    static Logger logger = Logger.getLogger("ServiceFactory");
 
     public static <T extends Service> T get( Class<T> clazz){
         T returnValue = null;
@@ -15,7 +20,8 @@ public class ServiceFactory {
         }catch (IllegalAccessException e){
             e.getCause();
         }catch (InvocationTargetException e){
-            e.getCause();
+            //e.getCause();
+            logger.log(Level.SEVERE, "Exception "+e.getCause());
         }
         return returnValue;
     }

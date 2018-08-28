@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.beans.Member;
 import com.care.dto.form.RegistrationForm;
 
 public class MemberServiceImpl implements MemberService {
@@ -9,14 +10,24 @@ public class MemberServiceImpl implements MemberService {
         return ourInstance;
     }
 
-    public <T extends Service> T create() {
-        return (T)getInstance();
-    }
+//    public <T extends Service> T create() {
+//        return (T)getInstance();
+//    }
 
     private MemberServiceImpl() {
     }
 
     public boolean registerMember(RegistrationForm registrationForm) {
+
         return false;
+    }
+
+    public int deleteMember(int memberId) {
+
+        return 0;
+    }
+
+    public int editMember(int memberId, Member member) {
+        return 0;
     }
 }
