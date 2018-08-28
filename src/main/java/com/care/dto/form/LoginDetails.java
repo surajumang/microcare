@@ -2,6 +2,8 @@ package com.care.dto.form;
 
 import com.care.validation.FormBean;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class LoginDetails extends FormBean {
     private String email;
     private String password;
@@ -31,7 +33,7 @@ public class LoginDetails extends FormBean {
     }
 
     @Override
-    public void validate() {
+    public void validateCustom(HttpServletRequest req) {
 
     }
 }

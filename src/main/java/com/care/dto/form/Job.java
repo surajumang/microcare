@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 public class Job extends FormBean {
 
     @Override
-    public void validate(HttpServletRequest req) {
+    public void validateCustom(HttpServletRequest req) {
 
     }
 }

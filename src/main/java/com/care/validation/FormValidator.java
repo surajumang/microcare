@@ -30,6 +30,6 @@ public class FormValidator {
                 }
             }
         }
-        form.validate(req);
+        form.validateCustom(req);
     }
 }

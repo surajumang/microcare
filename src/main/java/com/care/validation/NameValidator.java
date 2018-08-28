@@ -1,12 +1,10 @@
 package com.care.validation;
 
-import com.care.annotations.NameCheck;
+import com.care.annotations.Name;
 
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public final class NameValidator extends Validator{
@@ -24,14 +22,14 @@ public final class NameValidator extends Validator{
 
         String errvalue = "";
         boolean flag = false;
-        NameCheck nameCheck = (NameCheck) a;
+        Name name = (Name) a;
         Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
 
-        if(value == null && nameCheck.required()){
+        if(value == null && name.required()){
             errvalue += "Can't be null";
             flag =true;
         }
-        if(!value.matches(nameCheck.pattern())){
+        if(!value.matches(name.pattern())){
             errvalue += "Not in proper format";
             flag = true;
         }

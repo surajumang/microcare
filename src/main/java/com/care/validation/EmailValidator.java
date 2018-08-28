@@ -1,11 +1,9 @@
 package com.care.validation;
 
-import com.care.annotations.EmailCheck;
+import com.care.annotations.Email;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class EmailValidator extends Validator {
@@ -24,7 +22,7 @@ public class EmailValidator extends Validator {
         String errvalue = "";
         boolean flag = false;
 
-        EmailCheck emailCheck = (EmailCheck)a;
+        Email emailCheck = (Email)a;
         Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
 
         if(value == null && emailCheck.required()){

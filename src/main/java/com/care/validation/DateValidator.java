@@ -5,12 +5,10 @@ package com.care.validation;
 
 */
 
-import com.care.annotations.DateCheck;
+import com.care.annotations.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DateValidator extends Validator {
@@ -28,15 +26,15 @@ public class DateValidator extends Validator {
 
         String errvalue = "";
         boolean flag = false;
-        DateCheck dateCheck = (DateCheck)a;
+        Date date = (Date)a;
 
         Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
 
-        if(value == null && dateCheck.required()){
+        if(value == null && date.required()){
             errvalue += "Can't be Null";
             flag =true;
         }
-        if(!value.matches(dateCheck.pattern())){
+        if(!value.matches(date.pattern())){
             errvalue += "Not in proper format";
             flag = true;
         }

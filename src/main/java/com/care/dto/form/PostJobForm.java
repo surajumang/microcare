@@ -1,11 +1,10 @@
 package com.care.dto.form;
 
-import com.care.annotations.NameCheck;
-import com.care.annotations.NumberCheck;
+import com.care.annotations.Name;
+import com.care.annotations.Number;
 import com.care.validation.FormBean;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 public class PostJobForm extends FormBean {
     private String title;
@@ -13,7 +12,7 @@ public class PostJobForm extends FormBean {
     private String startDate;
     private String endDate;
 
-    @NameCheck
+    @Name
     public String getTitle() {
         return title;
     }
@@ -21,7 +20,7 @@ public class PostJobForm extends FormBean {
     public void setTitle(String title) {
         this.title = title;
     }
-    @NumberCheck(pattern = "\\d+\\.\\d+")
+    @Number(pattern = "\\d+\\.\\d+")
     public String getHourlyPay() {
         return hourlyPay;
     }
@@ -47,7 +46,7 @@ public class PostJobForm extends FormBean {
     }
 
     @Override
-    public void validate(HttpServletRequest req) {
+    public void validateCustom(HttpServletRequest req) {
 
     }
 }

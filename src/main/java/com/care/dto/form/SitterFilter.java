@@ -1,6 +1,6 @@
 package com.care.dto.form;
 
-import com.care.annotations.NumberCheck;
+import com.care.annotations.Number;
 import com.care.validation.FormBean;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +9,7 @@ public class SitterFilter extends FormBean {
     private String zipCode;
     private String emailPattern;
 
-    @NumberCheck(pattern = "\\d{6}")
+    @Number(pattern = "\\d{6}")
     public String getZipCode() {
         return zipCode;
     }
@@ -27,7 +27,7 @@ public class SitterFilter extends FormBean {
     }
 
     @Override
-    public void validate(HttpServletRequest req) {
+    public void validateCustom(HttpServletRequest req) {
 
     }
 }

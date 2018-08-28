@@ -5,11 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.RegularExpression;
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface NameCheck {
-    String pattern() default "[A-Za-z]+";
+public @interface Number {
+    String pattern() default "\\d{10}";
     boolean required() default true;
 }

@@ -5,9 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DateCheck {
-    String pattern() default "\\d{2}/\\d{2}/\\d{4}";
+@Target(ElementType.METHOD)
+public @interface Email {
+    String pattern() default "(\\w)+@([A-Za-z]+\\.?)+";
     boolean required() default true;
 }

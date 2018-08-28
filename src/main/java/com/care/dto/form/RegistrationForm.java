@@ -1,6 +1,5 @@
 package com.care.dto.form;
 
-import com.care.annotations.NumberCheck;
 import com.care.validation.FormBean;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,7 +81,7 @@ public class RegistrationForm extends FormBean{
     }
 
     @Override
-    public void validate(HttpServletRequest req) {
+    public void validateCustom(HttpServletRequest req) {
         String errorvalue = "";
         boolean flag = false;
 

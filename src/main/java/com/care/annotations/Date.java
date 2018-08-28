@@ -5,9 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface NumberCheck {
-    String pattern() default "\\d{10}";
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Date {
+    String pattern() default "\\d{2}/\\d{2}/\\d{4}";
     boolean required() default true;
 }
