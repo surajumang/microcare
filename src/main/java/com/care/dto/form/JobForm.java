@@ -23,6 +23,7 @@ public class JobForm extends FormBean {
     public void setTitle(String title) {
         this.title = title;
     }
+
     @Number(pattern = "\\d+\\.\\d+")
     public String getHourlyPay() {
         return hourlyPay;

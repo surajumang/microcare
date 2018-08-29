@@ -7,8 +7,6 @@ package com.care.dao;
 import com.care.beans.Member;
 import com.care.beans.MemberType;
 import com.care.dto.form.LoginDetails;
-import sun.dc.pr.PRError;
-
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
