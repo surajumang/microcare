@@ -30,7 +30,7 @@ public class PostJob extends HttpServlet {
         FormValidator.validate(postJobForm, errors);
 
         /*
-            SeekerService.postJob(Job)
+            SeekerService.postJob(PostJob)
             JobService.postJob()
             JobDAOImpl.createJob()
          */
