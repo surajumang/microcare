@@ -26,6 +26,7 @@ public class Registration extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession currentSession = req.getSession();
         Member member = (Member)currentSession.getAttribute("currentUser");
+
         if(member != null){
             /*
             There is already a logged in user.
@@ -35,19 +36,17 @@ public class Registration extends HttpServlet {
         }
 
         FormBean rf = FormPopulator.populate(req, SeekerRegistration.class);
-        Map<String, String> m = new HashMap<String, String>();
+        Map<String, String> errors = new HashMap<String, String>();
 
-        req.setAttribute("errors", m);
         System.err.print(rf);
-        FormValidator.validate(rf, req);
-
+        FormValidator.validate(rf, errors);
 
         if(currentSession.isNew()){
             req.setAttribute("user", ((SeekerRegistration)rf).getEmail());
         }
 
-        System.err.println(m);
-        if(! m.isEmpty()){
+        System.err.println(errors);
+        if(! errors.isEmpty()){
 
             RequestDispatcher rd = req.getRequestDispatcher("Register.jsp");
             rd.forward(req, resp);

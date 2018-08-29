@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.beans.Member;
 import com.care.dto.form.RegistrationForm;
 
 public class SitterServiceImpl implements SitterService {
@@ -15,5 +16,13 @@ public class SitterServiceImpl implements SitterService {
         int rowsAffected = 0;
 
         return rowsAffected == 1;
+    }
+
+    public int deleteMember(int memberId) {
+        return 0;
+    }
+
+    public int editMember(int memberId, Member member) {
+        return 0;
     }
 }

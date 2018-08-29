@@ -3,7 +3,7 @@ package com.care.dto.form;
 import com.care.annotations.Number;
 import com.care.validation.FormBean;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 public class SitterFilter extends FormBean {
     private String zipCode;
@@ -27,7 +27,7 @@ public class SitterFilter extends FormBean {
     }
 
     @Override
-    public void validateCustom(HttpServletRequest req) {
+    public void validateCustom(Map<String, String> errors) {
 
     }
 }

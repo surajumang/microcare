@@ -20,8 +20,7 @@ public class FormPopulator {
             e.getCause();
         }
 
-        for (Method method: form.getMethods()
-             ) {
+        for (Method method: form.getMethods()) {
             String methodName = method.getName();
             if (methodName.startsWith("set")){
                 String fieldName = methodName.substring(3);

@@ -2,14 +2,12 @@ package com.care.dto.form;
 
 import com.care.validation.FormBean;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 public class ApplicationForm extends FormBean {
 
-    
-
     @Override
-    public void validateCustom(HttpServletRequest req) {
+    public void validateCustom(Map<String, String> errors) {
 
     }
 }

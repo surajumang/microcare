@@ -50,7 +50,7 @@ public class MemberDAOImpl implements MemberDAO {
         }catch (SQLException e){
             logger.log(Level.SEVERE, "addMember", e);
         }
-
+        return rowsAffected;
     }
 
     public int editMember(int memberId, Member member) {

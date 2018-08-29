@@ -1,11 +1,10 @@
 package com.care.dto.form;
 
 import com.care.annotations.Date;
-import com.care.annotations.Name;
 import com.care.annotations.Number;
 import com.care.validation.FormBean;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 public class JobForm extends FormBean {
     private String title;
@@ -50,7 +49,17 @@ public class JobForm extends FormBean {
     }
 
     @Override
-    public void validateCustom(HttpServletRequest req) {
+    public String toString() {
+        return "JobForm{" +
+                "title='" + title + '\'' +
+                ", hourlyPay='" + hourlyPay + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                '}';
+    }
+
+    @Override
+    public void validateCustom(Map<String, String> errors) {
         //check if end date is greater than start date.
     }
 }

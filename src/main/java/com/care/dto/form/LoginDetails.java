@@ -3,7 +3,7 @@ package com.care.dto.form;
 import com.care.annotations.Email;
 import com.care.validation.FormBean;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 public class LoginDetails extends FormBean {
     private String email;
@@ -35,7 +35,7 @@ public class LoginDetails extends FormBean {
     }
 
     @Override
-    public void validateCustom(HttpServletRequest req) {
+    public void validateCustom(Map<String, String> errors) {
 
     }
 }

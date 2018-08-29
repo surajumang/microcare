@@ -51,4 +51,16 @@ public class AppliedJob {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public String toString() {
+        return "AppliedJob{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", postedBy=" + postedBy +
+                ", hourlyPay=" + hourlyPay +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }

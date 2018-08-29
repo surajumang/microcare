@@ -3,10 +3,6 @@ package com.care.validation;
 
 import com.care.annotations.Number;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Annotation;
-import java.util.Map;
-
 public class NumberValidator extends Validator {
     private static final NumberValidator ourInstance = new NumberValidator();
 
@@ -18,12 +14,10 @@ public class NumberValidator extends Validator {
     }
 
     @Override
-    public void validate(String value, Annotation a, HttpServletRequest req) {
+    public boolean validate(String value, String fieldName) {
         String errvalue = "";
         boolean flag = false;
         Number number = (Number) a;
-
-        Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
 
         if(value == null && number.required()){
             errvalue += " can't be NULL";
@@ -34,6 +28,6 @@ public class NumberValidator extends Validator {
             flag = true;
         }
         if (flag)
-            myErrors.put("number", errvalue);
+            errors.put("number", errvalue);
     }
 }

@@ -59,4 +59,16 @@ public class AppliedApplication {
     public void setDateOfCreation(Date dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
+
+    @Override
+    public String toString() {
+        return "AppliedApplication{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", expectedPay=" + expectedPay +
+                ", dateOfCreation=" + dateOfCreation +
+                '}';
+    }
 }

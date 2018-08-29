@@ -1,8 +1,8 @@
 package com.care.validation;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 public abstract class FormBean {
-    public abstract void validateCustom(HttpServletRequest req);
+    public abstract void validateCustom(Map<String, String> errors);
 
 }

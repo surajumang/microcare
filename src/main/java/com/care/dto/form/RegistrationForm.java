@@ -5,7 +5,6 @@ import com.care.annotations.Name;
 import com.care.annotations.Number;
 import com.care.validation.FormBean;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public class RegistrationForm extends FormBean{
@@ -89,11 +88,9 @@ public class RegistrationForm extends FormBean{
     }
 
     @Override
-    public void validateCustom(HttpServletRequest req) {
+    public void validateCustom(Map<String, String> errors) {
         String errorvalue = "";
         boolean flag = false;
-
-        Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
 
         if(! password.equals(password2)){
             errorvalue += " Passwords don't match";
@@ -101,6 +98,6 @@ public class RegistrationForm extends FormBean{
         }
 
         if (flag)
-            myErrors.put("password2", errorvalue);
+            errors.put("password2", errorvalue);
     }
 }

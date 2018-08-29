@@ -35,8 +35,16 @@ public class SitterDAOImpl implements SitterDAO {
         return 0;
     }
 
+    public Member getMember(String email, String password) {
+        return null;
+    }
+
     // MemberDAO methods delegate calls to these if you do not wish to provide a specific implementation.
     public int addMember(Member member) {
+        return 0;
+    }
+
+    public int editMember(int memberId, Member member) {
         return 0;
     }
 

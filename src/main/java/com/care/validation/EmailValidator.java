@@ -2,10 +2,6 @@ package com.care.validation;
 
 import com.care.annotations.Email;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Annotation;
-import java.util.Map;
-
 public class EmailValidator extends Validator {
     private static final EmailValidator ourInstance = new EmailValidator();
 
@@ -17,13 +13,11 @@ public class EmailValidator extends Validator {
     }
 
     @Override
-    public void validate(String value, Annotation a, HttpServletRequest req) {
-
+    public boolean validate(String value, String fieldName) {
         String errvalue = "";
         boolean flag = false;
 
         Email emailCheck = (Email)a;
-        Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
 
         if(value == null && emailCheck.required()){
             errvalue += "can't be null";
@@ -34,7 +28,6 @@ public class EmailValidator extends Validator {
             flag = true;
         }
         if(flag)
-            myErrors.put("email", errvalue);
-
+            errors.put(fieldName, errvalue);
     }
 }

@@ -8,7 +8,6 @@ import com.care.service.ServiceFactory;
 public class SeekerDAOImpl implements SeekerDAO {
 
     private MemberService memberService = ServiceFactory.get(MemberServiceImpl.class);
-
     private static SeekerDAOImpl ourInstance = new SeekerDAOImpl();
     public static SeekerDAOImpl getInstance(){
         return ourInstance;
@@ -29,8 +28,16 @@ public class SeekerDAOImpl implements SeekerDAO {
     public int deleteJob() {
         return 0;
     }
-    // Methods from MemberDAO.
+
+    public Member getMember(String email, String password) {
+        return null;
+    }
+
     public int addMember(Member member) {
+        return 0;
+    }
+
+    public int editMember(int memberId, Member member) {
         return 0;
     }
 

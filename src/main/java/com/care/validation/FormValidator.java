@@ -1,37 +1,45 @@
 package com.care.validation;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 /*
     It will iterate through the form's methods(getters) and call the corresponding validation
     depending upon the annotation.
  */
 public class FormValidator {
-    public static void  validate(FormBean form, HttpServletRequest req){
+    private static Logger logger = Logger.getLogger("FormValidator");
+
+    public static void  validate(FormBean form){
+        Map<String, String> errors = new HashMap<String, String>();
+
         for(Method method : form.getClass().getMethods()){
-            if(!method.getName().startsWith("get")){
-                continue;
-            }
-            for (Annotation annotation : method.getDeclaredAnnotations()) {
-                System.err.println(method.getName() + "done");
-//                System.err.println(annotation);
+            if(method.getName().startsWith("get")){
+                String fieldName = method.getName().substring(3);
+                fieldName = fieldName.substring(0,1).toLowerCase() + fieldName.substring(1);
 
-                Validator v = ValidatorFactory.getInstance(annotation);
-                System.err.print(v.getClass());
-                try {
-                    String value = (String)method.invoke(form);
+                for (Annotation annotation : method.getDeclaredAnnotations()) {
+                    logger.info(method.getName() + "done");
+                    logger.info(annotation.toString());
+                    Validator v = ValidatorFactory.getInstance(annotation.annotationType());
+                    logger.info(v.getClass().getSimpleName());
 
-                    v.validate(value, annotation, req);
-                }catch (IllegalAccessException e){
-                    e.getCause();
-                }catch (InvocationTargetException e){
-                    e.getCause();
+                    try {
+                        String value = (String)method.invoke(form);
+                        v.validate(value, );
+                    }catch (IllegalAccessException e){
+                        e.getCause();
+                    }catch (InvocationTargetException e){
+                        e.getCause();
+                    }
                 }
             }
+
         }
-        form.validateCustom(req);
+        form.validateCustom(errors);
     }
 }

@@ -2,11 +2,6 @@ package com.care.validation;
 
 import com.care.annotations.Name;
 
-
-import javax.servlet.http.HttpServletRequest;
-import java.lang.annotation.Annotation;
-import java.util.Map;
-
 public final class NameValidator extends Validator{
     private static final NameValidator ourInstance = new NameValidator();
 
@@ -18,12 +13,10 @@ public final class NameValidator extends Validator{
     }
 
     @Override
-    public void validate(String value, Annotation a, HttpServletRequest req) {
-
+    public boolean validate(String value, String fieldName) {
         String errvalue = "";
         boolean flag = false;
         Name name = (Name) a;
-        Map<String, String> myErrors = (Map<String, String>)req.getAttribute("errors");
 
         if(value == null && name.required()){
             errvalue += "Can't be null";
@@ -34,7 +27,6 @@ public final class NameValidator extends Validator{
             flag = true;
         }
         if (flag)
-            myErrors.put("name",errvalue);
-
+            errors.put("name",errvalue);
     }
 }

@@ -1,28 +1,44 @@
 package com.care.validation;
 
+import com.care.annotations.Date;
+import com.care.annotations.Email;
+import com.care.annotations.Name;
+import com.care.annotations.Number;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ValidatorFactory {
-    private static Validator v = null;
+    private static Logger logger = Logger.getLogger("ValidatorFactory");
+    private static final Map<Class<? extends Annotation>, Validator> validators = new HashMap<Class<? extends Annotation>, Validator>();
 
-    public static Validator getInstance(Annotation t){
+    static {
+        validators.put(Date.class, DateValidator.getInstance());
+        validators.put(Email.class, EmailValidator.getInstance());
+        validators.put(Name.class, NameValidator.getInstance());
+        validators.put(Number.class, NumberValidator.getInstance());
+    }
+
+// call it using annotationType() method
+    public static Validator getInstance(Class<? extends Annotation> annotationType) {
+        logger.info(annotationType.toString());
         Validator returnValue = null;
-        String className = t.annotationType().getSimpleName().concat("Validaor");
-        // log it
-        try{
-            Class clazz = Class.forName(className);
-            java.lang.reflect.Method method = clazz.getMethod("getInstance");
-            returnValue = (Validator)method.invoke(null);
-        }catch (ClassNotFoundException e){
-            e.getCause();
-        }catch (NoSuchMethodException e){
-            e.getCause();
-        }catch (IllegalAccessException e){
-            e.getCause();
-        }catch (InvocationTargetException e){
-            e.getCause();
-        }
+
+        return validators.get(annotationType);
+    }
+}
+
+//        String className = t.annotationType().getSimpleName().concat("Validaor");
+//
+//        try{
+//            Class clazz = Class.forName(className);
+//            java.lang.reflect.Method method = clazz.getMethod("getInstance");
+//            returnValue = (Validator)method.invoke(null);
+//        }
 
 //        if (t instanceof Date)
 //            v = DateValidator.getInstance();
@@ -32,8 +48,4 @@ public class ValidatorFactory {
 //            v = NameValidator.getInstance();
 //        if (t instanceof Number)
 //            v = NumberValidator.getInstance();
-//        System.err.println(v);
-
-        return v;
-    }
-}
+//

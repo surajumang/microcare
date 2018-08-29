@@ -18,8 +18,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Login extends HttpServlet{
+
+    Logger logger = Logger.getLogger("LoginServlet");
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -30,16 +33,15 @@ public class Login extends HttpServlet{
 
         FormBean ld = FormPopulator.populate(req, LoginDetails.class);
 
-        System.err.println(ld);
-        Map<String, String> m = new HashMap<String, String>();
-        req.setAttribute("errors", m);
+        logger.info(ld.toString());
+        Map<String, String> errors = new HashMap<String, String>();
 
-        FormValidator.validate(ld, req);
-        System.err.println(m);
+        FormValidator.validate(ld, errors);
+        logger.info(errors.toString());
 
         String page = "jsp/Members/ErrorPage.jsp";
 
-        if (m.isEmpty()) {
+        if (errors.isEmpty()) {
             LoginDetails lld = (LoginDetails) ld;
             Member member = null;//SeekerServiceImpl.login(lld);
             MemberType memberType = member.getMemberType();

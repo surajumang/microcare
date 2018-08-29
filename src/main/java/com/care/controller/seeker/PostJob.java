@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PostJob extends HttpServlet {
     @Override
@@ -24,7 +26,8 @@ public class PostJob extends HttpServlet {
         Set error parameter to be used by the Validator.
          */
         FormBean postJobForm = FormPopulator.populate(req, JobForm.class);
-        FormValidator.validate(postJobForm, req);
+        Map<String, String> errors = new HashMap<String, String>();
+        FormValidator.validate(postJobForm, errors);
 
         /*
             SeekerService.postJob(Job)
