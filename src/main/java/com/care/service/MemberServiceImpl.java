@@ -22,8 +22,16 @@ public class MemberServiceImpl implements MemberService {
         return false;
     }
 
+    public int getMember(int memberId) {
+        return 0;
+    }
+
     public int deleteMember(int memberId) {
 
+        return 0;
+    }
+
+    public int editMember(int memberId, RegistrationForm registrationForm) {
         return 0;
     }
 
