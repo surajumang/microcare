@@ -17,8 +17,8 @@ public class DateValidator extends Validator {
     private DateValidator() {
     }
 
-
-    public boolean validate(String value, Class<>) {
+    @Override
+    public boolean isValid() {
         return false;
     }
 }

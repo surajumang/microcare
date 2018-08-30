@@ -41,11 +41,11 @@ public class ValidatorFactory {
 //        }
 
 //        if (t instanceof Date)
-//            v = DateValidator.getInstance();
+//            isValid = DateValidator.getInstance();
 //        if (t instanceof Email)
-//            v = EmailValidator.getInstance();
+//            isValid = EmailValidator.getInstance();
 //        if (t instanceof Name)
-//            v = NameValidator.getInstance();
+//            isValid = NameValidator.getInstance();
 //        if (t instanceof Number)
-//            v = NumberValidator.getInstance();
+//            isValid = NumberValidator.getInstance();
 //

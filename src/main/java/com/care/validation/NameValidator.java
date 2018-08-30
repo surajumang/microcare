@@ -13,20 +13,7 @@ public final class NameValidator extends Validator{
     }
 
     @Override
-    public boolean validate(String value, String fieldName) {
-        String errvalue = "";
-        boolean flag = false;
-        Name name = (Name) a;
-
-        if(value == null && name.required()){
-            errvalue += "Can't be null";
-            flag =true;
-        }
-        if(!value.matches(name.pattern())){
-            errvalue += "Not in proper format";
-            flag = true;
-        }
-        if (flag)
-            errors.put("name",errvalue);
+    public boolean isValid() {
+        return false;
     }
 }
