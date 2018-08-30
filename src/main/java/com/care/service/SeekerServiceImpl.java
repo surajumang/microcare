@@ -21,11 +21,11 @@ public class SeekerServiceImpl implements SeekerService {
 
     }
 
-    public int postJob(JobDTO jobForm) throws SQLException {
+    public int postJob(JobDTO jobForm)  {
         return 0;
     }
 
-    public List<JobDTO> listJobs(int userId) throws SQLException {
+    public List<JobDTO> listJobs(int userId)  {
         return null;
     }
 
@@ -57,7 +57,7 @@ public class SeekerServiceImpl implements SeekerService {
     Make sure that the job on which the operation is to be performed belongs to the currently logged in user.
     Fields to be displayed are [Job title, SitterName, ApplicationStatus, ExpectedPay]
      */
-    public List<ApplicationDTO> listApplicationsOnJob(int jobId) throws SQLException {
+    public List<ApplicationDTO> listApplicationsOnJob(int jobId) {
         List<ApplicationDTO> applicationDTOList = new ArrayList<ApplicationDTO>();
 
         if(! verifyJobBelongsToMember(jobId)){
@@ -77,11 +77,11 @@ public class SeekerServiceImpl implements SeekerService {
         return false;
     }
 
-    public int editJob(int userId, JobDTO jobForm) throws SQLException {
+    public int editJob(int userId, JobDTO jobForm) {
         return 0;
     }
 
-    public int closeJob(int jobId) throws SQLException {
+    public int closeJob(int jobId)  {
         return 0;
     }
 }
