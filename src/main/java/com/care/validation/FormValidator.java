@@ -30,7 +30,7 @@ public class FormValidator {
 
                     try {
                         String value = (String)method.invoke(form);
-                        v.validate(value, );
+                        //v.validate(value, );
                     }catch (IllegalAccessException e){
                         e.getCause();
                     }catch (InvocationTargetException e){

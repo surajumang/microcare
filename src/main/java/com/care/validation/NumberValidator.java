@@ -14,20 +14,7 @@ public class NumberValidator extends Validator {
     }
 
     @Override
-    public boolean validate(String value, String fieldName) {
-        String errvalue = "";
-        boolean flag = false;
-        Number number = (Number) a;
-
-        if(value == null && number.required()){
-            errvalue += " can't be NULL";
-            flag = true;
-        }
-        if(!value.matches(number.pattern())){
-            errvalue += "Improper format";
-            flag = true;
-        }
-        if (flag)
-            errors.put("number", errvalue);
+    public boolean isValid() {
+        return false;
     }
 }
