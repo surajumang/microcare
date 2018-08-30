@@ -29,6 +29,14 @@
 
     <request-character-encoding>UTF-8</request-character-encoding>
 
+
+    <listener>
+        <listener-class>
+            com.care.dao.ConnectionUtil
+        </listener-class>
+    </listener>
+
+
     <servlet>
             <servlet-name>SeekerRegistration</servlet-name>
             <servlet-class>com.care.controller.seeker.Registration</servlet-class>

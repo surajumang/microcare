@@ -9,8 +9,9 @@ import java.util.List;
 
 public class SitterServiceImpl implements SitterService {
     private static SitterServiceImpl ourInstance = new SitterServiceImpl();
-    public static <T extends Service> T getInstance(){
-        return (T)ourInstance;
+
+    public static SitterServiceImpl getInstance(){
+        return ourInstance;
     }
 
     private SitterServiceImpl(){

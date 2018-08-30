@@ -23,24 +23,6 @@ public class Registration extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        FormBean rf = FormPopulator.populate(req, SitterRegistrationDTO.class);
-        Map<String, String> m = new HashMap<String, String>();
-
-        req.setAttribute("errors", m);
-
-        System.err.print(rf);
-        FormValidator.validate(rf, req);
-
-        HttpSession currentSession = req.getSession();
-        if(currentSession.isNew()){
-            req.setAttribute("user", ((SitterRegistrationDTO)rf).getEmail());
-        }
-        System.err.println(m);
-
-        if(! m.isEmpty()){
-            RequestDispatcher rd = req.getRequestDispatcher("Register.jsp");
-            rd.forward(req, resp);
-        }
 
         //SitterService server = ServerFactory.getInstance("seeker");
         RequestDispatcher rd = req.getRequestDispatcher("SuccessMessage.jsp");

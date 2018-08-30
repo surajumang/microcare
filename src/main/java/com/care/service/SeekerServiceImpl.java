@@ -14,7 +14,9 @@ import java.util.List;
 public class SeekerServiceImpl implements SeekerService {
 
     private static SeekerServiceImpl ourInstance = new SeekerServiceImpl();
-    private MemberService memberService = ServiceFactory.get(MemberServiceImpl.class);
+    public static SeekerServiceImpl getInstance(){
+        return ourInstance;
+    }
 
     private SeekerServiceImpl(){
 
