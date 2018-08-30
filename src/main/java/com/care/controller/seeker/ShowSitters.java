@@ -31,9 +31,6 @@ public class ShowSitters extends HttpServlet {
          */
         FormBean formBean = FormPopulator.populate(req, SitterFilter.class);
         // put this in a utility class if possible.
-        Map<String, String> errors = new HashMap<String, String>();
-
-        FormValidator.validate(formBean, errors);
 
         List<Sitter> sitters = null;
         /*

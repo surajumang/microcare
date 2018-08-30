@@ -3,11 +3,9 @@ package com.care.controller;
 
 import com.care.beans.Member;
 import com.care.beans.MemberType;
+import com.care.dto.User;
 import com.care.dto.form.LoginDetails;
-import com.care.service.AuthenticationService;
-import com.care.service.AuthenticationServiceImpl;
-import com.care.service.AuthenticationUtil;
-import com.care.service.ServiceFactory;
+import com.care.service.*;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 
@@ -49,12 +47,22 @@ public class Login extends HttpServlet{
             LoginDetails loginDetails = (LoginDetails) userLoginDetails;
             // handle the case
             Member member = null;
+            MemberType memberType = null;
             if (authenticationService.loginUser(loginDetails)){
+                logger.info("Back at LoginServlet");
                 member = AuthenticationUtil.getLoggedInUser();
+
+                User user = new User();
+                ObjectMapper.mapObject(member, user, true);
+                req.setAttribute("member", member);
+                memberType = member.getMemberType();
+
+                if (memberType.name().equals("SEEKER")){
+                    page = "jsp/Members/Seeker/Home.jsp";
+                }
+                else
+                    page = "jsp/Members/Sitter/Home.jsp";
             }
-
-            MemberType memberType = member.getMemberType();
-
         }
         RequestDispatcher rd = req.getRequestDispatcher(page);
         rd.forward(req, resp);

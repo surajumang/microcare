@@ -5,24 +5,40 @@
 package com.care.dao;
 
 import com.care.beans.Member;
+import com.care.beans.MemberType;
 
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MemberDAOImpl implements MemberDAO {
-
-
     private Logger logger = Logger.getLogger("MemberDAOImpl");
+    private static MemberDAOImpl ourInstance = new MemberDAOImpl();
+    private MemberDAOImpl(){
+
+    }
+    public static MemberDAOImpl getInstance(){
+        return ourInstance;
+    }
 
     public Member getMember(String email) {
         Connection connection = ConnectionUtil.getConnection();
-        Member member = null;
+        System.err.println(connection);
+        Member member = new Member();
        try {
-           PreparedStatement preparedStatement = connection.prepareStatement("SELECT PASSWORD FROM MEMBER WHERE EMAIL=?");
+           logger.info("Connection acquired  :" );
+           PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM MEMBER WHERE EMAIL=?");
            preparedStatement.setString(1, email);
 
-           ResultSet rs = preparedStatement.executeQuery();
+           ResultSet resultSet = preparedStatement.executeQuery();
+           while (resultSet.next()){
+               logger.info("Row exist");
+               member.setEmail(resultSet.getString("EMAIL"));
+               member.setFirstName(resultSet.getString("FIRST_NAME"));
+               member.setLastName(resultSet.getString("LAST_NAME"));
+               member.setMemberType(MemberType.valueOf(resultSet.getString("MENBER_TYPE")));
+               member.setPassword(resultSet.getString("PASSWORD"));
+           }
 
        }catch (SQLException e){
            logger.log(Level.SEVERE, "getMember", e);

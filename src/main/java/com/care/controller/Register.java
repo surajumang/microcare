@@ -27,26 +27,7 @@ public class Register extends HttpServlet{
         Read the form parameters and save it in application context.
          */
         FormBean rf = FormPopulator.populate(req, RegistrationFormDTO.class);
-        Map<String, String> m = new HashMap<String, String>();
 
-        req.setAttribute("errors", m);
-
-        System.err.print(rf);
-        FormValidator.validate(rf, req);
-
-        HttpSession currentSession = req.getSession();
-        if(currentSession.isNew()){
-            req.setAttribute("user", ((RegistrationFormDTO)rf).getEmail());
-        }
-
-        System.err.println(m);
-
-
-        if(! m.isEmpty()){
-
-            RequestDispatcher rd = req.getRequestDispatcher("Register.jsp");
-            rd.forward(req, resp);
-        }
         //SeekerServiceImpl.registerMember((RegistrationFormDTO)rf);
         RequestDispatcher rd = req.getRequestDispatcher("SuccessMessage.jsp");
         rd.forward(req, resp);

@@ -16,6 +16,7 @@
             The HomePage for the sitter will display all the available options
             and a Welcome Message.
       --%>
+      <jsp:include page="../../header.jsp">
       <form class="" action="${pageContext.request.contextPath}/jsp/Jobs/PostJob.jsp" method="post">
             <input type="submit" name="PostJob" value="Post Job"/>
       </form>
@@ -33,5 +34,6 @@
       </form>
 
 
+      <jsp:include page="../../footer.jsp">
     </body>
 </html>

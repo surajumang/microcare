@@ -6,17 +6,37 @@ import com.care.dao.MemberDAO;
 import com.care.dao.MemberDAOImpl;
 import com.care.dto.form.LoginDetails;
 
+import java.util.logging.Logger;
+
 public class AuthenticationServiceImpl implements AuthenticationService {
 
+    private static Logger logger = Logger.getLogger("AuthenticationServiceImpl");
+
+    private static AuthenticationServiceImpl ourInstance = new AuthenticationServiceImpl();
+
+    public static AuthenticationServiceImpl getInstance(){
+        logger.info(" returns --> " + ourInstance);
+        return ourInstance;
+    }
+    private AuthenticationServiceImpl(){
+
+    }
+
     public boolean loginUser(LoginDetails loginDetails) {
+        logger.info("User trying to Log in");
+
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member member = memberDAO.getMember(loginDetails.getEmail());
         boolean isLoginSuccessful = false;
 
         if(member != null){
+            logger.info("Member Exists ");
+            logger.info(loginDetails.getPassword());
+            logger.info(member.getPassword());
             if (loginDetails.getPassword().equals(member.getPassword())){
                 isLoginSuccessful = true;
                 AuthenticationUtil.setLoggedInUser(member);
+                logger.info("LOgin success");
             }
         }
         return isLoginSuccessful;

@@ -16,9 +16,10 @@
         available options.
       --%>
 
-      <jsp:include page="../header.jsp"/>
+      <jsp:include page="../../header.jsp"/>
 
 	<c:out value ="${pageContext.request.contextPath}"/>
+
       <form class="" action="${pageContext.request.contextPath}/jsp/Jobs/PostJob.jsp" method="post">
             <input type="submit" name="PostJob" value="Post Job"/>
       </form>
@@ -40,19 +41,13 @@
       <table>
           <tr>
               <td>${member.email}</td>
-              <td>${member.firstname}</td>
-              <td>${member.lastname}</td>
-              <td>${member.zipcode}</td>
-          </tr>
-          <tr>
-              <td>${login.email}</td>
-              <td>${login.password}</td>
-              <td>${login.email}</td>
-              <td>${login.password}</td>
+              <td>${member.firstName}</td>
+              <td>${member.lastName}</td>
+              <td>${member.zipCode}</td>
           </tr>
       </table>
 
 
-      <jsp:include page="../footer.jsp"/>
+      <jsp:include page="../../footer.jsp"/>
     </body>
 </html>

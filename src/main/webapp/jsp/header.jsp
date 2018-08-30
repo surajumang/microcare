@@ -6,5 +6,5 @@
 </style>
 
 <p >
-        Welcome ${user}
+        Welcome ${user.email}
 </p>
