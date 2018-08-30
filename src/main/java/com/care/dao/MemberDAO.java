@@ -2,12 +2,14 @@ package com.care.dao;
 
 import com.care.beans.Member;
 
-public interface MemberDAO extends DAO{
-    Member getMember(String email);
-    int addMember(Member member);
+import java.sql.SQLException;
 
-    int editMember(int memberId, Member member);
-    int deleteMember(int memberId);
+public interface MemberDAO extends DAO{
+    Member getMember(String email) throws SQLException;
+    int addMember(Member member) throws SQLException;
+
+    int editMember(int memberId, Member member) throws SQLException;
+    int deleteMember(int memberId) throws SQLException;
 
 
 }

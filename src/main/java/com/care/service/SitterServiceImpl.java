@@ -1,9 +1,7 @@
 package com.care.service;
 
-import com.care.beans.Member;
-import com.care.dto.form.ApplicationFormDTO;
-import com.care.dto.form.JobFormDTO;
-import com.care.dto.form.RegistrationFormDTO;
+import com.care.dto.form.ApplicationDTO;
+import com.care.dto.form.JobDTO;
 
 import java.util.List;
 
@@ -18,15 +16,15 @@ public class SitterServiceImpl implements SitterService {
 
     }
 
-    public List<JobFormDTO> listAllJobs() {
+    public List<JobDTO> listAllJobs() {
         return null;
     }
 
-    public List<ApplicationFormDTO> listAllApplications(int memberId) {
+    public List<ApplicationDTO> listAllApplications(int memberId) {
         return null;
     }
 
-    public List<ApplicationFormDTO> listApplication(int applicationId) {
+    public List<ApplicationDTO> listApplication(int applicationId) {
         return null;
     }
 

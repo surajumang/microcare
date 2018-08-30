@@ -6,7 +6,7 @@ import com.care.validation.FormBean;
 
 import java.util.Map;
 
-public class JobFormDTO extends FormBean {
+public class JobDTO extends FormBean {
     private String title;
     private String hourlyPay;
     // should be greater than current Date and time.

@@ -21,7 +21,7 @@ public final class JobDAOImpl implements JobDAO {
 
     }
 
-    public Job getJob(int jobId){
+    public Job getJob(int jobId) throws SQLException {
         Job job = new Job();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM APPLICATION " +
@@ -38,28 +38,28 @@ public final class JobDAOImpl implements JobDAO {
     /*
     Post a job
      */
-    public int addJob(Job job){
+    public int addJob(Job job) throws SQLException {
         return 0;
     }
 
-    public boolean checkOwner(int postedBy, int jobId) {
+    public boolean checkOwner(int postedBy, int jobId) throws SQLException {
         return false;
     }
 
-    public int editJob(int jobId){
+    public int editJob(int jobId) throws SQLException {
         return 0;
     }
-    public List<Job> getAllJobs(int memberId){
+    public List<Job> getAllJobs(int memberId) throws SQLException {
         List<Job> jobs = new ArrayList<Job>();
         jobs.add(new Job());
 
         return jobs;
     }
-    public int deleteJob(int jobId){
+    public int deleteJob(int jobId) throws SQLException {
         return 0;
     }
 
-    public int deleteAllJobs(int postedBy){
+    public int deleteAllJobs(int postedBy) throws SQLException {
         return 0;
     }
     

@@ -26,7 +26,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         logger.info("User trying to Log in");
 
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
-        Member member = memberDAO.getMember(loginDetails.getEmail());
+        Member member = null;
+        try {
+            member = memberDAO.getMember(loginDetails.getEmail());
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
         boolean isLoginSuccessful = false;
 
         if(member != null){
@@ -35,7 +40,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             logger.info(member.getPassword());
             if (loginDetails.getPassword().equals(member.getPassword())){
                 isLoginSuccessful = true;
-                AuthenticationUtil.setLoggedInUser(member);
                 logger.info("LOgin success");
             }
         }
@@ -43,7 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public boolean logout() {
-        AuthenticationUtil.removeLoggedInUser();
+        //CommonUtil.removeLoggedInUser();
         return false;
     }
 
@@ -56,6 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public boolean isLoggedIn(int userId) {
-        return userId == AuthenticationUtil.getLoggedInUser().getId();
+        //return userId == CommonUtil.getLoggedInUser().getId();
+        return false;
     }
 }

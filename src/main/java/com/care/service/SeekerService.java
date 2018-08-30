@@ -1,8 +1,9 @@
 package com.care.service;
 
-import com.care.dto.form.ApplicationFormDTO;
-import com.care.dto.form.JobFormDTO;
+import com.care.dto.form.ApplicationDTO;
+import com.care.dto.form.JobDTO;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface SeekerService extends Service {
@@ -15,14 +16,14 @@ public interface SeekerService extends Service {
     /*verify that the logged in user is a Seeker
      every action is to be performed on the currently logged in user.
     */
-    int postJob(JobFormDTO jobForm);
+    int postJob(JobDTO jobForm);
     // verify memberId corresponds to the logged in user.
-    List<JobFormDTO> listJobs();
+    List<JobDTO> listJobs(int userId) ;
     // verify that this is invoked on the logged in user.
     // check that this job belongs to the logged in user.
-    List<ApplicationFormDTO> listApplicationsOnJob(int jobId);
+    List<ApplicationDTO> listApplicationsOnJob(int jobId) ;
 
-    int editJob(int userId, JobFormDTO jobForm);
+    int editJob(int userId, JobDTO jobForm) ;
 
-    int closeJob(int jobId);
+    int closeJob(int jobId) ;
 }

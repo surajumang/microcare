@@ -2,12 +2,11 @@ package com.care.service;
 
 import com.care.beans.Job;
 import com.care.beans.Member;
-import com.care.dao.DAOFactory;
-import com.care.dao.JobDAO;
-import com.care.dao.JobDAOImpl;
-import com.care.dto.form.ApplicationFormDTO;
-import com.care.dto.form.JobFormDTO;
+import com.care.dao.*;
+import com.care.dto.form.ApplicationDTO;
+import com.care.dto.form.JobDTO;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,36 +21,67 @@ public class SeekerServiceImpl implements SeekerService {
 
     }
 
-    public int postJob(JobFormDTO jobForm) {
+    public int postJob(JobDTO jobForm) throws SQLException {
         return 0;
     }
 
-    public List<JobFormDTO> listJobs() {
-        List<JobFormDTO> memberJobDTO = new ArrayList<JobFormDTO>();
-
-        if(AuthenticationUtil.isMemberLoggedIn()){
-            Member member = AuthenticationUtil.getLoggedInUser();
-            JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-            List<Job> memberJobs = jobDAO.getAllJobs(member.getId());
-
-            for(Job job: memberJobs){
-                JobFormDTO jobFormDTO = null;
-                ObjectMapper.mapObject(job, jobFormDTO, true);
-                memberJobDTO.add(jobFormDTO);
-            }
-        }
-        return memberJobDTO;
-    }
-
-    public List<ApplicationFormDTO> listApplicationsOnJob(int jobId) {
+    public List<JobDTO> listJobs(int userId) throws SQLException {
         return null;
     }
 
-    public int editJob(int userId, JobFormDTO jobForm) {
+    /*
+    List all jobs posted by the currently logged in seeker.
+    Fields to be listed are [Title, Status, StartDate, EndDate]
+    along with operations allowed to be performed on them.[Edit, List Applications, CloseJob(confiramtion)]
+     */
+    public List<JobDTO> listJobs(Member member) {
+        List<JobDTO> memberJobDTO = new ArrayList<JobDTO>();
+
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        List<Job> memberJobs = null;
+        try {
+            memberJobs = jobDAO.getAllJobs(member.getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        for(Job job: memberJobs){
+            JobDTO jobDTO = null;
+            ObjectMapper.mapObject(job, jobDTO, true);
+            memberJobDTO.add(jobDTO);
+        }
+        return memberJobDTO;
+    }
+    /*
+    List all the applications on a Job selected by the current seeker.
+    Make sure that the job on which the operation is to be performed belongs to the currently logged in user.
+    Fields to be displayed are [Job title, SitterName, ApplicationStatus, ExpectedPay]
+     */
+    public List<ApplicationDTO> listApplicationsOnJob(int jobId) throws SQLException {
+        List<ApplicationDTO> applicationDTOList = new ArrayList<ApplicationDTO>();
+
+        if(! verifyJobBelongsToMember(jobId)){
+            // Throwing exception is also a possibilty.
+            return null;
+        }
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+
+
+        return null;
+    }
+    /*
+
+     */
+    private boolean verifyJobBelongsToMember(int jobId){
+
+        return false;
+    }
+
+    public int editJob(int userId, JobDTO jobForm) throws SQLException {
         return 0;
     }
 
-    public int closeJob(int jobId) {
+    public int closeJob(int jobId) throws SQLException {
         return 0;
     }
 }

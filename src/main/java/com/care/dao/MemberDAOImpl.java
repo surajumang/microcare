@@ -21,7 +21,7 @@ public class MemberDAOImpl implements MemberDAO {
         return ourInstance;
     }
 
-    public Member getMember(String email) {
+    public Member getMember(String email) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         System.err.println(connection);
         Member member = new Member();
@@ -46,7 +46,7 @@ public class MemberDAOImpl implements MemberDAO {
         return member;
     }
 
-    public int addMember(Member member) {
+    public int addMember(Member member) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
 
         int rowsAffected = 0;
@@ -68,7 +68,7 @@ public class MemberDAOImpl implements MemberDAO {
         return rowsAffected;
     }
 
-    public int editMember(int memberId, Member member) {
+    public int editMember(int memberId, Member member) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
 
         int rowsAffected = 0;
@@ -91,7 +91,7 @@ public class MemberDAOImpl implements MemberDAO {
         return rowsAffected;
     }
 
-    public int deleteMember(int memberId) {
+    public int deleteMember(int memberId) throws SQLException {
         return 0;
     }
 }

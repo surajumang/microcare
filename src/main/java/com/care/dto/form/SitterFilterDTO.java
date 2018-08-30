@@ -5,7 +5,7 @@ import com.care.validation.FormBean;
 
 import java.util.Map;
 
-public class SitterFilter extends FormBean {
+public class SitterFilterDTO extends FormBean {
     private String zipCode;
     private String emailPattern;
 

@@ -14,7 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +49,7 @@ public class Login extends HttpServlet{
             MemberType memberType = null;
             if (authenticationService.loginUser(loginDetails)){
                 logger.info("Back at LoginServlet");
-                member = AuthenticationUtil.getLoggedInUser();
+                member = CommonUtil.getLoggedInUser();
 
                 User user = new User();
                 ObjectMapper.mapObject(member, user, true);

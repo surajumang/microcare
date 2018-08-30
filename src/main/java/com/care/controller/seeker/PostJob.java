@@ -1,10 +1,9 @@
 package com.care.controller.seeker;
 
 
-import com.care.dto.form.JobFormDTO;
+import com.care.dto.form.JobDTO;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
-import com.care.validation.FormValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +25,7 @@ public class PostJob extends HttpServlet {
         Check if user is logged in[Utility method]
         Set error parameter to be used by the Validator.
          */
-        FormBean postJobForm = FormPopulator.populate(req, JobFormDTO.class);
+        FormBean postJobForm = FormPopulator.populate(req, JobDTO.class);
         Map<String, String> errors = new HashMap<String, String>();
         //FormValidator.validate(postJobForm, errors);
 

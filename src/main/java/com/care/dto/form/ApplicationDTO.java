@@ -4,7 +4,7 @@ import com.care.validation.FormBean;
 
 import java.util.Map;
 
-public class ApplicationFormDTO extends FormBean {
+public class ApplicationDTO extends FormBean {
 
     @Override
     public void validateCustom(Map<String, String> errors) {
