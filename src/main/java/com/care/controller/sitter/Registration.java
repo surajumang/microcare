@@ -1,6 +1,6 @@
 package com.care.controller.sitter;
 
-import com.care.dto.form.SitterRegistration;
+import com.care.dto.form.SitterRegistrationDTO;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 import com.care.validation.FormValidator;
@@ -23,7 +23,7 @@ public class Registration extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        FormBean rf = FormPopulator.populate(req, SitterRegistration.class);
+        FormBean rf = FormPopulator.populate(req, SitterRegistrationDTO.class);
         Map<String, String> m = new HashMap<String, String>();
 
         req.setAttribute("errors", m);
@@ -33,7 +33,7 @@ public class Registration extends HttpServlet {
 
         HttpSession currentSession = req.getSession();
         if(currentSession.isNew()){
-            req.setAttribute("user", ((SitterRegistration)rf).getEmail());
+            req.setAttribute("user", ((SitterRegistrationDTO)rf).getEmail());
         }
         System.err.println(m);
 

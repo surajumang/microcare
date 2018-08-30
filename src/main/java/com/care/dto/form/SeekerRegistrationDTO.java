@@ -2,7 +2,7 @@ package com.care.dto.form;
 
 import com.care.annotations.Name;
 
-public class SeekerRegistration extends RegistrationForm {
+public class SeekerRegistrationDTO extends RegistrationFormDTO {
 
     private String children;
     private String spouseName;
@@ -27,7 +27,7 @@ public class SeekerRegistration extends RegistrationForm {
 
     @Override
     public String toString() {
-        return "SeekerRegistration{" +
+        return "SeekerRegistrationDTO{" +
                 "children='" + children + '\'' +
                 ", spouseName='" + spouseName + '\'' +
                 '}';

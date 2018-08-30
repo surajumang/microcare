@@ -35,7 +35,7 @@ public class SitterDAOImpl implements SitterDAO {
         return 0;
     }
 
-    public Member getMember(String email, String password) {
+    public Member getMember(String email) {
         return null;
     }
 

@@ -3,7 +3,7 @@ package com.care.dao;
 import com.care.beans.Member;
 
 public interface MemberDAO extends DAO{
-    Member getMember(String email, String password);
+    Member getMember(String email);
     int addMember(Member member);
 
     int editMember(int memberId, Member member);

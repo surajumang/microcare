@@ -5,8 +5,7 @@
 package com.care.dao;
 
 import com.care.beans.Member;
-import com.care.beans.MemberType;
-import com.care.dto.form.LoginDetails;
+
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +15,7 @@ public class MemberDAOImpl implements MemberDAO {
 
     private Logger logger = Logger.getLogger("MemberDAOImpl");
 
-    public Member getMember(String email, String password) {
+    public Member getMember(String email) {
         Connection connection = ConnectionUtil.getConnection();
         Member member = null;
        try {

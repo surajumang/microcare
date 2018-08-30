@@ -1,7 +1,6 @@
 package com.care.controller;
 
-import com.care.dto.form.RegistrationForm;
-import com.care.service.SeekerServiceImpl;
+import com.care.dto.form.RegistrationFormDTO;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 import com.care.validation.FormValidator;
@@ -27,7 +26,7 @@ public class Register extends HttpServlet{
         /*
         Read the form parameters and save it in application context.
          */
-        FormBean rf = FormPopulator.populate(req, RegistrationForm.class);
+        FormBean rf = FormPopulator.populate(req, RegistrationFormDTO.class);
         Map<String, String> m = new HashMap<String, String>();
 
         req.setAttribute("errors", m);
@@ -37,7 +36,7 @@ public class Register extends HttpServlet{
 
         HttpSession currentSession = req.getSession();
         if(currentSession.isNew()){
-            req.setAttribute("user", ((RegistrationForm)rf).getEmail());
+            req.setAttribute("user", ((RegistrationFormDTO)rf).getEmail());
         }
 
         System.err.println(m);
@@ -48,7 +47,7 @@ public class Register extends HttpServlet{
             RequestDispatcher rd = req.getRequestDispatcher("Register.jsp");
             rd.forward(req, resp);
         }
-        //SeekerServiceImpl.registerMember((RegistrationForm)rf);
+        //SeekerServiceImpl.registerMember((RegistrationFormDTO)rf);
         RequestDispatcher rd = req.getRequestDispatcher("SuccessMessage.jsp");
         rd.forward(req, resp);
     }

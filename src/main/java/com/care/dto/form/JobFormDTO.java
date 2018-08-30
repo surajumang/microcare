@@ -6,7 +6,7 @@ import com.care.validation.FormBean;
 
 import java.util.Map;
 
-public class JobForm extends FormBean {
+public class JobFormDTO extends FormBean {
     private String title;
     private String hourlyPay;
     // should be greater than current Date and time.
@@ -62,4 +62,5 @@ public class JobForm extends FormBean {
     public void validateCustom(Map<String, String> errors) {
         //check if end date is greater than start date.
     }
+
 }

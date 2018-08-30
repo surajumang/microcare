@@ -7,7 +7,7 @@ import com.care.validation.FormBean;
 
 import java.util.Map;
 
-public class RegistrationForm extends FormBean{
+public class RegistrationFormDTO extends FormBean{
 
     private String email;
     private String firstName;

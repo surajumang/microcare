@@ -1,7 +1,7 @@
 package com.care.controller.seeker;
 
 import com.care.beans.Member;
-import com.care.dto.form.SeekerRegistration;
+import com.care.dto.form.SeekerRegistrationDTO;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 import com.care.validation.FormValidator;
@@ -35,14 +35,14 @@ public class Registration extends HttpServlet {
             rd.forward(req, resp);
         }
 
-        FormBean rf = FormPopulator.populate(req, SeekerRegistration.class);
+        FormBean rf = FormPopulator.populate(req, SeekerRegistrationDTO.class);
         Map<String, String> errors = new HashMap<String, String>();
 
         System.err.print(rf);
         FormValidator.validate(rf, errors);
 
         if(currentSession.isNew()){
-            req.setAttribute("user", ((SeekerRegistration)rf).getEmail());
+            req.setAttribute("user", ((SeekerRegistrationDTO)rf).getEmail());
         }
 
         System.err.println(errors);
@@ -51,7 +51,7 @@ public class Registration extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("Register.jsp");
             rd.forward(req, resp);
         }
-      //  SeekerServiceImpl.registerMember((SeekerRegistration)rf);
+      //  SeekerServiceImpl.registerMember((SeekerRegistrationDTO)rf);
         RequestDispatcher rd = req.getRequestDispatcher("SuccessMessage.jsp");
         rd.forward(req, resp);
     }

@@ -1,6 +1,6 @@
 package com.care.dto.form;
 
-public class SitterRegistration extends RegistrationForm {
+public class SitterRegistrationDTO extends RegistrationFormDTO {
     private int experience;
     private double expectedPay;
 

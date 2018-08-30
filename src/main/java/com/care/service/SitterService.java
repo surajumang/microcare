@@ -1,16 +1,20 @@
 package com.care.service;
 
-public interface SitterService extends MemberService{
+import com.care.dto.form.ApplicationFormDTO;
+import com.care.dto.form.JobFormDTO;
+
+import java.util.List;
+
+public interface SitterService extends Service{
     //make sure that the user invoking this is a Sitter.
-    int listAllJobs();
+    List<JobFormDTO> listAllJobs();
     // check if logged in user is the one whose applications will be shown.
-    int listAllApplications(int memberId);
+    List<ApplicationFormDTO> listAllApplications(int memberId);
     // check if logged in user is the one whose applications will be shown.
-    int listApplication(int applicationId);
+    List<ApplicationFormDTO> listApplication(int applicationId);
     //check if already applied to job
     int applyToJob(int jobId);
     // check if user is deleting an application which belongs to it.
     int deleteApplication(int applicationId);
-    // make sure that the logged in user is performing this operation.
-    int closeAccount(int sitterId);
+
 }
