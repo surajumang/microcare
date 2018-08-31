@@ -1,6 +1,6 @@
 package com.care.dto.form;
 
-import com.care.annotations.Name;
+import com.care.annotation.Name;
 
 public class SeekerRegistrationDTO extends RegistrationFormDTO {
 

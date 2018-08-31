@@ -1,7 +1,5 @@
 package com.care.validation;
 
-import com.care.annotations.Name;
-
 public final class NameValidator extends Validator{
     private static final NameValidator ourInstance = new NameValidator();
 

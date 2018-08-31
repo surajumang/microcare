@@ -1,7 +1,5 @@
 package com.care.validation;
 
-import com.care.annotations.Email;
-
 public class EmailValidator extends Validator {
     private static final EmailValidator ourInstance = new EmailValidator();
 

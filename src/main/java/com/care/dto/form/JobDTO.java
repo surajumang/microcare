@@ -1,7 +1,5 @@
 package com.care.dto.form;
 
-import com.care.annotations.Date;
-import com.care.annotations.Number;
 import com.care.validation.FormBean;
 
 import java.util.Map;

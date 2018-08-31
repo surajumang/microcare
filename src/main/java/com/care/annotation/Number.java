@@ -1,4 +1,4 @@
-package com.care.annotations;
+package com.care.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,8 +1,8 @@
 package com.care.dto.form;
 
-import com.care.annotations.Email;
-import com.care.annotations.Name;
-import com.care.annotations.Number;
+import com.care.annotation.Email;
+import com.care.annotation.Name;
+import com.care.annotation.Number;
 import com.care.validation.FormBean;
 
 import java.util.Map;

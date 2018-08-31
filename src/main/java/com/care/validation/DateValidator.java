@@ -5,8 +5,6 @@ package com.care.validation;
 
 */
 
-import com.care.annotations.Date;
-
 public class DateValidator extends Validator {
     private static final DateValidator ourInstance = new DateValidator();
 

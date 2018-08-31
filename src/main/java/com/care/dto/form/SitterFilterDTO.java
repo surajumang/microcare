@@ -1,6 +1,6 @@
 package com.care.dto.form;
 
-import com.care.annotations.Number;
+import com.care.annotation.Number;
 import com.care.validation.FormBean;
 
 import java.util.Map;

@@ -1,8 +1,6 @@
 package com.care.validation;
 
 
-import com.care.annotations.Number;
-
 public class NumberValidator extends Validator {
     private static final NumberValidator ourInstance = new NumberValidator();
 
