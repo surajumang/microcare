@@ -60,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public boolean isLoggedIn(int userId) {
-        //return userId == CommonUtil.getLoggedInUser().getId();
+        //return userId == CommonUtil.getLoggedInUserFromSession().getId();
         return false;
     }
 }

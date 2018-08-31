@@ -5,6 +5,7 @@ package com.care.dao;
 
 import com.care.beans.Application;
 import com.care.beans.Status;
+import com.care.dto.form.ApplicationDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -19,6 +20,11 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
     private Logger logger = Logger.getLogger("ApplicationDAOImpl");
     // called to edit or post an Application
+    private static ApplicationDAOImpl ourInstance = new ApplicationDAOImpl();
+
+    public static ApplicationDAOImpl getInstance(){
+        return ourInstance;
+    }
     private ApplicationDAOImpl(){
 
     }
@@ -83,11 +89,11 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         return null;
     }
 
-    public List<Application> getAllApplications(int memberId) throws SQLException {
+    public List<Application> getAllApplications(int appliedBy) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM APPLICATION WHERE MEMBER_ID = ?");
-            statement.setInt(1, memberId);
+            statement.setInt(1, appliedBy);
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -95,6 +101,39 @@ public class ApplicationDAOImpl implements ApplicationDAO {
             logger.log(Level.SEVERE, "AddApplication", e.getCause());
         }
         return null;
+    }
+
+    public List<ApplicationDTO> getAllApplicationsOnJob(int jobId) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+        List<ApplicationDTO> applicationDTOsList = new ArrayList<ApplicationDTO>();
+        logger.info("Getting all application on a JOB");
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT JOB.TITLE, MEMBER.FIRST_NAME, MEMBER.LAST_NAME, APPLICATION.STATUS, APPLICATION.EXPECTED_PAY" +
+                    " FROM APPLICATION\n" +
+                    "INNER JOIN MEMBER ON APPLICATION.MEMBER_ID = MEMBER.ID\n" +
+                    "INNER JOIN  JOB ON APPLICATION.JOB_ID = JOB.ID\n" +
+                    "WHERE APPLICATION.JOB_ID = ?;");
+            statement.setInt(1, jobId);
+
+            ResultSet resultSet = statement.executeQuery();
+
+
+            while(resultSet.next()){
+                logger.info("Getting one row from the result Set");
+                ApplicationDTO applicationDTO = new ApplicationDTO();
+                applicationDTO.setTitle(resultSet.getString("TITLE"));
+                applicationDTO.setFirstName(resultSet.getString("FIRST_NAME"));
+                applicationDTO.setLastName(resultSet.getString("LAST_NAME"));
+                applicationDTO.setExpectedPay(resultSet.getString("EXPECTED_PAY"));
+                applicationDTO.setStatus(resultSet.getString("STATUS"));
+
+                applicationDTOsList.add(applicationDTO);
+            }
+
+        }catch (SQLException e){
+            logger.log(Level.SEVERE, "AddApplication", e.getCause());
+        }
+        return applicationDTOsList;
     }
 
     public int deleteApplication(int applicationId) throws SQLException {

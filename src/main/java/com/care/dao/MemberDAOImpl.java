@@ -33,10 +33,11 @@ public class MemberDAOImpl implements MemberDAO {
            ResultSet resultSet = preparedStatement.executeQuery();
            while (resultSet.next()){
                logger.info("Row exist");
+               member.setId(resultSet.getInt("ID"));
                member.setEmail(resultSet.getString("EMAIL"));
                member.setFirstName(resultSet.getString("FIRST_NAME"));
                member.setLastName(resultSet.getString("LAST_NAME"));
-               member.setMemberType(MemberType.valueOf(resultSet.getString("MENBER_TYPE")));
+               member.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
                member.setPassword(resultSet.getString("PASSWORD"));
            }
 

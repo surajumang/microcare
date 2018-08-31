@@ -22,6 +22,7 @@ public class ObjectMapper {
                 srcMethods.put(methodName, method);
             }
         }
+        logger.info("mapping started");
 
         for (Method method : dest.getClass().getMethods()){
             if (method.getName().startsWith("set")){
@@ -33,7 +34,9 @@ public class ObjectMapper {
                     try{
                         Method srcGetterMethod = src.getClass().getMethod("get"+methodName);
                         Class returnType = srcGetterMethod.getReturnType();
+                        logger.info(method.getName() + " --- > " + srcGetterMethod.getName());
                         method.invoke(dest, srcGetterMethod.invoke(src));
+
                     }catch (IllegalAccessException e){
                         logger.log(Level.SEVERE, "Can't Access", e.getCause());
                     }catch (InvocationTargetException e){

@@ -18,12 +18,10 @@
 
       <jsp:include page="../../header.jsp"/>
 
-	<c:out value ="${pageContext.request.contextPath}"/>
-
       <form class="" action="${pageContext.request.contextPath}/jsp/Jobs/PostJob.jsp" method="post">
             <input type="submit" name="PostJob" value="Post Job"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/jsp/Jobs/ViewMyJobs.jsp" method="post">
+      <form class="" action="Members/Seeker/ShowMyJobs.do" method="post">
             <input type="submit" name="ViewJobs" value="My Jobs"/>
       </form>
       <form class="" action="${pageContext.request.contextPath}/jsp/Members/SearchSitters.jsp" method="post">

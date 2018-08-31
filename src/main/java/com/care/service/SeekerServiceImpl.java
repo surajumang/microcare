@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.beans.Application;
 import com.care.beans.Job;
 import com.care.beans.Member;
 import com.care.dao.*;
@@ -9,8 +10,12 @@ import com.care.dto.form.JobDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SeekerServiceImpl implements SeekerService {
+
+    Logger logger = Logger.getLogger("SeekerServiceImpl");
 
     private static SeekerServiceImpl ourInstance = new SeekerServiceImpl();
     public static SeekerServiceImpl getInstance(){
@@ -21,12 +26,8 @@ public class SeekerServiceImpl implements SeekerService {
 
     }
 
-    public int postJob(JobDTO jobForm)  {
+    public int postJob(Member member, JobDTO jobForm)  {
         return 0;
-    }
-
-    public List<JobDTO> listJobs(int userId)  {
-        return null;
     }
 
     /*
@@ -36,17 +37,18 @@ public class SeekerServiceImpl implements SeekerService {
      */
     public List<JobDTO> listJobs(Member member) {
         List<JobDTO> memberJobDTO = new ArrayList<JobDTO>();
-
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         List<Job> memberJobs = null;
+
         try {
             memberJobs = jobDAO.getAllJobs(member.getId());
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Can't access database", e.getCause());
+            // Show error page.
         }
 
         for(Job job: memberJobs){
-            JobDTO jobDTO = null;
+            JobDTO jobDTO = new JobDTO();
             ObjectMapper.mapObject(job, jobDTO, true);
             memberJobDTO.add(jobDTO);
         }
@@ -57,17 +59,20 @@ public class SeekerServiceImpl implements SeekerService {
     Make sure that the job on which the operation is to be performed belongs to the currently logged in user.
     Fields to be displayed are [Job title, SitterName, ApplicationStatus, ExpectedPay]
      */
-    public List<ApplicationDTO> listApplicationsOnJob(int jobId) {
+    public List<ApplicationDTO> listApplicationsOnJob(Member member, int jobId) {
         List<ApplicationDTO> applicationDTOList = new ArrayList<ApplicationDTO>();
-
-        if(! verifyJobBelongsToMember(jobId)){
-            // Throwing exception is also a possibilty.
-            return null;
-        }
+//        if(! verifyJobBelongsToMember(jobId)){
+//            // Throwing exception is also a possibilty.
+//            return null;
+//        }
+        logger.info("ListApplications");
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
-
-
-        return null;
+        try {
+            applicationDTOList = applicationDAO.getAllApplicationsOnJob(jobId);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Cant fetch All Applications on Job");
+        }
+        return applicationDTOList;
     }
     /*
 
@@ -77,11 +82,11 @@ public class SeekerServiceImpl implements SeekerService {
         return false;
     }
 
-    public int editJob(int userId, JobDTO jobForm) {
+    public int editJob(Member member, JobDTO jobForm) {
         return 0;
     }
 
-    public int closeJob(int jobId)  {
+    public int closeJob(Member member, int jobId)  {
         return 0;
     }
 }

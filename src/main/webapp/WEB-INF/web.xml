@@ -43,7 +43,7 @@
     </servlet>
     <servlet-mapping>
             <servlet-name>SeekerRegistration</servlet-name>
-            <url-pattern>/jsp/Members/SeekerRegistration.do</url-pattern>
+            <url-pattern>/Members/SeekerRegistration.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -52,7 +52,7 @@
     </servlet>
     <servlet-mapping>
             <servlet-name>SitterRegistration</servlet-name>
-            <url-pattern>/jsp/Members/SitterRegistration.do</url-pattern>
+            <url-pattern>/Members/SitterRegistration.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -65,12 +65,21 @@
     </servlet-mapping>
 
     <servlet>
-            <servlet-name>PostJob</servlet-name>
-            <servlet-class>com.care.controller.seeker.PostJob</servlet-class>
+            <servlet-name>ShowJobs</servlet-name>
+            <servlet-class>com.care.controller.seeker.ShowJobs</servlet-class>
     </servlet>
     <servlet-mapping>
-            <servlet-name>PostJob</servlet-name>
-            <url-pattern>/PostJobServlet.do</url-pattern>
+            <servlet-name>ShowJobs</servlet-name>
+            <url-pattern>/Members/Seeker/ShowMyJobs.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+            <servlet-name>ListAllApplcations</servlet-name>
+            <servlet-class>com.care.controller.seeker.ShowApplications</servlet-class>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>ListAllApplcations</servlet-name>
+            <url-pattern>/Members/Seeker/ViewApplicants.do</url-pattern>
     </servlet-mapping>
 
 

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" errorPage="Error.jsp" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"
        uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -9,6 +9,24 @@
         <head>
                 <meta charset="utf-8">
                 <title></title>
+
+                <style>
+                table {
+                    font-family: arial, sans-serif;
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                td, th {
+                    border: 1px solid #dddddd;
+                    text-align: left;
+                    padding: 8px;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #dddddd;
+                }
+                </style>
         </head>
         <body>
             <%--
@@ -21,7 +39,7 @@
             <thead>
                 <tr>
                     <td>Title</td>
-                    <td>Hourly Pay</td>
+                    <td>Status</td>
                     <td>Start Date</td>
                     <td>End Date</td>
                     <td>Edit Field</td>
@@ -32,27 +50,27 @@
             <c:forEach var="job" items="${myJobs}">
             <tr>
                 <td>${job.title}</td>
-                <td>${job.hourlyPay}</td>
+                <td>Status</td>
                 <td>${job.startDate}</td>
                 <td>${job.endDate}</td>
                 <td>
                     <form action="ShowJobToEdit.do" method="post">
                         <%-- <input type="hidden" name="id" value="${job.id}"> --%>
-                        <c:set var="id" value="${job}" scope="session"/>
+                        <c:set var="id" value="${job.id}" scope="session"/>
                         <input type="submit" name="" value="Edit">
                     </form>
                 </td>
                 <td>
                     <form action="DeleteJob.do" method="post">
                         <%-- <input type="hidden" name="id" value="${job.id}"> --%>
-                        <c:set var="id" value="${job}" scope="session"/>
+                        <c:set var="id" value="${job.id}" scope="session"/>
                         <input type="submit" name="" value="Delete">
                     </form>
                 </td>
                 <td>
                     <form action="ViewApplicants.do" method="post">
                         <%-- <input type="hidden" name="id" value="${job.id}"> --%>
-                        <c:set var="id" value="${job}" scope="session"/>
+                        <c:set var="id" value="${job.id}" scope="session"/>
                         <input type="submit" name="" value="View Applications">
                     </form>
                 </td>

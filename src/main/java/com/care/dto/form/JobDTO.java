@@ -7,13 +7,21 @@ import com.care.validation.FormBean;
 import java.util.Map;
 
 public class JobDTO extends FormBean {
+    private int id;
     private String title;
-    private String hourlyPay;
+    private double hourlyPay;
     // should be greater than current Date and time.
-    private String startDate;
+    private java.util.Date startDate;
     // should be greater than or equal to current Date and time.
-    private String endDate;
+    private java.util.Date endDate;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -23,28 +31,27 @@ public class JobDTO extends FormBean {
         this.title = title;
     }
 
-    @Number(pattern = "\\d+\\.\\d+")
-    public String getHourlyPay() {
+    public double getHourlyPay() {
         return hourlyPay;
     }
 
-    public void setHourlyPay(String hourlyPay) {
+    public void setHourlyPay(double hourlyPay) {
         this.hourlyPay = hourlyPay;
     }
-    @Date
-    public String getStartDate() {
+
+    public java.util.Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(java.util.Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public java.util.Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(java.util.Date endDate) {
         this.endDate = endDate;
     }
 

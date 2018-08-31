@@ -1,7 +1,7 @@
 package com.care.controller.seeker;
 
 import com.care.beans.Member;
-import com.care.dto.form.JobDTO;
+import com.care.dto.form.ApplicationDTO;
 import com.care.exception.IncompatibleUserTypeException;
 import com.care.exception.NoUserLoggedInException;
 import com.care.service.CommonUtil;
@@ -20,18 +20,18 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ShowJobs extends HttpServlet {
+public class ShowApplications extends HttpServlet {
+    Logger logger = Logger.getLogger("ShowApplicationsSeeker");
 
-    Logger logger = Logger.getLogger("ShowJobs");
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        doGet(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = "ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
         boolean userLoggedIn = false;
         Member currentMember = null;
         try {
@@ -47,21 +47,25 @@ public class ShowJobs extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(page);
             rd.forward(request, response);
         }
-        List<JobDTO> myJobs = new ArrayList<JobDTO>();
+        //make it more robust.
+        logger.info("-------- " + request.getSession().getAttribute("id").toString() + " -------");
 
-        /*
-        Db call to fetch the jobs created by this user.
-        List<Job> lj = SeekerServiceImpl.getJobs();
-        SeekerService will simply delegate this call to JobServiceImpl(member.getId()) -> Job form object.
-        This will further be delegated to JobDAOImpl which will give a model class Job.
-         */
+        int jobIdToViewApplications = (Integer)request.getSession().getAttribute("id");;
+
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-        myJobs = seekerService.listJobs(currentMember);
+        List<ApplicationDTO> applications = new ArrayList<ApplicationDTO>();
 
-        request.setAttribute("myJobs", myJobs);
-        logger.info("Dispatching to ShowMyJobs Page");
-        RequestDispatcher rd = request.getRequestDispatcher("/Members/Seeker/ShowMyJobs.jsp");
+        applications = seekerService.listApplicationsOnJob(currentMember, jobIdToViewApplications);
+        /*
+        Need to collect all the applications which are posted on this Job.
+        List<ApplicationsFormDTO > SeekerServiceImpl.getApplications(jobId);
+        It will delegate the call to ApplicationServiceImpl.getApplications(jobId);
+        It will take care of calling ApplicationDAOImpl to fetch actual data.
+         */
+        request.setAttribute("applications", applications);
+        RequestDispatcher rd = request.getRequestDispatcher("/Members/Seeker/ViewApplications.jsp");
         rd.forward(request, response);
+
 
     }
 }

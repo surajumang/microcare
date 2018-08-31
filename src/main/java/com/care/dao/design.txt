@@ -38,19 +38,19 @@ CREATE TABLE JOB (
        HOURLY_PAY      DECIMAL(5,3)    NOT NULL,
        START_DATE      DATE            NOT NULL,
        END_DATE        DATE            NOT NULL,
-       DATE_CREATED    DATE            NOT NULL,
+       DATE_CREATED    TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP ,
        STATUS          ENUM ("ACTIVE", "INACTIVE") DEFAULT "ACTIVE" NOT NULL,
        LAST_MODIFIED   TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
        FOREIGN KEY (POSTED_BY) REFERENCES SEEKER(ID)
 );
 
 CREATE TABLE APPLICATION(
-       ID              INT(10)         AUTO_INCREMENT PRIMARY KEY,
-       JOB_ID          INT(10)    ,    AUTO_INCREMENT
-       MEMBER_ID INT(10) ,
+       ID              INT(10)        AUTO_INCREMENT PRIMARY KEY,
+       JOB_ID          INT(10)        NOT NULL,
+       MEMBER_ID INT(10)              NOT NULL,
        EXPECTED_PAY    DECIMAL(5,3)    NOT NULL,
        STATUS         ENUM ("ACTIVE", "INACTIVE") DEFAULT "ACTIVE" NOT NULL ,
-       DATE_CREATED    DATE     NOT NULL ,
+       DATE_CREATED    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
        LAST_MODIFIED   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
        FOREIGN KEY (JOB_ID) REFERENCES JOB(ID),
        FOREIGN KEY (MEMBER_ID) REFERENCES SITTER(ID)
@@ -69,5 +69,33 @@ create table MEMBER (
         LAST_MODIFIED   TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PASSWORD        VARCHAR(30)             NOT NULL
   );
-insert into MEMBER(first_name, last_name, phone, email, zip_code, password)
-values("suraj", "kumar", 1234, "a@a", 234314, "efjnkj");
+
+insert into MEMBER(first_name, last_name, address, phone, email, zip_code, password)
+values("suraj", "kumar", "A k colony, Domlur", 1234, "a@a", 234314, "qwerty"),
+("sai", "Krishna", "Mens PG domlur", 1233, "sai@gmail", 141343, "asdf");
+
+INSERT INTO MEMBER(first_name, last_name, address, phone, email, zip_code, password, MEMBER_TYPE)
+VALUES("abhay", "yadav", "1st block Koramangla", 12344, "abhay@gmail", 123456, "Abhay", "sitter"),
+("anushri", "hv", "Domlur pg", 12345, "anu@gmail", 235346, "Anu", "sitter");
+
+INSERT INTO SEEKER(ID)
+VALUES(1),(2);
+
+INSERT INTO SITTER(ID, EXPERIENCE, EXPECTED_PAY)
+VALUES(3, 12, 123),(4,1, 133);
+
+INSERT INTO JOB(TITLE, POSTED_BY, HOURLY_PAY, START_DATE, END_DATE )
+VALUES("mY First Job", 1, 12, '2018-08-12', '2018-08-12'),
+("Not a job", 2, 11, '2018-08-12', '2018-08-12');
+
+
+insert into APPLICATION(JOB_ID, MEMBER_ID, EXPECTED_PAY)
+VALUES(3,3,12), (4,3,32), (3,4,21), (4,4,12);
+
+//LIST ALL APPLICATIONS ON A JOB GIVEN A JOB_ID
+SELECT JOB.TITLE, MEMBER.FIRST_NAME, MEMBER.LAST_NAME, APPLICATION.STATUS, APPLICATION.EXPECTED_PAY, JOB_ID FROM
+APPLICATION
+INNER JOIN MEMBER ON APPLICATION.MEMBER_ID = MEMBER.ID
+INNER JOIN  JOB ON APPLICATION.JOB_ID = JOB.ID
+WHERE APPLICATION.JOB_ID = 3;
+

@@ -31,19 +31,19 @@ tr:nth-child(even) {
         <table>
             <thead>
                 <tr>
-                    <td>Email</td>
+                    <td>Title</td>
                     <td>First Name</td>
                     <td>Last Name</td>
-                    <td>Title</td>
+                    <td>Status</td>
                     <td>Expected Pay</td>
                 </tr>
             </thead>
             <c:forEach var="app" items="${applications}">
             <tr>
-                <td>${app.email}</td>
+                <td>${app.title}</td>
                 <td>${app.firstName}</td>
                 <td>${app.lastName}</td>
-                <td>${app.title}</td>
+                <td>${app.status}</td>
                 <td>${app.expectedPay}</td>
             </tr>
         </c:forEach>
