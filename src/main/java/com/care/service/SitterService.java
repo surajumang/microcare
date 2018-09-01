@@ -1,13 +1,13 @@
 package com.care.service;
 
+import com.care.beans.Job;
 import com.care.dto.form.ApplicationDTO;
-import com.care.dto.form.JobDTO;
 
 import java.util.List;
 
 public interface SitterService extends Service{
     //make sure that the user invoking this is a Sitter.
-    List<JobDTO> listAllJobs();
+    List<Job> listAllJobs();
     // check if logged in user is the one whose applications will be shown.
     List<ApplicationDTO> listAllApplications(int memberId);
     // check if logged in user is the one whose applications will be shown.

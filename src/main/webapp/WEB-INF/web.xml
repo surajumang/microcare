@@ -106,6 +106,24 @@
             <url-pattern>/Members/Seeker/DeleteJob.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+            <servlet-name>ApplyToJob</servlet-name>
+            <servlet-class>com.care.controller.sitter.ApplyToJob</servlet-class>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>DeleteJob</servlet-name>
+            <url-pattern>/Members/Sitter/ApplyToJob.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+            <servlet-name>ShowAllJobs</servlet-name>
+            <servlet-class>com.care.controller.sitter.ShowJobs</servlet-class>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>ShowAllJobs</servlet-name>
+            <url-pattern>/Members/Sitter/ShowAllJobs.do</url-pattern>
+    </servlet-mapping>
+
 
 
 

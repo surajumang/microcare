@@ -52,7 +52,8 @@
             <c:forEach var="job" items="${myJobs}">
             <tr>
                 <td>${job.title}</td>
-                <td>${job.status}</td>
+                <%-- find a way --%>
+                <td>Status</td>
                 <td>${job.startDate}</td>
                 <td>${job.endDate}</td>
                 <td>

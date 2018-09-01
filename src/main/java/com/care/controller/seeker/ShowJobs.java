@@ -31,7 +31,7 @@ public class ShowJobs extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = "ErrorPage.jsp";
+        String page = "/Members/ErrorPage.jsp";
         boolean userLoggedIn = false;
 
         /*

@@ -10,6 +10,21 @@ public class Job {
     private double hourlyPay;
     private Date startDate;
     private Date endDate;
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", postedBy=" + postedBy +
+                ", hourlyPay=" + hourlyPay +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status=" + status +
+                ", dateOfCreation=" + dateOfCreation +
+                '}';
+    }
+
     private Status status;
     private Date dateOfCreation;
 

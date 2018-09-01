@@ -16,24 +16,25 @@
             The HomePage for the sitter will display all the available options
             and a Welcome Message.
       --%>
-      <jsp:include page="../../header.jsp">
-      <form class="" action="${pageContext.request.contextPath}/jsp/Jobs/PostJob.jsp" method="post">
-            <input type="submit" name="PostJob" value="Post Job"/>
+      <jsp:include page="../../header.jsp"/>
+
+      <form class="" action="Members/Sitter/ShowAllJobs.do" method="post">
+            <input type="submit" name="PostJob" value="Show Jobs"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/jsp/Jobs/ViewMyJobs.jsp" method="post">
+      <form class="" action="Members/Sitter/ShowMyApplications.do" method="post">
             <input type="submit" name="ViewJobs" value="My Jobs"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/jsp/Members/SearchSitters.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/Members/Sitter/ApplyToJob.jsp" method="post">
             <input type="submit" name="SearchSitters" value="Search Sitters"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/jsp/Members/EditProfile.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/Members/EditProfile.jsp" method="post">
             <input type="submit" name="EditProfile" value="Edit Profile"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/jsp/Members/DeleteAccount.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/Members/DeleteAccount.jsp" method="post">
             <input type="submit" name="DeleteAccount" value="Delete Account"/>
       </form>
 
 
-      <jsp:include page="../../footer.jsp">
+      <jsp:include page="../../footer.jsp"/>
     </body>
 </html>
