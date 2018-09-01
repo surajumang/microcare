@@ -27,6 +27,7 @@ tr:nth-child(even) {
 
 </head>
     <body>
+        <center><h2>${applications[0].title}</h2></center>
         <h2>html table</h2>
         <table>
             <thead>

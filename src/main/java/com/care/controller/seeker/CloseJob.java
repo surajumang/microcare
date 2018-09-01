@@ -13,12 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ShowApplications extends HttpServlet {
-    Logger logger = Logger.getLogger("ShowApplicationsSeeker");
+public class CloseJob extends HttpServlet {
 
+    private Logger logger = Logger.getLogger("CLoseJob");
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -26,35 +25,29 @@ public class ShowApplications extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String page = "/Members/ErrorPage.jsp";
 
-        String page = "/ErrorPage.jsp";
-
-        //make it more robust.
+        //make it more robust.Job to be closed.
         logger.info("-------- " + request.getParameter("id") + " -------");
 
-        int jobIdToViewApplications = Integer.parseInt(request.getParameter("id"));
+        int jobToBeClosed = Integer.parseInt(request.getParameter("id"));
 
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-        Member currentMember = (Member) request.getSession().getAttribute("currentMember");
+        Member currentMember = (Member) request.getSession().getAttribute("currentUser");
+        logger.info(currentMember.toString());
 
-        logger.info("Called SeekerService listAppOnJob");
+        logger.info("Called CloseJob" + currentMember);
 
-        List<ApplicationDTO> applications =
-                seekerService.listApplicationsOnJob(currentMember, jobIdToViewApplications);
-        /*
-        Need to collect all the applications which are posted on this Job.
-        List<ApplicationsFormDTO > SeekerServiceImpl.getApplications(jobId);
-        It will delegate the call to ApplicationServiceImpl.getApplications(jobId);
-        It will take care of calling ApplicationDAOImpl to fetch actual data.
-         */
 
-        if (applications != null){
-            page = "/Members/Seeker/ViewApplications.jsp";
+        int status = seekerService.closeJob(currentMember, jobToBeClosed);
+
+        if (status == 1){
+            page = "/Members/Seeker/ShowMyJobs.jsp";
         }
+
 
         logger.info(page);
 
-        request.setAttribute("applications", applications);
         RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
         rd.forward(request, response);
 

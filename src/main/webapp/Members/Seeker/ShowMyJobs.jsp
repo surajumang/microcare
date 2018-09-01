@@ -35,6 +35,8 @@
             of Jobs inside the scope/request or session.object.
          --%>
         <p>Show all the jobs created by the user.</p>
+
+
         <table>
             <thead>
                 <tr>
@@ -50,27 +52,27 @@
             <c:forEach var="job" items="${myJobs}">
             <tr>
                 <td>${job.title}</td>
-                <td>Status</td>
+                <td>${job.status}</td>
                 <td>${job.startDate}</td>
                 <td>${job.endDate}</td>
                 <td>
-                    <form action="ShowJobToEdit.do" method="post">
-                        <%-- <input type="hidden" name="id" value="${job.id}"> --%>
-                        <c:set var="id" value="${job.id}" scope="session"/>
+                    <form action="ShowJobToEdit.do" method="get">
+                        <input type="hidden" name="id" value="${job.id}">
+
                         <input type="submit" name="" value="Edit">
                     </form>
                 </td>
                 <td>
-                    <form action="DeleteJob.do" method="post">
-                        <%-- <input type="hidden" name="id" value="${job.id}"> --%>
-                        <c:set var="id" value="${job.id}" scope="session"/>
-                        <input type="submit" name="" value="Delete">
+                    <form action="DeleteJob.do" method="get">
+                        <input type="hidden" name="id" value="${job.id}">
+
+                        <input type="submit" name="" value="Delete Job">
                     </form>
                 </td>
                 <td>
-                    <form action="ViewApplicants.do" method="post">
-                        <%-- <input type="hidden" name="id" value="${job.id}"> --%>
-                        <c:set var="id" value="${job.id}" scope="session"/>
+                    <form action="ViewApplicants.do" method="get">
+                        <input type="hidden" name="id" value="${job.id}">
+
                         <input type="submit" name="" value="View Applications">
                     </form>
                 </td>

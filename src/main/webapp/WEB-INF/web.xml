@@ -97,6 +97,14 @@
             <url-pattern>/Members/Seeker/ViewApplicants.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+            <servlet-name>DeleteJob</servlet-name>
+            <servlet-class>com.care.controller.seeker.CloseJob</servlet-class>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>DeleteJob</servlet-name>
+            <url-pattern>/Members/Seeker/DeleteJob.do</url-pattern>
+    </servlet-mapping>
 
 
 

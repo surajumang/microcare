@@ -4,7 +4,7 @@
 package com.care.dao;
 
 import com.care.beans.Job;
-import com.care.beans.MemberType;
+import com.care.beans.Member;
 import com.care.beans.Status;
 
 import java.sql.*;
@@ -27,7 +27,7 @@ public final class JobDAOImpl implements JobDAO {
 
     }
 
-    public Job getJob(int jobId) throws SQLException {
+    public Job getJob(Member member, int jobId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
 
         logger.info("Get job method");
@@ -64,39 +64,47 @@ public final class JobDAOImpl implements JobDAO {
         List<Job> jobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
 
-        try {
-            logger.info("Acquired connection");
-            PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE FROM JOB " +
-                    "WHERE POSTED_BY = ?");
-            statement.setInt(1, postedBy);
-            logger.info(postedBy + " User ID to get job from DB");
+        logger.info("Acquired connection");
+        PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE FROM JOB " +
+                "WHERE POSTED_BY = ?");
+        statement.setInt(1, postedBy);
+        logger.info(postedBy + " User ID to get job from DB");
 
-            ResultSet resultSet = statement.executeQuery();
+        ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()){
-                logger.info("Picked one row from the result set");
-                Job job = new Job();
-                job.setTitle(resultSet.getString("TITLE"));
-                job.setId(resultSet.getInt("ID"));
-                job.setStartDate(resultSet.getDate("START_DATE"));
-                job.setEndDate(resultSet.getDate("END_DATE"));
-                job.setStatus(Status.valueOf(resultSet.getString("STATUS")));
+        while (resultSet.next()){
+            logger.info("Picked one row from the result set");
+            Job job = new Job();
+            job.setTitle(resultSet.getString("TITLE"));
+            job.setId(resultSet.getInt("ID"));
+            job.setStartDate(resultSet.getDate("START_DATE"));
+            job.setEndDate(resultSet.getDate("END_DATE"));
+            job.setStatus(Status.valueOf(resultSet.getString("STATUS")));
 
-                jobs.add(job);
-            }
-
-        }catch (SQLException e){
-            e.printStackTrace();
-            logger.log(Level.SEVERE, "GetAllApplication", e.getCause());
-            throw e;
+            jobs.add(job);
         }
+
         return jobs;
     }
-    public int deleteJob(int jobId) throws SQLException {
-        return 0;
+    public int deleteJob(Member member, int jobId) throws SQLException {
+        logger.info("Close Seeker's Job");
+
+        Connection connection = ConnectionUtil.getConnection();
+
+        logger.info("Acquired connection");
+        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
+                "WHERE ID=? AND POSTED_BY=?");
+
+        logger.info(jobId + " JobId ID to get job from DB" + member.getId());
+        statement.setInt(1, jobId);
+        statement.setInt(2, member.getId());
+
+
+        return statement.executeUpdate();
+
     }
 
-    public int deleteAllJobs(int postedBy) throws SQLException {
+    public int deleteAllJobs(Member member, int postedBy) throws SQLException {
         return 0;
     }
     

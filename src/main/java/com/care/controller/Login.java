@@ -60,9 +60,10 @@ public class Login extends HttpServlet{
                     session.setAttribute("currentUser" ,member);
 
 
+
                 User user = new User();
                 ObjectMapper.mapObject(member, user, true);
-                request.setAttribute("member", member);
+
                 MemberType memberType = member.getMemberType();
 
                 if (memberType.name().equals("SEEKER")){

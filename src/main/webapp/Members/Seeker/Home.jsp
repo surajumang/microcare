@@ -18,19 +18,19 @@
 
       <jsp:include page="../../header.jsp"/>
 
-      <form class="" action="${pageContext.request.contextPath}/jsp/Jobs/PostJob.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/Members/Seeker/PostJob.jsp" method="post">
             <input type="submit" name="PostJob" value="Post Job"/>
       </form>
       <form class="" action="Members/Seeker/ShowMyJobs.do" method="post">
             <input type="submit" name="ViewJobs" value="My Jobs"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/jsp/Members/SearchSitters.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/Members/Seeker/SearchSitters.jsp" method="post">
             <input type="submit" name="SearchSitters" value="Search Sitters"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/jsp/Members/EditProfile.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/Members/Seeker/EditProfile.jsp" method="post">
             <input type="submit" name="EditProfile" value="Edit Profile"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/jsp/Members/DeleteAccount.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/Members/Seeker/DeleteAccount.jsp" method="post">
             <input type="submit" name="DeleteAccount" value="Delete Account"/>
       </form>
 
@@ -38,10 +38,10 @@
       <p>Login successful your details are</p>
       <table>
           <tr>
-              <td>${member.email}</td>
-              <td>${member.firstName}</td>
-              <td>${member.lastName}</td>
-              <td>${member.zipCode}</td>
+              <td>${currentUser.email}</td>
+              <td>${currentUser.firstName}</td>
+              <td>${currentUser.lastName}</td>
+              <td>${currentUser.zipCode}</td>
           </tr>
       </table>
 

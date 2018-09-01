@@ -6,7 +6,13 @@ import com.care.dao.MemberDAO;
 import com.care.dao.MemberDAOImpl;
 import com.care.dto.form.RegistrationFormDTO;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class MemberServiceImpl implements MemberService {
+
+    private Logger logger = Logger.getLogger("MemberService");
+
     private static MemberServiceImpl ourInstance = new MemberServiceImpl();
 
     public static MemberServiceImpl getInstance() {
@@ -31,8 +37,9 @@ public class MemberServiceImpl implements MemberService {
         Member member = null;
         try {
             member = memberDAO.getMember(memberId);
+            logger.info(member.toString());
         } catch (java.sql.SQLException e) {
-            e.printStackTrace();
+           logger.log(Level.SEVERE, "Error fetching member");
         }
         return member;
     }

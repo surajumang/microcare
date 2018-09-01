@@ -17,6 +17,23 @@ public class Member {
         private Date lastModified;
         private String password;
 
+        @Override
+        public String toString() {
+                return "Member{" +
+                        "id=" + id +
+                        ", firstName='" + firstName + '\'' +
+                        ", lastName='" + lastName + '\'' +
+                        ", phone=" + phone +
+                        ", memberType=" + memberType +
+                        ", email='" + email + '\'' +
+                        ", address='" + address + '\'' +
+                        ", zipCode=" + zipCode +
+                        ", status=" + status +
+                        ", lastModified=" + lastModified +
+                        ", password='" + password + '\'' +
+                        '}';
+        }
+
         public int getId() {
                 return id;
         }
@@ -104,4 +121,6 @@ public class Member {
         public void setPassword(String password) {
                 this.password = password;
         }
+
+
 }

@@ -86,7 +86,9 @@ VALUES(3, 12, 123),(4,1, 133);
 
 INSERT INTO JOB(TITLE, POSTED_BY, HOURLY_PAY, START_DATE, END_DATE )
 VALUES("mY First Job", 1, 12, '2018-08-12', '2018-08-12'),
-("Not a job", 2, 11, '2018-08-12', '2018-08-12');
+("Not a job", 2, 11, '2018-08-12', '2018-08-12'),
+("BabySitting service", 2, 23, '2018-08-12', '2018-08-12' ),
+("Elderly service", 2, 111, '2018-08-12', '2018-08-12' );
 
 
 insert into APPLICATION(JOB_ID, MEMBER_ID, EXPECTED_PAY)
