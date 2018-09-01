@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,22 +50,20 @@ public class Login extends HttpServlet{
         if (errors.isEmpty()) {
             LoginDetails loginDetails = (LoginDetails) userLoginDetails;
             // handle the case
-            Member member = null;
-            MemberType memberType = null;
 
             if (authenticationService.loginUser(loginDetails)){
-                member = memberService.getMember(loginDetails.getEmail());
+                Member member = memberService.getMember(loginDetails.getEmail());
                 logger.info("Back at LoginServlet");
-                try {
-                    CommonUtil.setLoggedInUser(member, request);
-                }catch (IncompatibleUserTypeException e) {
-                    logger.log(Level.SEVERE, "Can't set a Member to Request", e.getCause());
-                }
+
+                HttpSession session = request.getSession();
+                if (member != null)
+                    session.setAttribute("currentUser" ,member);
+
 
                 User user = new User();
                 ObjectMapper.mapObject(member, user, true);
                 request.setAttribute("member", member);
-                memberType = member.getMemberType();
+                MemberType memberType = member.getMemberType();
 
                 if (memberType.name().equals("SEEKER")){
                     logger.info("Seeker");

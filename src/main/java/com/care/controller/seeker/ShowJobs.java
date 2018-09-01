@@ -33,21 +33,6 @@ public class ShowJobs extends HttpServlet {
 
         String page = "ErrorPage.jsp";
         boolean userLoggedIn = false;
-        Member currentMember = null;
-        try {
-            userLoggedIn = CommonUtil.isMemberLoggedIn(request);
-            currentMember = CommonUtil.getLoggedInUserFromSession(request);
-        }catch (NoUserLoggedInException e){
-            logger.log(Level.SEVERE, "No user logged in", e.getCause());
-        }catch (IncompatibleUserTypeException e){
-            logger.log(Level.SEVERE, "Error fetching user", e.getCause());
-        }
-
-        if(! userLoggedIn || currentMember == null ){
-            RequestDispatcher rd = request.getRequestDispatcher(page);
-            rd.forward(request, response);
-        }
-        List<JobDTO> myJobs = new ArrayList<JobDTO>();
 
         /*
         Db call to fetch the jobs created by this user.
@@ -55,12 +40,19 @@ public class ShowJobs extends HttpServlet {
         SeekerService will simply delegate this call to JobServiceImpl(member.getId()) -> Job form object.
         This will further be delegated to JobDAOImpl which will give a model class Job.
          */
+        Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-        myJobs = seekerService.listJobs(currentMember);
+
+        List<JobDTO> myJobs = seekerService.listJobs(currentMember);
+
+        if (myJobs != null){
+            page = "/Members/Seeker/ShowMyJobs.jsp";
+        }
 
         request.setAttribute("myJobs", myJobs);
-        logger.info("Dispatching to ShowMyJobs Page");
-        RequestDispatcher rd = request.getRequestDispatcher("/Members/Seeker/ShowMyJobs.jsp");
+        logger.info("Dispatching to Page" + page);
+
+        RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
         rd.forward(request, response);
 
     }

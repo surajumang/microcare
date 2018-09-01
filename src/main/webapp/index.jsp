@@ -24,7 +24,7 @@
                 <input type="submit" name="sb" value="Submit">
             </form>
             New User
-            <a href="jsp/Members/Register.jsp">Register Here</a>
+            <a href="${pageContext.request.contextPath}/Members/Register.jsp">Register Here</a>
         </div>
     </body>
 </html>
