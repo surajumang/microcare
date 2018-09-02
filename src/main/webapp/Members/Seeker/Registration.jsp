@@ -9,55 +9,92 @@
     <head>
         <meta charset="utf-8">
         <title></title>
-        <style type="text/css">
-            form {
-                text-align: center;
-            }
-        </style>
+        <style>
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+input[type=text]:focus{
+    background-color: lightblue;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+</style>
     </head>
 
     <body>
-        <c:forEach var="i" begin="1" end ="7">
-            <c:out value="${i}"/>
-        </c:forEach>
         <h1>Enter Your Details</h1>
+        <div class="">
+            <form  action="SeekerRegistration.do" method="post">
+                <label for="mail">Email</label>
+                <input type="text" name="email" placeholder="Email" >
+                <c:out value="${errors.email}"/><br>
 
-        <form  action="SeekerRegistration.do" method="post">
-            <label for="">Email
-            <input type="text" name="email" placeholder="Email" >
-            </label>
-            <c:out value="${errors.email}"/><br>
+                <label for="fname">First Name</label>
+                <input type="text" name="firstName" placeholder="First Name" >
+                <c:out value="${errors.firstName}"/><br>
 
-            <input type="text" name="firstName" placeholder="First Name" >
-            <c:out value="${errors.firstName}"/><br>
+                <label for="lname">Last Name</label>
+                <input type="text" name="lastName" placeholder="Last Name">
+                <c:out value="${errors.lastName}"/><br>
 
-            <input type="text" name="lastName" placeholder="Last Name">
-            <c:out value="${errors.lastName}"/><br>
+                <label >Address</label>
+                <input type="text" name="address" placeholder="Address">
+                <c:out value="${errors.address}"/><br>
 
-            <input type="text" name="address" placeholder="Address">
-            <c:out value="${errors.address}"/><br>
+                <label> Phone </label>
+                <input type="text" name="phone" placeholder="Phone">
+                <c:out value="${errors.phone}"/><br>
 
-            <input type="text" name="phone" placeholder="Phone">
-            <c:out value="${errors.phone}"/><br>
+                <label>Zip Code</label>
+                <input type="text" name="zipCode" placeholder="Zip Code(Six digits)">
+                <c:out value="${errors.zipCode}"/><br>
 
-            <input type="text" name="zipCode" placeholder="Zip Code(Six digits)">
-            <c:out value="${errors.zipCode}"/><br>
+                <label> Spouse Name</label>
+                <input type="text" name="spouseName" placeholder="Spouse Name (optional)">
+                <c:out value="${errors.spouseName}"><br>
 
-            <input type="text" name="spouseName" placeholder="Spouse Name (optional)">
-            <c:out value="${errors.spouseName}"><br>
+                <label>Number of Children</label>
+                <input type="text" name="children" placeholder="Number of Children(optional)">
+                <c:out value="${errors.children}"><br>
 
-            <input type="text" name="children" placeholder="Number of Children">
-            <c:out value="${errors.children}"><br>
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Password" >
+                <c:out value="${errors.password}"/><br>
 
-            <input type="password" name="password" placeholder="Password" >
-            <c:out value="${errors.password}"/><br>
+                <label>Re enter the Password</label>
+                <input type="password" name="password2" placeholder="Password" >
+                <c:out value="${errors.password2}"/><br>
 
-            <input type="password" name="password2" placeholder="Password" >
-            <c:out value="${errors.password2}"/><br>
+                <input type="submit" name="" value="Submit">
 
-            <input type="submit" name="" value="Submit">
+            </form>
 
-        </form>
+        </div>
 
     </body>
 </html>

@@ -9,6 +9,13 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+        <style media="screen">
+            .seeker{
+                width: 25%;
+                display: block;
+                float: left;
+            }
+        </style>
     </head>
     <body>
         <%--
@@ -18,21 +25,35 @@
 
       <jsp:include page="../../header.jsp"/>
 
-      <form class="" action="${pageContext.request.contextPath}/Members/Seeker/PostJob.jsp" method="post">
-            <input type="submit" name="PostJob" value="Post Job"/>
-      </form>
-      <form class="" action="Members/Seeker/ShowMyJobs.do" method="post">
-            <input type="submit" name="ViewJobs" value="My Jobs"/>
-      </form>
-      <form class="" action="${pageContext.request.contextPath}/Members/Seeker/SearchSitters.jsp" method="post">
-            <input type="submit" name="SearchSitters" value="Search Sitters"/>
-      </form>
-      <form class="" action="${pageContext.request.contextPath}/Members/Seeker/EditProfile.jsp" method="post">
-            <input type="submit" name="EditProfile" value="Edit Profile"/>
-      </form>
-      <form class="" action="${pageContext.request.contextPath}/Members/Seeker/DeleteAccount.jsp" method="post">
-            <input type="submit" name="DeleteAccount" value="Delete Account"/>
-      </form>
+      <div class="seeker">
+          <form class="" action="${pageContext.request.contextPath}/Members/Seeker/PostJob.jsp" method="post">
+                <input type="submit" name="PostJob" value="Post Job"/>
+          </form>
+      </div>
+
+      <div class="seeker">
+          <form class="" action="Members/Seeker/ShowMyJobs.do" method="post">
+                <input type="submit" name="ViewJobs" value="My Jobs"/>
+          </form>
+      </div>
+
+      <div class="seeker">
+          <form class="" action="${pageContext.request.contextPath}/Members/Seeker/SearchSitters.jsp" method="post">
+                <input type="submit" name="SearchSitters" value="Search Sitters"/>
+          </form>
+      </div>
+
+      <div class="seeker">
+          <form class="" action="${pageContext.request.contextPath}/Members/Seeker/EditProfile.jsp" method="post">
+                <input type="submit" name="EditProfile" value="Edit Profile"/>
+          </form>
+      </div>
+
+      <div class="seeker">
+          <form class="" action="${pageContext.request.contextPath}/Members/Seeker/DeleteAccount.jsp" method="post">
+                <input type="submit" name="DeleteAccount" value="Delete Account"/>
+          </form>
+      </div>
 
 
       <p>Login successful your details are</p>

@@ -133,6 +133,15 @@
             <url-pattern>/Members/Sitter/ShowMyApplications.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>com.care.controller.LogOut</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/Members/Logout.do</url-pattern>
+    </servlet-mapping>
+
 
 
 
