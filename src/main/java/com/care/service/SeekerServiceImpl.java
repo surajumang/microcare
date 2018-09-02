@@ -32,7 +32,7 @@ public class SeekerServiceImpl implements SeekerService {
     /*
     List all jobs posted by the currently logged in seeker.
     Fields to be listed are [Title, Status, StartDate, EndDate]
-    along with operations allowed to be performed on them.[Edit, List Applications, CloseJob(confiramtion)]
+    along with operations allowed to be performed on them.[Edit, List Applications, CloseApplication(confiramtion)]
      */
     public List<JobDTO> listJobs(Member member) {
         List<JobDTO> memberJobDTO = new ArrayList<JobDTO>();

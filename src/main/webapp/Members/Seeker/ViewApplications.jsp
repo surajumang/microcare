@@ -31,8 +31,7 @@ tr:nth-child(even) {
         <h2>html table</h2>
         <table>
             <thead>
-                <tr>
-                    <td>Title</td>
+                <tr>                    
                     <td>First Name</td>
                     <td>Last Name</td>
                     <td>Status</td>
@@ -41,7 +40,6 @@ tr:nth-child(even) {
             </thead>
             <c:forEach var="app" items="${applications}">
             <tr>
-                <td>${app.title}</td>
                 <td>${app.firstName}</td>
                 <td>${app.lastName}</td>
                 <td>${app.status}</td>

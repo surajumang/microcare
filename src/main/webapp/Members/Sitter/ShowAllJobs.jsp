@@ -49,6 +49,7 @@
                 <td>${job.startDate}</td>
 
                 <td>
+                    <%-- Send it to a form so that relevant input can be accepted --%>
                     <form action="ApplyToJob.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
 

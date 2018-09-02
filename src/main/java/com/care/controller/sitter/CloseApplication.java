@@ -1,10 +1,7 @@
-package com.care.controller.seeker;
+package com.care.controller.sitter;
 
 import com.care.beans.Member;
-import com.care.dto.form.ApplicationDTO;
-import com.care.service.SeekerService;
-import com.care.service.SeekerServiceImpl;
-import com.care.service.ServiceFactory;
+import com.care.service.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,13 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CloseJob extends HttpServlet {
-
-    private Logger logger = Logger.getLogger("CLoseJob");
+public class CloseApplication extends HttpServlet {
+    Logger logger = Logger.getLogger("CloseJobSitter");
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -27,26 +22,25 @@ public class CloseJob extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = "/Members/ErrorPage.jsp";
-
+        int applicationToBeClosed = -1;
         //make it more robust.Job to be closed.
-        int jobToBeClosed = -1;
-
         try {
             logger.info("-------- " + request.getParameter("id") + " -------");
-            jobToBeClosed = Integer.parseInt(request.getParameter("id"));
+            applicationToBeClosed = Integer.parseInt(request.getParameter("id"));
         }catch (IllegalArgumentException e){
             logger.log(Level.SEVERE, "Application ID", e);
         }
-        SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
+
+
+        SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
-        logger.info("Called CloseApplication" + currentMember);
+        logger.info("Called CloseApplication for Sitter" + currentMember);
 
-
-        int status = seekerService.closeJob(currentMember, jobToBeClosed);
+        int status = sitterService.deleteApplication(currentMember, applicationToBeClosed);
 
         if (status == 1){
-            page = "/Members/Seeker/ShowMyJobs.do";
+            page = "/Members/Sitter/ShowMyApplications.do";
         }
 
 
@@ -54,7 +48,6 @@ public class CloseJob extends HttpServlet {
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
         rd.forward(request, response);
-
 
     }
 }

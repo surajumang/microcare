@@ -27,6 +27,14 @@
                     background-color: #dddddd;
                 }
                 </style>
+
+            <script type="text/javascript">
+                function confirmDeletion(form) {
+                    if(window.confirm("Are you sure you want to Delete this Job")){
+                        form.submit();
+                    }
+                }
+            </script>
         </head>
         <body>
             <%--
@@ -67,7 +75,7 @@
                     <form action="DeleteJob.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
 
-                        <input type="submit" name="" value="Delete Job">
+                        <input type="button" name="" value="Delete Job" onclick="confirmDeletion(this.form)">
                     </form>
                 </td>
                 <td>

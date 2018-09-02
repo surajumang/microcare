@@ -1,11 +1,11 @@
 package com.care.service;
 
+import com.care.beans.Application;
 import com.care.beans.Job;
-import com.care.dao.DAOFactory;
-import com.care.dao.JobDAO;
-import com.care.dao.JobDAOImpl;
-import com.care.dto.form.ApplicationDTO;
+import com.care.beans.Member;
+import com.care.dao.*;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,19 +39,29 @@ public class SitterServiceImpl implements SitterService {
         return allJobs;
     }
 
-    public List<ApplicationDTO> listAllApplications(int memberId) {
+    public List<Application> listAllApplications(Member member, int sitterId) {
         return null;
     }
 
-    public List<ApplicationDTO> listApplication(int applicationId) {
+    public List<Application> listApplication(Member member, int applicationId) {
         return null;
     }
 
-    public int applyToJob(int jobId) {
+    public int applyToJob(Member member, int jobId) {
+
         return 0;
     }
 
-    public int deleteApplication(int applicationId) {
-        return 0;
+    public int deleteApplication(Member member, int applicationId) {
+        Connection connection = ConnectionUtil.getConnection();
+        int status = 0;
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+
+        try {
+            status = applicationDAO.deleteApplication(member, applicationId);
+        }catch (SQLException e){
+            logger.log(Level.SEVERE, "Error Closing application", e);
+        }
+        return status;
     }
 }

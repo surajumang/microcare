@@ -124,6 +124,15 @@
             <url-pattern>/Members/Sitter/ShowAllJobs.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+            <servlet-name>ShowMyApplications</servlet-name>
+            <servlet-class>com.care.controller.sitter.ShowApplications</servlet-class>
+    </servlet>
+    <servlet-mapping>
+            <servlet-name>ShowMyApplications</servlet-name>
+            <url-pattern>/Members/Sitter/ShowMyApplications.do</url-pattern>
+    </servlet-mapping>
+
 
 
 

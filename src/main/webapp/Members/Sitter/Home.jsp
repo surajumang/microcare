@@ -22,11 +22,9 @@
             <input type="submit" name="PostJob" value="Show Jobs"/>
       </form>
       <form class="" action="Members/Sitter/ShowMyApplications.do" method="post">
-            <input type="submit" name="ViewJobs" value="My Jobs"/>
+            <input type="submit" name="ViewJobs" value="My Applications"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/Members/Sitter/ApplyToJob.jsp" method="post">
-            <input type="submit" name="SearchSitters" value="Search Sitters"/>
-      </form>
+      
       <form class="" action="${pageContext.request.contextPath}/Members/EditProfile.jsp" method="post">
             <input type="submit" name="EditProfile" value="Edit Profile"/>
       </form>
