@@ -1,10 +1,5 @@
 package com.care.validation;
 
-import com.care.annotation.Date;
-import com.care.annotation.Email;
-import com.care.annotation.Name;
-import com.care.annotation.Number;
-
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +9,7 @@ public class ValidatorFactory {
     private static Logger logger = Logger.getLogger("ValidatorFactory");
     private static final Map<Class<? extends Annotation>, Validator> validators = new HashMap<Class<? extends Annotation>, Validator>();
 
-    static {
-        validators.put(Date.class, DateValidator.getInstance());
-        validators.put(Email.class, EmailValidator.getInstance());
-        validators.put(Name.class, NameValidator.getInstance());
-        validators.put(Number.class, NumberValidator.getInstance());
-    }
+
 
 // call it using annotationType() method
     public static Validator getInstance(Class<? extends Annotation> annotationType) {
@@ -38,7 +28,7 @@ public class ValidatorFactory {
 //            returnValue = (Validator)method.invoke(null);
 //        }
 
-//        if (t instanceof Date)
+//        if (t instanceof StringDate)
 //            isValid = DateValidator.getInstance();
 //        if (t instanceof Email)
 //            isValid = EmailValidator.getInstance();

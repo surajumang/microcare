@@ -1,5 +1,9 @@
 package com.care.validation;
 
+import com.care.annotation.*;
+import com.care.annotation.Number;
+
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.annotation.Annotation;
@@ -14,7 +18,17 @@ import java.util.logging.Logger;
 public class FormValidator {
     private static Logger logger = Logger.getLogger("FormValidator");
 
-    public static void  validate(FormBean form){
+    private static final Map<Class<? extends Annotation>, AnnotationProcessor> ANNOTATION_PROCESSOR_MAP =
+            new HashMap<Class<? extends Annotation>, AnnotationProcessor >();
+
+    static {
+        ANNOTATION_PROCESSOR_MAP.put(StringDate.class, new StringDateProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Email.class, new EmailProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Name.class, new NameProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Number.class, new NumberProcessor());
+    }
+
+    public static void  validate(FormBean form, HttpServletRequest request){
         Map<String, String> errors = new HashMap<String, String>();
 
         for(Method method : form.getClass().getMethods()){
@@ -25,16 +39,12 @@ public class FormValidator {
                 for (Annotation annotation : method.getDeclaredAnnotations()) {
                     logger.info(method.getName() + "done");
                     logger.info(annotation.toString());
-                    Validator v = ValidatorFactory.getInstance(annotation.annotationType());
+                    Validator v = ANNOTATION_PROCESSOR_MAP.get(annotation.annotationType()).create(annotation);
                     logger.info(v.getClass().getSimpleName());
 
-                    try {
-                        String value = (String)method.invoke(form);
-                        //v.validate(value, );
-                    }catch (IllegalAccessException e){
-                        e.getCause();
-                    }catch (InvocationTargetException e){
-                        e.getCause();
+                    String value = request.getParameter(fieldName);
+                    if (! v.isValid(value)){
+                        errors.put("")
                     }
                 }
             }

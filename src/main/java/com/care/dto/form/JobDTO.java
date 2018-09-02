@@ -8,9 +8,9 @@ public class JobDTO extends FormBean {
     private int id;
     private String title;
     private double hourlyPay;
-    // should be greater than current Date and time.
+    // should be greater than current StringDate and time.
     private java.util.Date startDate;
-    // should be greater than or equal to current Date and time.
+    // should be greater than or equal to current StringDate and time.
     private java.util.Date endDate;
 
     public int getId() {

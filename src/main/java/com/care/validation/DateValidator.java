@@ -1,22 +1,16 @@
 package com.care.validation;
 
-/*This class will read the value of Date annotation and verify that the
+/*This class will read the value of StringDate annotation and verify that the
  *Form object's value conforms to the regex provided.
 
 */
 
 public class DateValidator extends Validator {
-    private static final DateValidator ourInstance = new DateValidator();
 
-    public static DateValidator getInstance() {
-        return ourInstance;
+    public DateValidator() {
     }
 
-    private DateValidator() {
-    }
+    public <T> boolean isValid(T t) {
 
-    @Override
-    public boolean isValid() {
-        return false;
     }
 }

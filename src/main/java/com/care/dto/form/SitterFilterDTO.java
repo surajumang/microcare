@@ -9,7 +9,7 @@ public class SitterFilterDTO extends FormBean {
     private String zipCode;
     private String emailPattern;
 
-    @Number(pattern = "\\d{6}")
+    @Number(regex = "\\d{6}")
     public String getZipCode() {
         return zipCode;
     }

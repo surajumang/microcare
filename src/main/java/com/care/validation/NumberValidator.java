@@ -2,17 +2,16 @@ package com.care.validation;
 
 
 public class NumberValidator extends Validator {
-    private static final NumberValidator ourInstance = new NumberValidator();
 
-    public static NumberValidator getInstance() {
-        return ourInstance;
-    }
+    String regex;
 
-    private NumberValidator() {
+    public NumberValidator(String regex) {
+        this.regex = regex;
     }
 
     @Override
-    public boolean isValid() {
-        return false;
+    public <T> boolean isValid(T value) {
+        String val = (String)value;
+        return val.matches(regex);
     }
 }
