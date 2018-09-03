@@ -5,9 +5,8 @@ import com.care.beans.Job;
 import com.care.beans.Member;
 import com.care.dao.*;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,15 +26,14 @@ public class SitterServiceImpl implements SitterService {
 
     public List<Job> listAllJobs() {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        List<Job> allJobs = new ArrayList<Job>();
+        List<Job> allJobs;
 
         try{
             allJobs = jobDAO.getAllJobs();
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Getting all Jobs" , e);
+            allJobs = Collections.emptyList();
         }
-
-
         return allJobs;
     }
 
@@ -53,7 +51,6 @@ public class SitterServiceImpl implements SitterService {
     }
 
     public int deleteApplication(Member member, int applicationId) {
-        Connection connection = ConnectionUtil.getConnection();
         int status = 0;
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
 

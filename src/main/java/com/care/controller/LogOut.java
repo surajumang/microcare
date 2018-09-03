@@ -25,7 +25,7 @@ public class LogOut extends HttpServlet {
         logger.info(member + "to be logged out");
         request.getSession().invalidate();
         request.setAttribute("stat", member);
-        getServletContext().getRequestDispatcher("/Logout.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher("/member/Logout.jsp").forward(request, response);
 
     }
 }

@@ -1,6 +1,8 @@
 package com.care.controller.seeker;
 
+import com.care.beans.Application;
 import com.care.beans.Member;
+import com.care.controller.CommonUtil;
 import com.care.dto.form.ApplicationDTO;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,37 +30,22 @@ public class ShowApplications extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = "/ErrorPage.jsp";
-
-        //make it more robust.
-        logger.info("-------- " + request.getParameter("id") + " -------");
-
-        int jobIdToViewApplications = Integer.parseInt(request.getParameter("id"));
+        String page = "/member/ErrorPage.jsp";
+        int jobIdToViewApplications = CommonUtil.getJobIdFromRequest(request);
 
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute("currentMember");
 
         logger.info("Called SeekerService listAppOnJob");
-
         List<ApplicationDTO> applications =
                 seekerService.listApplicationsOnJob(currentMember, jobIdToViewApplications);
-        /*
-        Need to collect all the applications which are posted on this Job.
-        List<ApplicationsFormDTO > SeekerServiceImpl.getApplications(jobId);
-        It will delegate the call to ApplicationServiceImpl.getApplications(jobId);
-        It will take care of calling ApplicationDAOImpl to fetch actual data.
-         */
 
+        // this has to changed to Collections.emptyList().
         if (applications != null){
-            page = "/Members/Seeker/ViewApplications.jsp";
+            page = "/member/seeker/ViewApplications.jsp";
+            request.setAttribute("applications", applications);
         }
-
         logger.info(page);
-
-        request.setAttribute("applications", applications);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
-        rd.forward(request, response);
-
-
+        getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }

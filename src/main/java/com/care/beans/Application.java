@@ -16,6 +16,8 @@ public class Application {
         private Date dateOfCreation;
         private Date lastModified;
 
+        public static final Application EMPTY_APPLICATION = new Application();
+
         public int getId() {
                 return id;
         }

@@ -6,6 +6,8 @@ public class Sitter extends Member {
         private int experience;
         private int expectedPay;
 
+        public static final Sitter EMPTY_SITTER = new Sitter();
+
         @Override
         public int getId() {
                 return id;
@@ -30,5 +32,14 @@ public class Sitter extends Member {
 
         public void setExpectedPay(int expectedPay) {
                 this.expectedPay = expectedPay;
+        }
+
+        @Override
+        public String toString() {
+                return "Sitter{" +
+                        "id=" + id +
+                        ", experience=" + experience +
+                        ", expectedPay=" + expectedPay +
+                        '}';
         }
 }

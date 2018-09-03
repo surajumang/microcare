@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.beans.Job;
 import com.care.beans.Member;
 import com.care.dto.form.ApplicationDTO;
 import com.care.dto.form.JobDTO;
@@ -18,7 +19,7 @@ public interface SeekerService extends Service {
     */
     int postJob(Member member, JobDTO jobForm);
     // verify memberId corresponds to the logged in user.
-    List<JobDTO> listJobs(Member member) ;
+    List<Job> listJobs(Member member) ;
     // verify that this is invoked on the logged in user.
     // check that this job belongs to the logged in user.
     List<ApplicationDTO> listApplicationsOnJob(Member member, int jobId) ;

@@ -1,6 +1,7 @@
 package com.care.controller.sitter;
 
 import com.care.beans.Member;
+import com.care.controller.CommonUtil;
 import com.care.service.*;
 
 import javax.servlet.RequestDispatcher;
@@ -21,15 +22,8 @@ public class CloseApplication extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = "/Members/ErrorPage.jsp";
-        int applicationToBeClosed = -1;
-        //make it more robust.Job to be closed.
-        try {
-            logger.info("-------- " + request.getParameter("id") + " -------");
-            applicationToBeClosed = Integer.parseInt(request.getParameter("id"));
-        }catch (IllegalArgumentException e){
-            logger.log(Level.SEVERE, "Application ID", e);
-        }
+        String page = "/member/ErrorPage.jsp";
+        int applicationToBeClosed = CommonUtil.getJobIdFromRequest(request);
 
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
@@ -40,14 +34,11 @@ public class CloseApplication extends HttpServlet {
         int status = sitterService.deleteApplication(currentMember, applicationToBeClosed);
 
         if (status == 1){
-            page = "/Members/Sitter/ShowMyApplications.do";
+            page = "/member/sitter/ShowMyApplications.do";
         }
-
-
         logger.info(page);
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
         rd.forward(request, response);
-
     }
 }

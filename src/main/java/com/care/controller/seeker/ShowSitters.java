@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 public class ShowSitters extends HttpServlet {
@@ -26,10 +27,11 @@ public class ShowSitters extends HttpServlet {
         Fetch all the sitters which match the criteria specified in the request parameter(email, zipCode).
 
          */
+        String page = "/member/ErrorPage.jsp";
         FormBean formBean = FormPopulator.populate(req, SitterFilterDTO.class);
         // put this in a utility class if possible.
 
-        List<Sitter> sitters = null;
+        List<Sitter> sitters = Collections.emptyList();
         /*
         Need to run a query on the DB
         SeekerService.showSitters(SitterFilterDTO)--> List<Sitter DTO>
@@ -37,9 +39,9 @@ public class ShowSitters extends HttpServlet {
         SitterService.getSitters(SitterFilterDTO)---> List<Sitter Bean>
 
          */
+        page = "/member/seeker/ShowSitters.jsp";
         req.setAttribute("sitters", sitters);
-        RequestDispatcher rd = req.getRequestDispatcher("ShowSitters.jsp");
-        rd.forward(req, resp);
+        getServletContext().getRequestDispatcher(page).forward(req, resp);
 
     }
 }

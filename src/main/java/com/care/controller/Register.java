@@ -23,13 +23,13 @@ public class Register extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*
-        Read the form parameters and save it in application context.
-         */
+
         FormBean rf = FormPopulator.populate(req, RegistrationFormDTO.class);
 
-        //SeekerServiceImpl.registerMember((RegistrationFormDTO)rf);
-        RequestDispatcher rd = req.getRequestDispatcher("SuccessMessage.jsp");
-        rd.forward(req, resp);
+        /*
+        SeekerServiceImpl.registerMember((RegistrationFormDTO)rf);
+        [TODO]
+        */
+        getServletContext().getRequestDispatcher("SuccessMessage.jsp").forward(req, resp);
     }
 }

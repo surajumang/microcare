@@ -24,7 +24,7 @@ public class ShowJobs extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = "/Members/ErrorPage.jsp";
+        String page = "/member/ErrorPage.jsp";
 
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
@@ -32,10 +32,9 @@ public class ShowJobs extends HttpServlet {
         List<Job> allJobs = sitterService.listAllJobs();
 
         if (allJobs != null){
-            page = "/Members/Sitter/ShowAllJobs.jsp";
+            page = "/member/sitter/ShowAllJobs.jsp";
+            request.setAttribute("allJobs", allJobs);
         }
-
-        request.setAttribute("allJobs", allJobs);
         logger.info(allJobs.toString());
         logger.info("Dispatching to Page" + page);
 

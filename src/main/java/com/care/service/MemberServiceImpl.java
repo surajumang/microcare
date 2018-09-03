@@ -19,10 +19,6 @@ public class MemberServiceImpl implements MemberService {
         return ourInstance;
     }
 
-//    public <T extends Service> T create() {
-//        return (T)getInstance();
-//    }
-
     private MemberServiceImpl() {
     }
 
@@ -40,6 +36,7 @@ public class MemberServiceImpl implements MemberService {
             logger.info(member.toString());
         } catch (java.sql.SQLException e) {
            logger.log(Level.SEVERE, "Error fetching member");
+           member = Member.EMPTY_MEMBER;
         }
         return member;
     }

@@ -20,13 +20,12 @@ public class ShowJobToEdit extends HttpServlet {
         /*
         Get parameter from the request to refer to the job to be edited.
          */
-        Member member = ControllerUtil.getCurrentUser(req);
+
         /*
         Extract the job object from the session object(it was set by the requsting JSP).
         Or bypass the Servlet and let the Jsp sent this request deirectly to the confirmation page.
         The confirmation page will then requst the EditJob servlet with the updated params.
          */
 
-        String jobId = req.getParameter("id");
     }
 }

@@ -6,6 +6,7 @@ import com.care.dao.MemberDAO;
 import com.care.dao.MemberDAOImpl;
 import com.care.dto.form.LoginDetails;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -30,7 +31,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             member = memberDAO.getMember(loginDetails.getEmail());
         } catch (java.sql.SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Can't fetch member for Login");
         }
         boolean isLoginSuccessful = false;
 

@@ -39,9 +39,6 @@ public class Login extends HttpServlet{
         logger.info(userLoginDetails.toString());
         Map<String, String> errors = new HashMap<String, String>();
 
-        //FormValidator.validate(userLoginDetails, errors);
-       // logger.info(errors.toString());
-
         String page = "Members/ErrorPage.jsp";
 
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
@@ -49,32 +46,31 @@ public class Login extends HttpServlet{
 
         if (errors.isEmpty()) {
             LoginDetails loginDetails = (LoginDetails) userLoginDetails;
-            // handle the case
 
             if (authenticationService.loginUser(loginDetails)){
                 Member member = memberService.getMember(loginDetails.getEmail());
-                logger.info("Back at LoginServlet");
+                if (member != Member.EMPTY_MEMBER){
 
-                HttpSession session = request.getSession();
-                if (member != null)
-                    session.setAttribute("currentUser" ,member);
-
-
-
-                User user = new User();
-                ObjectMapper.mapObject(member, user, true);
-
-                MemberType memberType = member.getMemberType();
-
-                if (memberType.name().equals("SEEKER")){
-                    logger.info("Seeker");
-                    page = "Members/Seeker/Home.jsp";
+                    request.getSession().setAttribute("currentUser" ,member);
+                    logger.info("Back at LoginServlet");
+                    User user = new User();
+                    ObjectMapper.mapObject(member, user, true);
+                    page = setMemberPage(member.getMemberType());
                 }
-                else
-                    page = "Members/Sitter/Home.jsp";
+
             }
         }
         RequestDispatcher rd = request.getRequestDispatcher(page);
         rd.forward(request, response);
+    }
+
+    private String setMemberPage(MemberType memberType){
+        String page = "/member";
+        if (memberType == MemberType.SEEKER){
+            page += "/seeker/Home.jsp";
+        }else{
+            page += "/sitter/Home.jsp";
+        }
+        return page;
     }
 }
