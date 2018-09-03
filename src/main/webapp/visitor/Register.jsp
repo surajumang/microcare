@@ -16,13 +16,13 @@
         </style>
     </head>
     <body>
-
-        <form action="${pageContext.request.contextPath}/jsp/Members/Seeker/Registration.jsp" method="post">
-            <input type="submit" name="" value="Submit">
+        <h2>Join in as </h2>
+        <form action="${pageContext.request.contextPath}/visitor/SeekerRegistration.jsp" method="post">
+            <input type="submit" name="" value="Seeker">
         </form>
-        <form action="${pageContext.request.contextPath}/jsp/Members/Sitter/Registration.jsp" method="post">            
-            <input type="submit" name="" value="Submit">
+        <form action="${pageContext.request.contextPath}/visitor/SitterRegistration.jsp" method="post">
+            <input type="submit" name="" value="Sitter">
         </form>
-
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

@@ -30,7 +30,7 @@ public class ShowApplications extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = "/member/ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
         int jobIdToViewApplications = CommonUtil.getJobIdFromRequest(request);
 
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
@@ -42,7 +42,7 @@ public class ShowApplications extends HttpServlet {
 
         // this has to changed to Collections.emptyList().
         if (applications != null){
-            page = "/member/seeker/ViewApplications.jsp";
+            page = "/seeker/ViewApplications.jsp";
             request.setAttribute("applications", applications);
         }
         logger.info(page);

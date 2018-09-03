@@ -28,13 +28,11 @@ tr:nth-child(even) {
 </style>
     </head>
 
-    <jsp:include page="../header.jsp"/>
+    <jsp:include page="/header.jsp"/>
     <body>
             <p>Registration Successful</p>
             You Can now login.
-            <a href="../index.jsp">
-
-
+            <a href="{pageContext.request.contextPath}/index.jsp">Login</a>
     </body>
-    <jsp:include page="../footer.jsp"/>
+   <jsp:include page="/footer.jsp"/>
 </html>

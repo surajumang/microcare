@@ -23,7 +23,7 @@ public class ApplyToJob extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = "/member/ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
 
         //make it more robust.Job to apply on.
         int jobToApplyOn = CommonUtil.getJobIdFromRequest(request);
@@ -36,11 +36,10 @@ public class ApplyToJob extends HttpServlet {
 
         if (status == 1){
             // send the request to another servlet which will take it to apprropriate place.
-            page = "/member/seeker/ShowMyJobs.jsp";
+            page = "/seeker/ShowMyJobs.jsp";
         }
         logger.info(page);
 
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
-        rd.forward(request, response);
+        getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }

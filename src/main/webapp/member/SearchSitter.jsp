@@ -11,6 +11,7 @@
         <title></title>
     </head>
     <body>
+
         <%--Show all the sitters in a table, also provide a way to
     Search sitter by some criteria(zip code) or (EmailId) --%>
 
@@ -36,4 +37,5 @@
     </table>
 
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

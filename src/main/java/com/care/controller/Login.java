@@ -39,7 +39,7 @@ public class Login extends HttpServlet{
         logger.info(userLoginDetails.toString());
         Map<String, String> errors = new HashMap<String, String>();
 
-        String page = "Members/ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
 
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
         MemberService memberService = ServiceFactory.get(MemberServiceImpl.class);
@@ -50,27 +50,25 @@ public class Login extends HttpServlet{
             if (authenticationService.loginUser(loginDetails)){
                 Member member = memberService.getMember(loginDetails.getEmail());
                 if (member != Member.EMPTY_MEMBER){
-
                     request.getSession().setAttribute("currentUser" ,member);
                     logger.info("Back at LoginServlet");
-                    User user = new User();
-                    ObjectMapper.mapObject(member, user, true);
                     page = setMemberPage(member.getMemberType());
                 }
 
             }
         }
-        RequestDispatcher rd = request.getRequestDispatcher(page);
-        rd.forward(request, response);
+        getServletContext().getRequestDispatcher(page).forward(request, response);
+
     }
 
     private String setMemberPage(MemberType memberType){
-        String page = "/member";
+        String page = "";
         if (memberType == MemberType.SEEKER){
             page += "/seeker/Home.jsp";
         }else{
             page += "/sitter/Home.jsp";
         }
+        logger.info("done with page" + page);
         return page;
     }
 }

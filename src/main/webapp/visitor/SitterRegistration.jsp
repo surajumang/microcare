@@ -17,7 +17,7 @@
     </head>
     <body>
         <h1>Enter Your Details</h1>
-        <form  action="SitterRegistration.do" method="post">
+        <form  action="${pageContext.request.contextPath}/visitor/SitterRegistration.do" method="post">
             <input type="text" name="email" placeholder="Email" >
             <c:out value="${errors.email}"/><br>
 
@@ -37,10 +37,10 @@
             <c:out value="${errors.zipCode}"/><br>
 
             <input type="text" name="experience" placeholder="Experience(Years)">
-            <c:out value="${errors.experience}"><br>
+            <c:out value="${errors.experience}"/><br>
 
             <input type="text" name="expectedPay" placeholder="Expected Pay">
-            <c:out value="${errors.expectedPay}"><br>
+            <c:out value="${errors.expectedPay}"/><br>
 
             <input type="password" name="password" placeholder="Password" >
             <c:out value="${errors.password}"/><br>
@@ -51,6 +51,6 @@
             <input type="submit" name="" value="Submit">
 
         </form>
-
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

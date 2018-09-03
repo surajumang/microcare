@@ -25,7 +25,7 @@ public class ShowApplications extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = "/member/ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
 
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
@@ -33,11 +33,9 @@ public class ShowApplications extends HttpServlet {
         List<Application> allMyApplications = sitterService.listAllApplications(currentMember, currentMember.getId());
 
         if (allMyApplications != null){
-            page = "/member/Sitter/ShowAllJobs.jsp";
+            page = "/Sitter/ShowAllJobs.jsp";
             request.setAttribute("allMyApplications", allMyApplications);
         }
-
-
         logger.info(allMyApplications.toString());
         logger.info("Dispatching to Page" + page);
         getServletContext().getRequestDispatcher(page).forward(request, response);

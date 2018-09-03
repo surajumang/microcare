@@ -30,18 +30,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Member member = null;
         try {
             member = memberDAO.getMember(loginDetails.getEmail());
+            logger.info(member + " ");
         } catch (java.sql.SQLException e) {
             logger.log(Level.SEVERE, "Can't fetch member for Login");
         }
         boolean isLoginSuccessful = false;
 
         if(member != null){
-            logger.info("Member Exists ");
+            logger.info("Member Exists " + member);
             logger.info(loginDetails.getPassword());
             logger.info(member.getPassword());
             if (loginDetails.getPassword().equals(member.getPassword())){
                 isLoginSuccessful = true;
-                logger.info("LOgin success");
+                logger.info("Login success");
             }
         }
         return isLoginSuccessful;

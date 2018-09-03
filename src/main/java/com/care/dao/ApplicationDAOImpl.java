@@ -85,8 +85,6 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         statement.setString(2,Status.ACTIVE.name());
 
         ResultSet resultSet = statement.executeQuery();
-
-
         while(resultSet.next()){
             logger.info("Getting one row from the result Set");
             ApplicationDTO applicationDTO = new ApplicationDTO();

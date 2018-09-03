@@ -22,7 +22,7 @@ public class CloseApplication extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = "/member/ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
         int applicationToBeClosed = CommonUtil.getJobIdFromRequest(request);
 
 
@@ -34,11 +34,10 @@ public class CloseApplication extends HttpServlet {
         int status = sitterService.deleteApplication(currentMember, applicationToBeClosed);
 
         if (status == 1){
-            page = "/member/sitter/ShowMyApplications.do";
+            page = "/sitter/ShowMyApplications.do";
         }
         logger.info(page);
 
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
-        rd.forward(request, response);
+        getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }

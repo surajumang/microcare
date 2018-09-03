@@ -1,8 +1,5 @@
 package com.care.controller.seeker;
 
-import com.care.beans.Member;
-import com.care.controller.ControllerUtil;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

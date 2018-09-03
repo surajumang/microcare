@@ -16,8 +16,9 @@
     <body>
         <div class="form1" al>
             <h1>welcome</h1>
-            <c:out value = "${requestScope.message}">
-            <form action="login.do" method="post">
+            <c:out value = "${message}">
+            <form action="visitor/login.do" method="post">
+                <label>Email</label>
                 <input type="text" name="email" placeholder="User Name">
                 <br><br>
                 <input type="password" name="password" placeholder="Password">
@@ -25,7 +26,7 @@
                 <input type="submit" name="sb" value="Submit">
             </form>
             New User
-            <a href="${pageContext.request.contextPath}/Members/Register.jsp">Register Here</a>
+            <a href="${pageContext.request.contextPath}/visitor/Register.jsp">Register Here</a>
         </div>
     </body>
 </html>

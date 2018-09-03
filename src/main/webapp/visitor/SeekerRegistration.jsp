@@ -49,7 +49,7 @@ div {
     <body>
         <h1>Enter Your Details</h1>
         <div class="">
-            <form  action="SeekerRegistration.do" method="post">
+            <form  action="${pageContext.request.contextPath}/visitor/SeekerRegistration.do" method="post">
                 <label for="mail">Email</label>
                 <input type="text" name="email" placeholder="Email" >
                 <c:out value="${errors.email}"/><br>
@@ -76,11 +76,11 @@ div {
 
                 <label> Spouse Name</label>
                 <input type="text" name="spouseName" placeholder="Spouse Name (optional)">
-                <c:out value="${errors.spouseName}"><br>
+                <c:out value="${errors.spouseName}"/><br>
 
                 <label>Number of Children</label>
                 <input type="text" name="children" placeholder="Number of Children(optional)">
-                <c:out value="${errors.children}"><br>
+                <c:out value="${errors.children}"/><br>
 
                 <label>Password</label>
                 <input type="password" name="password" placeholder="Password" >
@@ -93,8 +93,7 @@ div {
                 <input type="submit" name="" value="Submit">
 
             </form>
-
         </div>
-
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

@@ -36,7 +36,7 @@
                 </script>
         </head>
         <body>
-
+        <jsp:include page="/header.jsp"/>
         <p>Show all the active applications from this sitter.</p>
 
 
@@ -58,7 +58,7 @@
                 <td>Status</td>
 
                 <td>
-                    <form action="DeleteApplication.do" method="get">
+                    <form action="${pageContext.request.contextPath}/sitter/DeleteApplication.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
@@ -66,6 +66,6 @@
             </tr>
         </c:forEach>
         </table>
-
         </body>
+        <jsp:include page="/footer.jsp"/>
 </html>

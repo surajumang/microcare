@@ -27,6 +27,7 @@ tr:nth-child(even) {
 
 </head>
     <body>
+    <jsp:include page="/header.jsp"/>
         <center><h2>${applications[0].title}</h2></center>
         <h2>html table</h2>
         <table>
@@ -47,6 +48,6 @@ tr:nth-child(even) {
             </tr>
         </c:forEach>
         </table>
-
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

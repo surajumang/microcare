@@ -27,7 +27,7 @@ public class CloseJob extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = "/member/ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
 
         //make it more robust.Job to be closed.
         int jobToBeClosed = CommonUtil.getJobIdFromRequest(request);
@@ -37,7 +37,7 @@ public class CloseJob extends HttpServlet {
         logger.info("Called CloseApplication" + currentMember);
         int status = seekerService.closeJob(currentMember, jobToBeClosed);
         if (status == 1){
-            page = "/member/seeker/ShowMyJobs.do";
+            page = "/seeker/ShowMyJobs.do";
         }
 
         logger.info(page);

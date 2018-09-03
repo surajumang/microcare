@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" isErrorPage = "true" language="java" %>
 <%@ taglib prefix="c"
        uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -12,6 +12,7 @@
         <title></title>
     </head>
     <body>
-
+        <h1>Error Page.</h1>
+        <a href="${pageContext.request.contextPath}/index.jsp">Click here to go back</a>
     </body>
 </html>

@@ -11,6 +11,7 @@
         <title></title>
     </head>
     <body>
+    <jsp:include page="/header.jsp"/>
         <p>Show all the sitters based on some criteria</p>
 
         Shows a List of sitters. A row represents one Sitter.
@@ -39,4 +40,5 @@
             </c:forEach>
         </table>
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

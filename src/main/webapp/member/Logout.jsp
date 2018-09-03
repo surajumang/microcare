@@ -11,5 +11,7 @@
       <c:forEach var="st" items="${stats}">
         <li>${st}</li>
     </ul>
+    <a href="index.jsp">Register Here</a>
   </body>
+  <jsp:include page="/footer.jsp"/>
 </html>

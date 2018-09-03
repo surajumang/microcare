@@ -11,6 +11,7 @@
         <title></title>
     </head>
     <body>
+    <jsp:include page="/header.jsp"/>
         <p>First show the current information related to the Job in a
         filled form which the user can edit.</p>
 
@@ -29,6 +30,6 @@
 
             <input type="submit" name="" value="Submit">
         </form>
-
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

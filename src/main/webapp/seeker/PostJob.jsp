@@ -14,6 +14,7 @@
         <%--
         Will provide a form to the user and pass it to the proper servlet.
      --%>
+     <jsp:include page="/header.jsp"/>
      <p>Page for posting a job. It will show a form to the user.</p>
 
      <form class="" action="PostJobServlet.do" method="post">
@@ -33,6 +34,6 @@
          <input type="submit" name="" value="Submit">
 
      </form>
-
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

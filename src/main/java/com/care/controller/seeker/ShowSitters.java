@@ -27,7 +27,7 @@ public class ShowSitters extends HttpServlet {
         Fetch all the sitters which match the criteria specified in the request parameter(email, zipCode).
 
          */
-        String page = "/member/ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
         FormBean formBean = FormPopulator.populate(req, SitterFilterDTO.class);
         // put this in a utility class if possible.
 
@@ -39,7 +39,7 @@ public class ShowSitters extends HttpServlet {
         SitterService.getSitters(SitterFilterDTO)---> List<Sitter Bean>
 
          */
-        page = "/member/seeker/ShowSitters.jsp";
+        page = "/seeker/ShowSitters.jsp";
         req.setAttribute("sitters", sitters);
         getServletContext().getRequestDispatcher(page).forward(req, resp);
 

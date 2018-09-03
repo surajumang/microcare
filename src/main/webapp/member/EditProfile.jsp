@@ -12,7 +12,9 @@
         <title></title>
     </head>
     <body>
+    <jsp:include page="/header.jsp"/>
         <p>Page to edit details of the Member</p>
 
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

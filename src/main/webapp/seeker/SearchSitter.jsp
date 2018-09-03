@@ -13,6 +13,7 @@
     <body>
         <%--Show all the sitters in a table, also provide a way to
     Search sitter by some criteria(zip code) or (EmailId) --%>
+    <jsp:include page="/header.jsp"/>
 
     <p>Will show all the options to
     filter them based on some criteria.</p>
@@ -34,6 +35,6 @@
         </tr>
         </c:forEach>
     </table>
-
     </body>
+    <jsp:include page="/footer.jsp"/>
 </html>

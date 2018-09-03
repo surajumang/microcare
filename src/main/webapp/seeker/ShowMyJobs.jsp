@@ -42,6 +42,7 @@
             Edit button and a ViewApplicants button.The servlet will pass a List
             of Jobs inside the scope/request or session.object.
          --%>
+         <jsp:include page="/header.jsp"/>
         <p>Show all the jobs created by the user.</p>
 
 
@@ -65,21 +66,21 @@
                 <td>${job.startDate}</td>
                 <td>${job.endDate}</td>
                 <td>
-                    <form action="ShowJobToEdit.do" method="get">
+                    <form action="${pageContext.request.contextPath}/seeker/ShowJobToEdit.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
 
                         <input type="submit" name="" value="Edit">
                     </form>
                 </td>
                 <td>
-                    <form action="DeleteJob.do" method="get">
+                    <form action="${pageContext.request.contextPath}/seeker/DeleteJob.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
 
                         <input type="button" name="" value="Delete Job" onclick="confirmDeletion(this.form)">
                     </form>
                 </td>
                 <td>
-                    <form action="ViewApplicants.do" method="get">
+                    <form action="${pageContext.request.contextPath}/seeker/ViewApplicants.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
 
                         <input type="submit" name="" value="View Applications">
@@ -88,6 +89,6 @@
             </tr>
         </c:forEach>
         </table>
-
         </body>
+        <jsp:include page="/footer.jsp"/>
 </html>

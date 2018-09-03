@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" errorPage = "../ErrorPage.jsp" language="java" %>
 <%@ taglib prefix="c"
        uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -16,6 +16,13 @@
                 float: left;
             }
         </style>
+        <script type="text/javascript">
+                        function confirmDeletion(form) {
+                            if(window.confirm("Are you sure you want to Delete this Job")){
+                                form.submit();
+                            }
+                        }
+        </script>
     </head>
     <body>
         <%--
@@ -23,35 +30,35 @@
         available options.
       --%>
 
-      <jsp:include page="../../header.jsp"/>
+      <jsp:include page="/header.jsp"/>
 
       <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/Members/Seeker/PostJob.jsp" method="post">
+          <form class="" action="${pageContext.request.contextPath}/seeker/PostJob.jsp" method="post">
                 <input type="submit" name="PostJob" value="Post Job"/>
           </form>
       </div>
 
       <div class="seeker">
-          <form class="" action="Members/Seeker/ShowMyJobs.do" method="post">
+          <form class="" action="${pageContext.request.contextPath}/seeker/ShowMyJobs.do" method="post">
                 <input type="submit" name="ViewJobs" value="My Jobs"/>
           </form>
       </div>
 
       <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/Members/Seeker/SearchSitters.jsp" method="post">
+          <form class="" action="${pageContext.request.contextPath}/seeker/SearchSitters.jsp" method="post">
                 <input type="submit" name="SearchSitters" value="Search Sitters"/>
           </form>
       </div>
 
       <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/Members/Seeker/EditProfile.jsp" method="post">
+          <form class="" action="${pageContext.request.contextPath}/seeker/EditProfile.jsp" method="post">
                 <input type="submit" name="EditProfile" value="Edit Profile"/>
           </form>
       </div>
 
       <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/Members/Seeker/DeleteAccount.jsp" method="post">
-                <input type="submit" name="DeleteAccount" value="Delete Account"/>
+          <form class="" action="${pageContext.request.contextPath}/member/DeleteAccount.jsp" method="post">
+                <input type="submit" name="DeleteAccount" value="Delete Account" onclick="confirmDeletion(this.form)">
           </form>
       </div>
 
@@ -67,6 +74,6 @@
       </table>
 
 
-      <jsp:include page="../../footer.jsp"/>
+      <jsp:include page="/footer.jsp"/>
     </body>
 </html>
