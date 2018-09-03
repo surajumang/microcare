@@ -16,6 +16,7 @@
     <body>
         <div class="form1" al>
             <h1>welcome</h1>
+            <c:out value = "${requestScope.message}">
             <form action="login.do" method="post">
                 <input type="text" name="email" placeholder="User Name">
                 <br><br>

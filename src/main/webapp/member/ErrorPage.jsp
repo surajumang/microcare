@@ -5,6 +5,7 @@
         <title></title>
     </head>
     <body>
-        <h1>User Not found</h1>
+        <h1>Error Page.</h1>
+        <a href="">Click here to go back</a>
     </body>
 </html>

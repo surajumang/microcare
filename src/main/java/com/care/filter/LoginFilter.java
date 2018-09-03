@@ -1,8 +1,6 @@
 package com.care.filter;
 
 import com.care.beans.Member;
-import com.care.service.CommonUtil;
-import org.apache.taglibs.standard.tag.common.core.UrlSupport;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +60,10 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
 
         }else {
-            response.sendRedirect(appContext+"/index.jsp");
+            logger.info("Member not logged in");
+            request.setAttribute("message", "You must log in first");
+            servletContext.getRequestDispatcher("/index.jsp").forward(request, response);
+            //response.sendRedirect(appContext+"/index.jsp");
         }
 
     }

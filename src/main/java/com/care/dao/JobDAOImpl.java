@@ -85,14 +85,15 @@ public final class JobDAOImpl implements JobDAO {
 
         return jobs;
     }
-    //All active jobs only.
+    //All active jobs only. and the ones not applied by the sitter.
     public List<Job> getAllJobs() throws SQLException {
         List<Job> allJobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM JOB");
-
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM JOB WHERE STATUS = ?");
+        statement.setString(1, Status.ACTIVE.name());
         ResultSet resultSet = statement.executeQuery();
+
         while (resultSet.next()){
             logger.info("Picked one row from the result set");
             Job job = new Job();
