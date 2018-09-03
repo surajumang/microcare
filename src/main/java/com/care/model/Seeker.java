@@ -1,22 +1,20 @@
 
-package com.care.beans;
+package com.care.model;
 
-public class Seeker extends Member {
+public class Seeker {
 
         private int id;
         private int numberOfChildren;
         private String spouseName;
+        private Member member;
 
         public static final Seeker EMPTY_SEEKER = new Seeker();
 
-        @Override
-        public int getId() {
-                return id;
+        public Member getMember(){
+                return member;
         }
-
-        @Override
-        public void setId(int id) {
-                this.id = id;
+        public void setMember(Member member){
+                this.member = member;
         }
 
         public int getNumberOfChildren() {

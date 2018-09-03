@@ -1,11 +1,8 @@
 package com.care.controller;
 
-import com.care.beans.Member;
+import com.care.model.Member;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;

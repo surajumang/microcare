@@ -1,7 +1,7 @@
 package com.care.dao;
 
-import com.care.beans.Job;
-import com.care.beans.Member;
+import com.care.model.Job;
+import com.care.model.Member;
 
 import java.sql.SQLException;
 import java.util.List;

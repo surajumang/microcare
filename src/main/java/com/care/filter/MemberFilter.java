@@ -1,7 +1,6 @@
 package com.care.filter;
 
-import com.care.beans.Member;
-import com.care.beans.MemberType;
+import com.care.model.Member;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

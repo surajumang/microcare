@@ -1,6 +1,6 @@
 package com.care.service;
 
-import com.care.beans.Member;
+import com.care.model.Member;
 import com.care.dto.form.RegistrationFormDTO;
 
 public interface MemberService extends Service {

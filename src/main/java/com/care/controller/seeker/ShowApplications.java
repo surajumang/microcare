@@ -1,22 +1,18 @@
 package com.care.controller.seeker;
 
-import com.care.beans.Application;
-import com.care.beans.Member;
+import com.care.model.Member;
 import com.care.controller.CommonUtil;
 import com.care.dto.form.ApplicationDTO;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShowApplications extends HttpServlet {

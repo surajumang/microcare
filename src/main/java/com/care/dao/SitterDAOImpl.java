@@ -4,7 +4,7 @@
 
 package com.care.dao;
 
-import com.care.beans.Member;
+import com.care.model.Member;
 import com.care.service.MemberService;
 import com.care.service.MemberServiceImpl;
 import com.care.service.ServiceFactory;

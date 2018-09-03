@@ -1,7 +1,7 @@
 package com.care.service;
 
-import com.care.beans.Job;
-import com.care.beans.Member;
+import com.care.model.Job;
+import com.care.model.Member;
 import com.care.dao.*;
 import com.care.dto.form.ApplicationDTO;
 import com.care.dto.form.JobDTO;

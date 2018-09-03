@@ -1,26 +1,20 @@
 
 package com.care.controller;
 
-import com.care.beans.Member;
-import com.care.beans.MemberType;
-import com.care.dto.User;
+import com.care.model.Member;
+import com.care.model.MemberType;
 import com.care.dto.form.LoginDetails;
-import com.care.exception.IncompatibleUserTypeException;
-import com.care.exception.NoUserLoggedInException;
 import com.care.service.*;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Login extends HttpServlet{

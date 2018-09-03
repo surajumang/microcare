@@ -1,6 +1,6 @@
 package com.care.dto;
 
-import com.care.beans.MemberType;
+import com.care.model.MemberType;
 
 public class User {
     private String email;

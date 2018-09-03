@@ -1,6 +1,6 @@
 package com.care.service;
 
-import com.care.beans.Member;
+import com.care.model.Member;
 import com.care.dao.DAOFactory;
 import com.care.dao.MemberDAO;
 import com.care.dao.MemberDAOImpl;

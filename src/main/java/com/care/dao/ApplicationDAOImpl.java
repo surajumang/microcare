@@ -3,9 +3,9 @@
 */
 package com.care.dao;
 
-import com.care.beans.Application;
-import com.care.beans.Member;
-import com.care.beans.Status;
+import com.care.model.Application;
+import com.care.model.Member;
+import com.care.model.Status;
 import com.care.dto.form.ApplicationDTO;
 
 import java.sql.PreparedStatement;
@@ -13,9 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ApplicationDAOImpl implements ApplicationDAO {

@@ -4,8 +4,8 @@
 */
 package com.care.dao;
 
-import com.care.beans.Member;
-import com.care.beans.MemberType;
+import com.care.model.Member;
+import com.care.model.MemberType;
 
 import java.sql.*;
 import java.util.logging.Level;

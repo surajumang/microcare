@@ -1,6 +1,6 @@
 package com.care.dao;
 
-import com.care.beans.Member;
+import com.care.model.Member;
 
 import java.sql.SQLException;
 

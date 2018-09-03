@@ -4,7 +4,7 @@
 
         Used with Members.
 */
-package com.care.beans;
+package com.care.model;
 public enum MemberType {
     SEEKER,
     SITTER,

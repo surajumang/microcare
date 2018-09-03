@@ -1,7 +1,7 @@
 package com.care.controller.seeker;
 
-import com.care.beans.Job;
-import com.care.beans.Member;
+import com.care.model.Job;
+import com.care.model.Member;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShowJobs extends HttpServlet {

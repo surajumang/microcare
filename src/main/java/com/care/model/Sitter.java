@@ -1,21 +1,28 @@
 
-package com.care.beans;
+package com.care.model;
 
-public class Sitter extends Member {
+public class Sitter {
         private int id;
+        private Member member;
         private int experience;
         private int expectedPay;
 
         public static final Sitter EMPTY_SITTER = new Sitter();
 
-        @Override
         public int getId() {
                 return id;
         }
 
-        @Override
         public void setId(int id) {
                 this.id = id;
+        }
+
+        public Member getMember() {
+                return member;
+        }
+
+        public void setMember(Member member) {
+                this.member = member;
         }
 
         public int getExperience() {

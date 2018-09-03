@@ -1,6 +1,6 @@
 package com.care.controller;
 
-import com.care.beans.Member;
+import com.care.model.Member;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -1,7 +1,7 @@
 package com.care.dao;
 
-import com.care.beans.Application;
-import com.care.beans.Job;
+import com.care.model.Application;
+import com.care.model.Job;
 import com.care.service.MemberService;
 import com.care.service.MemberServiceImpl;
 import com.care.service.ServiceFactory;

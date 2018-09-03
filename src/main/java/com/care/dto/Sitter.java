@@ -1,10 +1,5 @@
 package com.care.dto;
 
-import com.care.beans.MemberType;
-import com.care.beans.Status;
-
-import java.util.Date;
-
 public class Sitter {
     private int experience;
     private int expectedPay;

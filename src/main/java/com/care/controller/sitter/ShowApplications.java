@@ -1,12 +1,11 @@
 package com.care.controller.sitter;
 
-import com.care.beans.Application;
-import com.care.beans.Member;
+import com.care.model.Application;
+import com.care.model.Member;
 import com.care.service.ServiceFactory;
 import com.care.service.SitterService;
 import com.care.service.SitterServiceImpl;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
