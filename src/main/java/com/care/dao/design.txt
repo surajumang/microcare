@@ -36,6 +36,8 @@ CREATE TABLE JOB (
        TITLE           VARCHAR(100)    NOT NULL,
        POSTED_BY       INT(10)         NOT NULL,
        HOURLY_PAY      DECIMAL(5,3)    NOT NULL,
+       START_TIME      TIME            NOT NULL,
+       END_TIME        TIME            NOT NULL,
        START_DATE      DATE            NOT NULL,
        END_DATE        DATE            NOT NULL,
        DATE_CREATED    TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP ,
@@ -47,7 +49,7 @@ CREATE TABLE JOB (
 CREATE TABLE APPLICATION(
        ID              INT(10)        AUTO_INCREMENT PRIMARY KEY,
        JOB_ID          INT(10)        NOT NULL,
-       MEMBER_ID INT(10)              NOT NULL,
+       SITTER_ID INT(10)              NOT NULL,
        EXPECTED_PAY    DECIMAL(5,3)    NOT NULL,
        STATUS         ENUM ("ACTIVE", "INACTIVE") DEFAULT "ACTIVE" NOT NULL ,
        DATE_CREATED    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

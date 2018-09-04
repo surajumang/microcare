@@ -17,19 +17,11 @@ public class SeekerServiceImpl implements SeekerService {
 
     Logger logger = Logger.getLogger("SeekerServiceImpl");
 
-    private static SeekerServiceImpl ourInstance = new SeekerServiceImpl();
-    public static SeekerServiceImpl getInstance(){
-        return ourInstance;
-    }
-
-    private SeekerServiceImpl(){
-
-    }
+    public SeekerServiceImpl(){    }
 
     public int postJob(Member member, JobDTO jobForm)  {
         return 0;
     }
-
 
     public List<Job> listJobs(Member member) {
 

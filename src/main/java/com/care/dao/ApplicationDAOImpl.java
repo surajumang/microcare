@@ -21,15 +21,7 @@ import java.util.logging.Logger;
 public class ApplicationDAOImpl implements ApplicationDAO {
 
     private Logger logger = Logger.getLogger("ApplicationDAOImpl");
-    // called to edit or post an Application
-    private static ApplicationDAOImpl ourInstance = new ApplicationDAOImpl();
-
-    public static ApplicationDAOImpl getInstance(){
-        return ourInstance;
-    }
-    private ApplicationDAOImpl(){
-
-    }
+    public ApplicationDAOImpl(){ }
 
 
     /*

@@ -17,7 +17,7 @@ public class ObjectMapper {
         Map<String, Method> srcMethods = new HashMap<String, Method>();
 
         for (Method method : src.getClass().getMethods()){
-            if (method.getName().startsWith("get")){
+            if (method.getName().startsWith("create")){
                 String methodName = method.getName().substring(3);
                 srcMethods.put(methodName, method);
             }
@@ -32,7 +32,7 @@ public class ObjectMapper {
                     Class[] arg = method.getParameterTypes();
                     
                     try{
-                        Method srcGetterMethod = src.getClass().getMethod("get"+methodName);
+                        Method srcGetterMethod = src.getClass().getMethod("create"+methodName);
                         Class returnType = srcGetterMethod.getReturnType();
                         logger.info(method.getName() + " --- > " + srcGetterMethod.getName());
                         method.invoke(dest, srcGetterMethod.invoke(src));
