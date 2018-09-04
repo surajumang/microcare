@@ -18,4 +18,9 @@ public class NumberValidator extends Validator {
         String val = (String)value;
         return val.matches(regex);
     }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

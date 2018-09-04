@@ -31,25 +31,33 @@ public class FormValidator {
     public static void  validate(FormBean form, Map<String, String> errors )
             throws InvocationTargetException, IllegalAccessException {
 
+        logger.info("*****************STaRTING VALIDATION *****************");
+        logger.info(form.getClass().getName());
+
         for(Method method : form.getClass().getMethods()){
-            if(method.getName().startsWith("create")){
+            if(method.getName().startsWith("get")){
+                logger.info(method.getName());
+
                 String fieldName = method.getName().substring(3);
                 fieldName = fieldName.substring(0,1).toLowerCase() + fieldName.substring(1);
 
                 for (Annotation annotation : method.getDeclaredAnnotations()) {
-                    logger.info(method.getName() + "done");
+
                     logger.info(annotation.toString());
                     Validator v = ANNOTATION_PROCESSOR_MAP.get(annotation.annotationType()).create(annotation);
+
                     logger.info(v.getClass().getSimpleName());
 
                     String value = (String)method.invoke(form);
                     if (! v.isValid(value)){
                         errors.put(fieldName, v.getMessage());
                     }
+                    logger.info(method.getName() + "done");
                 }
             }
 
         }
+        logger.info("***************VALIDATION DONE******************");
 
     }
 }

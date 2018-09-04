@@ -49,6 +49,7 @@ public final class JobDAOImpl implements JobDAO {
     public int editJob(int jobId) throws SQLException {
         return 0;
     }
+
     public List<Job> getAllJobs(int postedBy) throws SQLException {
         logger.info("GetAllJobs Seeker");
 
@@ -77,6 +78,7 @@ public final class JobDAOImpl implements JobDAO {
 
         return jobs;
     }
+    //[TODO]
     //All active jobs only. and the ones not applied by the sitter.
     public List<Job> getAllJobs() throws SQLException {
         List<Job> allJobs = new ArrayList<Job>();
@@ -100,7 +102,9 @@ public final class JobDAOImpl implements JobDAO {
         }
         return allJobs;
     }
-
+    /*
+    Deleting a job must also delete all application corresponding to it.
+     */
     public int deleteJob(Member member, int jobId) throws SQLException {
         logger.info("Close Seeker's Job");
 
@@ -118,7 +122,9 @@ public final class JobDAOImpl implements JobDAO {
         return statement.executeUpdate();
 
     }
-
+    /*
+    Delete all applications as well.
+     */
     public int deleteAllJobs(Member member) throws SQLException {
         logger.info("Close Seeker's Job");
 

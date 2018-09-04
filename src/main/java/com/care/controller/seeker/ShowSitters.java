@@ -26,7 +26,7 @@ public class ShowSitters extends HttpServlet {
 
          */
         String page = "/ErrorPage.jsp";
-        FormBean formBean = FormPopulator.populate(req, SitterFilterDTO.class);
+        //FormBean formBean = FormPopulator.populate(req, SitterFilterDTO.class);
         // put this in a utility class if possible.
 
         List<Sitter> sitters = Collections.emptyList();

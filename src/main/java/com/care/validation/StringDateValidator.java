@@ -27,4 +27,9 @@ public class StringDateValidator extends Validator {
 
         return status;
     }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

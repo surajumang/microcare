@@ -8,14 +8,19 @@ import com.care.validation.FormValidator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RegistrationFormDTO extends FormBean{
+
+    private Logger logger = Logger.getLogger("RegistrationFormDto");
 
     private String email;
     private String firstName;
     private String lastName;
     private String zipCode;
     private String password;
+    private String status;
     private String password2;
     private String address;
     private String phone;
@@ -47,7 +52,7 @@ public class RegistrationFormDTO extends FormBean{
         this.lastName = lastName;
     }
 
-    @Number
+    @Number(regex = "\\d{6}")
     public String getZipCode() {
         return zipCode;
     }
@@ -80,7 +85,7 @@ public class RegistrationFormDTO extends FormBean{
         this.address = address;
     }
 
-    @Number
+    @Number(regex = "\\d{10}")
     public String getPhone() {
         return phone;
     }
@@ -89,14 +94,22 @@ public class RegistrationFormDTO extends FormBean{
         this.phone = phone;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public void validateCustom(Map<String, String> errors) {
         try {
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "While validating", e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "While validating", e);
         }
         String errorValue = "";
         boolean flag = false;
@@ -106,5 +119,20 @@ public class RegistrationFormDTO extends FormBean{
         }
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "RegistrationFormDTO{" +
+                "email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                ", password2='" + password2 + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 }

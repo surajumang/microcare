@@ -30,7 +30,12 @@ public class FormPopulator {
 
                 logger.info("fieldName after -->" + fieldName);
                 try {
-                    method.invoke(ret,(String)request.getParameter(fieldName));
+                    // replace with Class<returnType>.cast(object).
+                    String value = request.getParameter(fieldName);
+                    if(value == null)
+                        continue;
+
+                    method.invoke(ret,value);
                 }catch (IllegalAccessException e){
                     e.getCause();
                 }catch (InvocationTargetException e){
