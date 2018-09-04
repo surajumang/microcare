@@ -13,10 +13,19 @@ public class RegistrationFormDTO extends FormBean{
     private String firstName;
     private String lastName;
     private String zipCode;
+    private String memberType;
     private String password;
     private String password2;
     private String address;
     private String phone;
+
+    public String getMemberType() {
+        return memberType;
+    }
+
+    public void setMemberType(String memberType) {
+        this.memberType = memberType;
+    }
 
     @Email
     public String getEmail() {

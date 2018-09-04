@@ -4,12 +4,12 @@
 
 package com.care.dao;
 
+import com.care.model.Application;
+import com.care.model.Job;
 import com.care.model.Member;
-import com.care.service.MemberService;
-import com.care.service.MemberServiceImpl;
-import com.care.service.ServiceFactory;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class SitterDAOImpl implements SitterDAO {
@@ -17,16 +17,14 @@ public class SitterDAOImpl implements SitterDAO {
 
     public SitterDAOImpl(){ }
 
-    public int applyToJob(int memberId, int jobId) throws SQLException {
-        return 0;
+    public int applyToJob(Application application) throws SQLException {
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+        return applicationDAO.addApplication(application);
     }
 
-    public int getJobs() throws SQLException {
-        return 0;
-    }
-
-    public int getJobs(int zipCode) throws SQLException {
-        return 0;
+    public List<Job> getJobs() throws SQLException {
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        return jobDAO.getAllJobs();
     }
 
     public int closeApplication(int applicationId) throws SQLException {
@@ -35,22 +33,5 @@ public class SitterDAOImpl implements SitterDAO {
 
     public Member getMember(String email) throws SQLException {
         return null;
-    }
-
-    // MemberDAO methods delegate calls to these if you do not wish to provide a specific implementation.
-    public int addMember(Member member) throws SQLException {
-        return 0;
-    }
-
-    public int editMember(int memberId, Member member) throws SQLException {
-        return 0;
-    }
-
-    public int editMember(int memberId) {
-        return 0;
-    }
-
-    public int deleteMember(int memberId) throws SQLException {
-        return 0;
     }
 }

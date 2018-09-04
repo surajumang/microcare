@@ -5,8 +5,8 @@ import com.care.dto.form.RegistrationFormDTO;
 
 public interface AccountService extends Service {
 
-    boolean registerMember(RegistrationFormDTO registrationFormDTO);
+    boolean enroll(RegistrationFormDTO registrationFormDTO);
     Member getMember(String email);
-    int deleteMember(String email);
-    int editMember(String email, RegistrationFormDTO registrationFormDTO);
+    int deleteMember(int memberId);
+    int editMember(int memberId, RegistrationFormDTO registrationFormDTO);
 }

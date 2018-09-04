@@ -69,7 +69,7 @@ public class SeekerServiceImpl implements SeekerService {
 
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         try{
-            status = jobDAO.deleteJob(member, jobId);
+            status = jobDAO.deleteJob(jobId);
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Can't delete Job", e);
             status = 0;

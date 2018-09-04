@@ -14,8 +14,13 @@ public class AccountServiceImpl implements AccountService {
     private Logger logger = Logger.getLogger("AccountService");
     public AccountServiceImpl() {  }
 
-    public boolean registerMember(RegistrationFormDTO registrationFormDTO) {
-
+    /*
+    Map the registration form to Member either Seeker/Sitter and then put it in both Seeker/Sitter, Member
+     */
+    public boolean enroll(RegistrationFormDTO registrationFormDTO) {
+        Member member = new Member();
+        //registrationFormDTO.get
+        ObjectMapper.mapObject(registrationFormDTO, member, false);
         return false;
     }
 
@@ -32,13 +37,30 @@ public class AccountServiceImpl implements AccountService {
         }
         return member;
     }
-
-    public int deleteMember(String email) {
-
+    /*
+    Write code related to authorization here.
+    [TODO]
+     */
+    public int deleteMember(int memberId) {
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        try {
+            memberDAO.deleteMember(memberId);
+            logger.info(memberId + " ");
+        } catch (java.sql.SQLException e) {
+            logger.log(Level.SEVERE, "Error fetching member");
+        }
         return 0;
     }
 
-    public int editMember(String email, RegistrationFormDTO registrationFormDTO) {
+    public int editMember(int memberId, RegistrationFormDTO registrationFormDTO) {
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+
+        try {
+            memberDAO.editMember();
+            logger.info(memberId + " ");
+        } catch (java.sql.SQLException e) {
+            logger.log(Level.SEVERE, "Error fetching member");
+        }
         return 0;
     }
 

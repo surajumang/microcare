@@ -2,15 +2,9 @@ package com.care.dao;
 
 import com.care.model.Application;
 import com.care.model.Job;
-import com.care.service.MemberService;
-import com.care.service.MemberServiceImpl;
-import com.care.service.ServiceFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SeekerDAOImpl implements SeekerDAO {
@@ -18,35 +12,36 @@ public class SeekerDAOImpl implements SeekerDAO {
 
     public SeekerDAOImpl(){ }
 
-    public boolean postJob(Job job) throws SQLException {
-        Connection connection = ConnectionUtil.getConnection();
-        try{
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO JOB(TITLE, POSTED_BY, HOURLY_PAY, START_DATE, END_DATE)" +
-                    "VALUES(?,?,?,?,?)");
-        }catch (SQLException e){
-            logger.log(Level.SEVERE, "Posting Job", e.getCause());
-            throw e;
-        }
-        return false;
+    public int postJob(Job job) throws SQLException {
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        return jobDAO.addJob(job);
     }
 
-    public int editJob(int jobId, Job job) throws SQLException {
-        return 0;
+    public int editJob(Job job) throws SQLException {
+        return postJob(job);
+    }
+    /*
+    Check if the job to be deleted belongs to the currently logged in Sitter.
+     */
+    public int deleteJob(int jobId) throws SQLException {
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        return jobDAO.deleteJob(jobId);
     }
 
-    public boolean deleteJob(int jobId) throws SQLException {
-        return false;
-    }
-
-    public List<Job> listAllMyJobs(int memberId) throws SQLException {
-        return null;
+    public List<Job> listAllMyJobs(int postedBy) throws SQLException {
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        return jobDAO.getAllJobs(postedBy);
     }
 
     public List<Application> listAllApplicationsOnMyJob(int jobId) throws SQLException {
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+
+        //return applicationDAO.getAllApplicationsOnJob(jobId);
         return null;
     }
 
-    public boolean closeJob(int jobId) throws SQLException {
-        return false;
+    public int closeJob(int jobId) throws SQLException {
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        return jobDAO.deleteJob(jobId);
     }
 }

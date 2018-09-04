@@ -6,9 +6,9 @@ package com.care.dao;
 
 import com.care.model.Member;
 import com.care.model.MemberType;
+import com.care.model.Status;
 
 import java.sql.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MemberDAOImpl implements MemberDAO {
@@ -18,52 +18,20 @@ public class MemberDAOImpl implements MemberDAO {
 
     public Member getMember(String email) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
-        System.err.println(connection);
-        Member member = new Member();
-
         logger.info("Connection acquired  :" );
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM MEMBER WHERE EMAIL=?");
         preparedStatement.setString(1, email);
 
         ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
-            logger.info("Row exist");
-            member.setId(resultSet.getInt("ID"));
-            member.setEmail(resultSet.getString("EMAIL"));
-            member.setFirstName(resultSet.getString("FIRST_NAME"));
-            member.setLastName(resultSet.getString("LAST_NAME"));
-            member.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
-            member.setPassword(resultSet.getString("PASSWORD"));
+        Member member = Member.EMPTY_MEMBER;
+        if (resultSet.next()){
+            member = populateMember(resultSet);
         }
-
         return member;
     }
 
     public int addMember(Member member) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
-
-        int rowsAffected = 0;
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO MEMBER(FIRST_NAME, LAST_NAME, PHONE, MEMBER_TYPE," +
-                    "EMAIL, ADDRESS, ZIP_CODE) VALUES(?,?,?,?,?,?,?)");
-            preparedStatement.setString(1, member.getFirstName());
-            preparedStatement.setString(2, member.getLastName());
-            preparedStatement.setInt(3, member.getPhone());
-            preparedStatement.setString(4, member.getMemberType().name());
-            preparedStatement.setString(5, member.getEmail());
-            preparedStatement.setString(6, member.getAddress());
-            preparedStatement.setInt(7, member.getZipCode());
-
-            rowsAffected = preparedStatement.executeUpdate();
-        }catch (SQLException e){
-            logger.log(Level.SEVERE, "addMember", e);
-        }
-        return rowsAffected;
-    }
-
-    public int editMember(int memberId, Member member) throws SQLException {
-        Connection connection = ConnectionUtil.getConnection();
-
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO MEMBER(FIRST_NAME, LAST_NAME, PHONE, MEMBER_TYPE," +
                 "EMAIL, ADDRESS, ZIP_CODE) VALUES(?,?,?,?,?,?,?) WHERE ID = ?" );
         preparedStatement.setString(1, member.getFirstName());
@@ -73,12 +41,34 @@ public class MemberDAOImpl implements MemberDAO {
         preparedStatement.setString(5, member.getEmail());
         preparedStatement.setString(6, member.getAddress());
         preparedStatement.setInt(7, member.getZipCode());
-        preparedStatement.setInt(8, memberId);
+        preparedStatement.setInt(8, member.getId());
 
         return preparedStatement.executeUpdate();
     }
 
+    public int editMember(Member member) throws SQLException {
+        return addMember(member);
+    }
+
     public int deleteMember(int memberId) throws SQLException {
-        return 0;
+        Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE MEMBER SET STATUS = ? WHERE ID = ?");
+        statement.setString(1, Status.INACTIVE.name());
+        statement.setInt(2, memberId);
+
+        return statement.executeUpdate();
+    }
+
+    private Member populateMember(ResultSet resultSet) throws SQLException{
+        Member member = new Member();
+        logger.info("Row exist");
+        member.setId(resultSet.getInt("ID"));
+        member.setEmail(resultSet.getString("EMAIL"));
+        member.setFirstName(resultSet.getString("FIRST_NAME"));
+        member.setLastName(resultSet.getString("LAST_NAME"));
+        member.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
+        member.setPassword(resultSet.getString("PASSWORD"));
+
+        return member;
     }
 }

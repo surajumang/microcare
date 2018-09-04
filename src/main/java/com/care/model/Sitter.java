@@ -1,9 +1,8 @@
 
 package com.care.model;
 
-public class Sitter {
+public class Sitter extends Member {
         private int id;
-        private Member member;
         private int experience;
         private int expectedPay;
 
@@ -15,14 +14,6 @@ public class Sitter {
 
         public void setId(int id) {
                 this.id = id;
-        }
-
-        public Member getMember() {
-                return member;
-        }
-
-        public void setMember(Member member) {
-                this.member = member;
         }
 
         public int getExperience() {

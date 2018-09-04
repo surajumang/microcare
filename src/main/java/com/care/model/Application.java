@@ -13,7 +13,7 @@ public class Application {
         private int sitterId;
         private double expectedPay;
         private Status status;
-        private Date dateOfCreation;
+        private Date dateCreated;
         private Date lastModified;
         private Job job;
         private Sitter sitter;
@@ -76,12 +76,12 @@ public class Application {
                 this.status = status;
         }
 
-        public Date getDateOfCreation() {
-                return dateOfCreation;
+        public Date getDateCreated() {
+                return dateCreated;
         }
 
-        public void setDateOfCreation(Date dateOfCreation) {
-                this.dateOfCreation = dateOfCreation;
+        public void setDateCreated(Date dateCreated) {
+                this.dateCreated = dateCreated;
         }
 
         public Date getLastModified() {

@@ -1,21 +1,13 @@
 
 package com.care.model;
 
-public class Seeker {
+public class Seeker extends Member{
 
         private int id;
         private int numberOfChildren;
         private String spouseName;
-        private Member member;
 
         public static final Seeker EMPTY_SEEKER = new Seeker();
-
-        public Member getMember(){
-                return member;
-        }
-        public void setMember(Member member){
-                this.member = member;
-        }
 
         public int getNumberOfChildren() {
                 return numberOfChildren;

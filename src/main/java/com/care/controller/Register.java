@@ -27,7 +27,7 @@ public class Register extends HttpServlet{
         FormBean rf = FormPopulator.populate(req, RegistrationFormDTO.class);
 
         /*
-        SeekerServiceImpl.registerMember((RegistrationFormDTO)rf);
+        SeekerServiceImpl.enroll((RegistrationFormDTO)rf);
         [TODO]
         */
         getServletContext().getRequestDispatcher("SuccessMessage.jsp").forward(req, resp);

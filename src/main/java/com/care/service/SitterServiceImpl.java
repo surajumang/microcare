@@ -48,7 +48,7 @@ public class SitterServiceImpl implements SitterService {
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
 
         try {
-            status = applicationDAO.deleteApplication(member, applicationId);
+            status = applicationDAO.deleteApplication(applicationId);
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Error Closing application", e);
         }
