@@ -48,6 +48,8 @@
             <input type="password" name="password2" placeholder="Password" >
             <c:out value="${errors.password2}"/><br>
 
+            <input type="hidden" name="memberType" value="SITTER">
+
             <input type="submit" name="" value="Submit">
 
         </form>
