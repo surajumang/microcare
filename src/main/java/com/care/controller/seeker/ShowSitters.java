@@ -1,11 +1,9 @@
 package com.care.controller.seeker;
 
 import com.care.dto.Sitter;
-import com.care.dto.form.SitterFilterDTO;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

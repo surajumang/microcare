@@ -4,9 +4,13 @@ package com.care.validation;
 public class NumberValidator extends Validator {
 
     String regex;
+    boolean required;
+    String message;
 
-    public NumberValidator(String regex) {
+    public NumberValidator(String regex, boolean required, String message) {
         this.regex = regex;
+        this.required = required;
+        this.message = message;
     }
 
     @Override

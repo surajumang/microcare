@@ -9,5 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Email {
     String regex() default "(\\w)+@([A-Za-z]+\\.?)+";
+    String message() default  "Email must follow this pattern";
     boolean required() default true;
 }

@@ -28,8 +28,8 @@ public class FormValidator {
         ANNOTATION_PROCESSOR_MAP.put(Number.class, new NumberProcessor());
     }
 
-    public static void  validate(FormBean form, HttpServletRequest request){
-        Map<String, String> errors = new HashMap<String, String>();
+    public static void  validate(FormBean form, Map<String, String> errors )
+            throws InvocationTargetException, IllegalAccessException {
 
         for(Method method : form.getClass().getMethods()){
             if(method.getName().startsWith("create")){
@@ -42,14 +42,14 @@ public class FormValidator {
                     Validator v = ANNOTATION_PROCESSOR_MAP.get(annotation.annotationType()).create(annotation);
                     logger.info(v.getClass().getSimpleName());
 
-                    String value = request.getParameter(fieldName);
+                    String value = (String)method.invoke(form);
                     if (! v.isValid(value)){
-                        errors.put("")
+                        errors.put(fieldName, v.getMessage());
                     }
                 }
             }
 
         }
-        form.validateCustom(errors);
+
     }
 }

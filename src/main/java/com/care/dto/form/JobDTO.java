@@ -1,7 +1,9 @@
 package com.care.dto.form;
 
 import com.care.validation.FormBean;
+import com.care.validation.FormValidator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public class JobDTO extends FormBean {
@@ -65,7 +67,20 @@ public class JobDTO extends FormBean {
 
     @Override
     public void validateCustom(Map<String, String> errors) {
-        //check if end date is greater than start date.
+        /*
+        Check if start date is greater than the end Date.
+         */
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        if (startDate.after(endDate)){
+            errors.put("StartDate", "Start date must be less than end Date");
+        }
     }
 
 }

@@ -2,7 +2,9 @@ package com.care.dto.form;
 
 import com.care.annotation.Email;
 import com.care.validation.FormBean;
+import com.care.validation.FormValidator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public class LoginDetails extends FormBean {
@@ -36,6 +38,12 @@ public class LoginDetails extends FormBean {
 
     @Override
     public void validateCustom(Map<String, String> errors) {
-
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

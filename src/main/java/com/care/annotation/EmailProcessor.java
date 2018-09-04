@@ -10,6 +10,6 @@ public class EmailProcessor extends AnnotationProcessor {
     public <T extends Annotation> Validator create(T annotation) {
         Email email = (Email)annotation;
 
-        return new EmailValidator(email.regex(), email.required());
+        return new EmailValidator(email.regex(), email.required(), email.message());
     }
 }

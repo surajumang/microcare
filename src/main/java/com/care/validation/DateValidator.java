@@ -11,6 +11,6 @@ public class DateValidator extends Validator {
     }
 
     public <T> boolean isValid(T t) {
-
+        return true;
     }
 }

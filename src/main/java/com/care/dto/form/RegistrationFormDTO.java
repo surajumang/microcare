@@ -4,7 +4,9 @@ import com.care.annotation.Email;
 import com.care.annotation.Name;
 import com.care.annotation.Number;
 import com.care.validation.FormBean;
+import com.care.validation.FormValidator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public class RegistrationFormDTO extends FormBean{
@@ -89,15 +91,20 @@ public class RegistrationFormDTO extends FormBean{
 
     @Override
     public void validateCustom(Map<String, String> errors) {
-        String errorvalue = "";
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        String errorValue = "";
         boolean flag = false;
 
         if(! password.equals(password2)){
-            errorvalue += " Passwords don't match";
-            flag = true;
+            errors.put("password2", "Passwords don't match");
         }
 
-        if (flag)
-            errors.put("password2", errorvalue);
+
     }
 }
