@@ -3,7 +3,7 @@ package com.care.service;
 import com.care.model.Member;
 import com.care.dto.form.RegistrationFormDTO;
 
-public interface MemberService extends Service {
+public interface AccountService extends Service {
 
     boolean registerMember(RegistrationFormDTO registrationFormDTO);
     Member getMember(String email);

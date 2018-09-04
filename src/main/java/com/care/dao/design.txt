@@ -36,6 +36,8 @@ CREATE TABLE JOB (
        TITLE           VARCHAR(100)    NOT NULL,
        SEEKER_ID       INT(10)         NOT NULL,
        HOURLY_PAY      DECIMAL(5,3)    NOT NULL,
+       START_TIME      TIME            NOT NULL,
+       END_TIME        TIME            NOT NULL,
        START_DATE      DATE            NOT NULL,
        END_DATE        DATE            NOT NULL,
        DATE_CREATED    TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP ,

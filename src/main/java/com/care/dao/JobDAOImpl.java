@@ -16,15 +16,7 @@ public final class JobDAOImpl implements JobDAO {
 
     private Logger logger = Logger.getLogger("JobDAOImpl");
 
-    private static JobDAOImpl ourInstance = new JobDAOImpl();
-
-
-    public static JobDAOImpl getInstance(){
-        return ourInstance;
-    }
-    private JobDAOImpl(){
-
-    }
+    public JobDAOImpl(){ }
 
     public Job getJob(Member member, int jobId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
@@ -67,7 +59,7 @@ public final class JobDAOImpl implements JobDAO {
         PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE FROM JOB " +
                 "WHERE POSTED_BY = ?");
         statement.setInt(1, postedBy);
-        logger.info(postedBy + " User ID to get job from DB");
+        logger.info(postedBy + " User ID to create job from DB");
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -118,7 +110,7 @@ public final class JobDAOImpl implements JobDAO {
         PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
                 "WHERE ID=? AND POSTED_BY=?");
 
-        logger.info(jobId + " JobId ID to get job from DB" + member.getId());
+        logger.info(jobId + " JobId ID to create job from DB" + member.getId());
         statement.setInt(1, jobId);
         statement.setInt(2, member.getId());
 
@@ -136,7 +128,7 @@ public final class JobDAOImpl implements JobDAO {
         PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
                 "WHERE POSTED_BY=?");
 
-        logger.info( " JobId ID to get job from DB" + member.getId());
+        logger.info( " JobId ID to create job from DB" + member.getId());
         statement.setInt(1, member.getId());
 
 

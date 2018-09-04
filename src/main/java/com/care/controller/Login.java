@@ -36,13 +36,13 @@ public class Login extends HttpServlet{
         String page = "/ErrorPage.jsp";
 
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
-        MemberService memberService = ServiceFactory.get(MemberServiceImpl.class);
+        AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
 
         if (errors.isEmpty()) {
             LoginDetails loginDetails = (LoginDetails) userLoginDetails;
 
             if (authenticationService.loginUser(loginDetails)){
-                Member member = memberService.getMember(loginDetails.getEmail());
+                Member member = accountService.getMember(loginDetails.getEmail());
                 if (member != Member.EMPTY_MEMBER){
                     request.getSession().setAttribute("currentUser" ,member);
                     logger.info("Back at LoginServlet");

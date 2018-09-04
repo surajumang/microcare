@@ -14,17 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SeekerDAOImpl implements SeekerDAO {
-
-    private MemberService memberService = ServiceFactory.get(MemberServiceImpl.class);
     private Logger logger = Logger.getLogger("SeekerDAOImpl");
-    private static SeekerDAOImpl ourInstance = new SeekerDAOImpl();
-    public static SeekerDAOImpl getInstance(){
-        return ourInstance;
-    }
 
-    private SeekerDAOImpl(){
-
-    }
+    public SeekerDAOImpl(){ }
 
     public boolean postJob(Job job) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();

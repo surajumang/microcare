@@ -10,16 +10,12 @@ import com.care.service.MemberServiceImpl;
 import com.care.service.ServiceFactory;
 
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class SitterDAOImpl implements SitterDAO {
-    //composition to delegate calls when no specific implementation required
-    private MemberService memberService = ServiceFactory.get(MemberServiceImpl.class);
+    private Logger logger = Logger.getLogger("SitterDaoImpl");
 
-    private static SitterDAOImpl ourInstance = new SitterDAOImpl();
-
-    private SitterDAOImpl(){
-
-    }
+    public SitterDAOImpl(){ }
 
     public int applyToJob(int memberId, int jobId) throws SQLException {
         return 0;

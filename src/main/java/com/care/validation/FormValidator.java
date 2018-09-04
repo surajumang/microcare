@@ -18,7 +18,7 @@ public class FormValidator {
         Map<String, String> errors = new HashMap<String, String>();
 
         for(Method method : form.getClass().getMethods()){
-            if(method.getName().startsWith("get")){
+            if(method.getName().startsWith("create")){
                 String fieldName = method.getName().substring(3);
                 fieldName = fieldName.substring(0,1).toLowerCase() + fieldName.substring(1);
 
