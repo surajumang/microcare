@@ -1,7 +1,11 @@
 package com.care.dto.form;
 
+import com.care.annotation.Name;
+import com.care.annotation.Number;
 import com.care.validation.FormBean;
+import com.care.validation.FormValidator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public class ApplicationDTO extends FormBean {
@@ -21,6 +25,7 @@ public class ApplicationDTO extends FormBean {
         this.id = id;
     }
 
+    @Name
     public String getTitle() {
         return title;
     }
@@ -28,7 +33,7 @@ public class ApplicationDTO extends FormBean {
     public void setTitle(String title) {
         this.title = title;
     }
-
+    @Name
     public String getFirstName() {
         return firstName;
     }
@@ -36,7 +41,7 @@ public class ApplicationDTO extends FormBean {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
+    @Name
     public String getLastName() {
         return lastName;
     }
@@ -52,7 +57,7 @@ public class ApplicationDTO extends FormBean {
     public void setStatus(String status) {
         this.status = status;
     }
-
+    @Number
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -61,8 +66,17 @@ public class ApplicationDTO extends FormBean {
         this.expectedPay = expectedPay;
     }
 
+    /*
+    Call the validator from this method and when it returns adds it's own error messages.
+     */
     @Override
     public void validateCustom(Map<String, String> errors) {
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
 
+        } catch (IllegalAccessException e) {
+
+        }
     }
 }

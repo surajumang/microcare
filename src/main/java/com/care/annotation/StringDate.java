@@ -7,7 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Date {
-    String pattern() default "\\d{2}/\\d{2}/\\d{4}";
+public @interface StringDate {
+    String regex() default "\\d{2}/\\d{2}/\\d{4}";
+    String message() default "Date must follow the pattern DDM/MY/YYYY";
     boolean required() default true;
 }

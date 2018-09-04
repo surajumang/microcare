@@ -2,6 +2,8 @@ package com.care.dto.form;
 
 import com.care.annotation.Name;
 
+import java.util.Map;
+
 public class SeekerRegistrationDTO extends RegistrationFormDTO {
 
     private String children;
@@ -15,7 +17,6 @@ public class SeekerRegistrationDTO extends RegistrationFormDTO {
     public void setSpouseName(String spouseName) {
         this.spouseName = spouseName;
     }
-
     @Name
     public String getChildren() {
         return children;
@@ -30,6 +31,11 @@ public class SeekerRegistrationDTO extends RegistrationFormDTO {
         return "SeekerRegistrationDTO{" +
                 "children='" + children + '\'' +
                 ", spouseName='" + spouseName + '\'' +
-                '}';
+                '}' + super.toString() ;
+    }
+
+    @Override
+    public void validateCustom(Map<String, String> errors) {
+        super.validateCustom(errors);
     }
 }

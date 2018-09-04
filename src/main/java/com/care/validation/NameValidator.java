@@ -1,17 +1,25 @@
 package com.care.validation;
 
 public final class NameValidator extends Validator{
-    private static final NameValidator ourInstance = new NameValidator();
 
-    public static NameValidator getInstance() {
-        return ourInstance;
+    private String regex;
+    private boolean required;
+    private String message;
+
+    public NameValidator(String regex, boolean required, String message) {
+        this.regex = regex;
+        this.required = required;
+        this.message = message;
     }
-
-    private NameValidator() {
+    
+    @Override
+    public <T> boolean isValid(T value) {
+        String val = (String)value;
+        return val.matches(regex);
     }
 
     @Override
-    public boolean isValid() {
-        return false;
+    public String getMessage() {
+        return message;
     }
 }

@@ -3,9 +3,7 @@ package com.care.controller.sitter;
 import com.care.dto.form.SitterRegistrationDTO;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
-import com.care.validation.FormValidator;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +12,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Registration extends HttpServlet {
+    private Logger logger = Logger.getLogger("SitterRegistration");
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -25,7 +26,17 @@ public class Registration extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //SitterService server = ServerFactory.getInstance("seeker");
-        getServletContext().getRequestDispatcher("SuccessMessage.jsp").forward(req,resp);
+        FormBean reg = FormPopulator.populate(req, SitterRegistrationDTO.class);
+        logger.info(reg + " " );
+        Map<String, String> errors = new HashMap<String, String>();
+
+        reg.validateCustom(errors);
+        logger.info(errors + " ");
+
+        if(errors.isEmpty()){
+            logger.info("Without errors");
+        }
+        getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
     }
 }
 

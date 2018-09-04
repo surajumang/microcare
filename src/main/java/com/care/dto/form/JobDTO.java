@@ -1,16 +1,18 @@
 package com.care.dto.form;
 
 import com.care.validation.FormBean;
+import com.care.validation.FormValidator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 public class JobDTO extends FormBean {
     private int id;
     private String title;
     private double hourlyPay;
-    // should be greater than current Date and time.
+    // should be greater than current StringDate and time.
     private java.util.Date startDate;
-    // should be greater than or equal to current Date and time.
+    // should be greater than or equal to current StringDate and time.
     private java.util.Date endDate;
 
     public int getId() {
@@ -65,7 +67,20 @@ public class JobDTO extends FormBean {
 
     @Override
     public void validateCustom(Map<String, String> errors) {
-        //check if end date is greater than start date.
+        /*
+        Check if start date is greater than the end Date.
+         */
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        if (startDate.after(endDate)){
+            errors.put("StartDate", "Start date must be less than end Date");
+        }
     }
 
 }

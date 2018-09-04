@@ -1,11 +1,9 @@
 package com.care.controller.seeker;
 
 import com.care.dto.Sitter;
-import com.care.dto.form.SitterFilterDTO;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +26,7 @@ public class ShowSitters extends HttpServlet {
 
          */
         String page = "/ErrorPage.jsp";
-        FormBean formBean = FormPopulator.populate(req, SitterFilterDTO.class);
+        //FormBean formBean = FormPopulator.populate(req, SitterFilterDTO.class);
         // put this in a utility class if possible.
 
         List<Sitter> sitters = Collections.emptyList();

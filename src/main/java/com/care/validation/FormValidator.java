@@ -1,5 +1,9 @@
 package com.care.validation;
 
+import com.care.annotation.*;
+import com.care.annotation.Number;
+
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.annotation.Annotation;
@@ -14,32 +18,46 @@ import java.util.logging.Logger;
 public class FormValidator {
     private static Logger logger = Logger.getLogger("FormValidator");
 
-    public static void  validate(FormBean form){
-        Map<String, String> errors = new HashMap<String, String>();
+    private static final Map<Class<? extends Annotation>, AnnotationProcessor> ANNOTATION_PROCESSOR_MAP =
+            new HashMap<Class<? extends Annotation>, AnnotationProcessor >();
+
+    static {
+        ANNOTATION_PROCESSOR_MAP.put(StringDate.class, new StringDateProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Email.class, new EmailProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Name.class, new NameProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Number.class, new NumberProcessor());
+    }
+
+    public static void  validate(FormBean form, Map<String, String> errors )
+            throws InvocationTargetException, IllegalAccessException {
+
+        logger.info("*****************STaRTING VALIDATION *****************");
+        logger.info(form.getClass().getName());
 
         for(Method method : form.getClass().getMethods()){
-            if(method.getName().startsWith("create")){
+            if(method.getName().startsWith("get")){
+                logger.info(method.getName());
+
                 String fieldName = method.getName().substring(3);
                 fieldName = fieldName.substring(0,1).toLowerCase() + fieldName.substring(1);
 
                 for (Annotation annotation : method.getDeclaredAnnotations()) {
-                    logger.info(method.getName() + "done");
+
                     logger.info(annotation.toString());
-                    Validator v = ValidatorFactory.getInstance(annotation.annotationType());
+                    Validator v = ANNOTATION_PROCESSOR_MAP.get(annotation.annotationType()).create(annotation);
+
                     logger.info(v.getClass().getSimpleName());
 
-                    try {
-                        String value = (String)method.invoke(form);
-                        //v.validate(value, );
-                    }catch (IllegalAccessException e){
-                        e.getCause();
-                    }catch (InvocationTargetException e){
-                        e.getCause();
+                    String value = (String)method.invoke(form);
+                    if (! v.isValid(value)){
+                        errors.put(fieldName, v.getMessage());
                     }
+                    logger.info(method.getName() + "done");
                 }
             }
 
         }
-        form.validateCustom(errors);
+        logger.info("***************VALIDATION DONE******************");
+
     }
 }

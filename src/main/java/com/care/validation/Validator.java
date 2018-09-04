@@ -1,7 +1,8 @@
 package com.care.validation;
 
-import java.lang.annotation.Annotation;
-
 public abstract class Validator {
-    public abstract boolean isValid();
+    public abstract <T> boolean isValid(T value);
+    public String getMessage(){
+        return "Supply proper values for the field";
+    }
 }

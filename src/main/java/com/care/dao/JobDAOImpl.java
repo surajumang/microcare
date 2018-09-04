@@ -83,8 +83,10 @@ public final class JobDAOImpl implements JobDAO {
         }
         return allJobs;
     }
-
-    public int deleteJob(int jobId) throws SQLException {
+    /*
+    Deleting a job must also delete all application corresponding to it.
+     */
+    public int deleteJob(Member member, int jobId) throws SQLException {
         logger.info("Close Seeker's Job");
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +

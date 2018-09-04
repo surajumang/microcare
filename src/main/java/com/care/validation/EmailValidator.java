@@ -1,17 +1,25 @@
 package com.care.validation;
 
 public class EmailValidator extends Validator {
-    private static final EmailValidator ourInstance = new EmailValidator();
 
-    public static EmailValidator getInstance() {
-        return ourInstance;
-    }
+    private String regex;
+    private boolean required;
+    private String message;
 
-    private EmailValidator() {
+    public EmailValidator(String regex, boolean required, String message) {
+        this.regex = regex;
+        this.required = required;
+        this.message = message;
     }
 
     @Override
-    public boolean isValid() {
-        return false;
+    public <T> boolean isValid(T value) {
+        String v = (String)value;
+        return v.matches(regex);
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

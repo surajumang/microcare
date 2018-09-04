@@ -184,7 +184,7 @@
 	<!--
     <filter-mapping>
         <filter-name>FormValidationFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-regex>/*</url-regex>
     </filter-mapping>
 	-->
 

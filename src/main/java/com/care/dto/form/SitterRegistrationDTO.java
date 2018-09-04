@@ -1,22 +1,41 @@
 package com.care.dto.form;
 
-public class SitterRegistrationDTO extends RegistrationFormDTO {
-    private int experience;
-    private double expectedPay;
+import com.care.annotation.Number;
 
-    public int getExperience() {
+import java.util.Map;
+
+public class SitterRegistrationDTO extends RegistrationFormDTO {
+    @Override
+    public String toString() {
+        return "SitterRegistrationDTO{" +
+                "experience='" + experience + '\'' +
+                ", expectedPay='" + expectedPay + '\'' +
+                '}' + super.toString();
+    }
+
+    private String experience;
+    private String expectedPay;
+
+    @Number
+    public String getExperience() {
         return experience;
     }
 
-    public void setExperience(int experience) {
+    public void setExperience(String experience) {
         this.experience = experience;
     }
-
-    public double getExpectedPay() {
+    @Number
+    public String getExpectedPay() {
         return expectedPay;
     }
 
-    public void setExpectedPay(double expectedPay) {
+    public void setExpectedPay(String expectedPay) {
         this.expectedPay = expectedPay;
     }
+
+    @Override
+    public void validateCustom(Map<String, String> errors) {
+        super.validateCustom(errors);
+    }
 }
+

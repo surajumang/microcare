@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Number {
-    String pattern() default "\\d*";
+    String regex() default "\\d*";
+    String message() default "Only digits allowed here";
     boolean required() default true;
 }
