@@ -25,8 +25,7 @@ public class Registration extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //SitterService server = ServerFactory.getInstance("seeker");
-        RequestDispatcher rd = req.getRequestDispatcher("SuccessMessage.jsp");
-        rd.forward(req, resp);
+        getServletContext().getRequestDispatcher("SuccessMessage.jsp").forward(req,resp);
     }
 }
 

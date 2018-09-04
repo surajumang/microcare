@@ -21,15 +21,7 @@ import java.util.logging.Logger;
 public class ApplicationDAOImpl implements ApplicationDAO {
 
     private Logger logger = Logger.getLogger("ApplicationDAOImpl");
-    // called to edit or post an Application
-    private static ApplicationDAOImpl ourInstance = new ApplicationDAOImpl();
-
-    public static ApplicationDAOImpl getInstance(){
-        return ourInstance;
-    }
-    private ApplicationDAOImpl(){
-
-    }
+    public ApplicationDAOImpl(){ }
 
 
     /*
@@ -85,8 +77,6 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         statement.setString(2,Status.ACTIVE.name());
 
         ResultSet resultSet = statement.executeQuery();
-
-
         while(resultSet.next()){
             logger.info("Getting one row from the result Set");
             ApplicationDTO applicationDTO = new ApplicationDTO();

@@ -1,6 +1,7 @@
 package com.care.controller.seeker;
 
 import com.care.beans.Member;
+import com.care.controller.CommonUtil;
 import com.care.dto.form.ApplicationDTO;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
@@ -26,35 +27,21 @@ public class CloseJob extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = "/Members/ErrorPage.jsp";
+        String page = "/ErrorPage.jsp";
 
         //make it more robust.Job to be closed.
-        int jobToBeClosed = -1;
-
-        try {
-            logger.info("-------- " + request.getParameter("id") + " -------");
-            jobToBeClosed = Integer.parseInt(request.getParameter("id"));
-        }catch (IllegalArgumentException e){
-            logger.log(Level.SEVERE, "Application ID", e);
-        }
+        int jobToBeClosed = CommonUtil.getJobIdFromRequest(request);
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
         logger.info("Called CloseApplication" + currentMember);
-
-
         int status = seekerService.closeJob(currentMember, jobToBeClosed);
-
         if (status == 1){
-            page = "/Members/Seeker/ShowMyJobs.do";
+            page = "/seeker/ShowMyJobs.do";
         }
-
 
         logger.info(page);
 
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(page);
-        rd.forward(request, response);
-
-
+        getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }

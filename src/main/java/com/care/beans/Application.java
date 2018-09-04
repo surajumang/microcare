@@ -10,11 +10,13 @@ public class Application {
 
         private int id;
         private int jobId;
-        private int memberId;
+        private int sitterId;
         private double expectedPay;
         private Status status;
         private Date dateOfCreation;
         private Date lastModified;
+
+        public static final Application EMPTY_APPLICATION = new Application();
 
         public int getId() {
                 return id;
@@ -32,12 +34,12 @@ public class Application {
                 this.jobId = jobId;
         }
 
-        public int getMemberId() {
-                return memberId;
+        public int getSitterId() {
+                return sitterId;
         }
 
-        public void setMemberId(int memberId) {
-                this.memberId = memberId;
+        public void setSitterId(int sitterId) {
+                this.sitterId = sitterId;
         }
 
         public double getExpectedPay() {

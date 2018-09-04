@@ -25,7 +25,7 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        RequestDispatcher rd = req.getRequestDispatcher("SuccessMessage.jsp");
-        rd.forward(req, resp);
+        getServletContext().getRequestDispatcher("SuccessMessage.jsp").forward(req, resp);
+
     }
 }

@@ -2,9 +2,12 @@
 package com.care.beans;
 
 public class Seeker extends Member {
+
         private int id;
         private int numberOfChildren;
         private String spouseName;
+
+        public static final Seeker EMPTY_SEEKER = new Seeker();
 
         @Override
         public int getId() {
@@ -31,4 +34,13 @@ public class Seeker extends Member {
         public void setSpouseName(String spouseName) {
                 this.spouseName = spouseName;
         }
+
+    @Override
+    public String toString() {
+        return "Seeker{" +
+                "id=" + id +
+                ", numberOfChildren=" + numberOfChildren +
+                ", spouseName='" + spouseName + '\'' +
+                '}';
+    }
 }
