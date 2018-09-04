@@ -12,14 +12,7 @@ import java.util.logging.Logger;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private static Logger logger = Logger.getLogger("AuthenticationServiceImpl");
-
-    private static AuthenticationServiceImpl ourInstance = new AuthenticationServiceImpl();
-
-    public static AuthenticationServiceImpl getInstance(){
-        logger.info(" returns --> " + ourInstance);
-        return ourInstance;
-    }
-    private AuthenticationServiceImpl(){
+    public AuthenticationServiceImpl(){
 
     }
 

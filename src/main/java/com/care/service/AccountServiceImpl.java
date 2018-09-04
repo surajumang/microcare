@@ -9,18 +9,10 @@ import com.care.dto.form.RegistrationFormDTO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MemberServiceImpl implements MemberService {
+public class AccountServiceImpl implements AccountService {
 
-    private Logger logger = Logger.getLogger("MemberService");
-
-    private static MemberServiceImpl ourInstance = new MemberServiceImpl();
-
-    public static MemberServiceImpl getInstance() {
-        return ourInstance;
-    }
-
-    private MemberServiceImpl() {
-    }
+    private Logger logger = Logger.getLogger("AccountService");
+    public AccountServiceImpl() {  }
 
     public boolean registerMember(RegistrationFormDTO registrationFormDTO) {
 

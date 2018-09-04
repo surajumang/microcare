@@ -14,15 +14,8 @@ import java.util.logging.Logger;
 public class SitterServiceImpl implements SitterService {
 
     private Logger logger = Logger.getLogger("SitterServiceImpl");
-    private static SitterServiceImpl ourInstance = new SitterServiceImpl();
 
-    public static SitterServiceImpl getInstance(){
-        return ourInstance;
-    }
-
-    private SitterServiceImpl(){
-
-    }
+    public SitterServiceImpl(){ }
 
     public List<Job> listAllJobs() {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);

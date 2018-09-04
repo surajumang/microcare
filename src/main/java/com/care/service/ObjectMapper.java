@@ -22,7 +22,7 @@ public class ObjectMapper {
         Fetch getters from the src
          */
         for (Method method : src.getClass().getMethods()){
-            if (method.getName().startsWith("get")){
+            if (method.getName().startsWith("create")){
                 String methodName = method.getName().substring(3);
                 srcGetterMethods.put(methodName, method);
             }

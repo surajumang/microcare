@@ -13,13 +13,8 @@ import java.util.logging.Logger;
 
 public class MemberDAOImpl implements MemberDAO {
     private Logger logger = Logger.getLogger("MemberDAOImpl");
-    private static MemberDAOImpl ourInstance = new MemberDAOImpl();
-    private MemberDAOImpl(){
 
-    }
-    public static MemberDAOImpl getInstance(){
-        return ourInstance;
-    }
+    public MemberDAOImpl(){ }
 
     public Member getMember(String email) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
