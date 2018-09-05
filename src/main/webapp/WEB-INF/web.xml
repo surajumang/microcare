@@ -152,6 +152,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>DeleteApplication</servlet-name>
+        <servlet-class>com.care.controller.sitter.CloseApplication</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteApplication</servlet-name>
+        <url-pattern>/sitter/DeleteApplication.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>LogOut</servlet-name>
         <servlet-class>com.care.controller.LogOut</servlet-class>
     </servlet>

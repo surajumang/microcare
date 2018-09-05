@@ -19,6 +19,6 @@ public interface JobDAO extends DAO {
 
     List<Job> getAllJobs(int postedBy) throws SQLException;
 
-    List<Job> getAllJobs()throws SQLException;
+    List<Job> getAllAvailableJobs(int sitterId)throws SQLException;
 
 }

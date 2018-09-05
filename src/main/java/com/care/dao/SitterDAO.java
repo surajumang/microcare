@@ -14,8 +14,6 @@ public interface SitterDAO extends DAO {
 
     int applyToJob(Application application) throws SQLException;
 
-    List<Job> getJobs() throws SQLException;
-
     int closeApplication(int applicationId) throws SQLException;
 
 }

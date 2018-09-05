@@ -27,7 +27,7 @@ public class ShowJobs extends HttpServlet {
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
 
-        List<Job> allJobs = sitterService.listAllJobs();
+        List<Job> allJobs = sitterService.listAllAvailableJobs(currentMember);
 
         if (allJobs != null){
             page = "/sitter/ShowAllJobs.jsp";

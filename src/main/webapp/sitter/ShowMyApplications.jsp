@@ -52,14 +52,14 @@
             </thead>
             <c:forEach var="app" items="${allMyApplications}">
             <tr>
-                <td>${app.title}</td>
-                <td>${app.hourlyPay}</td>
+                <td>${app.job.title}</td>
+                <td>${app.job.hourlyPay}</td>
                 <td>${app.expectedPay}</td>
-                <td>Status</td>
+                <td>${app.status}</td>
 
                 <td>
                     <form action="${pageContext.request.contextPath}/sitter/DeleteApplication.do" method="get">
-                        <input type="hidden" name="id" value="${job.id}">
+                        <input type="hidden" name="id" value="${app.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
                 </td>

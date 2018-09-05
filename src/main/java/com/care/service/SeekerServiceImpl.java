@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.model.Application;
 import com.care.model.Job;
 import com.care.model.Member;
 import com.care.dao.*;
@@ -34,7 +35,7 @@ public class SeekerServiceImpl implements SeekerService {
         List<Job> memberJobs = new ArrayList<Job>();
 
         try {
-            memberJobs = jobDAO.getAllJobs(member.getId());
+            memberJobs = jobDAO.getAllAvailableJobs(member.getId());
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't access database", e);
             memberJobs = Collections.emptyList();
@@ -43,19 +44,19 @@ public class SeekerServiceImpl implements SeekerService {
         return memberJobs;
     }
 
-    public List<ApplicationDTO> listApplicationsOnJob(Member member, int jobId) {
+    public List<Application> applications(Member member, int jobId) {
 
-        List<ApplicationDTO> applicationDTOList = new ArrayList<ApplicationDTO>();
+        List<Application> applications;
         logger.info("ListApplications");
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
 
         try {
-            applicationDTOList = applicationDAO.getAllApplicationsOnJob(jobId);
+            applications = applicationDAO.getAllApplicationsOnJob(jobId);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't fetch All Applications on Job", e);
-            applicationDTOList = Collections.emptyList();
+            applications = Collections.emptyList();
         }
-        return applicationDTOList;
+        return applications;
     }
     /*
 

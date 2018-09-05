@@ -29,7 +29,7 @@
             <input type="submit" name="PostJob" value="Show Jobs"/>
       </form>
       <form class="" action="${pageContext.request.contextPath}/sitter/ShowMyApplications.do" method="post">
-            <input type="submit" name="ViewJobs" value="My Applications"/>
+            <input type="submit" name="ViewApplications" value="My Applications"/>
       </form>
       
       <form class="" action="${pageContext.request.contextPath}/member/EditProfile.jsp" method="post">

@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.model.Application;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
 import com.care.dto.form.ApplicationDTO;
@@ -33,8 +34,8 @@ public class ShowApplications extends HttpServlet {
         Member currentMember = (Member) request.getSession().getAttribute("currentMember");
 
         logger.info("Called SeekerService listAppOnJob");
-        List<ApplicationDTO> applications =
-                seekerService.listApplicationsOnJob(currentMember, jobIdToViewApplications);
+        List<Application> applications =
+                seekerService.applications(currentMember, jobIdToViewApplications);
 
         // this has to changed to Collections.emptyList().
         if (applications != null){

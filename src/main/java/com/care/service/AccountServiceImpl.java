@@ -37,13 +37,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private int addSeeker(Seeker seeker){
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        //MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         logger.info(seeker.toString());
         int status = -1;
         try {
-            memberDAO.addMember(seeker);
-            seeker.setId(memberDAO.getMember(seeker.getEmail()).getId());
+            //memberDAO.addMember(seeker);
+            //seeker.setId(memberDAO.getMember(seeker.getEmail()).getId());
             status = seekerDAO.addSeeker(seeker);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);

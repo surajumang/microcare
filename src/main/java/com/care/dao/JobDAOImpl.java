@@ -59,6 +59,7 @@ public final class JobDAOImpl implements JobDAO {
 
     /*
     [todo]
+    This is for Seeker to get all jobs posted by him,
      */
     public List<Job> getAllJobs(int postedBy) throws SQLException {
         logger.info("GetAllJobs Seeker");
@@ -77,24 +78,24 @@ public final class JobDAOImpl implements JobDAO {
         return jobs;
     }
     /*
-    [TODO]
     All active jobs only. and the ones not applied by the sitter.
-
+    This will be called by Sitter.
      */
-    public List<Job> getAllJobs() throws SQLException {
-        List<Job> allJobs = new ArrayList<Job>();
+    public List<Job> getAllAvailableJobs(int sitterId) throws SQLException {
+        List<Job> allAvailableJobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM JOB WHERE STATUS = ?");
-        statement.setString(1, Status.ACTIVE.name());
+        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE MEMBER_ID = ?)");
+        statement.setInt(1, sitterId);
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
             logger.info("Picked one row from the result set");
-            allJobs.add(populateJob(resultSet));
+            allAvailableJobs.add(populateJob(resultSet));
         }
-        return allJobs;
+        return allAvailableJobs;
     }
     /*
+    [todo]
     Deleting a job must also delete all application corresponding to it.
      */
     public int deleteJob(Member member, int jobId) throws SQLException {

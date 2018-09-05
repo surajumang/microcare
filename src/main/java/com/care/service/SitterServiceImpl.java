@@ -17,25 +17,29 @@ public class SitterServiceImpl implements SitterService {
 
     public SitterServiceImpl(){ }
 
-    public List<Job> listAllJobs() {
+    public List<Job> listAllAvailableJobs(Member member) {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         List<Job> allJobs;
 
         try{
-            allJobs = jobDAO.getAllJobs();
+            allJobs = jobDAO.getAllAvailableJobs(member.getId());
         }catch (SQLException e){
-            logger.log(Level.SEVERE, "Getting all Jobs" , e);
+            logger.log(Level.SEVERE, "Getting all Available Jobs" , e);
             allJobs = Collections.emptyList();
         }
         return allJobs;
     }
 
-    public List<Application> listAllApplications(Member member, int sitterId) {
-        return null;
-    }
-
-    public List<Application> listApplication(Member member, int applicationId) {
-        return null;
+    public List<Application> listAllApplications(Member member) {
+        ApplicationDAO applicationDAO= DAOFactory.get(ApplicationDAOImpl.class);
+        List<Application> applications ;
+        try{
+            applications = applicationDAO.getAllApplications(member.getId());
+        }catch (SQLException e){
+            logger.log(Level.SEVERE , "All applications for Sitter", e);
+            applications = Collections.emptyList();
+        }
+        return applications;
     }
 
     public int applyToJob(Member member, int jobId) {
@@ -46,7 +50,6 @@ public class SitterServiceImpl implements SitterService {
     public int deleteApplication(Member member, int applicationId) {
         int status = 0;
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
-
         try {
             status = applicationDAO.deleteApplication(applicationId);
         }catch (SQLException e){

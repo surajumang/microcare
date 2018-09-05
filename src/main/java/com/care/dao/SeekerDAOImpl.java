@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class SeekerDAOImpl implements SeekerDAO {
+public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
     private Logger logger = Logger.getLogger("SeekerDAOImpl");
 
     public SeekerDAOImpl(){ }
@@ -18,6 +18,8 @@ public class SeekerDAOImpl implements SeekerDAO {
     @Override
     public int addSeeker(Seeker seeker) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
+        addMember(seeker);
+        seeker.setId(getMember(seeker.getEmail()).getId());
         PreparedStatement statement = connection.prepareStatement("INSERT INTO SEEKER(ID, NO_CHILDREN, SPOUSE_NAME)" +
                 "VALUES(?,?,?)");
         statement.setInt(1,seeker.getId());
@@ -45,7 +47,7 @@ public class SeekerDAOImpl implements SeekerDAO {
 
     public List<Job> listAllMyJobs(int postedBy) throws SQLException {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        return jobDAO.getAllJobs(postedBy);
+        return jobDAO.getAllAvailableJobs(postedBy);
     }
 
     public List<Application> listAllApplicationsOnMyJob(int jobId) throws SQLException {
