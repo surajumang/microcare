@@ -69,7 +69,7 @@ create table MEMBER (
         ZIP_CODE        INT(6)                  NOT NULL,
         STATUS        ENUM ("ACTIVE", "INACTIVE") DEFAULT "ACTIVE",
         LAST_MODIFIED   TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        PASSWORD        VARCHAR(30)             NOT NULL
+        PASSWORD        VARCHAR(32)             NOT NULL
   );
 
 insert into MEMBER(first_name, last_name, address, phone, email, zip_code, password)

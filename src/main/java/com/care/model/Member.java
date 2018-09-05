@@ -1,7 +1,10 @@
 
 package com.care.model;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.security.MessageDigest;
+import java.nio.charset.StandardCharsets;
 
 public class Member {
         private int id;
@@ -105,6 +108,7 @@ public class Member {
         public void setPassword(String password) {
                 this.password = password;
         }
+
 
     @Override
     public String toString() {
