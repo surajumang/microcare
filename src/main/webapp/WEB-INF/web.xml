@@ -160,6 +160,15 @@
         <url-pattern>/member/Logout.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CloseAccount</servlet-name>
+        <servlet-class>com.care.controller.CloseAccount</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CloseAccount</servlet-name>
+        <url-pattern>/member/CloseAccount.do</url-pattern>
+    </servlet-mapping>
+
 
 
 

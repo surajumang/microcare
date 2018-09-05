@@ -31,6 +31,7 @@ public class CloseJob extends HttpServlet {
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
         logger.info("Called CloseApplication" + currentMember);
+
         int status = seekerService.closeJob(currentMember, jobToBeClosed);
         if (status == 1){
             page = "/seeker/ShowMyJobs.do";

@@ -62,7 +62,7 @@
             <tr>
                 <td>${job.title}</td>
                 <%-- find a way --%>
-                <td>Status</td>
+                <td>${job.status}</td>
                 <td>${job.startDate}</td>
                 <td>${job.endDate}</td>
                 <td>

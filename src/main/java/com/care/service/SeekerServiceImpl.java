@@ -36,7 +36,7 @@ public class SeekerServiceImpl implements SeekerService {
         try {
             memberJobs = jobDAO.getAllJobs(member.getId());
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Can't access database", e.getCause());
+            logger.log(Level.SEVERE, "Can't access database", e);
             memberJobs = Collections.emptyList();
         }
 
@@ -52,7 +52,7 @@ public class SeekerServiceImpl implements SeekerService {
         try {
             applicationDTOList = applicationDAO.getAllApplicationsOnJob(jobId);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Can't fetch All Applications on Job");
+            logger.log(Level.SEVERE, "Can't fetch All Applications on Job", e);
             applicationDTOList = Collections.emptyList();
         }
         return applicationDTOList;

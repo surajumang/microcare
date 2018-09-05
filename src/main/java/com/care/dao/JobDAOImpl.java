@@ -45,7 +45,12 @@ public final class JobDAOImpl implements JobDAO {
     }
 
     public int deleteJob(int jobId) throws SQLException {
-        return 0;
+        Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS = ? WHERE ID = ?");
+        statement.setString(1, Status.INACTIVE.name());
+        statement.setInt(2, jobId);
+
+        return statement.executeUpdate();
     }
 
     public int editJob(Job job) throws SQLException {
@@ -59,7 +64,8 @@ public final class JobDAOImpl implements JobDAO {
         logger.info("GetAllJobs Seeker");
         List<Job> jobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE FROM JOB " +
+        PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE, HOURLY_PAY " +
+                "FROM JOB " +
                 "WHERE POSTED_BY = ?");
         statement.setInt(1, postedBy);
         logger.info(postedBy + " User ID to createObject job from DB");
@@ -126,6 +132,7 @@ public final class JobDAOImpl implements JobDAO {
         job.setEndDate(resultSet.getDate("END_DATE"));
         job.setStatus(Status.valueOf(resultSet.getString("STATUS")));
 
+        logger.info("Added one job successfully");
         return job;
     }
 }
