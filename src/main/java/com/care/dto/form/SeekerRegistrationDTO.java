@@ -1,15 +1,16 @@
 package com.care.dto.form;
 
 import com.care.annotation.Name;
+import com.care.annotation.Number;
 
 import java.util.Map;
 
 public class SeekerRegistrationDTO extends RegistrationFormDTO {
 
-    private String children;
+    private String numberOfchildren;
     private String spouseName;
 
-    @Name
+    @Name(required = false)
     public String getSpouseName() {
         return spouseName;
     }
@@ -17,19 +18,20 @@ public class SeekerRegistrationDTO extends RegistrationFormDTO {
     public void setSpouseName(String spouseName) {
         this.spouseName = spouseName;
     }
-    @Name
-    public String getChildren() {
-        return children;
+
+    @Number(required = false)
+    public String getNumberOfchildren() {
+        return numberOfchildren;
     }
 
-    public void setChildren(String children) {
-        this.children = children;
+    public void setNumberOfchildren(String numberOfchildren) {
+        this.numberOfchildren = numberOfchildren;
     }
 
     @Override
     public String toString() {
         return "SeekerRegistrationDTO{" +
-                "children='" + children + '\'' +
+                "numberOfchildren='" + numberOfchildren + '\'' +
                 ", spouseName='" + spouseName + '\'' +
                 '}' + super.toString() ;
     }

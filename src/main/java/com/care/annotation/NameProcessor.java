@@ -10,6 +10,6 @@ public class NameProcessor extends AnnotationProcessor {
     @Override
     public <T extends Annotation> Validator create(T annotation) {
         Name name = (Name) annotation;
-        return new NameValidator(name.regex(),name.required(), name.message());
+        return new NameValidator(name.regex(), name.required(), name.message());
     }
 }

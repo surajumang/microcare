@@ -14,8 +14,15 @@ public class EmailValidator extends Validator {
 
     @Override
     public <T> boolean isValid(T value) {
-        String v = (String)value;
-        return v.matches(regex);
+        String val = (String)value;
+        boolean result = false;
+        if (required == false){
+            result = true;
+        }
+        if (val != null ){
+            result = val.matches(regex);
+        }
+        return result;
     }
 
     @Override

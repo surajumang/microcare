@@ -40,6 +40,6 @@ public class Sitter extends Member {
                         "id=" + id +
                         ", experience=" + experience +
                         ", expectedPay=" + expectedPay +
-                        '}';
+                        '}' + super.toString();
         }
 }

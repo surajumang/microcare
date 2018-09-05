@@ -60,7 +60,7 @@ public final class JobDAOImpl implements JobDAO {
         PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE FROM JOB " +
                 "WHERE POSTED_BY = ?");
         statement.setInt(1, postedBy);
-        logger.info(postedBy + " User ID to create job from DB");
+        logger.info(postedBy + " User ID to createObject job from DB");
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -114,7 +114,7 @@ public final class JobDAOImpl implements JobDAO {
         PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
                 "WHERE ID=? AND POSTED_BY=?");
 
-        logger.info(jobId + " JobId ID to create job from DB" + member.getId());
+        logger.info(jobId + " JobId ID to createObject job from DB" + member.getId());
         statement.setInt(1, jobId);
         statement.setInt(2, member.getId());
 
@@ -134,7 +134,7 @@ public final class JobDAOImpl implements JobDAO {
         PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
                 "WHERE POSTED_BY=?");
 
-        logger.info( " JobId ID to create job from DB" + member.getId());
+        logger.info( " JobId ID to createObject job from DB" + member.getId());
         statement.setInt(1, member.getId());
 
 

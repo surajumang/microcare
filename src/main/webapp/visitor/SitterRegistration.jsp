@@ -10,9 +10,7 @@
         <meta charset="utf-8">
         <title></title>
         <style type="text/css">
-            form {
-                text-align: center;
-            }
+
         </style>
     </head>
     <body>

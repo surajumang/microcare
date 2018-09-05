@@ -41,6 +41,6 @@ public class Seeker extends Member {
                 "id=" + id +
                 ", numberOfChildren=" + numberOfChildren +
                 ", spouseName='" + spouseName + '\'' +
-                '}';
+                '}' + super.toString();
     }
 }

@@ -32,8 +32,9 @@ public class FormPopulator {
                 try {
                     // replace with Class<returnType>.cast(object).
                     String value = request.getParameter(fieldName);
-                    if(value == null)
-                        continue;
+                    logger.info("*****" + value + " ****");
+//                    if(value == null)
+//                        continue;
 
                     method.invoke(ret,value);
                 }catch (IllegalAccessException e){

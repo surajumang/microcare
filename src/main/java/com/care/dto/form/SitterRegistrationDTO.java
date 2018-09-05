@@ -16,7 +16,7 @@ public class SitterRegistrationDTO extends RegistrationFormDTO {
     private String experience;
     private String expectedPay;
 
-    @Number
+    @Number(regex = "\\d+")
     public String getExperience() {
         return experience;
     }
@@ -24,6 +24,7 @@ public class SitterRegistrationDTO extends RegistrationFormDTO {
     public void setExperience(String experience) {
         this.experience = experience;
     }
+
     @Number
     public String getExpectedPay() {
         return expectedPay;

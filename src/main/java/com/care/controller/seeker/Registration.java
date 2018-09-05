@@ -1,8 +1,12 @@
 package com.care.controller.seeker;
 
 import com.care.beans.Member;
+import com.care.dto.form.RegistrationFormDTO;
 import com.care.dto.form.SeekerRegistrationDTO;
 import com.care.dto.form.SitterRegistrationDTO;
+import com.care.service.AccountService;
+import com.care.service.AccountServiceImpl;
+import com.care.service.ServiceFactory;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 import com.care.validation.FormValidator;
@@ -35,10 +39,17 @@ public class Registration extends HttpServlet {
         Map<String, String> errors = new HashMap<String, String>();
 
         reg.validateCustom(errors);
+        AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
+
         logger.info(errors + " ");
 
         if(errors.isEmpty()){
+            RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)reg;
+
             logger.info("Without errors");
+            logger.info(registrationFormDTO.getMemberType());
+            accountService.enroll(registrationFormDTO);
+            logger.info("Back at servlet");
         }
         request.setAttribute("errors", errors);
         getServletContext().getRequestDispatcher("/visitor/SeekerRegistration.jsp").forward(request,response);

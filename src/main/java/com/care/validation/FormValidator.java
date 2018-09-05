@@ -49,6 +49,7 @@ public class FormValidator {
                     logger.info(v.getClass().getSimpleName());
 
                     String value = (String)method.invoke(form);
+                    logger.info("" + value);
                     if (! v.isValid(value)){
                         errors.put(fieldName, v.getMessage());
                     }

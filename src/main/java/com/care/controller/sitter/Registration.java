@@ -1,6 +1,10 @@
 package com.care.controller.sitter;
 
+import com.care.dto.form.RegistrationFormDTO;
 import com.care.dto.form.SitterRegistrationDTO;
+import com.care.service.AccountService;
+import com.care.service.AccountServiceImpl;
+import com.care.service.ServiceFactory;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 
@@ -23,20 +27,28 @@ public class Registration extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //SitterService server = ServerFactory.getInstance("seeker");
-        FormBean reg = FormPopulator.populate(req, SitterRegistrationDTO.class);
+        FormBean reg = FormPopulator.populate(request, SitterRegistrationDTO.class);
         logger.info(reg + " " );
         Map<String, String> errors = new HashMap<String, String>();
 
         reg.validateCustom(errors);
         logger.info(errors + " ");
 
+        AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
+
         if(errors.isEmpty()){
             logger.info("Without errors");
+            RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)reg;
+
+            logger.info(registrationFormDTO.getMemberType());
+            accountService.enroll(registrationFormDTO);
+            logger.info("Back at servlet");
         }
-        getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
+        request.setAttribute("errors", errors);
+        getServletContext().getRequestDispatcher("/visitor/SitterRegistration.jsp").forward(request, response);
     }
 }
 

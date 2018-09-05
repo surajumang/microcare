@@ -29,7 +29,7 @@ public class ConnectionUtil implements ServletContextListener {
             connection = DriverManager.getConnection(dburl, username, password);
             System.err.println(connection);
         }catch (SQLException e){
-            System.err.println("***********Can't create connection");
+            System.err.println("***********Can't createObject connection");
             logger.log(Level.SEVERE, "Sql", e.getCause());
         }catch (ClassNotFoundException e){
             logger.severe("**************Unable to load the driver");

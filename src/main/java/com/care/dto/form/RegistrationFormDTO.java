@@ -20,7 +20,7 @@ public class RegistrationFormDTO extends FormBean{
     private String lastName;
     private String zipCode;
     private String password;
-    private String status;
+    private String memberType;
     private String password2;
     private String address;
     private String phone;
@@ -85,6 +85,14 @@ public class RegistrationFormDTO extends FormBean{
         this.address = address;
     }
 
+    public String getMemberType() {
+        return memberType;
+    }
+
+    public void setMemberType(String memberType) {
+        this.memberType = memberType;
+    }
+
     @Number(regex = "\\d{10}")
     public String getPhone() {
         return phone;
@@ -92,14 +100,6 @@ public class RegistrationFormDTO extends FormBean{
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     @Override
@@ -129,7 +129,7 @@ public class RegistrationFormDTO extends FormBean{
                 ", lastName='" + lastName + '\'' +
                 ", zipCode='" + zipCode + '\'' +
                 ", password='" + password + '\'' +
-                ", status='" + status + '\'' +
+                ", memberType='" + memberType + '\'' +
                 ", password2='" + password2 + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +

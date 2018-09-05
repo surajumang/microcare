@@ -15,7 +15,14 @@ public final class NameValidator extends Validator{
     @Override
     public <T> boolean isValid(T value) {
         String val = (String)value;
-        return val.matches(regex);
+        boolean result = false;
+        if (required == false){
+            result = true;
+        }
+        if (val != null ){
+            result = val.matches(regex);
+        }
+        return result;
     }
 
     @Override
