@@ -17,7 +17,7 @@ public class NumberValidator extends Validator {
     public <T> boolean isValid(T value) {
         String val = (String)value;
         boolean result = false;
-        if (required == false){
+        if (! required){
             result = true;
         }
         if (val != null ){

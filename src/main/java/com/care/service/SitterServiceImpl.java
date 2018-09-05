@@ -36,7 +36,7 @@ public class SitterServiceImpl implements SitterService {
         try{
             applications = applicationDAO.getAllApplications(member.getId());
         }catch (SQLException e){
-            logger.log(Level.SEVERE , "All applications for Sitter", e);
+            logger.log(Level.SEVERE , "All getApplications for Sitter", e);
             applications = Collections.emptyList();
         }
         return applications;

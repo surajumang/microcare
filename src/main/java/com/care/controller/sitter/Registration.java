@@ -30,6 +30,7 @@ public class Registration extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //SitterService server = ServerFactory.getInstance("seeker");
+        String page = "/ErrorPage.jsp";
         FormBean reg = FormPopulator.populate(request, SitterRegistrationDTO.class);
         logger.info(reg + " " );
         Map<String, String> errors = new HashMap<String, String>();
@@ -41,6 +42,7 @@ public class Registration extends HttpServlet {
 
         if(errors.isEmpty()){
             logger.info("Without errors");
+            page = "/visitor/index.jsp";
             RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)reg;
 
             logger.info(registrationFormDTO.getMemberType());
@@ -48,7 +50,7 @@ public class Registration extends HttpServlet {
             logger.info("Back at servlet");
         }
         request.setAttribute("errors", errors);
-        getServletContext().getRequestDispatcher("/visitor/SitterRegistration.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }
 

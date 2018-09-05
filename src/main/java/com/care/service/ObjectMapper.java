@@ -113,8 +113,10 @@ public class ObjectMapper {
                 If the argument type is already a String then no valueOf conversion required.
                  */
                 if (argTypes[0] == String.class){
+                    logger.info("String arg type of Model");
                     setter.invoke(dest,  getter.invoke(src));
                 }else {
+                    logger.info("Model populated using Static value of");
                     Method valueOf = argTypes[0].getMethod("valueOf", String.class);
                     setter.invoke(dest, valueOf.invoke(null, getter.invoke(src)));
                 }

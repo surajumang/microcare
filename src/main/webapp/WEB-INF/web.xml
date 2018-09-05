@@ -107,6 +107,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>PostJob</servlet-name>
+        <servlet-class>com.care.controller.seeker.PostJob</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostJob</servlet-name>
+        <url-pattern>/seeker/PostJob.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
             <servlet-name>ListAllApplcations</servlet-name>
             <servlet-class>com.care.controller.seeker.ShowApplications</servlet-class>
     </servlet>

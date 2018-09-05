@@ -10,7 +10,7 @@ public interface SitterService extends Service{
     //make sure that the user invoking this is a Sitter.
     List<Job> listAllAvailableJobs(Member member);
 
-    // check if logged in user is the one whose applications will be shown.
+    // check if logged in user is the one whose getApplications will be shown.
     List<Application> listAllApplications(Member member);
 
     //check if already applied to job
