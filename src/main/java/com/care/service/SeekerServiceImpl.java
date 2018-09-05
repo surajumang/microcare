@@ -19,6 +19,11 @@ public class SeekerServiceImpl implements SeekerService {
 
     public SeekerServiceImpl(){    }
 
+    @Override
+    public boolean getSeeker() {
+        return false;
+    }
+
     public int postJob(Member member, JobDTO jobForm)  {
         return 0;
     }

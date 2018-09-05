@@ -56,14 +56,16 @@ public class AccountServiceImpl implements AccountService {
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
 
         try {
-            memberDAO.editMember();
+            // Object Mapper needed here.
+
+            memberDAO.editMember(new Member());
             logger.info(memberId + " ");
         } catch (java.sql.SQLException e) {
             logger.log(Level.SEVERE, "Error fetching member");
         }
         return 0;
     }
-
+    
     public int editMember(String email, Member member) {
         return 0;
     }
