@@ -16,16 +16,19 @@ public class StringDateValidator extends Validator {
         this.message = message;
     }
 
+    @Override
     public <T> boolean isValid(T value) {
-        boolean status = true;
         String val = (String)value;
-        try{
-            Date date = new SimpleDateFormat(regex).parse(val);
-        }catch (ParseException e){
-            status = false;
+        boolean result = false;
+
+        if (!required){
+            result = true;
+        }
+        if (val != null ){
+            result = val.matches(regex);
         }
 
-        return status;
+        return result;
     }
 
     @Override

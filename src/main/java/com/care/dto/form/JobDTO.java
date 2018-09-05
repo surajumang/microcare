@@ -1,28 +1,36 @@
 package com.care.dto.form;
 
+import com.care.annotation.Name;
+import com.care.annotation.Number;
+import com.care.annotation.StringDate;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Date;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JobDTO extends FormBean {
-    private int id;
+
+    private Logger logger = Logger.getLogger("JobDTO");
+
+    private String  seekerId;
     private String title;
-    private double hourlyPay;
-    // should be greater than current StringDate and time.
-    private java.util.Date startDate;
-    // should be greater than or equal to current StringDate and time.
-    private java.util.Date endDate;
+    private String hourlyPay;
+    private String startDate;
+    private String endDate;
 
-    public int getId() {
-        return id;
+    public String getSeekerId() {
+        return seekerId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setSeekerId(String seekerId) {
+        this.seekerId = seekerId;
     }
 
+    @Name(regex = "\\w+")
     public String getTitle() {
         return title;
     }
@@ -31,35 +39,38 @@ public class JobDTO extends FormBean {
         this.title = title;
     }
 
-    public double getHourlyPay() {
+    @Number(regex = "\\d+")
+    public String getHourlyPay() {
         return hourlyPay;
     }
 
-    public void setHourlyPay(double hourlyPay) {
+    public void setHourlyPay(String hourlyPay) {
         this.hourlyPay = hourlyPay;
     }
 
-    public java.util.Date getStartDate() {
+    @StringDate
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(java.util.Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
-
-    public java.util.Date getEndDate() {
+    @StringDate
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(java.util.Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
     @Override
     public String toString() {
-        return "JobForm{" +
-                "title='" + title + '\'' +
-                ", hourlyPay='" + hourlyPay + '\'' +
+        return "JobDTO{" +
+                "id=" + seekerId +
+                ", title='" + title + '\'' +
+                ", hourlyPay=" + hourlyPay +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 '}';
@@ -73,14 +84,21 @@ public class JobDTO extends FormBean {
         try {
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Invok", e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Invok", e);
+        }
+        logger.info(errors+ "");
+
+        boolean dateError = errors.containsKey("startDate") || errors.containsKey("endDate");
+
+        if (! dateError){
+            if (Date.valueOf(startDate).after(Date.valueOf(endDate))){
+                errors.put("startDate", "Start date must be less than end Date");
+            }
         }
 
-        if (startDate.after(endDate)){
-            errors.put("StartDate", "Start date must be less than end Date");
-        }
+
     }
 
 }

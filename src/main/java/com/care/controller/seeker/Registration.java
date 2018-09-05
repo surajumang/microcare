@@ -50,7 +50,7 @@ public class Registration extends HttpServlet {
             logger.info("Back at servlet");
         }
 
-        getServletContext().getRequestDispatcher("/visitor/SeekerRegistration.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher(page).forward(request,response);
 
     }
 }

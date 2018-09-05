@@ -3,7 +3,6 @@ package com.care.controller.seeker;
 import com.care.model.Application;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
-import com.care.dto.form.ApplicationDTO;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
@@ -35,12 +34,12 @@ public class ShowApplications extends HttpServlet {
 
         logger.info("Called SeekerService listAppOnJob");
         List<Application> applications =
-                seekerService.applications(currentMember, jobIdToViewApplications);
+                seekerService.getApplications(currentMember, jobIdToViewApplications);
 
         // this has to changed to Collections.emptyList().
         if (applications != null){
             page = "/seeker/ViewApplications.jsp";
-            request.setAttribute("applications", applications);
+            request.setAttribute("getApplications", applications);
         }
         logger.info(page);
         getServletContext().getRequestDispatcher(page).forward(request, response);

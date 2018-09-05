@@ -15,7 +15,7 @@ public interface SeekerService extends Service {
 
     List<Job> listJobs(Member member) ;
 
-    List<Application> applications(Member member, int jobId) ;
+    List<Application> getApplications(Member member, int jobId) ;
 
     int editJob(Member member, JobDTO jobForm) ;
 

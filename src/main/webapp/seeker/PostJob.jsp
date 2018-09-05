@@ -17,17 +17,17 @@
      <jsp:include page="/header.jsp"/>
      <p>Page for posting a job. It will show a form to the user.</p>
 
-     <form class="" action="PostJobServlet.do" method="post">
+     <form class="" action="${pageContext.request.contextPath}/seeker/PostJob.do" method="post">
          <input type="text" name="title" placeholder="Job Title" value="">
          <c:out value="${errors.title}"/>
          <br><br>
          <input type="text" name="hourlyPay" placeholder="Hourly Pay" value="">
          <c:out value="${errors.hourlyPay}"/>
          <br><br>
-         <input type="text" name="startDate" placeholder="Start Date" value="">
+         <input type="text" name="startDate" placeholder="Start Date(YYYY-MM-DD)" value="">
          <c:out value="${errors.startDate}"/>
          <br><br>
-         <input type="text" name="endDate" placeholder="End Date" value="">
+         <input type="text" name="endDate" placeholder="End Date(YYYY-MM-DD)" value="">
          <c:out value="${errors.endDate}"/>
          <br><br>
 

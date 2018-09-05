@@ -20,22 +20,33 @@ public class SeekerServiceImpl implements SeekerService {
 
     public SeekerServiceImpl(){    }
 
-    @Override
     public boolean getSeeker() {
         return false;
     }
 
     public int postJob(Member member, JobDTO jobForm)  {
-        return 0;
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        Job job = new Job();
+        int status;
+
+        ObjectMapper.mapObject(jobForm, job, true);
+        try{
+            status = jobDAO.addJob(job);
+        }catch (SQLException e){
+            logger.log(Level.SEVERE, "Posting Job", e);
+            status = -1;
+        }
+
+        return status;
     }
 
     public List<Job> listJobs(Member member) {
 
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        List<Job> memberJobs = new ArrayList<Job>();
+        List<Job> memberJobs ;
 
         try {
-            memberJobs = jobDAO.getAllAvailableJobs(member.getId());
+            memberJobs = jobDAO.getAllJobs(member.getId());
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't access database", e);
             memberJobs = Collections.emptyList();
@@ -44,7 +55,7 @@ public class SeekerServiceImpl implements SeekerService {
         return memberJobs;
     }
 
-    public List<Application> applications(Member member, int jobId) {
+    public List<Application> getApplications(Member member, int jobId) {
 
         List<Application> applications;
         logger.info("ListApplications");
