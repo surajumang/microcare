@@ -19,7 +19,7 @@ public final class NameValidator extends Validator{
         if (required == false){
             result = true;
         }
-        if (val != null ){
+        if (val != null && !val.equals("")){
             result = val.matches(regex);
         }
         return result;

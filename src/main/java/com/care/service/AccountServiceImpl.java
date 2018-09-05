@@ -1,11 +1,12 @@
 package com.care.service;
 
+import com.care.dao.*;
 import com.care.model.Member;
-import com.care.dao.DAOFactory;
-import com.care.dao.MemberDAO;
-import com.care.dao.MemberDAOImpl;
+import com.care.model.Seeker;
+import com.care.model.Sitter;
 import com.care.dto.form.RegistrationFormDTO;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,21 +19,52 @@ public class AccountServiceImpl implements AccountService {
         /*
         Testing ObjectMapper. Check whether a seeker or a sitter has to be added.
          */
+        int status = -1;
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         logger.info("Called enroll");
+
         if (registrationFormDTO.getMemberType().equals("SEEKER") ){
             Seeker seeker = new Seeker();
-            logger.info(registrationFormDTO.toString());
             ObjectMapper.mapObject(registrationFormDTO, seeker, true);
-            logger.info(seeker.toString());
-        }else{
-            Sitter sitter = new Sitter();
-            logger.info(registrationFormDTO.toString());
-            ObjectMapper.mapObject(registrationFormDTO, sitter, true);
-            logger.info(sitter.toString());
+            status = addSeeker(seeker);
         }
+        else {
+            Sitter sitter = new Sitter();
+            ObjectMapper.mapObject(registrationFormDTO, sitter, true);
+            status = addSitter(sitter);
+        }
+        return status == 1 ;
+    }
 
+    private int addSeeker(Seeker seeker){
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
+        logger.info(seeker.toString());
+        int status = -1;
+        try {
+            memberDAO.addMember(seeker);
+            seeker.setId(memberDAO.getMember(seeker.getEmail()).getId());
+            status = seekerDAO.addSeeker(seeker);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Can't add", e);
+        }
+        return status;
+    }
 
-        return false;
+    private int addSitter(Sitter sitter){
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
+        logger.info(sitter.toString());
+        int status = -1;
+
+        try {
+            memberDAO.addMember(sitter);
+            sitter.setId(memberDAO.getMember(sitter.getEmail()).getId());
+            status = sitterDAO.addSitter(sitter);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Can't add", e);
+        }
+        return status;
     }
 
     public Member getMember(String memberId) {

@@ -1,6 +1,6 @@
 package com.care.controller.seeker;
 
-import com.care.beans.Member;
+import com.care.model.Member;
 import com.care.dto.form.RegistrationFormDTO;
 import com.care.dto.form.SeekerRegistrationDTO;
 import com.care.dto.form.SitterRegistrationDTO;
@@ -30,6 +30,7 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String page = "/visitor/SeekerRegistration.jsp";
         FormBean reg = FormPopulator.populate(request, SeekerRegistrationDTO.class);
         logger.info(reg + " " );
         Map<String, String> errors = new HashMap<String, String>();
@@ -38,8 +39,9 @@ public class Registration extends HttpServlet {
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
 
         logger.info(errors + " ");
-
+        request.setAttribute("errors", errors);
         if(errors.isEmpty()){
+            page = "/visitor/index.jsp";
             RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)reg;
 
             logger.info("Without errors");
@@ -47,7 +49,7 @@ public class Registration extends HttpServlet {
             accountService.enroll(registrationFormDTO);
             logger.info("Back at servlet");
         }
-        request.setAttribute("errors", errors);
+
         getServletContext().getRequestDispatcher("/visitor/SeekerRegistration.jsp").forward(request,response);
 
     }

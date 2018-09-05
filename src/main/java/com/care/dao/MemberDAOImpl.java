@@ -31,9 +31,10 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     public int addMember(Member member) throws SQLException {
+        logger.info(member + " ");
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO MEMBER(FIRST_NAME, LAST_NAME, PHONE, MEMBER_TYPE," +
-                "EMAIL, ADDRESS, ZIP_CODE) VALUES(?,?,?,?,?,?,?) WHERE ID = ?" );
+                "EMAIL, ADDRESS, ZIP_CODE, PASSWORD) VALUES(?,?,?,?,?,?,?,?)" );
         preparedStatement.setString(1, member.getFirstName());
         preparedStatement.setString(2, member.getLastName());
         preparedStatement.setInt(3, member.getPhone());
@@ -41,7 +42,7 @@ public class MemberDAOImpl implements MemberDAO {
         preparedStatement.setString(5, member.getEmail());
         preparedStatement.setString(6, member.getAddress());
         preparedStatement.setInt(7, member.getZipCode());
-        preparedStatement.setInt(8, member.getId());
+        preparedStatement.setString(8, member.getPassword());
 
         return preparedStatement.executeUpdate();
     }
