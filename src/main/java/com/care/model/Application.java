@@ -2,9 +2,9 @@
         Bean class corresponding to Application.
 */
 
-package com.care.beans;
+package com.care.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Application {
 
@@ -13,10 +13,28 @@ public class Application {
         private int sitterId;
         private double expectedPay;
         private Status status;
-        private Date dateOfCreation;
+        private Date dateCreated;
         private Date lastModified;
+        private Job job;
+        private Sitter sitter;
 
         public static final Application EMPTY_APPLICATION = new Application();
+
+        public Job getJob() {
+                return job;
+        }
+
+        public void setJob(Job job) {
+                this.job = job;
+        }
+
+        public Sitter getSitter() {
+                return sitter;
+        }
+
+        public void setSitter(Sitter sitter) {
+                this.sitter = sitter;
+        }
 
         public int getId() {
                 return id;
@@ -58,12 +76,12 @@ public class Application {
                 this.status = status;
         }
 
-        public Date getDateOfCreation() {
-                return dateOfCreation;
+        public Date getDateCreated() {
+                return dateCreated;
         }
 
-        public void setDateOfCreation(Date dateOfCreation) {
-                this.dateOfCreation = dateOfCreation;
+        public void setDateCreated(Date dateCreated) {
+                this.dateCreated = dateCreated;
         }
 
         public Date getLastModified() {

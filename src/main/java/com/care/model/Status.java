@@ -5,7 +5,7 @@
         Used with jobs, Applications and Members.
 */
 
-package com.care.beans;
+package com.care.model;
 
 public enum Status {
     ACTIVE,

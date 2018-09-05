@@ -1,17 +1,36 @@
 
-package com.care.beans;
+package com.care.model;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 public class Job {
     private int id;
     private String title;
-    private int postedBy;
+    private int seekerId;
     private double hourlyPay;
     private Date startDate;
     private Date endDate;
     private Status status;
     private Date dateOfCreation;
+    private Seeker seeker;
+    private List<Application> applications;
+
+    public Seeker getSeeker() {
+        return seeker;
+    }
+
+    public void setSeeker(Seeker seeker) {
+        this.seeker = seeker;
+    }
+
+    public List<Application> getApplications() {
+        return applications;
+    }
+
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
+    }
 
     public static final Job EMPTY_JOB = new Job();
 
@@ -39,12 +58,12 @@ public class Job {
         this.title = title;
     }
 
-    public int getPostedBy() {
-        return postedBy;
+    public int getSeekerId() {
+        return seekerId;
     }
 
-    public void setPostedBy(int postedBy) {
-        this.postedBy = postedBy;
+    public void setSeekerId(int seekerId) {
+        this.seekerId = seekerId;
     }
 
     public Date getStartDate() {
@@ -84,7 +103,7 @@ public class Job {
         return "Job{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", postedBy=" + postedBy +
+                ", seekerId=" + seekerId +
                 ", hourlyPay=" + hourlyPay +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +

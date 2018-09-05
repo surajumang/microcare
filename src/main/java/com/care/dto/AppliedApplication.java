@@ -1,7 +1,5 @@
 package com.care.dto;
 
-import com.care.beans.Status;
-
 import java.util.Date;
 
 public class AppliedApplication {

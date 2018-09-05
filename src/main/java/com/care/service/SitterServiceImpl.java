@@ -1,8 +1,8 @@
 package com.care.service;
 
-import com.care.beans.Application;
-import com.care.beans.Job;
-import com.care.beans.Member;
+import com.care.model.Application;
+import com.care.model.Job;
+import com.care.model.Member;
 import com.care.dao.*;
 
 import java.sql.SQLException;
@@ -48,7 +48,7 @@ public class SitterServiceImpl implements SitterService {
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
 
         try {
-            status = applicationDAO.deleteApplication(member, applicationId);
+            status = applicationDAO.deleteApplication(applicationId);
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Error Closing application", e);
         }

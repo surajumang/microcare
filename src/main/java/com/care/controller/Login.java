@@ -1,8 +1,8 @@
 
 package com.care.controller;
 
-import com.care.beans.Member;
-import com.care.beans.MemberType;
+import com.care.model.Member;
+import com.care.model.MemberType;
 import com.care.dto.form.LoginDetails;
 import com.care.service.*;
 import com.care.validation.FormBean;

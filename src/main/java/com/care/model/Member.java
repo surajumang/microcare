@@ -1,10 +1,9 @@
 
-package com.care.beans;
+package com.care.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Member {
-        
         private int id;
         private String firstName;
         private String lastName;

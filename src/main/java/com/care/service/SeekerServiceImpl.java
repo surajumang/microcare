@@ -1,7 +1,7 @@
 package com.care.service;
 
-import com.care.beans.Job;
-import com.care.beans.Member;
+import com.care.model.Job;
+import com.care.model.Member;
 import com.care.dao.*;
 import com.care.dto.form.ApplicationDTO;
 import com.care.dto.form.JobDTO;
@@ -18,6 +18,11 @@ public class SeekerServiceImpl implements SeekerService {
     Logger logger = Logger.getLogger("SeekerServiceImpl");
 
     public SeekerServiceImpl(){    }
+
+    @Override
+    public boolean getSeeker() {
+        return false;
+    }
 
     public int postJob(Member member, JobDTO jobForm)  {
         return 0;
@@ -69,7 +74,7 @@ public class SeekerServiceImpl implements SeekerService {
 
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         try{
-            status = jobDAO.deleteJob(member, jobId);
+            status = jobDAO.deleteJob(jobId);
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Can't delete Job", e);
             status = 0;

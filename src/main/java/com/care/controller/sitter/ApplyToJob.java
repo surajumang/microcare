@@ -1,16 +1,14 @@
 package com.care.controller.sitter;
 
-import com.care.beans.Member;
+import com.care.model.Member;
 import com.care.controller.CommonUtil;
 import com.care.service.*;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ApplyToJob extends HttpServlet {

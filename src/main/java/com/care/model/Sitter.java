@@ -1,5 +1,5 @@
 
-package com.care.beans;
+package com.care.model;
 
 public class Sitter extends Member {
         private int id;
@@ -8,12 +8,10 @@ public class Sitter extends Member {
 
         public static final Sitter EMPTY_SITTER = new Sitter();
 
-        @Override
         public int getId() {
                 return id;
         }
 
-        @Override
         public void setId(int id) {
                 this.id = id;
         }

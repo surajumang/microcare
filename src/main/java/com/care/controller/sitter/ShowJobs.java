@@ -1,11 +1,9 @@
 package com.care.controller.sitter;
 
-import com.care.beans.Job;
-import com.care.beans.Member;
-import com.care.dto.form.JobDTO;
+import com.care.model.Job;
+import com.care.model.Member;
 import com.care.service.*;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
