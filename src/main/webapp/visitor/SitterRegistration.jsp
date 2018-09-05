@@ -16,28 +16,28 @@
     <body>
         <h1>Enter Your Details</h1>
         <form  action="${pageContext.request.contextPath}/visitor/SitterRegistration.do" method="post">
-            <input type="text" name="email" placeholder="Email" >
+            <input type="text" name="email" placeholder="Email" value="${formErrors.email}">
             <c:out value="${errors.email}"/><br>
 
-            <input type="text" name="firstName" placeholder="First Name" >
+            <input type="text" name="firstName" placeholder="First Name" value="${formErrors.firstName}" >
             <c:out value="${errors.firstName}"/><br>
 
-            <input type="text" name="lastName" placeholder="Last Name">
+            <input type="text" name="lastName" placeholder="Last Name" value="${formErrors.lastName}">
             <c:out value="${errors.lastName}"/><br>
 
-            <input type="text" name="address" placeholder="Address">
+            <input type="text" name="address" placeholder="Address" value="${formErrors.address}">
             <c:out value="${errors.address}"/><br>
 
-            <input type="text" name="phone" placeholder="Phone">
+            <input type="text" name="phone" placeholder="Phone" value="${formErrors.phone}">
             <c:out value="${errors.phone}"/><br>
 
-            <input type="text" name="zipCode" placeholder="Zip Code(Six digits)">
+            <input type="text" name="zipCode" placeholder="Zip Code(Six digits)" value="${formErrors.zipCode}">
             <c:out value="${errors.zipCode}"/><br>
 
-            <input type="text" name="experience" placeholder="Experience(Years)">
+            <input type="text" name="experience" placeholder="Experience(Years)" value="${formErrors.experience}">
             <c:out value="${errors.experience}"/><br>
 
-            <input type="text" name="expectedPay" placeholder="Expected Pay">
+            <input type="text" name="expectedPay" placeholder="Expected Pay" value="${formErrors.expectedPay}">
             <c:out value="${errors.expectedPay}"/><br>
 
             <input type="password" name="password" placeholder="Password" >

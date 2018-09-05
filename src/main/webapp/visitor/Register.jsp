@@ -20,6 +20,7 @@
         <form action="${pageContext.request.contextPath}/visitor/SeekerRegistration.jsp" method="post">
             <input type="submit" name="" value="Seeker">
         </form>
+        <br><br>
         <form action="${pageContext.request.contextPath}/visitor/SitterRegistration.jsp" method="post">
             <input type="submit" name="" value="Sitter">
         </form>
