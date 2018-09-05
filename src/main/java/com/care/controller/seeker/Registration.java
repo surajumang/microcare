@@ -1,14 +1,9 @@
 package com.care.controller.seeker;
 
-import com.care.beans.Member;
 import com.care.dto.form.SeekerRegistrationDTO;
-import com.care.dto.form.SitterRegistrationDTO;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
-import com.care.validation.FormValidator;
-import sun.rmi.runtime.Log;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

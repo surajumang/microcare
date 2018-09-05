@@ -4,6 +4,7 @@
 package com.care.dao;
 
 import com.care.model.Job;
+import com.care.model.Member;
 import com.care.model.Status;
 
 import java.sql.*;
@@ -41,6 +42,10 @@ public final class JobDAOImpl implements JobDAO {
         statement.setDate(5, job.getEndDate());
 
         return statement.executeUpdate();
+    }
+
+    public int deleteJob(int jobId) throws SQLException {
+        return 0;
     }
 
     public int editJob(Job job) throws SQLException {
