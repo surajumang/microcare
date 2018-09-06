@@ -15,7 +15,7 @@
     </head>
     <body>
         <h1>Enter Your Details</h1>
-        <form  action="${pageContext.request.contextPath}/visitor/SitterRegistration.do" method="post">
+        <form  action="${pageContext.request.contextPath}/visitor/SeekerRegistration.do" method="post">
             <input type="text" name="email" placeholder="Email" value="${formErrors.email}">
             <c:out value="${errors.email}"/><br>
 
@@ -47,6 +47,7 @@
             <c:out value="${errors.password2}"/><br>
 
             <input type="hidden" name="memberType" value="SITTER">
+            <c:set var="currentPage" scope="request" value="/visitor/SitterRegistration.jsp"/>
 
             <input type="submit" name="" value="Submit">
 

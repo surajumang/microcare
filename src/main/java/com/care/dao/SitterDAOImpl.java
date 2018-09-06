@@ -21,6 +21,9 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
     @Override
     public int addSitter(Sitter sitter) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
+        addMember(sitter);
+        sitter.setId(getMember(sitter.getEmail()).getId());
+
         PreparedStatement statement = connection.prepareStatement("INSERT INTO SITTER(ID, EXPERIENCE, EXPECTED_PAY)" +
                 "VALUES(?,?,?)");
         statement.setInt(1,sitter.getId());

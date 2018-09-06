@@ -17,10 +17,8 @@
     <body>
         <h1>Enter Your Details</h1>
         <div class="">
-            <form  action="${pageContext.request.contextPath}/visitor/SeekerRegistration.do" method="post">
-                <label for="mail">Email</label>
-                <input type="text" name="email" placeholder="Email" value="${formErrors.email}">
-                <c:out value="${errors.email}"/><br>
+            <form  action="${pageContext.request.contextPath}/sitter/EditProfile.do" method="post">
+
 
                 <label for="fname">First Name</label>
                 <input type="text" name="firstName" placeholder="First Name" value="${formErrors.firstName}">
@@ -42,25 +40,13 @@
                 <input type="text" name="zipCode" placeholder="Zip Code(Six digits)" value="${formErrors.zipCode}">
                 <c:out value="${errors.zipCode}"/><br>
 
-                <label> Spouse Name</label>
-                <input type="text" name="spouseName" placeholder="Spouse Name (optional)" value="${formErrors.spouseName}">
-                <c:out value="${errors.spouseName}"/><br>
+                <input type="text" name="experience" placeholder="Experience(Years)" value="${formErrors.experience}">
+                <c:out value="${errors.experience}"/><br>
 
-                <label>Number of Children</label>
-                <input type="text" name="children" placeholder="Number of Children(optional)" value="${formErrors.children}">
-                <c:out value="${errors.children}"/><br>
-
-                <label>Password</label>
-                <input type="password" name="password" placeholder="Password">
-                <c:out value="${errors.password}"/><br>
-
-                <label>Re enter the Password</label>
-                <input type="password" name="password2" placeholder="Password" >
-                <c:out value="${errors.password2}"/><br>
+                <input type="text" name="expectedPay" placeholder="Expected Pay" value="${formErrors.expectedPay}">
+                <c:out value="${errors.expectedPay}"/><br>
 
                 <input type="hidden" name="memberType" value="SEEKER">
-
-                <c:set var="currentPage" scope="request" value="/visitor/SeekerRegistration.jsp"/>
 
                 <input type="submit" name="" value="Submit">
 

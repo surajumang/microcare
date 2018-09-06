@@ -79,14 +79,6 @@
             <url-pattern>/visitor/SeekerRegistration.do</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-            <servlet-name>SitterRegistration</servlet-name>
-            <servlet-class>com.care.controller.sitter.Registration</servlet-class>
-    </servlet>
-    <servlet-mapping>
-            <servlet-name>SitterRegistration</servlet-name>
-            <url-pattern>/visitor/SitterRegistration.do</url-pattern>
-    </servlet-mapping>
 
     <servlet>
             <servlet-name>Login</servlet-name>

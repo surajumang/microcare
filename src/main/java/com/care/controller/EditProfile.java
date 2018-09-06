@@ -1,9 +1,9 @@
-package com.care.controller.seeker;
+package com.care.controller;
 
-import com.care.model.Member;
 import com.care.dto.form.RegistrationFormDTO;
 import com.care.dto.form.SeekerRegistrationDTO;
 import com.care.dto.form.SitterRegistrationDTO;
+import com.care.model.Member;
 import com.care.model.MemberType;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class Registration extends HttpServlet {
-    Logger logger = Logger.getLogger("SeekerRegistration");
+public class EditProfile extends HttpServlet {
+    Logger logger = Logger.getLogger("EditProfile");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,8 +32,6 @@ public class Registration extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String page = request.getParameter("currentPage");
-        logger.info(page);
-
         MemberType memberType = MemberType.valueOf(request.getParameter("memberType"));
         Class<? extends FormBean> detailPage;
 
@@ -54,12 +52,14 @@ public class Registration extends HttpServlet {
         logger.info(errors + " ");
         request.setAttribute("errors", errors);
         if(errors.isEmpty()){
-            page = "/index.jsp";
-            request.setAttribute("registrationMessage", "Registration SuccessFul. You can now log in");
+            page = "/"+memberType.name().toLowerCase()+"/Home.jsp";
             RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)registrationDetails;
 
             logger.info("Without errors");
             logger.info(registrationFormDTO.getMemberType());
+            /*
+            Set unmodifiebale attributes here.
+             */
             accountService.enroll(registrationFormDTO);
             logger.info("Back at servlet");
         }

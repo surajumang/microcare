@@ -20,7 +20,7 @@ public class AccountServiceImpl implements AccountService {
         Testing ObjectMapper. Check whether a seeker or a sitter has to be added.
          */
         int status = -1;
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        //MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         logger.info("Called enroll");
 
         if (registrationFormDTO.getMemberType().equals("SEEKER") ){
@@ -58,8 +58,8 @@ public class AccountServiceImpl implements AccountService {
         int status = -1;
 
         try {
-            memberDAO.addMember(sitter);
-            sitter.setId(memberDAO.getMember(sitter.getEmail()).getId());
+//            memberDAO.addMember(sitter);
+//            sitter.setId(memberDAO.getMember(sitter.getEmail()).getId());
             status = sitterDAO.addSitter(sitter);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);
@@ -96,17 +96,21 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public int editMember(int memberId, RegistrationFormDTO registrationFormDTO) {
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
 
-        try {
-            // Object Mapper needed here.
+        int status = -1;
+        logger.info("Called enroll");
 
-            memberDAO.editMember(new Member());
-            logger.info(memberId + " ");
-        } catch (java.sql.SQLException e) {
-            logger.log(Level.SEVERE, "Error fetching member");
+        if (registrationFormDTO.getMemberType().equals("SEEKER") ){
+            Seeker seeker = new Seeker();
+            ObjectMapper.mapObject(registrationFormDTO, seeker, true);
+            status = addSeeker(seeker);
         }
-        return 0;
+        else {
+            Sitter sitter = new Sitter();
+            ObjectMapper.mapObject(registrationFormDTO, sitter, true);
+            status = addSitter(sitter);
+        }
+        return status == 1 ;
     }
 
     public int editMember(String email, Member member) {

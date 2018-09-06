@@ -16,6 +16,7 @@
     <body>
         <div class="form1" al>
             <h1>welcome</h1>
+            <c:out value = "${registrationMessage}">
             <c:out value = "${message}">
             <form action="visitor/login.do" method="post">
                 <label>Email</label>
