@@ -2,6 +2,7 @@ package com.care.controller.sitter;
 
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
+import com.care.model.Sitter;
 import com.care.service.*;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,7 @@ public class ApplyToJob extends HttpServlet {
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         logger.info(currentMember.toString());
         logger.info("Called ApplyToJob" + currentMember);
-        int status = sitterService.applyToJob(currentMember, jobToApplyOn);
+        int status = sitterService.applyToJob( currentMember, jobToApplyOn);
 
         if (status == 1){
             // send the request to another servlet which will take it to apprropriate place.

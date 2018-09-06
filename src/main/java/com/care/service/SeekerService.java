@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface SeekerService extends Service {
 
-    boolean getSeeker();
+    Member getSeeker(int seekerId);
+
+    Job getJob(int jobId);
 
     int postJob(Member member, JobDTO jobForm);
 

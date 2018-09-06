@@ -31,11 +31,11 @@ public class Registration extends HttpServlet {
 
         //SitterService server = ServerFactory.getInstance("seeker");
         String page = "/ErrorPage.jsp";
-        FormBean reg = FormPopulator.populate(request, SitterRegistrationDTO.class);
-        logger.info(reg + " " );
+        FormBean registrationDetails = FormPopulator.populate(request, SitterRegistrationDTO.class);
+        logger.info(registrationDetails + " " );
         Map<String, String> errors = new HashMap<String, String>();
 
-        reg.validateCustom(errors);
+        registrationDetails.validateCustom(errors);
         logger.info(errors + " ");
 
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
@@ -43,13 +43,14 @@ public class Registration extends HttpServlet {
         if(errors.isEmpty()){
             logger.info("Without errors");
             page = "/visitor/index.jsp";
-            RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)reg;
+            RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)registrationDetails;
 
             logger.info(registrationFormDTO.getMemberType());
             accountService.enroll(registrationFormDTO);
             logger.info("Back at servlet");
         }
         request.setAttribute("errors", errors);
+        request.setAttribute("formErrors", (RegistrationFormDTO)registrationDetails);
         getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }

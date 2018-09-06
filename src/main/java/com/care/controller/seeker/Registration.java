@@ -4,6 +4,7 @@ import com.care.model.Member;
 import com.care.dto.form.RegistrationFormDTO;
 import com.care.dto.form.SeekerRegistrationDTO;
 import com.care.dto.form.SitterRegistrationDTO;
+import com.care.model.MemberType;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.ServiceFactory;
@@ -30,19 +31,35 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = "/visitor/SeekerRegistration.jsp";
-        FormBean reg = FormPopulator.populate(request, SeekerRegistrationDTO.class);
-        logger.info(reg + " " );
+        String page = request.getParameter("currentPage");
+        logger.info(page);
+
+        MemberType memberType = MemberType.valueOf(request.getParameter("memberType"));
+        Class<? extends FormBean> detailPage;
+
+        if (memberType == MemberType.SEEKER){
+            detailPage = SeekerRegistrationDTO.class;
+        }
+        else {
+            detailPage = SitterRegistrationDTO.class;
+        }
+
+        FormBean registrationDetails = FormPopulator.populate(request, detailPage);
+        logger.info(registrationDetails + " " );
         Map<String, String> errors = new HashMap<String, String>();
 
-        reg.validateCustom(errors);
+        registrationDetails.validateCustom(errors);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
 
         logger.info(errors + " ");
         request.setAttribute("errors", errors);
         if(errors.isEmpty()){
-            page = "/visitor/index.jsp";
-            RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)reg;
+            /*
+            Forward the rquest to Login or make the user logged in here and then redirect to the Home page.
+             */
+            page = "/index.jsp";
+            request.setAttribute("registrationMessage", "Registration SuccessFul. You can now log in");
+            RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)registrationDetails;
 
             logger.info("Without errors");
             logger.info(registrationFormDTO.getMemberType());
@@ -50,7 +67,8 @@ public class Registration extends HttpServlet {
             logger.info("Back at servlet");
         }
 
-        getServletContext().getRequestDispatcher(page).forward(request,response);
+        request.setAttribute("formErrors", (RegistrationFormDTO)registrationDetails);
+        response.sendRedirect(page);
 
     }
 }

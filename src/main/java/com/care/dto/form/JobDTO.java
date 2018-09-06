@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class JobDTO extends FormBean {
 
     private Logger logger = Logger.getLogger("JobDTO");
-
+    private String id;
     private String  seekerId;
     private String title;
     private String hourlyPay;
@@ -30,7 +30,15 @@ public class JobDTO extends FormBean {
         this.seekerId = seekerId;
     }
 
-    @Name(regex = "\\w+")
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Name(regex = "[a-zA-Z0-9 ]+", message = "AlphaNumeric only")
     public String getTitle() {
         return title;
     }
@@ -39,7 +47,7 @@ public class JobDTO extends FormBean {
         this.title = title;
     }
 
-    @Number(regex = "\\d+")
+    @Number(regex = "\\d{1,3}(\\.\\d{0,2})?")
     public String getHourlyPay() {
         return hourlyPay;
     }

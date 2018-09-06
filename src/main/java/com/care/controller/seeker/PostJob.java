@@ -32,28 +32,27 @@ public class PostJob extends HttpServlet {
         Check if user is logged in[Utility method]
         Set error parameter to be used by the Validator.
          */
-        String page ="/ErrorPage.jsp";
+        String page ="/seeker/PostJob.jsp";
         FormBean postJobForm = FormPopulator.populate(request, JobDTO.class);
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
 
         Map<String, String> errors = new HashMap<String, String>();
         postJobForm.validateCustom(errors);
-        request.setAttribute("errors", errors);
-
-        if(!errors.isEmpty()){
-            logger.info("Dispatch with errors.");
-            getServletContext().getRequestDispatcher("/seeker/PostJob.jsp").forward(request, response);
-            logger.info("callback");
-            return;
-        }
         JobDTO jobDTO = (JobDTO)postJobForm;
-        jobDTO.setSeekerId(String.valueOf(currentUser.getId()));
-        
-        SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-        int status = seekerService.postJob(currentUser, jobDTO);
+        int status = -1;
 
-        if (status >= 0){
-            page = "/seeker/Home.jsp";
+        request.setAttribute("errors", errors);
+        request.setAttribute("formErrors", jobDTO);
+
+        if(errors.isEmpty()){
+            logger.info("Without errors");
+            jobDTO.setSeekerId(String.valueOf(currentUser.getId()));
+
+            SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
+            status = seekerService.postJob(currentUser, jobDTO);
+            if (status >= 0){
+                page = "/seeker/Home.jsp";
+            }
         }
 
         getServletContext().getRequestDispatcher(page).forward(request, response);

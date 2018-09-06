@@ -21,11 +21,16 @@ public final class JobDAOImpl implements JobDAO {
     public Job getJob(int jobId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Get job method");
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM APPLICATION " +
-                "WHERE ID=?");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM JOB WHERE ID=?");
         statement.setInt(1,jobId);
         ResultSet resultSet = statement.executeQuery();
-        return populateJob(resultSet);
+        Job job = null;
+
+        if (resultSet.next()){
+            job = populateJob(resultSet);
+            logger.info(job + " ");
+        }
+        return job;
     }
     /*
     Post a job
@@ -46,15 +51,25 @@ public final class JobDAOImpl implements JobDAO {
 
     public int deleteJob(int jobId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS = ? WHERE ID = ?");
-        statement.setString(1, Status.INACTIVE.name());
+        logger.info(jobId + "***********");
+        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS=? WHERE ID = ?");
+        statement.setString(1, Status.CLOSED.name());
         statement.setInt(2, jobId);
 
         return statement.executeUpdate();
     }
 
     public int editJob(Job job) throws SQLException {
-        return addJob(job);
+
+        Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET TITLE = ?, START_DATE=?, END_DATE=?, HOURLY_PAY=? WHERE ID = ?");
+        statement.setString(1, job.getTitle());
+        statement.setDate(2, job.getStartDate());
+        statement.setDate(3, job.getEndDate());
+        statement.setDouble(4, job.getHourlyPay());
+        statement.setInt(5, job.getId());
+
+        return statement.executeUpdate();
     }
 
     /*
@@ -84,7 +99,7 @@ public final class JobDAOImpl implements JobDAO {
     public List<Job> getAllAvailableJobs(int sitterId) throws SQLException {
         List<Job> allAvailableJobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE MEMBER_ID = ?)");
+        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE SITTER_ID = ?)");
         statement.setInt(1, sitterId);
         ResultSet resultSet = statement.executeQuery();
 
@@ -133,7 +148,7 @@ public final class JobDAOImpl implements JobDAO {
         job.setEndDate(resultSet.getDate("END_DATE"));
         job.setStatus(Status.valueOf(resultSet.getString("STATUS")));
 
-        logger.info("Added one job successfully");
+        logger.info("Added one job successfully " + job);
         return job;
     }
 }

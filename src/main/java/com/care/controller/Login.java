@@ -44,14 +44,15 @@ public class Login extends HttpServlet{
             if (authenticationService.loginUser(loginDetails)){
                 Member member = accountService.getMember(loginDetails.getEmail());
                 if (member != Member.EMPTY_MEMBER){
+
                     request.getSession().setAttribute("currentUser" ,member);
                     String memberType = member.getMemberType().name().toLowerCase();
 
                     request.getSession().setAttribute("memberType" , memberType);
                     logger.info("Back at LoginServlet");
 
-                    page = "/" + memberType + "/Home.jsp";
-                    //page = setMemberPage(member.getMemberType());
+                    //page = "/" + memberType + "/Home.jsp";
+                    page = setMemberPage(member.getMemberType());
                 }
 
             }

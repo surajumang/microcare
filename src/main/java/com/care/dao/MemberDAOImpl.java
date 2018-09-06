@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.Collections;
 import java.util.logging.Logger;
 
 public class MemberDAOImpl implements MemberDAO {
@@ -24,6 +25,21 @@ public class MemberDAOImpl implements MemberDAO {
         logger.info("Connection acquired  :" );
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM MEMBER WHERE EMAIL=?");
         preparedStatement.setString(1, email);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        Member member = Member.EMPTY_MEMBER;
+        if (resultSet.next()){
+            member = populateMember(resultSet);
+        }
+        return member;
+    }
+
+    @Override
+    public Member getMember(int memberId) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+        logger.info("Connection acquired  :" );
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM MEMBER WHERE ID=?");
+        preparedStatement.setInt(1, memberId);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         Member member = Member.EMPTY_MEMBER;
@@ -50,14 +66,24 @@ public class MemberDAOImpl implements MemberDAO {
         return preparedStatement.executeUpdate();
     }
 
-    public int editMember(Member member) throws SQLException {
-        return addMember(member);
+    public int editMember(int memberId, Member member) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+        logger.info("Editing Member");
+        PreparedStatement statement = connection.prepareStatement("UPDATE MEMBER SET FIRST_NAME=?, LAST_NAME=?, PHONE=?, ADDRESS=?, ZIP_CODE=? WHERE ID=?");
+        statement.setString(1, member.getFirstName());
+        statement.setString(2, member.getLastName());
+        statement.setInt(3, member.getPhone());
+        statement.setString(4, member.getAddress());
+        statement.setInt(5, member.getZipCode());
+        statement.setInt(6, memberId);
+
+        return statement.executeUpdate();
     }
 
     public int deleteMember(int memberId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE MEMBER SET STATUS = ? WHERE ID = ?");
-        statement.setString(1, Status.INACTIVE.name());
+        statement.setString(1, Status.CLOSED.name());
         statement.setInt(2, memberId);
 
         return statement.executeUpdate();

@@ -32,12 +32,15 @@
             <input type="submit" name="ViewApplications" value="My Applications"/>
       </form>
       
-      <form class="" action="${pageContext.request.contextPath}/member/EditProfile.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/sitter/EditProfile.jsp" method="post">
             <input type="submit" name="EditProfile" value="Edit Profile"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/member/DeleteAccount.jsp" method="post">
-            <input type="submit" name="DeleteAccount" value="Delete Account" onclick="confirmDeletion(this.form)">
-      </form>
+
+      <div class="right">
+          <form class="" action="${pageContext.request.contextPath}/sitter/CloseAccount.do" method="post">
+               <input type="button" name="closeAccount" value="Close Account" onclick="confirmDeletion(this.form, 'close your account')">
+          </form>
+     </div>
 
 
       <jsp:include page="/footer.jsp"/>

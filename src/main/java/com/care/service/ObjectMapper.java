@@ -74,8 +74,12 @@ public class ObjectMapper {
                 Method getter = srcGetterMethods.get(destSetterMethodName);
 
                 Class returnType = getter.getReturnType();
+                Object getterVal = getter.invoke(src);
                 logger.info(setter.getName() + " --- > " + getter.getName());
-                setter.invoke(dest, getter.invoke(src));
+                if (getterVal == null){
+                    continue;
+                }
+                setter.invoke(dest, getterVal);
             }
         }
     }
@@ -117,7 +121,12 @@ public class ObjectMapper {
                 }else {
                     logger.info("Model populated using Static value of");
                     Method valueOf = argTypes[0].getMethod("valueOf", String.class);
-                    setter.invoke(dest, valueOf.invoke(null, getter.invoke(src)));
+                    Object getterValue = getter.invoke(src);
+                    logger.info(valueOf + "--------" + getterValue);
+
+                    if (getterValue == null || valueOf == null)
+                        continue;
+                    setter.invoke(dest, valueOf.invoke(null, getterValue));
                 }
 
             }

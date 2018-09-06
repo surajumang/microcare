@@ -15,7 +15,8 @@
         <p>First show the current information related to the Job in a
         filled form which the user can edit.</p>
 
-        <form action="PostJobServlet.do" method="post">
+        <form action="${pageContext.request.contextPath}/seeker/EditJob.do" method="post">
+
             <input type="text" name="title" placeholder="Job Title" value="${editJob.title}">
             <c:out value="${errors.title}"/><br>
 
@@ -27,6 +28,8 @@
 
             <input type="text" name="endDate" placeholder="End Date" value="${editJob.endDate}">
             <c:out value="${errors.endDate}"/><br>
+
+            <input type="hidden" name="id" value="${editJob.id}">
 
             <input type="submit" name="" value="Submit">
         </form>

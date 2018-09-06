@@ -18,16 +18,17 @@
      <p>Page for posting a job. It will show a form to the user.</p>
 
      <form class="" action="${pageContext.request.contextPath}/seeker/PostJob.do" method="post">
-         <input type="text" name="title" placeholder="Job Title" value="">
+
+         <input type="text" name="title" placeholder="Job Title" value="${formErrors.title}">
          <c:out value="${errors.title}"/>
          <br><br>
-         <input type="text" name="hourlyPay" placeholder="Hourly Pay" value="">
+         <input type="text" name="hourlyPay" placeholder="Hourly Pay" value="${formErrors.hourlyPay}">
          <c:out value="${errors.hourlyPay}"/>
          <br><br>
-         <input type="text" name="startDate" placeholder="Start Date(YYYY-MM-DD)" value="">
+         <input type="text" name="startDate" placeholder="Start Date(YYYY-MM-DD)" value="${formErrors.startDate}">
          <c:out value="${errors.startDate}"/>
          <br><br>
-         <input type="text" name="endDate" placeholder="End Date(YYYY-MM-DD)" value="">
+         <input type="text" name="endDate" placeholder="End Date(YYYY-MM-DD)" value="${formErrors.endDate}">
          <c:out value="${errors.endDate}"/>
          <br><br>
 

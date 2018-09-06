@@ -1,6 +1,7 @@
 package com.care.service;
 
 import com.care.dao.*;
+import com.care.dto.form.EditForm;
 import com.care.model.Member;
 import com.care.model.Seeker;
 import com.care.model.Sitter;
@@ -20,7 +21,7 @@ public class AccountServiceImpl implements AccountService {
         Testing ObjectMapper. Check whether a seeker or a sitter has to be added.
          */
         int status = -1;
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        //MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         logger.info("Called enroll");
 
         if (registrationFormDTO.getMemberType().equals("SEEKER") ){
@@ -58,8 +59,8 @@ public class AccountServiceImpl implements AccountService {
         int status = -1;
 
         try {
-            memberDAO.addMember(sitter);
-            sitter.setId(memberDAO.getMember(sitter.getEmail()).getId());
+//            memberDAO.addMember(sitter);
+//            sitter.setId(memberDAO.getMember(sitter.getEmail()).getId());
             status = sitterDAO.addSitter(sitter);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);
@@ -95,21 +96,45 @@ public class AccountServiceImpl implements AccountService {
         return 0;
     }
 
-    public int editMember(int memberId, RegistrationFormDTO registrationFormDTO) {
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+    public int editMember(int memberId, EditForm editForm) {
+        int status = -1;
+        logger.info("Called enroll");
 
-        try {
-            // Object Mapper needed here.
-
-            memberDAO.editMember(new Member());
-            logger.info(memberId + " ");
-        } catch (java.sql.SQLException e) {
-            logger.log(Level.SEVERE, "Error fetching member");
+        if (editForm.getMemberType().equals("SEEKER") ){
+            Seeker seeker = new Seeker();
+            ObjectMapper.mapObject(editForm, seeker, true);
+            status = editSeeker( memberId, seeker);
         }
-        return 0;
+        else {
+            Sitter sitter = new Sitter();
+            ObjectMapper.mapObject(editForm, sitter, true);
+            status = editSitter(memberId, sitter);
+        }
+        return status ;
     }
 
-    public int editMember(String email, Member member) {
-        return 0;
+    private int editSeeker(int seekerId, Seeker seeker) {
+
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
+        logger.info(seeker.toString());
+        int status = -1;
+        try {
+            status = seekerDAO.editSeeker(seekerId, seeker);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Can't add", e);
+        }
+        return status;
+    }
+
+    private int editSitter(int sitterId, Sitter sitter){
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
+        logger.info(sitter.toString());
+        int status = -1;
+        try {
+            status = sitterDAO.editSitter(sitterId, sitter);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Can't add", e);
+        }
+        return status;
     }
 }

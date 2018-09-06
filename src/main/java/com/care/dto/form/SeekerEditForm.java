@@ -5,10 +5,10 @@ import com.care.annotation.Number;
 
 import java.util.Map;
 
-public class SeekerRegistrationDTO extends RegistrationFormDTO {
+public class SeekerEditForm extends EditForm {
 
-    private String numberOfChildren;
     private String spouseName;
+    private String noOfChildren;
 
     @Name(required = false)
     public String getSpouseName() {
@@ -20,20 +20,20 @@ public class SeekerRegistrationDTO extends RegistrationFormDTO {
     }
 
     @Number(required = false)
-    public String getNumberOfChildren() {
-        return numberOfChildren;
+    public String getNoOfChildren() {
+        return noOfChildren;
     }
 
-    public void setNumberOfChildren(String numberOfChildren) {
-        this.numberOfChildren = numberOfChildren;
+    public void setNoOfChildren(String noOfChildren) {
+        this.noOfChildren = noOfChildren;
     }
 
     @Override
     public String toString() {
-        return "SeekerRegistrationDTO{" +
-                "numberOfChildren='" + numberOfChildren + '\'' +
-                ", spouseName='" + spouseName + '\'' +
-                '}' + super.toString() ;
+        return "SeekerEditForm{" +
+                "spouseName='" + spouseName + '\'' +
+                ", noOfChildren='" + noOfChildren + '\'' +
+                '}';
     }
 
     @Override

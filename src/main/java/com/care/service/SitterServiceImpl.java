@@ -2,8 +2,8 @@ package com.care.service;
 
 import com.care.model.Application;
 import com.care.model.Job;
-import com.care.model.Member;
 import com.care.dao.*;
+import com.care.model.Member;
 
 import java.sql.SQLException;
 import java.util.Collections;
@@ -17,12 +17,12 @@ public class SitterServiceImpl implements SitterService {
 
     public SitterServiceImpl(){ }
 
-    public List<Job> listAllAvailableJobs(Member member) {
+    public List<Job> listAllAvailableJobs(Member sitter) {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         List<Job> allJobs;
 
         try{
-            allJobs = jobDAO.getAllAvailableJobs(member.getId());
+            allJobs = jobDAO.getAllAvailableJobs(sitter.getId());
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Getting all Available Jobs" , e);
             allJobs = Collections.emptyList();
@@ -30,11 +30,11 @@ public class SitterServiceImpl implements SitterService {
         return allJobs;
     }
 
-    public List<Application> listAllApplications(Member member) {
+    public List<Application> listAllApplications(Member sitter) {
         ApplicationDAO applicationDAO= DAOFactory.get(ApplicationDAOImpl.class);
         List<Application> applications ;
         try{
-            applications = applicationDAO.getAllApplications(member.getId());
+            applications = applicationDAO.getAllApplications(sitter.getId());
         }catch (SQLException e){
             logger.log(Level.SEVERE , "All getApplications for Sitter", e);
             applications = Collections.emptyList();
@@ -42,12 +42,12 @@ public class SitterServiceImpl implements SitterService {
         return applications;
     }
 
-    public int applyToJob(Member member, int jobId) {
+    public int applyToJob(Member sitter, int jobId) {
 
         return 0;
     }
 
-    public int deleteApplication(Member member, int applicationId) {
+    public int deleteApplication(Member sitter, int applicationId) {
         int status = 0;
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
         try {
