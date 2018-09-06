@@ -2,7 +2,6 @@ package com.care.service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -24,8 +23,8 @@ public class ObjectMapper {
 
     public static void mapObject(Object src, Object dest, boolean strict ){
 
-        srcGetterMethods = new HashMap<>();
-        destSetterMethods = new HashMap<>();
+        srcGetterMethods = new HashMap<String, Method>();
+        destSetterMethods = new HashMap<String, Method>();
         /*
         Fetch getters from the src
          */
