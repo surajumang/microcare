@@ -21,7 +21,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
     public int addApplication(Application application) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO APPLICATION (JOB_ID, MEMBER_ID, EXPECTED_PAY)" +
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO APPLICATION (JOB_ID, SITTER_ID, EXPECTED_PAY)" +
                 "VALUES(?,?,?)");
         statement.setInt(1,application.getJobId());
         statement.setInt(2, application.getSitterId());
@@ -48,7 +48,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
      */
     public List<Application> getAllApplications(int sitterId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT APPLICATION.ID, TITLE, EXPECTED_PAY, HOURLY_PAY, APPLICATION.STATUS FROM APPLICATION INNER JOIN JOB ON JOB.ID = APPLICATION.JOB_ID WHERE MEMBER_ID = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT APPLICATION.ID, TITLE, EXPECTED_PAY, HOURLY_PAY, APPLICATION.STATUS FROM APPLICATION INNER JOIN JOB ON JOB.ID = APPLICATION.JOB_ID WHERE SITTER_ID = ?");
         statement.setInt(1, sitterId);
 
         ResultSet resultSet = statement.executeQuery();
@@ -77,7 +77,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         List<Application> applications = new ArrayList<Application>();
         logger.info("Getting all application on a JOB");
 
-        PreparedStatement statement = connection.prepareStatement("SELECT JOB.ID, JOB.TITLE, MEMBER.FIRST_NAME, MEMBER.LAST_NAME, APPLICATION.STATUS, APPLICATION.EXPECTED_PAY, JOB_ID FROM APPLICATION INNER JOIN MEMBER ON APPLICATION.MEMBER_ID = MEMBER.ID INNER JOIN  JOB ON APPLICATION.JOB_ID = JOB.ID WHERE APPLICATION.JOB_ID = ? AND APPLICATION.STATUS = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT JOB.ID, JOB.TITLE, MEMBER.FIRST_NAME, MEMBER.LAST_NAME, APPLICATION.STATUS, APPLICATION.EXPECTED_PAY, JOB_ID FROM APPLICATION INNER JOIN MEMBER ON APPLICATION.SITTER_ID = MEMBER.ID INNER JOIN  JOB ON APPLICATION.JOB_ID = JOB.ID WHERE APPLICATION.JOB_ID = ? AND APPLICATION.STATUS = ?");
         statement.setInt(1, jobId);
         statement.setString(2,Status.ACTIVE.name());
         logger.info("Done with query");
@@ -111,7 +111,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         Connection connection = ConnectionUtil.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE ID = ?");
-        statement.setString(1, Status.INACTIVE.name());
+        statement.setString(1, Status.CLOSED.name());
         statement.setInt(2,applicationId);
 
         return statement.executeUpdate();
@@ -119,8 +119,8 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
     public int deleteAllApplications(int memberId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE MEMBER_ID = ?");
-        statement.setString(1, Status.INACTIVE.name());
+        PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE SITTER_ID = ?");
+        statement.setString(1, Status.CLOSED.name());
         statement.setInt(2, memberId);
 
         return statement.executeUpdate();
@@ -133,7 +133,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
         application.setId(resultSet.getInt("ID"));
         application.setJobId(resultSet.getInt("JOB_ID"));
-        application.setSitterId(resultSet.getInt("MEMBER_ID"));
+        application.setSitterId(resultSet.getInt("SITTER_ID"));
         application.setExpectedPay(resultSet.getDouble("EXPECTED_PAY"));
         application.setStatus(Status.valueOf(resultSet.getString("STATUS")));
         application.setDateCreated(resultSet.getDate("DATE_CREATED"));

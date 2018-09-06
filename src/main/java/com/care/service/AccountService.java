@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.dto.form.EditForm;
 import com.care.model.Member;
 import com.care.dto.form.RegistrationFormDTO;
 
@@ -11,5 +12,5 @@ public interface AccountService extends Service {
 
     int deleteMember(int memberId);
 
-    int editMember(int memberId, RegistrationFormDTO registrationFormDTO);
+    int editMember(int memberId, EditForm editForm);
 }

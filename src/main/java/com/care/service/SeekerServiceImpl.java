@@ -6,6 +6,7 @@ import com.care.model.Member;
 import com.care.dao.*;
 import com.care.dto.form.ApplicationDTO;
 import com.care.dto.form.JobDTO;
+import com.care.model.Seeker;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,8 +21,27 @@ public class SeekerServiceImpl implements SeekerService {
 
     public SeekerServiceImpl(){    }
 
-    public boolean getSeeker() {
-        return false;
+    public Member getSeeker(int seekerId) {
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
+        Seeker seeker = Seeker.EMPTY_SEEKER;
+        try{
+            seekerDAO.getSeeker(seekerId);
+        }catch(SQLException e){
+            logger.log(Level.SEVERE, "getting seeker", e);
+        }
+        return seeker;
+    }
+
+    @Override
+    public Job getJob(int jobId) {
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        Job job = Job.EMPTY_JOB;
+        try {
+            job = jobDAO.getJob(jobId);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "exception Getting a single job", e);
+        }
+        return job;
     }
 
     public int postJob(Member member, JobDTO jobForm)  {
@@ -78,7 +98,19 @@ public class SeekerServiceImpl implements SeekerService {
     }
 
     public int editJob(Member member, JobDTO jobForm) {
-        return 0;
+        int status = 1;
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        Job job = new Job();
+        ObjectMapper.mapObject(jobForm, job, true);
+
+        try{
+            status = jobDAO.editJob(job);
+        }catch (SQLException e){
+            logger.log(Level.SEVERE, "Can't edit a Job", e);
+        }
+        logger.info("------- " +status + "-------- ");
+
+        return status;
     }
 
     public int closeJob(Member member, int jobId)  {

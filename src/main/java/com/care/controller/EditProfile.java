@@ -1,8 +1,6 @@
 package com.care.controller;
 
-import com.care.dto.form.RegistrationFormDTO;
-import com.care.dto.form.SeekerRegistrationDTO;
-import com.care.dto.form.SitterRegistrationDTO;
+import com.care.dto.form.*;
 import com.care.model.Member;
 import com.care.model.MemberType;
 import com.care.service.AccountService;
@@ -21,6 +19,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class EditProfile extends HttpServlet {
+
     Logger logger = Logger.getLogger("EditProfile");
 
     @Override
@@ -31,40 +30,45 @@ public class EditProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = request.getParameter("currentPage");
-        MemberType memberType = MemberType.valueOf(request.getParameter("memberType"));
+        Member currentUser = (Member) request.getSession().getAttribute("currentUser");
+        MemberType memberType = currentUser.getMemberType();
+        String page = "/"+ memberType.name().toLowerCase()+"/EditProfile.jsp";
+
         Class<? extends FormBean> detailPage;
 
         if (memberType == MemberType.SEEKER){
-            detailPage = SeekerRegistrationDTO.class;
+            detailPage = SeekerEditForm.class;
         }
         else {
-            detailPage = SitterRegistrationDTO.class;
+            detailPage = SitterEditForm.class;
         }
 
-        FormBean registrationDetails = FormPopulator.populate(request, detailPage);
-        logger.info(registrationDetails + " " );
+        FormBean editDetails = FormPopulator.populate(request, detailPage);
+        logger.info(editDetails + " " );
         Map<String, String> errors = new HashMap<String, String>();
 
-        registrationDetails.validateCustom(errors);
+        editDetails.validateCustom(errors);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
 
         logger.info(errors + " ");
         request.setAttribute("errors", errors);
         if(errors.isEmpty()){
             page = "/"+memberType.name().toLowerCase()+"/Home.jsp";
-            RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)registrationDetails;
+            EditForm editForm = (EditForm) editDetails;
 
             logger.info("Without errors");
-            logger.info(registrationFormDTO.getMemberType());
-            /*
-            Set unmodifiebale attributes here.
-             */
-            accountService.enroll(registrationFormDTO);
+            logger.info(editForm.getMemberType());
+
+            accountService.editMember(currentUser.getId(), editForm);
             logger.info("Back at servlet");
         }
 
-        request.setAttribute("formErrors", (RegistrationFormDTO)registrationDetails);
+        if (memberType == MemberType.SEEKER){
+            request.setAttribute("formErrors", (SeekerEditForm)editDetails);
+        }else{
+            request.setAttribute("formErrors", (SitterEditForm)editDetails);
+        }
+
         request.getRequestDispatcher(page).forward(request,response);
 
     }

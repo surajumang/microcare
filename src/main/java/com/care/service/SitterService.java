@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface SitterService extends Service{
     //make sure that the user invoking this is a Sitter.
-    List<Job> listAllAvailableJobs(Member member);
+    List<Job> listAllAvailableJobs(Member sitter);
 
     // check if logged in user is the one whose getApplications will be shown.
-    List<Application> listAllApplications(Member member);
+    List<Application> listAllApplications(Member sitter);
 
     //check if already applied to job
-    int applyToJob(Member member, int jobId);
+    int applyToJob(Member sitter, int jobId);
 
     // check if user is deleting an application which belongs to it.
-    int deleteApplication(Member member, int applicationId);
+    int deleteApplication(Member sitter, int applicationId);
 
 }

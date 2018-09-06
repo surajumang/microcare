@@ -2,6 +2,7 @@ package com.care.controller.sitter;
 
 import com.care.model.Application;
 import com.care.model.Member;
+import com.care.model.Sitter;
 import com.care.service.ServiceFactory;
 import com.care.service.SitterService;
 import com.care.service.SitterServiceImpl;
@@ -29,7 +30,7 @@ public class ShowApplications extends HttpServlet {
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
 
-        List<Application> allMyApplications = sitterService.listAllApplications(currentMember);
+        List<Application> allMyApplications = sitterService.listAllApplications( currentMember);
 
         if (allMyApplications != null){
             page = "/sitter/ShowMyApplications.jsp";

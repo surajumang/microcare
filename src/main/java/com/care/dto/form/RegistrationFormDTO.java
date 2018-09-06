@@ -26,7 +26,7 @@ public class RegistrationFormDTO extends FormBean{
     private String phone;
 
 
-    @Email
+    @Email(message = "Email must be alphanumeric and contain an @")
     public String getEmail() {
         return email;
     }
@@ -53,7 +53,7 @@ public class RegistrationFormDTO extends FormBean{
         this.lastName = lastName;
     }
 
-    @Number(regex = "\\d{6}")
+    @Number(regex = "\\d{6}", message = "exactly six digits required")
     public String getZipCode() {
         return zipCode;
     }
@@ -65,7 +65,7 @@ public class RegistrationFormDTO extends FormBean{
     public String getPassword() {
         return password;
     }
-
+    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "Must be 5 or more characters without whitespaces ")
     public void setPassword(String password) {
         this.password = password;
     }
@@ -94,7 +94,7 @@ public class RegistrationFormDTO extends FormBean{
         this.memberType = memberType;
     }
 
-    @Number(regex = "\\d{10}")
+    @Number(regex = "\\d{10}", message = "Must be exactly 10 digits ")
     public String getPhone() {
         return phone;
     }
@@ -116,7 +116,7 @@ public class RegistrationFormDTO extends FormBean{
         boolean flag = false;
 
         if(! password.equals(password2)){
-            errors.put("password2", "Passwords don't match");
+            errors.put("password2", "Passwords should match");
         }
 
 

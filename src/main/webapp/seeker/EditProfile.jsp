@@ -15,6 +15,7 @@
     </head>
 
     <body>
+    <jsp:include page="/header.jsp"/>
         <h1>Enter Your Details</h1>
         <div class="">
             <form  action="${pageContext.request.contextPath}/seeker/EditProfile.do" method="post">
@@ -44,10 +45,8 @@
                 <c:out value="${errors.spouseName}"/><br>
 
                 <label>Number of Children</label>
-                <input type="text" name="children" placeholder="Number of Children(optional)" value="$formErrors.children">
-                <c:out value="${errors.children}"/><br>
-
-
+                <input type="text" name="children" placeholder="Number of Children(optional)" value="${formErrors.noOfChildren}">
+                <c:out value="${errors.noOfChildren}"/><br>
 
                 <input type="hidden" name="memberType" value="SEEKER">
 

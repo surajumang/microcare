@@ -4,7 +4,6 @@
 
 package com.care.dao;
 
-import com.care.model.Application;
 import com.care.model.Member;
 import com.care.model.Sitter;
 
@@ -33,16 +32,16 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
         return statement.executeUpdate();
     }
 
-    public int applyToJob(Application application) throws SQLException {
-        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
-        return applicationDAO.addApplication(application);
-    }
+    @Override
+    public int editSitter(int sitterId, Sitter sitter) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+        editMember(sitterId, sitter);
 
-    public int closeApplication(int applicationId) throws SQLException {
-        return 0;
-    }
+        PreparedStatement statement = connection.prepareStatement("UPDATE SITTER SET EXPERIENCE=?, EXPECTED_PAY=? WHERE ID =?");
+        statement.setInt(1, sitter.getExperience());
+        statement.setDouble(2, sitter.getExpectedPay());
+        statement.setInt(3, sitterId);
 
-    public Member getMember(String email) throws SQLException {
-        return null;
+        return statement.executeUpdate();
     }
 }

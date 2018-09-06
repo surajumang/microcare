@@ -2,6 +2,7 @@ package com.care.controller.sitter;
 
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
+import com.care.model.Sitter;
 import com.care.service.*;
 
 import javax.servlet.ServletException;

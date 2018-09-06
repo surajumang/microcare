@@ -1,6 +1,7 @@
 package com.care.service;
 
 import com.care.dao.*;
+import com.care.dto.form.EditForm;
 import com.care.model.Member;
 import com.care.model.Seeker;
 import com.care.model.Sitter;
@@ -95,25 +96,45 @@ public class AccountServiceImpl implements AccountService {
         return 0;
     }
 
-    public int editMember(int memberId, RegistrationFormDTO registrationFormDTO) {
-
+    public int editMember(int memberId, EditForm editForm) {
         int status = -1;
         logger.info("Called enroll");
 
-        if (registrationFormDTO.getMemberType().equals("SEEKER") ){
+        if (editForm.getMemberType().equals("SEEKER") ){
             Seeker seeker = new Seeker();
-            ObjectMapper.mapObject(registrationFormDTO, seeker, true);
-            status = addSeeker(seeker);
+            ObjectMapper.mapObject(editForm, seeker, true);
+            status = editSeeker( memberId, seeker);
         }
         else {
             Sitter sitter = new Sitter();
-            ObjectMapper.mapObject(registrationFormDTO, sitter, true);
-            status = addSitter(sitter);
+            ObjectMapper.mapObject(editForm, sitter, true);
+            status = editSitter(memberId, sitter);
         }
-        return status == 1 ;
+        return status ;
     }
 
-    public int editMember(String email, Member member) {
-        return 0;
+    private int editSeeker(int seekerId, Seeker seeker) {
+
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
+        logger.info(seeker.toString());
+        int status = -1;
+        try {
+            status = seekerDAO.editSeeker(seekerId, seeker);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Can't add", e);
+        }
+        return status;
+    }
+
+    private int editSitter(int sitterId, Sitter sitter){
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
+        logger.info(sitter.toString());
+        int status = -1;
+        try {
+            status = sitterDAO.editSitter(sitterId, sitter);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Can't add", e);
+        }
+        return status;
     }
 }

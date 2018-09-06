@@ -47,8 +47,8 @@
                 <c:out value="${errors.spouseName}"/><br>
 
                 <label>Number of Children</label>
-                <input type="text" name="children" placeholder="Number of Children(optional)" value="${formErrors.children}">
-                <c:out value="${errors.children}"/><br>
+                <input type="text" name="children" placeholder="Number of Children(optional)" value="${formErrors.numberOfChildren}">
+                <c:out value="${errors.numberOfChildren}"/><br>
 
                 <label>Password</label>
                 <input type="password" name="password" placeholder="Password">
@@ -59,8 +59,9 @@
                 <c:out value="${errors.password2}"/><br>
 
                 <input type="hidden" name="memberType" value="SEEKER">
+                <input type="hidden" name="currentPage" value="/visitor/SeekerRegistration.jsp">
 
-                <c:set var="currentPage" scope="request" value="/visitor/SeekerRegistration.jsp"/>
+
 
                 <input type="submit" name="" value="Submit">
 

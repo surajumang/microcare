@@ -54,6 +54,9 @@ public class Registration extends HttpServlet {
         logger.info(errors + " ");
         request.setAttribute("errors", errors);
         if(errors.isEmpty()){
+            /*
+            Forward the rquest to Login or make the user logged in here and then redirect to the Home page.
+             */
             page = "/index.jsp";
             request.setAttribute("registrationMessage", "Registration SuccessFul. You can now log in");
             RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)registrationDetails;
@@ -65,7 +68,7 @@ public class Registration extends HttpServlet {
         }
 
         request.setAttribute("formErrors", (RegistrationFormDTO)registrationDetails);
-        request.getRequestDispatcher(page).forward(request,response);
+        response.sendRedirect(page);
 
     }
 }

@@ -9,6 +9,7 @@ package com.care.model;
 
 public enum Status {
     ACTIVE,
-    INACTIVE,
+    CLOSED,
+    EXPIRED,
 
 }

@@ -144,12 +144,48 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ShowJobToEdit</servlet-name>
+        <servlet-class>com.care.controller.seeker.ShowJobToEdit</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowJobToEdit</servlet-name>
+        <url-pattern>/seeker/ShowJobToEdit.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EditJob</servlet-name>
+        <servlet-class>com.care.controller.seeker.EditJob</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditJob</servlet-name>
+        <url-pattern>/seeker/EditJob.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
             <servlet-name>ShowMyApplications</servlet-name>
             <servlet-class>com.care.controller.sitter.ShowApplications</servlet-class>
     </servlet>
     <servlet-mapping>
             <servlet-name>ShowMyApplications</servlet-name>
             <url-pattern>/sitter/ShowMyApplications.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SitterEditProfile</servlet-name>
+        <servlet-class>com.care.controller.EditProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SitterEditProfile</servlet-name>
+        <url-pattern>/sitter/EditProfile.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SeekerEditProfile</servlet-name>
+        <servlet-class>com.care.controller.EditProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SeekerEditProfile</servlet-name>
+        <url-pattern>/seeker/EditProfile.do</url-pattern>
     </servlet-mapping>
 
     <servlet>

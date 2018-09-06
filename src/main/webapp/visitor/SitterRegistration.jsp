@@ -47,7 +47,8 @@
             <c:out value="${errors.password2}"/><br>
 
             <input type="hidden" name="memberType" value="SITTER">
-            <c:set var="currentPage" scope="request" value="/visitor/SitterRegistration.jsp"/>
+            <input type="hidden" name="currentPage" value="/visitor/SitterRegistration.jsp">
+
 
             <input type="submit" name="" value="Submit">
 

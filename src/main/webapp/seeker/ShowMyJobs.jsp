@@ -68,14 +68,12 @@
                 <td>
                     <form action="${pageContext.request.contextPath}/seeker/ShowJobToEdit.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
-
                         <input type="submit" name="" value="Edit">
                     </form>
                 </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/seeker/DeleteJob.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
-
                         <input type="button" name="" value="Delete Job" onclick="confirmDeletion(this.form)">
                     </form>
                 </td>

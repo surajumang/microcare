@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
 public class FormPopulator {
-    public static FormBean populate(HttpServletRequest request, Class<? extends FormBean> form){
+    public static <T extends FormBean> T populate(HttpServletRequest request, Class<T> form){
         /*
             Go through the methods/fields of form and find the same in the request scope.
          */
@@ -44,6 +44,6 @@ public class FormPopulator {
                 }
             }
         }
-        return ret;
+        return (T)ret;
     }
 }

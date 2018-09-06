@@ -1,16 +1,26 @@
 package com.care.dto.form;
 
-public class EditInfo {
+import com.care.annotation.Name;
+import com.care.annotation.Number;
+import com.care.validation.FormBean;
+import com.care.validation.FormValidator;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class EditForm extends FormBean {
+    private Logger logger = Logger.getLogger("EditProfile");
 
     private String firstName;
     private String lastName;
     private String zipCode;
     private String memberType;
-    private String password;
-    private String password2;
     private String address;
     private String phone;
 
+    @Name
     public String getFirstName() {
         return firstName;
     }
@@ -18,7 +28,7 @@ public class EditInfo {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
+    @Name
     public String getLastName() {
         return lastName;
     }
@@ -26,7 +36,7 @@ public class EditInfo {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
+    @Number(regex = "\\d{6}", message = "Must be exactly six digits")
     public String getZipCode() {
         return zipCode;
     }
@@ -43,22 +53,6 @@ public class EditInfo {
         this.memberType = memberType;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword2() {
-        return password2;
-    }
-
-    public void setPassword2(String password2) {
-        this.password2 = password2;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -66,7 +60,7 @@ public class EditInfo {
     public void setAddress(String address) {
         this.address = address;
     }
-
+    @Number(regex = "\\d{10}", message = "Must be exactly ten digits only")
     public String getPhone() {
         return phone;
     }
@@ -76,16 +70,13 @@ public class EditInfo {
     }
 
     @Override
-    public String toString() {
-        return "EditInfo{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", memberType='" + memberType + '\'' +
-                ", password='" + password + '\'' +
-                ", password2='" + password2 + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public void validateCustom(Map<String, String> errors) {
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            logger.log(Level.SEVERE, "While validating", e);
+        } catch (IllegalAccessException e) {
+            logger.log(Level.SEVERE, "While validating", e);
+        }
     }
 }

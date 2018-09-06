@@ -30,7 +30,7 @@ public class CloseJob extends HttpServlet {
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
-        logger.info("Called CloseApplication" + currentMember);
+        logger.info("Called CloseApplication  " + currentMember);
 
         int status = seekerService.closeJob(currentMember, jobToBeClosed);
         if (status == 1){
