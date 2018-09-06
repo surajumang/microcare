@@ -14,6 +14,8 @@ public interface SitterDAO extends DAO {
 
     int editSitter(int sitterId, Sitter sitter) throws SQLException;
 
+    Sitter getSitter(int memberId) throws SQLException;
+
     /*
     Sitter close job may be added here.
      */

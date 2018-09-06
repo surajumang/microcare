@@ -4,12 +4,10 @@ import com.care.model.Application;
 import com.care.model.Job;
 import com.care.model.Member;
 import com.care.dao.*;
-import com.care.dto.form.ApplicationDTO;
 import com.care.dto.form.JobDTO;
 import com.care.model.Seeker;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,7 +19,7 @@ public class SeekerServiceImpl implements SeekerService {
 
     public SeekerServiceImpl(){    }
 
-    public Member getSeeker(int seekerId) {
+    public Seeker getSeeker(int seekerId) {
         SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         Seeker seeker = Seeker.EMPTY_SEEKER;
         try{

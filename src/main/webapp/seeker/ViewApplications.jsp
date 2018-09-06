@@ -28,7 +28,7 @@ tr:nth-child(even) {
 </head>
     <body>
     <jsp:include page="/header.jsp"/>
-        <center><h2>${applications[0].title}</h2></center>
+        <center><h2>${getApplications[0].job.title}</h2></center>
         <h2>html table</h2>
         <table>
             <thead>
@@ -39,10 +39,10 @@ tr:nth-child(even) {
                     <td>Expected Pay</td>
                 </tr>
             </thead>
-            <c:forEach var="app" items="${applications}">
+            <c:forEach var="app" items="${getApplications}">
             <tr>
-                <td>${app.firstName}</td>
-                <td>${app.lastName}</td>
+                <td>${app.sitter.firstName}</td>
+                <td>${app.sitter.lastName}</td>
                 <td>${app.status}</td>
                 <td>${app.expectedPay}</td>
             </tr>

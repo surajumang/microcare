@@ -1,18 +1,19 @@
 package com.care.service;
 
 import com.care.dto.form.ApplicationDTO;
-import com.care.model.Application;
-import com.care.model.Job;
+import com.care.model.*;
 import com.care.dao.*;
-import com.care.model.Member;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SitterServiceImpl implements SitterService {
+public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
 
     private Logger logger = Logger.getLogger("SitterServiceImpl");
 
@@ -53,6 +54,17 @@ public class SitterServiceImpl implements SitterService {
             logger.log(Level.SEVERE, "While getting a Job", e);
         }
         return job;
+    }
+
+    @Override
+    public Sitter getSitter(int sitterId) {
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
+        Sitter sitter = Sitter.EMPTY_SITTER;
+
+        try {
+            sitter = sitterDAO.get
+        }
+        return;
     }
 
     public int applyToJob(ApplicationDTO applicationDTO) {

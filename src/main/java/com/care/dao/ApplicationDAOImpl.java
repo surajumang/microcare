@@ -99,6 +99,8 @@ public class ApplicationDAOImpl implements ApplicationDAO {
             application.setSitter(sitter);
             application.setJob(job);
 
+            logger.info(application + " ");
+
             applications.add(application);
         }
 

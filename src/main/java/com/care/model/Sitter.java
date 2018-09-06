@@ -4,7 +4,7 @@ package com.care.model;
 public class Sitter extends Member {
         private int id;
         private int experience;
-        private int expectedPay;
+        private double expectedPay;
 
         public static final Sitter EMPTY_SITTER = new Sitter();
 
@@ -24,11 +24,11 @@ public class Sitter extends Member {
                 this.experience = experience;
         }
 
-        public int getExpectedPay() {
+        public double getExpectedPay() {
                 return expectedPay;
         }
 
-        public void setExpectedPay(int expectedPay) {
+        public void setExpectedPay(double expectedPay) {
                 this.expectedPay = expectedPay;
         }
 

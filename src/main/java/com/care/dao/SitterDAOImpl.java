@@ -9,6 +9,7 @@ import com.care.model.Sitter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -43,5 +44,22 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
         statement.setInt(3, sitterId);
 
         return statement.executeUpdate();
+    }
+
+    @Override
+    public Sitter getSitter(int memberId) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+        Member member = getMember(memberId);
+        Sitter sitter = new Sitter();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM SITTER WHERE ID =?");
+        statement.setInt(1, memberId);
+
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()){
+            sitter.setId(resultSet.getInt("ID"));
+
+        }
+        return ;
     }
 }

@@ -33,7 +33,7 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
     }
 
     @Override
-    public Member getSeeker(int seekerId) throws SQLException {
+    public Seeker getSeeker(int seekerId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         Member member = getMember(seekerId);
         Seeker seeker = new Seeker();

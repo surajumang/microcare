@@ -2,7 +2,6 @@ package com.care.dao;
 
 import com.care.model.Application;
 import com.care.model.Job;
-import com.care.model.Member;
 import com.care.model.Seeker;
 
 import java.sql.SQLException;
@@ -12,7 +11,7 @@ public interface SeekerDAO extends DAO {
 
     int addSeeker(Seeker seeker) throws SQLException;
 
-    Member getSeeker(int seekerId) throws SQLException;
+    Seeker getSeeker(int seekerId) throws SQLException;
 
     int editSeeker(int seekerId, Seeker seeker) throws SQLException;
 

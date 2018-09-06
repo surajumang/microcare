@@ -17,13 +17,16 @@
         <div class="form1" al>
             <h1>welcome</h1>
             <h2>${registrationMessage}</h2>
+            <p>${nonExistingEmail}</p>
+            <p>${invalidCredentials}</p>
+
             <c:out value = "${message}">
             <form action="visitor/login.do" method="post">
                 <label>Email</label>
                 <input type="text" name="email" placeholder="User Name">
-                <br><br>
+                <label>Email</label>
                 <input type="password" name="password" placeholder="Password">
-                <br><br>
+
                 <input type="submit" name="sb" value="Submit">
             </form>
             New User

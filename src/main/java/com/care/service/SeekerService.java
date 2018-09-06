@@ -4,12 +4,13 @@ import com.care.model.Application;
 import com.care.model.Job;
 import com.care.model.Member;
 import com.care.dto.form.JobDTO;
+import com.care.model.Seeker;
 
 import java.util.List;
 
 public interface SeekerService extends Service {
 
-    Member getSeeker(int seekerId);
+    Seeker getSeeker(int seekerId);
 
     Job getJob(int jobId);
 
