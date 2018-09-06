@@ -1,63 +1,39 @@
 package com.care.dto.form;
 
-import com.care.annotation.Name;
 import com.care.annotation.Number;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ApplicationDTO extends FormBean {
 
-    private String id;
-    private String title;
-    private String firstName;
-    private String lastName;
-    private String status;
+    Logger logger = Logger.getLogger("ApplicationDTO");
+
+    private String jobId;
+    private String sitterId;
     private String expectedPay;
 
-    public String getId() {
-        return id;
+    public String getJobId() {
+        return jobId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
     }
 
-    @Name
-    public String getTitle() {
-        return title;
+    public String getSitterId() {
+        return sitterId;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    @Name
-    public String getFirstName() {
-        return firstName;
+    public void setSitterId(String sitterId) {
+        this.sitterId = sitterId;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    @Name
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    @Number
+    @Number(required = true, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "At Max three digits before decimal")
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -66,17 +42,14 @@ public class ApplicationDTO extends FormBean {
         this.expectedPay = expectedPay;
     }
 
-    /*
-    Call the validator from this method and when it returns adds it's own error messages.
-     */
     @Override
     public void validateCustom(Map<String, String> errors) {
         try {
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {
-
+            logger.log(Level.SEVERE, "Invok", e);
         } catch (IllegalAccessException e) {
-
+            logger.log(Level.SEVERE, "ILLgalAccess", e);
         }
     }
 }

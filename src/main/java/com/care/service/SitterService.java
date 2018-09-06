@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.dto.form.ApplicationDTO;
 import com.care.model.Application;
 import com.care.model.Job;
 import com.care.model.Member;
@@ -14,7 +15,9 @@ public interface SitterService extends Service{
     List<Application> listAllApplications(Member sitter);
 
     //check if already applied to job
-    int applyToJob(Member sitter, int jobId);
+    Job getJob(int jobId);
+
+    int applyToJob(ApplicationDTO application);
 
     // check if user is deleting an application which belongs to it.
     int deleteApplication(Member sitter, int applicationId);

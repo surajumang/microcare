@@ -51,7 +51,7 @@
 
                 <td>
                     <%-- Send it to a form so that relevant input can be accepted --%>
-                    <form action="${pageContext.request.contextPath}/sitter/ApplyToJob.do" method="get">
+                    <form action="${pageContext.request.contextPath}/sitter/ShowJobToApply.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
                         <input type="submit" name="" value="Apply">
                     </form>

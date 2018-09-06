@@ -62,10 +62,11 @@ public class RegistrationFormDTO extends FormBean{
         this.zipCode = zipCode;
     }
 
+    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "Must be 5 or more characters without whitespaces ")
     public String getPassword() {
         return password;
     }
-    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "Must be 5 or more characters without whitespaces ")
+
     public void setPassword(String password) {
         this.password = password;
     }

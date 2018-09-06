@@ -68,7 +68,7 @@ public class Registration extends HttpServlet {
         }
 
         request.setAttribute("formErrors", (RegistrationFormDTO)registrationDetails);
-        response.sendRedirect(page);
+        getServletContext().getRequestDispatcher(page).forward(request, response);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.dto.form.ApplicationDTO;
 import com.care.model.Application;
 import com.care.model.Job;
 import com.care.dao.*;
@@ -42,8 +43,30 @@ public class SitterServiceImpl implements SitterService {
         return applications;
     }
 
-    public int applyToJob(Member sitter, int jobId) {
+    @Override
+    public Job getJob(int jobId) {
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        Job job = Job.EMPTY_JOB;
+        try {
+            job = jobDAO.getJob(jobId);
+        } catch (SQLException e){
+            logger.log(Level.SEVERE, "While getting a Job", e);
+        }
+        return job;
+    }
 
+    public int applyToJob(ApplicationDTO applicationDTO) {
+
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+        Application application = new Application();
+
+        ObjectMapper.mapObject(applicationDTO, application, true);
+        logger.info(application.toString() + " AFTER MAPPING");
+        try {
+            applicationDAO.addApplication(application);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "While Applying", e);
+        }
         return 0;
     }
 

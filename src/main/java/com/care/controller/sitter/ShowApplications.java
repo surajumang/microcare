@@ -30,7 +30,7 @@ public class ShowApplications extends HttpServlet {
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
 
-        List<Application> allMyApplications = sitterService.listAllApplications( currentMember);
+        List<Application> allMyApplications = sitterService.listAllApplications(currentMember);
 
         if (allMyApplications != null){
             page = "/sitter/ShowMyApplications.jsp";

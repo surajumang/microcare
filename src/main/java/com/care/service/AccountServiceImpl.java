@@ -44,7 +44,7 @@ public class AccountServiceImpl implements AccountService {
         int status = -1;
         try {
             //memberDAO.addMember(seeker);
-            //seeker.setId(memberDAO.getMember(seeker.getEmail()).getId());
+            //seeker.setJobId(memberDAO.getMember(seeker.getEmail()).getJobId());
             status = seekerDAO.addSeeker(seeker);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);
@@ -60,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
 
         try {
 //            memberDAO.addMember(sitter);
-//            sitter.setId(memberDAO.getMember(sitter.getEmail()).getId());
+//            sitter.setJobId(memberDAO.getMember(sitter.getEmail()).getJobId());
             status = sitterDAO.addSitter(sitter);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);

@@ -171,6 +171,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>ShowJobToApply</servlet-name>
+        <servlet-class>com.care.controller.sitter.ShowJobToApply</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowJobToApply</servlet-name>
+        <url-pattern>/sitter/ShowJobToApply.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>SitterEditProfile</servlet-name>
         <servlet-class>com.care.controller.EditProfile</servlet-class>
     </servlet>
