@@ -30,7 +30,7 @@ public class ApplyToJob extends HttpServlet {
         String jobToApplyOn = request.getParameter("id");
         ApplicationDTO application = FormPopulator.populate(request, ApplicationDTO.class);
         Map<String, String> errors = new HashMap<>();
-        int status = -1;
+        OperationStatus status=OperationStatus.FAILURE;
         application.validateCustom(errors);
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
@@ -48,7 +48,7 @@ public class ApplyToJob extends HttpServlet {
             logger.info("Status okay");
             page = "/sitter/ShowMyApplications.do";
         }
-        if (status == 1){
+        if (status == OperationStatus.SUCCESS){
             logger.info("Dispatching ");
             // send the request to another servlet which will take it to apprropriate place.
             page = "/sitter/ShowMyApplications.do";

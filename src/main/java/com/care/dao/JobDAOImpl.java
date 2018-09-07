@@ -49,11 +49,11 @@ public final class JobDAOImpl implements JobDAO {
         return statement.executeUpdate();
     }
 
-    public int deleteJob(int jobId) throws SQLException {
+    public int setJobStatus(int jobId, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info(jobId + "***********");
         PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS=? WHERE ID = ?");
-        statement.setString(1, Status.CLOSED.name());
+        statement.setString(1, status.name());
         statement.setInt(2, jobId);
 
         return statement.executeUpdate();
@@ -80,10 +80,12 @@ public final class JobDAOImpl implements JobDAO {
         logger.info("GetAllJobs Seeker");
         List<Job> jobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE, HOURLY_PAY " +
+        PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE, HOURLY_PAY, POSTED_BY " +
                 "FROM JOB " +
-                "WHERE POSTED_BY = ?");
+                "WHERE POSTED_BY = ? AND STATUS <> ?");
         statement.setInt(1, postedBy);
+        statement.setString(2, Status.CLOSED.name());
+
         logger.info(postedBy + " User ID to createObject job from DB");
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()){
@@ -99,8 +101,10 @@ public final class JobDAOImpl implements JobDAO {
     public List<Job> getAllAvailableJobs(int sitterId) throws SQLException {
         List<Job> allAvailableJobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE SITTER_ID = ?)");
-        statement.setInt(1, sitterId);
+        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID,POSTED_BY, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE STATUS = ? AND JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE SITTER_ID = ?)");
+        statement.setString(1, Status.ACTIVE.name());
+        statement.setInt(2, sitterId);
+
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()){
@@ -109,32 +113,30 @@ public final class JobDAOImpl implements JobDAO {
         }
         return allAvailableJobs;
     }
-    /*
-    [todo]
-    Deleting a job must also delete all application corresponding to it.
-     */
-    public int deleteJob(Member member, int jobId) throws SQLException {
-        logger.info("Close Seeker's Job");
-        Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
-                "WHERE ID=? AND POSTED_BY=?");
 
+//    public int deleteJob(Member member, int jobId) throws SQLException {
+//        logger.info("Close Seeker's Job");
+//        Connection connection = ConnectionUtil.getConnection();
+//        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
+//                "WHERE ID=? AND POSTED_BY=?");
+//
+//
+//        logger.info(jobId + " JobId ID to createObject job from DB" + member.getId());
+//
+//        statement.setInt(1, jobId);
+//        return statement.executeUpdate();
+//
+//    }
 
-        logger.info(jobId + " JobId ID to createObject job from DB" + member.getId());
-
-        statement.setInt(1, jobId);
-        return statement.executeUpdate();
-
-    }
-
-    public int deleteAllJobs(int postedBy) throws SQLException {
+    public int setAllJobsStatus(int postedBy, Status status) throws SQLException {
         logger.info("Close Seeker's Job");
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Acquired connection");
-        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
+        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS=?" +
                 "WHERE POSTED_BY=?");
         logger.info( " JobId ID to create job from DB" + postedBy);
-        statement.setInt(1, postedBy);
+        statement.setString(1, status.name());
+        statement.setInt(2, postedBy);
         return statement.executeUpdate();
     }
 
@@ -143,6 +145,7 @@ public final class JobDAOImpl implements JobDAO {
 
         job.setTitle(resultSet.getString("TITLE"));
         job.setId(resultSet.getInt("ID"));
+        job.setSeekerId(resultSet.getInt("POSTED_BY"));
         job.setHourlyPay(resultSet.getDouble("HOURLY_PAY"));
         job.setStartDate(resultSet.getDate("START_DATE"));
         job.setEndDate(resultSet.getDate("END_DATE"));

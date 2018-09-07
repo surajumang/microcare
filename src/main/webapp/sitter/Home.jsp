@@ -19,10 +19,10 @@
         </script>
     </head>
     <body>
-        <%--
-            The HomePage for the sitter will display all the available options
-            and a Welcome Message.
-      --%>
+        <h2>${SUCCESS}</h2>
+                <h2>${FAILURE}</h2>
+                <h2>${INVALID}</h2>
+                <h2>${ACCOUNT_STATUS}</h2>
       <jsp:include page="/header.jsp"/>
 
       <form class="" action="${pageContext.request.contextPath}/sitter/ShowAllJobs.do" method="post">

@@ -16,8 +16,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
-    public boolean loginUser(LoginDetails loginDetails) {
+    public OperationStatus loginUser(LoginDetails loginDetails) {
         logger.info("User trying to Log in");
+        OperationStatus status = OperationStatus.FAILURE;
 
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member member = null;
@@ -26,19 +27,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             logger.info(member + " ");
         } catch (java.sql.SQLException e) {
             logger.log(Level.SEVERE, "Can't fetch member for Login");
+            status = OperationStatus.FAILURE;
         }
-        boolean isLoginSuccessful = false;
 
         if(member != null){
             logger.info("Member Exists " + member);
-            logger.info(loginDetails.getPassword());
-            logger.info(member.getPassword());
-            if (loginDetails.getPassword().equals(member.getPassword())){
-                isLoginSuccessful = true;
+
+            if (Hash.createHash(loginDetails.getPassword()).equals(member.getPassword())){
+                status =OperationStatus.SUCCESS;
                 logger.info("Login success");
             }
         }
-        return isLoginSuccessful;
+        logger.info(status.name() + "STATUS");
+        return status;
     }
 
     public boolean logout() {

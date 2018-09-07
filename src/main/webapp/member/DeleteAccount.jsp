@@ -20,8 +20,7 @@
     </head>
     <body>
     <jsp:include page="/header.jsp"/>
-        <%--Ask for a confirmation to the user that the account will be deleted --%>
-        <%--Show User's detail and then   --%>
+
         <p>Are you Sure you want to Delete your Account.</p>
         
         <input type="button" name="delete" value="Delete" onclick=""/>

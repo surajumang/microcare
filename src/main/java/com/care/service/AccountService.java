@@ -6,11 +6,11 @@ import com.care.dto.form.RegistrationFormDTO;
 
 public interface AccountService extends Service {
 
-    boolean enroll(RegistrationFormDTO registrationFormDTO);
+    OperationStatus enroll(RegistrationFormDTO registrationFormDTO);
 
     Member getMember(String email);
 
-    int deleteMember(int memberId);
+    OperationStatus deleteMember(Member member);
 
     int editMember(int memberId, EditForm editForm);
 }

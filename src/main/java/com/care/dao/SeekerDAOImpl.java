@@ -75,7 +75,7 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
      */
     public int deleteJob(int jobId) throws SQLException {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        return jobDAO.deleteJob(jobId);
+        return jobDAO.setJobStatus(jobId, );
     }
 
     public List<Job> listAllMyJobs(int postedBy) throws SQLException {
@@ -92,6 +92,6 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
 
     public int closeJob(int jobId) throws SQLException {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        return jobDAO.deleteJob(jobId);
+        return jobDAO.setJobStatus(jobId, );
     }
 }

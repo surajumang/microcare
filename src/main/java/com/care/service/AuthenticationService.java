@@ -4,7 +4,7 @@ import com.care.dto.form.LoginDetails;
 
 public interface AuthenticationService extends Service {
 
-    boolean loginUser(LoginDetails loginDetails);
+    OperationStatus loginUser(LoginDetails loginDetails);
 
     boolean logout();
 

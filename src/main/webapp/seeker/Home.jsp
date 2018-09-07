@@ -25,11 +25,12 @@
         </script>
     </head>
     <body>
-        <%--
-        Home page for Seeker. Will contain a welcome Message and all the
-        available options.
-      --%>
 
+        <h2>${SUCCESS}</h2>
+        <h2>${FAILURE}</h2>
+        <h2>${UNAUTHORIZED}</h2>
+        <h2>${INVALID}</h2>
+        <h2>${ACCOUNT_STATUS}</h2>
       <jsp:include page="/header.jsp"/>
 
       <div class="seeker">
@@ -61,17 +62,6 @@
                        <input type="button" name="closeAccount" value="Close Account" onclick="confirmDeletion(this.form, 'close your account')">
                    </form>
       </div>
-
-
-      <p>Login successful your details are</p>
-      <table>
-          <tr>
-              <td>${currentUser.email}</td>
-              <td>${currentUser.firstName}</td>
-              <td>${currentUser.lastName}</td>
-              <td>${currentUser.zipCode}</td>
-          </tr>
-      </table>
 
 
       <jsp:include page="/footer.jsp"/>

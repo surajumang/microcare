@@ -10,10 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class CloseApplication extends HttpServlet {
     Logger logger = Logger.getLogger("CloseJobSitter");
+    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
+
+    static {
+        message.put(OperationStatus.FAILURE, "Can't Edit Job");
+        message.put(OperationStatus.SUCCESS, "Edit Successful");
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -21,8 +29,9 @@ public class CloseApplication extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = "/ErrorPage.jsp";
-        int applicationToBeClosed = CommonUtil.getJobIdFromRequest(request);
+        String page = "/sitter/Home.jsp";
+        OperationStatus operationStatus = OperationStatus.FAILURE;
+        int applicationToBeClosed = CommonUtil.getJobIdFromRequest(request, operationStatus);
 
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
@@ -30,13 +39,13 @@ public class CloseApplication extends HttpServlet {
 
         logger.info("Called CloseApplication for Sitter" + currentMember);
 
-        int status = sitterService.deleteApplication(currentMember, applicationToBeClosed);
+        operationStatus = sitterService.deleteApplication(currentMember, applicationToBeClosed);
 
-        if (status == 1){
+        if (operationStatus == OperationStatus.SUCCESS){
             page = "/sitter/ShowMyApplications.do";
         }
         logger.info(page);
-
+        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }

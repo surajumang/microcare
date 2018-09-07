@@ -60,6 +60,6 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
             sitter.setId(resultSet.getInt("ID"));
 
         }
-        return ;
+        return sitter;
     }
 }

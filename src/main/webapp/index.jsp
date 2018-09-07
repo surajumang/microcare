@@ -16,9 +16,9 @@
     <body>
         <div class="form1" al>
             <h1>welcome</h1>
-            <h2>${registrationMessage}</h2>
-            <p>${nonExistingEmail}</p>
-            <p>${invalidCredentials}</p>
+            <h2>${SUCCESS}</h2>
+            <p>${FAILURE}</p>
+
 
             <c:out value = "${message}">
             <form action="visitor/login.do" method="post">

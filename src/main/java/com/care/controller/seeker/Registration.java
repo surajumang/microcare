@@ -7,6 +7,7 @@ import com.care.dto.form.SitterRegistrationDTO;
 import com.care.model.MemberType;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
+import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
@@ -22,6 +23,12 @@ import java.util.logging.Logger;
 
 public class Registration extends HttpServlet {
     Logger logger = Logger.getLogger("SeekerRegistration");
+    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
+
+    static {
+        message.put(OperationStatus.FAILURE, "Unable to Register");
+        message.put(OperationStatus.SUCCESS, "Successful Registered, Now you can Log in");
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,17 +38,20 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = request.getParameter("currentPage");
+        String page = "/visitor/Register.jsp";
         logger.info(page);
 
         MemberType memberType = MemberType.valueOf(request.getParameter("memberType"));
+        OperationStatus operationStatus = OperationStatus.FAILURE;
         Class<? extends FormBean> detailPage;
 
         if (memberType == MemberType.SEEKER){
             detailPage = SeekerRegistrationDTO.class;
+            page = "/visitor/SeekerRegistration.jsp";
         }
         else {
             detailPage = SitterRegistrationDTO.class;
+            page = "/visitor/SitterRegistration.jsp";
         }
 
         FormBean registrationDetails = FormPopulator.populate(request, detailPage);
@@ -53,19 +63,15 @@ public class Registration extends HttpServlet {
 
         logger.info(errors + " ");
         request.setAttribute("errors", errors);
+
         if(errors.isEmpty()){
-            /*
-            Forward the rquest to Login or make the user logged in here and then redirect to the Home page.
-             */
             page = "/index.jsp";
-            request.setAttribute("registrationMessage", "Registration SuccessFul. You can now log in");
             RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)registrationDetails;
 
-            logger.info("Without errors");
-            logger.info(registrationFormDTO.getMemberType());
-            accountService.enroll(registrationFormDTO);
+            operationStatus = accountService.enroll(registrationFormDTO);
             logger.info("Back at servlet");
         }
+        request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
         request.setAttribute("formErrors", (RegistrationFormDTO)registrationDetails);
         getServletContext().getRequestDispatcher(page).forward(request, response);

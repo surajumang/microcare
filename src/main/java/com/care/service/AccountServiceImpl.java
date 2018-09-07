@@ -2,9 +2,7 @@ package com.care.service;
 
 import com.care.dao.*;
 import com.care.dto.form.EditForm;
-import com.care.model.Member;
-import com.care.model.Seeker;
-import com.care.model.Sitter;
+import com.care.model.*;
 import com.care.dto.form.RegistrationFormDTO;
 
 import java.sql.SQLException;
@@ -16,35 +14,34 @@ public class AccountServiceImpl implements AccountService {
     private Logger logger = Logger.getLogger("AccountService");
     public AccountServiceImpl() {  }
 
-    public boolean enroll(RegistrationFormDTO registrationFormDTO) {
-        /*
-        Testing ObjectMapper. Check whether a seeker or a sitter has to be added.
-         */
-        int status = -1;
-        //MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+    public OperationStatus enroll(RegistrationFormDTO registrationFormDTO) {
+
+        OperationStatus status = OperationStatus.FAILURE;
+        int val = -1;
         logger.info("Called enroll");
 
         if (registrationFormDTO.getMemberType().equals("SEEKER") ){
             Seeker seeker = new Seeker();
             ObjectMapper.mapObject(registrationFormDTO, seeker, true);
-            status = addSeeker(seeker);
+            val = addSeeker(seeker);
         }
         else {
             Sitter sitter = new Sitter();
             ObjectMapper.mapObject(registrationFormDTO, sitter, true);
-            status = addSitter(sitter);
+            val = addSitter(sitter);
         }
-        return status == 1 ;
+        if (val == 1){
+            status = OperationStatus.SUCCESS;
+        }
+        return status;
     }
 
     private int addSeeker(Seeker seeker){
-        //MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+
         SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         logger.info(seeker.toString());
         int status = -1;
         try {
-            //memberDAO.addMember(seeker);
-            //seeker.setJobId(memberDAO.getMember(seeker.getEmail()).getJobId());
             status = seekerDAO.addSeeker(seeker);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);
@@ -53,14 +50,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private int addSitter(Sitter sitter){
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+
         SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         logger.info(sitter.toString());
         int status = -1;
 
         try {
-//            memberDAO.addMember(sitter);
-//            sitter.setJobId(memberDAO.getMember(sitter.getEmail()).getJobId());
             status = sitterDAO.addSitter(sitter);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);
@@ -83,17 +78,33 @@ public class AccountServiceImpl implements AccountService {
     }
     /*
     Write code related to authorization here.
-    [TODO]
+    Deleting member requires all jobs and application deletion as well based on the member type..
+
      */
-    public int deleteMember(int memberId) {
+    public OperationStatus deleteMember(Member member) {
+
+        OperationStatus status = OperationStatus.SUCCESS;
+
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+
         try {
-            memberDAO.deleteMember(memberId);
-            logger.info(memberId + " ");
+
+            if (member.getMemberType() == MemberType.SEEKER){
+                applicationDAO.setAllApplicationsOnJobsPostedBy(member.getId(), Status.EXPIRED);
+                jobDAO.setAllJobsStatus(member.getId(), Status.EXPIRED);
+            }else {
+                applicationDAO.setAllApplicationsStatusBySitter(member.getId(), );
+            }
+
+            memberDAO.setMemberStatus(member.getId(), Status.CLOSED);
+
         } catch (java.sql.SQLException e) {
             logger.log(Level.SEVERE, "Error fetching member");
+            status = OperationStatus.FAILURE;
         }
-        return 0;
+        return status;
     }
 
     public int editMember(int memberId, EditForm editForm) {
@@ -137,4 +148,5 @@ public class AccountServiceImpl implements AccountService {
         }
         return status;
     }
+
 }

@@ -1,6 +1,10 @@
 package com.care.controller.seeker;
 
+import com.care.controller.CommonUtil;
 import com.care.model.Job;
+import com.care.model.Member;
+import com.care.model.Status;
+import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
@@ -10,11 +14,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class ShowJobToEdit extends HttpServlet {
 
     private Logger logger = Logger.getLogger("ShowJobsToEdit");
+    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
+
+    static {
+        message.put(OperationStatus.FAILURE, "Can't Edit Job");
+        message.put(OperationStatus.SUCCESS, "Edit Successful");
+        message.put(OperationStatus.INVALID, "Invalid Job ");
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -25,18 +38,27 @@ public class ShowJobToEdit extends HttpServlet {
         /*
         Get parameter from the request to refer to the job to be edited.
          */
-        int id = -1;
-        if (request.getParameter("id") != null){
-            id = Integer.parseInt(request.getParameter("id"));
-            logger.info(id + " ");
-        }
+        String page = "/seeker/ShowAndEditJob.jsp";
 
+        OperationStatus operationStatus = OperationStatus.FAILURE;
+        int id = CommonUtil.getJobIdFromRequest(request,operationStatus);
+        if(operationStatus == OperationStatus.INVALID){
+
+        }
+        Member member = (Member)request.getSession().getAttribute("currentUser");
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-        Job job = seekerService.getJob(id);
+        Job job = seekerService.getJob(member, id, operationStatus );
+        if (job.getStatus() == Status.EXPIRED || job.getStatus()== Status.CLOSED){
+            operationStatus = OperationStatus.FAILURE;
+            page = "/seeker/Home.jsp";
+        }
         logger.info(job + "-- >>> job here********************************");
+
         request.setAttribute("editJob", job);
 
-        getServletContext().getRequestDispatcher("/seeker/ShowAndEditJob.jsp").forward(request, response);
+        request.setAttribute(operationStatus.name(), message.get(operationStatus));
+
+        getServletContext().getRequestDispatcher(page).forward(request, response);
 
     }
 }

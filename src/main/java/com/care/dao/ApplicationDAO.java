@@ -1,6 +1,7 @@
 package com.care.dao;
 
 import com.care.model.Application;
+import com.care.model.Status;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +16,11 @@ public interface ApplicationDAO extends DAO {
 
     List<Application> getAllApplicationsOnJob(int jobId) throws SQLException;
 
-    int deleteApplication(int applicationId) throws SQLException;
+    int setApplicationStatus(int applicationId, Status status) throws SQLException;
 
-    int deleteAllApplications(int sitterId) throws SQLException;
+    int setAllApplicationsStatusBySitter(int sitterId, Status status) throws SQLException;
+
+    int setAllApplicationStatusByJob(int jobId, Status status)throws SQLException;
+
+    int setAllApplicationsOnJobsPostedBy(int postedBy, Status status) throws SQLException;
 }

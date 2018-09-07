@@ -10,17 +10,17 @@ import java.util.List;
 
 public interface SeekerService extends Service {
 
-    Seeker getSeeker(int seekerId);
+    Seeker getSeeker(int seekerId, OperationStatus operationStatus);
 
-    Job getJob(int jobId);
+    Job getJob(Member member, int jobId, OperationStatus operationStatus);
 
-    int postJob(Member member, JobDTO jobForm);
+    OperationStatus postJob(Member member, JobDTO jobForm);
 
-    List<Job> listJobs(Member member) ;
+    List<Job> listJobs(Member member, OperationStatus operationStatus) ;
 
-    List<Application> getApplications(Member member, int jobId) ;
+    List<Application> getApplications(Member member, int jobId, OperationStatus operationStatus) ;
 
-    int editJob(Member member, JobDTO jobForm) ;
+    OperationStatus editJob(Member member, JobDTO jobForm) ;
 
-    int closeJob(Member member, int jobId) ;
+    OperationStatus closeJob(Member member, int jobId) ;
 }

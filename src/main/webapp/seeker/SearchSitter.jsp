@@ -11,8 +11,9 @@
         <title></title>
     </head>
     <body>
-        <%--Show all the sitters in a table, also provide a way to
-    Search sitter by some criteria(zip code) or (EmailId) --%>
+        <h2>${SUCCESS}</h2>
+                <h2>${FAILURE}</h2>
+                <h2>${INVALID}</h2>
     <jsp:include page="/header.jsp"/>
 
     <p>Will show all the options to

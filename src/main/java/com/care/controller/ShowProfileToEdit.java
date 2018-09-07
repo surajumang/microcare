@@ -1,13 +1,10 @@
 package com.care.controller;
 
-import com.care.dto.form.SeekerRegistrationDTO;
-import com.care.dto.form.SitterRegistrationDTO;
 import com.care.model.Member;
 import com.care.model.MemberType;
 import com.care.model.Seeker;
 import com.care.model.Sitter;
 import com.care.service.*;
-import com.care.validation.FormBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,11 +39,13 @@ public class ShowProfileToEdit extends HttpServlet {
     private Seeker fetchSeeker(int memberId){
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         //do a instanceof test.
-        return seekerService.getSeeker(memberId);
+        OperationStatus status = OperationStatus.FAILURE;
+        return seekerService.getSeeker(memberId, status);
     }
 
     private Sitter fetchSitter(int memberId){
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-        return sitterService.getSitter(memberId);
+        OperationStatus status = OperationStatus.FAILURE;
+        return sitterService.getSitter(memberId, status);
     }
 }

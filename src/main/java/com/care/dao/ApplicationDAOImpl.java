@@ -4,7 +4,6 @@
 package com.care.dao;
 
 import com.care.model.*;
-import com.care.dto.form.ApplicationDTO;
 
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -109,24 +108,43 @@ public class ApplicationDAOImpl implements ApplicationDAO {
     /*
         Fairly simple implementation.
      */
-    public int deleteApplication(int applicationId) throws SQLException {
+    public int setApplicationStatus(int applicationId, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE ID = ?");
-        statement.setString(1, Status.CLOSED.name());
+        statement.setString(1, status.name());
         statement.setInt(2,applicationId);
 
         return statement.executeUpdate();
     }
 
-    public int deleteAllApplications(int memberId) throws SQLException {
+    public int setAllApplicationsStatusBySitter(int memberId, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE SITTER_ID = ?");
-        statement.setString(1, Status.CLOSED.name());
+        statement.setString(1, status.name());
         statement.setInt(2, memberId);
 
         return statement.executeUpdate();
     }
+
+    public int setAllApplicationStatusByJob(int jobId, Status status) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE JOB_ID = ?");
+        statement.setString(1, status.name());
+        statement.setInt(2, jobId);
+
+        return statement.executeUpdate();
+    }
+
+    public int setAllApplicationsOnJobsPostedBy(int postedBy, Status status) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE JOB_ID IN(SELECT ID FROM JOB WHERE POSTED_BY =?) ");
+        statement.setString(1, status.name());
+        statement.setInt(2, postedBy);
+
+        return statement.executeUpdate();
+    }
+
     /*
     Utility method. Populates non refrence type fields of Application.
      */

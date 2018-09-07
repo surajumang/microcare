@@ -11,9 +11,9 @@
         <title></title>
     </head>
     <body>
-        <%--
-        Will provide a form to the user and pass it to the proper servlet.
-     --%>
+        <h2>${SUCCESS}</h2>
+                <h2>${FAILURE}</h2>
+                <h2>${INVALID}</h2>
      <jsp:include page="/header.jsp"/>
      <p>Page for posting a job. It will show a form to the user.</p>
 

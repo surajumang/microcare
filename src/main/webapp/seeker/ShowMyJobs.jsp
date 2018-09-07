@@ -37,11 +37,9 @@
             </script>
         </head>
         <body>
-            <%--
-            View all jobs created by this seeker.The jobs will also have an
-            Edit button and a ViewApplicants button.The servlet will pass a List
-            of Jobs inside the scope/request or session.object.
-         --%>
+            <h2>${SUCCESS}</h2>
+                    <h2>${FAILURE}</h2>
+                    <h2>${INVALID}</h2>
          <jsp:include page="/header.jsp"/>
         <p>Show all the jobs created by the user.</p>
 
@@ -53,15 +51,14 @@
                     <td>Status</td>
                     <td>Start Date</td>
                     <td>End Date</td>
-                    <td>Edit Field</td>
-                    <td>Delete Field</td>
-                    <td>View Applications</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </thead>
             <c:forEach var="job" items="${myJobs}">
             <tr>
                 <td>${job.title}</td>
-                <%-- find a way --%>
                 <td>${job.status}</td>
                 <td>${job.startDate}</td>
                 <td>${job.endDate}</td>
@@ -74,7 +71,7 @@
                 <td>
                     <form action="${pageContext.request.contextPath}/seeker/DeleteJob.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
-                        <input type="button" name="" value="Delete Job" onclick="confirmDeletion(this.form)">
+                        <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
                 </td>
                 <td>

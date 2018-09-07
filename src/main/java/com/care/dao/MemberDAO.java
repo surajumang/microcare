@@ -1,6 +1,7 @@
 package com.care.dao;
 
 import com.care.model.Member;
+import com.care.model.Status;
 
 import java.sql.SQLException;
 
@@ -14,5 +15,5 @@ public interface MemberDAO extends DAO{
 
     int editMember(int memberId, Member member) throws SQLException;
 
-    int deleteMember(int memberId) throws SQLException;
+    int setMemberStatus(int memberId, Status status) throws SQLException;
 }

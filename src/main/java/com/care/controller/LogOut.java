@@ -1,6 +1,7 @@
 package com.care.controller;
 
 import com.care.model.Member;
+import com.care.service.OperationStatus;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +26,10 @@ public class LogOut extends HttpServlet {
         logger.info(member + "to be logged out");
         request.getSession().invalidate();
         request.setAttribute("stat", member);
-        getServletContext().getRequestDispatcher("/member/Logout.jsp").forward(request, response);
+
+        request.setAttribute(OperationStatus.SUCCESS.name(), "Successfully Logged Out");
+
+        getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 
     }
 }

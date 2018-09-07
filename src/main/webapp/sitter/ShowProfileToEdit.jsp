@@ -11,6 +11,9 @@
         <title></title>
     </head>
     <body>
+    <h2>${SUCCESS}</h2>
+            <h2>${FAILURE}</h2>
+            <h2>${INVALID}</h2>
     <jsp:include page="/header.jsp"/>
         <p>First show the current information related to the Job in a
         filled form which the user can edit.</p>

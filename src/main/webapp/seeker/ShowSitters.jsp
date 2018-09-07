@@ -12,15 +12,10 @@
     </head>
     <body>
     <jsp:include page="/header.jsp"/>
-        <p>Show all the sitters based on some criteria</p>
+        <h2>${SUCCESS}</h2>
+                <h2>${FAILURE}</h2>
+                <h2>${INVALID}</h2>
 
-        Shows a List of sitters. A row represents one Sitter.
-        <%--
-            ShowSitterServlet will pass the request to this page
-            and handover the list of Sitters.
-            Transfer content from jsp to another jsp in this case.
-      --%>
-      Do not use it now.
       <form  action="ShowSitters.do" method="post">
           <input type="text" name="emailPattern" value="" placeholder="Enter Email">
           <input type="text" name="zipCode" value="" placeholder="Zip Code">
