@@ -68,12 +68,15 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
     public List<Sitter> getSitterByEmail(String email) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         List<Sitter> sitters = new ArrayList<>();
-
+        logger.info("Fetching sitters from DB" );
         PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, ZIP_CODE, EXPERIENCE,EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.EMAIL LIKE ? ");
         statement.setString(1, "%" + email + "%");
 
+        logger.info(statement.toString());
         ResultSet resultSet = statement.executeQuery();
+
         while (resultSet.next()){
+            logger.info("Match found");
             sitters.add(populateSitter(resultSet));
         }
         return sitters;

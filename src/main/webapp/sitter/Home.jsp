@@ -36,7 +36,7 @@
             <input type="submit" name="EditProfile" value="Edit Profile"/>
       </form>
 
-        <a href="${pageContext.request.contextPath}/member/Search.jsp"> Search Seekers</a>
+        <a href="/member/Search.jsp"> Search Seekers</a>
 
       <div class="right">
           <form class="" action="${pageContext.request.contextPath}/sitter/CloseAccount.do" method="post">

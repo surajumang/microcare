@@ -36,17 +36,17 @@ public class FormValidator {
 
         for(Method method : form.getClass().getMethods()){
             if(method.getName().startsWith("get")){
-                logger.info(method.getName());
+                //logger.info(method.getName());
 
                 String fieldName = method.getName().substring(3);
                 fieldName = fieldName.substring(0,1).toLowerCase() + fieldName.substring(1);
 
                 for (Annotation annotation : method.getDeclaredAnnotations()) {
 
-                    logger.info(annotation.toString());
+                    //logger.info(annotation.toString());
                     Validator v = ANNOTATION_PROCESSOR_MAP.get(annotation.annotationType()).create(annotation);
 
-                    logger.info(v.getClass().getSimpleName());
+                    //logger.info(v.getClass().getSimpleName());
 
                     String value = (String)method.invoke(form);
                     logger.info("" + value);
@@ -54,7 +54,7 @@ public class FormValidator {
                         errors.put(fieldName, v.getMessage());
                         logger.info("NOTOKAY" + fieldName);
                     }
-                    logger.info(method.getName() + "done");
+                    //logger.info(method.getName() + "done");
                 }
             }
 

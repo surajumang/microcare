@@ -25,7 +25,7 @@
             <c:out value="${errors.hourlyPay}"/><br>
 
             <input type="text" name="startDate" placeholder="Start Date" value="${editJob.startDate}">
-            <c:out value="${errors.startDate}"/><br>
+            <c:out value="${errors.currentDate}"/><br>
 
             <input type="text" name="endDate" placeholder="End Date" value="${editJob.endDate}">
             <c:out value="${errors.endDate}"/><br>

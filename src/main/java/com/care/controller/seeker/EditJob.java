@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class EditJob extends HttpServlet {
-
+    private Logger logger = Logger.getLogger("EditJob");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
     static {
-        message.put(OperationStatus.FAILURE, "Can't Edit Job");
+        message.put(OperationStatus.FAILURE, "Can't Edit this Job");
         message.put(OperationStatus.SUCCESS, "Edit Successful");
     }
     @Override
@@ -37,10 +38,13 @@ public class EditJob extends HttpServlet {
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         Member currentUser = (Member)req.getSession().getAttribute("currentUser");
+        logger.info(errors + "ERRORS");
 
         if(errors.isEmpty()){
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
+
             operationStatus = seekerService.editJob(currentUser, jobForm);
+            logger.info("job status is " + operationStatus);
             page = "/seeker/Home.jsp";
         }
         req.setAttribute("editJob", jobForm);

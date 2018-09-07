@@ -21,7 +21,7 @@ public class ShowJobs extends HttpServlet {
 
     static {
         message.put(OperationStatus.FAILURE, "No jobs to Show");
-        message.put(OperationStatus.SUCCESS, "All jobs");
+        message.put(OperationStatus.SUCCESS, "All jobs available for you");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,6 +42,7 @@ public class ShowJobs extends HttpServlet {
         if (allJobs != null && !allJobs.isEmpty()){
             page = "/sitter/ShowAllJobs.jsp";
             request.setAttribute("allJobs", allJobs);
+            operationStatus = OperationStatus.SUCCESS;
         }
         logger.info(allJobs.toString());
         logger.info("Dispatching to Page" + page);

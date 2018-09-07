@@ -100,7 +100,7 @@ public class ObjectMapper {
                 if the method takes a primitive as a parameter then it's corresponding wrapper will be used to
                 get the valueOf static method.
                  */
-                logger.info(setter.getName() + "-------" + getter.getName() + "--------" + argTypes[0].getName());
+                //logger.info(setter.getName() + "-------" + getter.getName() + "--------" + argTypes[0].getName());
                 if (argTypes[0].isPrimitive()){
                     argTypes[0] = WRAPPER_TYPE.get(argTypes[0]);
                 }
@@ -119,10 +119,10 @@ public class ObjectMapper {
                     logger.info("String arg type of Model");
                     setter.invoke(dest,  getter.invoke(src));
                 }else {
-                    logger.info("Model populated using Static value of");
+                    //logger.info("Model populated using Static value of");
                     Method valueOf = argTypes[0].getMethod("valueOf", String.class);
                     Object getterValue = getter.invoke(src);
-                    logger.info(valueOf + "--------" + getterValue);
+                    //logger.info(valueOf + "--------" + getterValue);
 
                     if (getterValue == null || valueOf == null)
                         continue;

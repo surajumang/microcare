@@ -21,7 +21,7 @@ public class ShowJobs extends HttpServlet {
     private static final Map<OperationStatus, String> messege = new HashMap<OperationStatus, String>();
 
     static {
-        messege.put(OperationStatus.SUCCESS, "Successfully Got Jobs");
+        messege.put(OperationStatus.SUCCESS, "");
         messege.put(OperationStatus.FAILURE, "You Don't have any Jobs");
         messege.put(OperationStatus.UNAUTHORISED, "You are not authorised to see the contents");
     }

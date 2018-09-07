@@ -1,4 +1,4 @@
-package com.care.controller.sitter;
+package com.care.controller;
 
 import com.care.dto.form.EditForm;
 import com.care.dto.form.SeekerEditForm;
@@ -38,7 +38,7 @@ public class EditProfile extends HttpServlet {
         }else {
             page += editSitter(request, response, errors);
         }
-
+        request.setAttribute("errors", errors);
         getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 

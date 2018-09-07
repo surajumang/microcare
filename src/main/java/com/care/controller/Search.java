@@ -16,8 +16,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class Search extends HttpServlet {
+    Logger logger = Logger.getLogger("SearchingMembers");
+    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
+    static {
+        message.put(OperationStatus.FAILURE, "Can't Edit this Job");
+        message.put(OperationStatus.SUCCESS, "Edit Successful");
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
@@ -32,18 +39,23 @@ public class Search extends HttpServlet {
         Member member = (Member) req.getSession().getAttribute("currentUser");
 
         String page = "/member/Search.jsp";
+        logger.info(errors + " ");
+
         if(errors.isEmpty()){
-            if(member.getMemberType() == MemberType.SEEKER){
+            if(member.getMemberType() == MemberType.SITTER){
                 SeekerService seekerService= ServiceFactory.get(SeekerServiceImpl.class);
                 List<Seeker> seekers = seekerService.getSeekerByEmail(searchCriteria.getEmail());
+                logger.info("Fetched Seekers " + seekers);
                 req.setAttribute("members", seekers);
             }
             else {
                 SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
                 List<Sitter> sitters = sitterService.getSitterByEmail(searchCriteria.getEmail());
+                logger.info("Fetched sitters");
                 req.setAttribute("members", sitters);
             }
         }
+        req.setAttribute("errors", errors);
         getServletContext().getRequestDispatcher(page).forward(req, resp);
 
     }

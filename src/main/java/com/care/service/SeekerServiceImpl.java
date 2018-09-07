@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.controller.seeker.PostJob;
 import com.care.exception.IllegalApplicationAccessException;
 import com.care.exception.JobNotPostedByUserException;
 import com.care.model.*;
@@ -31,13 +32,15 @@ public class SeekerServiceImpl implements SeekerService {
 
     @Override
     public List<Seeker> getSeekerByEmail(String email) {
+        logger.info("Fetching seekers by Email");
         SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         List<Seeker> seekers = Collections.emptyList();
         try {
             seekers = seekerDAO.getSeekerByEmail(email);
         }catch (SQLException e){
-            logger.log(Level.SEVERE, "", e);
+            logger.log(Level.SEVERE, "fs", e);
         }
+        logger.info(seekers.size() + "");
         return seekers;
     }
 
@@ -58,23 +61,26 @@ public class SeekerServiceImpl implements SeekerService {
     }
 
     public OperationStatus postJob(Member member, JobDTO jobForm)  {
+        logger.info("Post job called by" + member.getId());
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = new Job();
         OperationStatus status = OperationStatus.SUCCESS;
         int val = -1;
         ObjectMapper.mapObject(jobForm, job, true);
 
+        logger.info("After mapping " + job);
         try{
             val = jobDAO.addJob(job);
-
+            if (val != 1){
+                status = OperationStatus.FAILURE;
+                logger.info("PostJob failed");
+            }
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Posting Job", e);
             status = OperationStatus.FAILURE;
         }
 
-        if (val != 1){
-            status = OperationStatus.FAILURE;
-        }
+
 
         return status;
     }
@@ -115,7 +121,7 @@ public class SeekerServiceImpl implements SeekerService {
 
     private boolean verifyJobBelongsToMember(Member member, int jobId){
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        boolean status = true;
+        boolean status = false;
         try{
             Job job = jobDAO.getJob(jobId);
             logger.info(job + " ");
@@ -131,10 +137,14 @@ public class SeekerServiceImpl implements SeekerService {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = new Job();
         OperationStatus operationStatus = OperationStatus.SUCCESS;
+
         ObjectMapper.mapObject(jobForm, job, true);
+        logger.info(job + "JOB TO BE EDITED");
         try{
             status = jobDAO.editJob(job);
+            logger.info(status + " ");
             if (status != 1){
+                logger.info("Couldn't edit job");
                 operationStatus=OperationStatus.FAILURE;
             }
         }catch (SQLException e){

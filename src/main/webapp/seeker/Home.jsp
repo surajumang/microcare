@@ -45,7 +45,11 @@
           </form>
       </div>
 
-      <a href="${pageContext.request.contextPath}/member/Search.jsp"> Search Seekers</a>
+      <div class="seeker">
+                <form class="" action="${pageContext.request.contextPath}/member/Search.jsp" method="post">
+                      <input type="submit" name="search" value="Search Sitters"/>
+                </form>
+            </div>
 
       <div class="seeker">
           <form class="" action="${pageContext.request.contextPath}/member/PutProfileInfo.do" method="post">

@@ -14,13 +14,6 @@ public class EditProfile extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*
-        Check user is logged in.
-         */
-
-        /*
-
-         */
 
     }
 }

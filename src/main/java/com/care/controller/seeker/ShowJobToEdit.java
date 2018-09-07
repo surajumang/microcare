@@ -26,8 +26,8 @@ public class ShowJobToEdit extends HttpServlet {
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
     static {
-        message.put(OperationStatus.FAILURE, "Can't Edit Job");
-        message.put(OperationStatus.SUCCESS, "Edit Successful");
+        message.put(OperationStatus.FAILURE, " You Can't Edit this Job");
+        message.put(OperationStatus.SUCCESS, "");
         message.put(OperationStatus.INVALID, "Invalid Job ");
     }
     @Override
@@ -46,6 +46,7 @@ public class ShowJobToEdit extends HttpServlet {
         int id = CommonUtil.getJobIdFromRequest(request);
 
         if (id >= 0){
+            logger.info("Editing job with id " + id );
             Member member = (Member)request.getSession().getAttribute("currentUser");
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
             Job job = null;
@@ -57,10 +58,11 @@ public class ShowJobToEdit extends HttpServlet {
                     request.setAttribute("editJob", job);
                 }
             } catch (JobNotPostedByUserException e) {
-                logger.log(Level.SEVERE, "Can't Edit an expire job", e);
+                logger.log(Level.SEVERE, "Can't Edit an expired job", e);
             }
             logger.info(job + "-- >>> job here********************************");
         }
+        logger.info("Dispatching to ---" + page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         getServletContext().getRequestDispatcher(page).forward(request, response);
 

@@ -16,7 +16,7 @@
     <form class="" action="${pageContext.request.contextPath}/member/Search.do" method="post">
         <label>Email</label>
         <input type="text" name="email" placeholder="Email" value="${search.email}">
-        <c:out value="${errors.email}">
+        <c:out value="${errors.email}"/>
         <input type="submit" name="" value="Go">
     </form>
 

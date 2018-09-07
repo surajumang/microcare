@@ -25,14 +25,14 @@ public class FormPopulator {
             if (methodName.startsWith("set")){
                 String fieldName = methodName.substring(3);
                 Logger logger = Logger.getLogger(FormPopulator.class.getName());
-                logger.info("fieldName before -->" + fieldName);
+                //logger.info("fieldName before -->" + fieldName);
                 fieldName = fieldName.substring(0,1).toLowerCase() + fieldName.substring(1);
 
-                logger.info("fieldName after -->" + fieldName);
+                //logger.info("fieldName after -->" + fieldName);
                 try {
                     // replace with Class<returnType>.cast(object).
                     String value = request.getParameter(fieldName);
-                    logger.info("*****" + value + " ****");
+                    //logger.info("*****" + value + " ****");
 //                    if(value == null)
 //                        continue;
 

@@ -100,16 +100,17 @@ public class JobDTO extends FormBean {
 
         boolean dateError = errors.containsKey("startDate") || errors.containsKey("endDate");
 
+        //[TODO] use try catch
         if (! dateError){
 
             if (Date.valueOf(startDate).before(new Date(System.currentTimeMillis()))){
                 errors.put("currentDate", "StartDate must be greater than current date");
             }
             if (Date.valueOf(startDate).after(Date.valueOf(endDate))){
-
                 errors.put("startDate", "Start date must be less than end Date");
             }
         }
+        logger.info("Done with validation");
 
 
     }

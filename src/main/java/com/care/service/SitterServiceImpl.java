@@ -69,12 +69,14 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
     @Override
     public List<Sitter> getSitterByEmail(String email) {
         List<Sitter> sitters = Collections.emptyList();
+        logger.info("Fetching sitters by email" + email);
         SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         try {
             sitters = sitterDAO.getSitterByEmail(email);
         }catch (SQLException e){
             logger.log(Level.SEVERE, "ads", e);
         }
+        logger.info(" " + sitters.size());
         return sitters;
     }
 

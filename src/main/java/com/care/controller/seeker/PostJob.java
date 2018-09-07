@@ -30,7 +30,7 @@ public class PostJob extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        doPost(req, resp);
     }
 
     @Override
@@ -48,17 +48,21 @@ public class PostJob extends HttpServlet {
 
         request.setAttribute("errors", errors);
         request.setAttribute("formErrors", jobDTO);
-
+        logger.info(errors + " ");
+        logger.info(jobDTO + " " );
         if(errors.isEmpty()){
             logger.info("Without errors");
             jobDTO.setSeekerId(String.valueOf(currentUser.getId()));
 
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
             operationStatus = seekerService.postJob(currentUser, jobDTO);
+            logger.info("Returned with status"  + operationStatus);
+
             if (operationStatus == OperationStatus.SUCCESS){
                 page = "/seeker/Home.jsp";
             }
         }
+
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         getServletContext().getRequestDispatcher(page).forward(request, response);
 
