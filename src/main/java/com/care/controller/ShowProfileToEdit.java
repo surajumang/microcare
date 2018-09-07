@@ -40,12 +40,12 @@ public class ShowProfileToEdit extends HttpServlet {
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         //do a instanceof test.
         OperationStatus status = OperationStatus.FAILURE;
-        return seekerService.getSeeker(memberId, status);
+        return seekerService.getSeeker(memberId);
     }
 
     private Sitter fetchSitter(int memberId){
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         OperationStatus status = OperationStatus.FAILURE;
-        return sitterService.getSitter(memberId, status);
+        return sitterService.getSitter(memberId);
     }
 }

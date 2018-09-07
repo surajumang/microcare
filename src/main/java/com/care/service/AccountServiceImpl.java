@@ -22,11 +22,14 @@ public class AccountServiceImpl implements AccountService {
 
         if (registrationFormDTO.getMemberType().equals("SEEKER") ){
             Seeker seeker = new Seeker();
+            registrationFormDTO.setPassword(Hash.createHash(registrationFormDTO.getPassword()));
+
             ObjectMapper.mapObject(registrationFormDTO, seeker, true);
             val = addSeeker(seeker);
         }
         else {
             Sitter sitter = new Sitter();
+            registrationFormDTO.setPassword(Hash.createHash(registrationFormDTO.getPassword()));
             ObjectMapper.mapObject(registrationFormDTO, sitter, true);
             val = addSitter(sitter);
         }
@@ -84,20 +87,19 @@ public class AccountServiceImpl implements AccountService {
     public OperationStatus deleteMember(Member member) {
 
         OperationStatus status = OperationStatus.SUCCESS;
-
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
 
         try {
-
             if (member.getMemberType() == MemberType.SEEKER){
+                logger.info("A SEEKer was deleted");
                 applicationDAO.setAllApplicationsOnJobsPostedBy(member.getId(), Status.EXPIRED);
                 jobDAO.setAllJobsStatus(member.getId(), Status.EXPIRED);
             }else {
-                applicationDAO.setAllApplicationsStatusBySitter(member.getId(), );
+                logger.info("A sitter was deleted");
+                applicationDAO.setAllApplicationsStatusBySitter(member.getId(),Status.EXPIRED );
             }
-
             memberDAO.setMemberStatus(member.getId(), Status.CLOSED);
 
         } catch (java.sql.SQLException e) {

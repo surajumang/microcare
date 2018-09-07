@@ -4,6 +4,7 @@ import com.care.dto.form.RegistrationFormDTO;
 import com.care.dto.form.SitterRegistrationDTO;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
+import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
@@ -30,7 +31,7 @@ public class Registration extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //SitterService server = ServerFactory.getInstance("seeker");
-        String page = "/ErrorPage.jsp";
+        String page = "visi/index.jsp";
         FormBean registrationDetails = FormPopulator.populate(request, SitterRegistrationDTO.class);
         logger.info(registrationDetails + " " );
         Map<String, String> errors = new HashMap<String, String>();
@@ -39,7 +40,7 @@ public class Registration extends HttpServlet {
         logger.info(errors + " ");
 
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-
+        OperationStatus operationStatus = OperationStatus.FAILURE;
         if(errors.isEmpty()){
             logger.info("Without errors");
             page = "/visitor/index.jsp";

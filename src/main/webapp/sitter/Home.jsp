@@ -32,9 +32,11 @@
             <input type="submit" name="ViewApplications" value="My Applications"/>
       </form>
       
-      <form class="" action="${pageContext.request.contextPath}/sitter/EditProfile.jsp" method="post">
+      <form class="" action="${pageContext.request.contextPath}/member/PutProfileInfo.do" method="post">
             <input type="submit" name="EditProfile" value="Edit Profile"/>
       </form>
+
+        <a href="${pageContext.request.contextPath}/member/Search.jsp"> Search Seekers</a>
 
       <div class="right">
           <form class="" action="${pageContext.request.contextPath}/sitter/CloseAccount.do" method="post">

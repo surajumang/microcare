@@ -1,6 +1,7 @@
 package com.care.dto.form;
 
 import com.care.annotation.Email;
+import com.care.annotation.Name;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 
@@ -14,7 +15,7 @@ public class LoginDetails extends FormBean {
     private String email;
     private String password;
 
-    @Email
+    @Email()
     public String getEmail() {
         return email;
     }
@@ -23,6 +24,7 @@ public class LoginDetails extends FormBean {
         this.email = email;
     }
 
+    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "Must be 5 or more characters without whitespaces ")
     public String getPassword() {
         return password;
     }

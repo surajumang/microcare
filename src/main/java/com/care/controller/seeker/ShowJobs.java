@@ -41,7 +41,7 @@ public class ShowJobs extends HttpServlet {
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
 
         OperationStatus status = OperationStatus.FAILURE;
-        List<Job> myJobs = seekerService.listJobs(currentMember,status);
+        List<Job> myJobs = seekerService.listJobs(currentMember);
         logger.info(myJobs.size() + "--------");
 
         if (myJobs != null && !myJobs.isEmpty()){

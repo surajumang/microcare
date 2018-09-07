@@ -45,17 +45,14 @@
           </form>
       </div>
 
-      <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/seeker/SearchSitters.jsp" method="post">
-                <input type="submit" name="SearchSitters" value="Search Sitters"/>
-          </form>
-      </div>
+      <a href="${pageContext.request.contextPath}/member/Search.jsp"> Search Seekers</a>
 
       <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/seeker/EditProfile.jsp" method="post">
+          <form class="" action="${pageContext.request.contextPath}/member/PutProfileInfo.do" method="post">
                 <input type="submit" name="EditProfile" value="Edit Profile"/>
           </form>
       </div>
+
 
       <div class="right">
                    <form class="" action="${pageContext.request.contextPath}/seeker/CloseAccount.do" method="post">

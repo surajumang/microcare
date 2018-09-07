@@ -63,23 +63,29 @@
                 <td>${job.startDate}</td>
                 <td>${job.endDate}</td>
                 <td>
+                    <c:if test="${job.status != 'EXPIRED'}">
                     <form action="${pageContext.request.contextPath}/seeker/ShowJobToEdit.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
                         <input type="submit" name="" value="Edit">
                     </form>
+                    </c:if>
                 </td>
                 <td>
+                    <c:if test="${job.status != 'EXPIRED'}">
                     <form action="${pageContext.request.contextPath}/seeker/DeleteJob.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
+                    </c:if>
                 </td>
                 <td>
+                   <c:if test="${job.status != 'EXPIRED'}">
                     <form action="${pageContext.request.contextPath}/seeker/ViewApplicants.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
 
                         <input type="submit" name="" value="View Applications">
                     </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

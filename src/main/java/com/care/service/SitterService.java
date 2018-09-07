@@ -10,13 +10,15 @@ import java.util.List;
 
 public interface SitterService extends Service{
 
-    List<Job> listAllAvailableJobs(Member sitter, OperationStatus operationStatus);
+    List<Job> listAllAvailableJobs(Member sitter);
 
-    List<Application> listAllApplications(Member sitter, OperationStatus operationStatus);
+    List<Application> listAllApplications(Member sitter);
 
-    Job getJob(int jobId, OperationStatus operationStatus);
+    Job getJob(int jobId);
 
-    Sitter getSitter(int sitterId, OperationStatus operationStatus);
+    Sitter getSitter(int sitterId);
+
+    List<Sitter> getSitterByEmail(String email);
 
     OperationStatus applyToJob(ApplicationDTO application);
 

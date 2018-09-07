@@ -26,7 +26,7 @@
          <c:out value="${errors.hourlyPay}"/>
          <br><br>
          <input type="text" name="startDate" placeholder="Start Date(YYYY-MM-DD)" value="${formErrors.startDate}">
-         <c:out value="${errors.startDate}"/>
+         <c:out value="${errors.currentDate}"/>
          <br><br>
          <input type="text" name="endDate" placeholder="End Date(YYYY-MM-DD)" value="${formErrors.endDate}">
          <c:out value="${errors.endDate}"/>

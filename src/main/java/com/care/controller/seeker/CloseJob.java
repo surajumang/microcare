@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.exception.JobNotPostedByUserException;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
 import com.care.service.OperationStatus;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CloseJob extends HttpServlet {
@@ -36,11 +38,11 @@ public class CloseJob extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = "/seeker/ShowMyJobs.do";
-        OperationStatus operationStatus;
+        OperationStatus operationStatus = OperationStatus.FAILURE;
 
-        int jobToBeClosed = CommonUtil.getJobIdFromRequest(request, operationStatus);
+        int jobToBeClosed = CommonUtil.getJobIdFromRequest(request);
 
-        if (jobToBeClosed >= 0){
+        if (jobToBeClosed < 0){
             operationStatus = OperationStatus.INVALID;
             request.setAttribute(operationStatus.name(), messege.get(operationStatus));
             getServletContext().getRequestDispatcher(page).forward(request, response);
@@ -50,8 +52,13 @@ public class CloseJob extends HttpServlet {
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
         logger.info("Called CloseApplication  " + currentMember);
-
-        operationStatus = seekerService.closeJob(currentMember, jobToBeClosed);
+        try {
+            operationStatus = seekerService.closeJob(currentMember, jobToBeClosed);
+        } catch (JobNotPostedByUserException e) {
+            logger.log(Level.SEVERE, "Job not pos", e);
+            //replace it with bad request.
+            operationStatus = OperationStatus.UNAUTHORISED;
+        }
         request.setAttribute(operationStatus.name(), messege.get(operationStatus));
 
         logger.info(page);

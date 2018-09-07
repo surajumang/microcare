@@ -13,17 +13,12 @@ public interface SeekerDAO extends DAO {
 
     Seeker getSeeker(int seekerId) throws SQLException;
 
+    List<Seeker> getSeekerByEmail(String email) throws SQLException;
+
     int editSeeker(int seekerId, Seeker seeker) throws SQLException;
-
-    int postJob(Job job) throws SQLException;
-
-    int editJob(Job job) throws SQLException;
-
-    int deleteJob(int jobId) throws SQLException;
 
     List<Job> listAllMyJobs(int memberId) throws SQLException;
 
     List<Application> listAllApplicationsOnMyJob(int jobId) throws SQLException;
 
-    int closeJob(int jobId) throws SQLException;
 }

@@ -15,15 +15,13 @@ public class CommonUtil {
         return (Member)httpSession.getAttribute("currentUser");
     }
 
-    public static int getJobIdFromRequest(HttpServletRequest request, OperationStatus operationStatus){
+    public static int getJobIdFromRequest(HttpServletRequest request){
         int jobId = -1;
         try {
             logger.info("-------- " + request.getParameter("id") + " -------");
             jobId = Integer.parseInt(request.getParameter("id"));
-            operationStatus = OperationStatus.SUCCESS;
         }catch (IllegalArgumentException e){
             logger.log(Level.SEVERE, "Application ID", e);
-            operationStatus = OperationStatus.INVALID;
         }
         return jobId;
     }

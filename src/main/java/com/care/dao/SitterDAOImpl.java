@@ -4,13 +4,14 @@
 
 package com.care.dao;
 
-import com.care.model.Member;
 import com.care.model.Sitter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
@@ -49,17 +50,47 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
     @Override
     public Sitter getSitter(int memberId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
-        Member member = getMember(memberId);
+        //Member member = getMember(memberId);
         Sitter sitter = new Sitter();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM SITTER WHERE ID =?");
+        PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, ZIP_CODE, EXPERIENCE,EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.ID =?");
         statement.setInt(1, memberId);
 
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()){
-            sitter.setId(resultSet.getInt("ID"));
-
+            sitter = populateSitter(resultSet);
+            logger.info(sitter + " ");
         }
+        return sitter;
+    }
+
+    @Override
+    public List<Sitter> getSitterByEmail(String email) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+        List<Sitter> sitters = new ArrayList<>();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, ZIP_CODE, EXPERIENCE,EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.EMAIL LIKE ? ");
+        statement.setString(1, "%" + email + "%");
+
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()){
+            sitters.add(populateSitter(resultSet));
+        }
+        return sitters;
+    }
+
+    private Sitter populateSitter(ResultSet resultSet) throws SQLException{
+        Sitter sitter = new Sitter();
+
+        sitter.setId(resultSet.getInt("SITTER.ID"));
+        sitter.setExpectedPay(resultSet.getDouble("EXPECTED_PAY"));
+        sitter.setExperience(resultSet.getInt("EXPERIENCE"));
+        sitter.setFirstName(resultSet.getString("FIRST_NAME"));
+        sitter.setLastName(resultSet.getString("LAST_NAME"));
+        sitter.setAddress(resultSet.getString("ADDRESS"));
+        sitter.setZipCode(resultSet.getInt("ZIP_CODE"));
+        sitter.setPhone(resultSet.getInt("PHONE"));
+
         return sitter;
     }
 }

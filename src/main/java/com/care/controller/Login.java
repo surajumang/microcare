@@ -47,12 +47,13 @@ public class Login extends HttpServlet{
 
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
+        logger.info(errors + "");
+        request.setAttribute("errors", errors);
 
         if (errors.isEmpty()) {
             status = authenticationService.loginUser(userLoginDetails);
 
             if (status == OperationStatus.SUCCESS){
-
                 Member member = accountService.getMember(userLoginDetails.getEmail());
                 if (member != Member.EMPTY_MEMBER){
 
@@ -66,13 +67,12 @@ public class Login extends HttpServlet{
                     page = setMemberPage(member.getMemberType());
                 }
             }
-
             request.setAttribute(status.name(), message.get(status));
         }
-
-            getServletContext().getRequestDispatcher(page).forward(request,response);
-
-
+        request.setAttribute(status.name(), message.get(status));
+        request.setAttribute("loginDetails", userLoginDetails);
+        logger.info("Dispatching to" + page);
+        getServletContext().getRequestDispatcher(page).forward(request,response);
     }
 
     private String setMemberPage(MemberType memberType){

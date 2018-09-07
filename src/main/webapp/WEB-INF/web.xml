@@ -29,7 +29,6 @@
 
     <request-character-encoding>UTF-8</request-character-encoding>
 
-
     <listener>
         <listener-class>
             com.care.dao.ConnectionUtil
@@ -69,7 +68,19 @@
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404error.jsp</location>
+    </error-page>
 
+    <error-page>
+        <error-code>500</error-code>
+        <location>/ErrorPage.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
     <servlet>
             <servlet-name>SeekerRegistration</servlet-name>
             <servlet-class>com.care.controller.seeker.Registration</servlet-class>
@@ -181,7 +192,7 @@
 
     <servlet>
         <servlet-name>SitterEditProfile</servlet-name>
-        <servlet-class>com.care.controller.EditProfile</servlet-class>
+        <servlet-class>com.care.controller.PutProfileInfo</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SitterEditProfile</servlet-name>
@@ -189,12 +200,30 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>SeekerEditProfile</servlet-name>
+        <servlet-name>PutProfileInfo</servlet-name>
+        <servlet-class>com.care.controller.PutProfileInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PutProfileInfo</servlet-name>
+        <url-pattern>/member/PutProfileInfo.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EditProfile</servlet-name>
         <servlet-class>com.care.controller.EditProfile</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SeekerEditProfile</servlet-name>
-        <url-pattern>/seeker/EditProfile.do</url-pattern>
+        <servlet-name>EditProfile</servlet-name>
+        <url-pattern>/member/EditProfile.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Search</servlet-name>
+        <servlet-class>com.care.controller.Search</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Search</servlet-name>
+        <url-pattern>/member/Search.do</url-pattern>
     </servlet-mapping>
 
     <servlet>

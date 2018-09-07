@@ -1,9 +1,6 @@
 package com.care.dao;
 
-import com.care.model.Application;
-import com.care.model.Job;
-import com.care.model.Member;
-import com.care.model.Seeker;
+import com.care.model.*;
 import com.care.service.ObjectMapper;
 
 import java.sql.Connection;
@@ -46,8 +43,19 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
             seeker.setSpouseName(resultSet.getString("SPOUSE_NAME"));
         }
         ObjectMapper.mapObject(member, seeker, false);
+        logger.info(seeker + "");
 
         return seeker;
+    }
+
+    @Override
+    public List<Seeker> getSeekerByEmail(String email) throws SQLException {
+        Connection connection = ConnectionUtil.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, ZIP_CODE, EXPERIENCE,EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.EMAIL LIKE ? \"");
+        statement.setString(1, "%" + email + "%");
+
+        return null;
     }
 
     @Override
@@ -62,22 +70,6 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
         return statement.executeUpdate();
     }
 
-    public int postJob(Job job) throws SQLException {
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        return jobDAO.addJob(job);
-    }
-
-    public int editJob(Job job) throws SQLException {
-        return postJob(job);
-    }
-    /*
-    Check if the job to be deleted belongs to the currently logged in Sitter.
-     */
-    public int deleteJob(int jobId) throws SQLException {
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        return jobDAO.setJobStatus(jobId, );
-    }
-
     public List<Job> listAllMyJobs(int postedBy) throws SQLException {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         return jobDAO.getAllAvailableJobs(postedBy);
@@ -88,10 +80,5 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
 
         //return applicationDAO.getAllApplicationsOnJob(jobId);
         return null;
-    }
-
-    public int closeJob(int jobId) throws SQLException {
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        return jobDAO.setJobStatus(jobId, );
     }
 }

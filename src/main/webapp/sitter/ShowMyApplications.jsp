@@ -40,9 +40,8 @@
                 <h2>${FAILURE}</h2>
                 <h2>${INVALID}</h2>
         <jsp:include page="/header.jsp"/>
-        <p>Show all the active applications from this sitter.</p>
-
-
+       <h2>${SUCCESS}</h2>
+       <h2>${FAILURE}</h2>
         <table>
             <thead>
                 <tr>
@@ -61,10 +60,12 @@
                 <td>${app.status}</td>
 
                 <td>
+                    <c:if test="${job.status ne 'EXPIRED'}">
                     <form action="${pageContext.request.contextPath}/sitter/DeleteApplication.do" method="get">
                         <input type="hidden" name="id" value="${app.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

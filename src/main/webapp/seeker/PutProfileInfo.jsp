@@ -18,36 +18,38 @@
     <h2>${SUCCESS}</h2>
             <h2>${FAILURE}</h2>
             <h2>${INVALID}</h2>
+    <jsp:include page="/header.jsp"/>
         <h1>Enter Your Details</h1>
         <div class="">
-            <form  action="${pageContext.request.contextPath}/sitter/EditProfile.do" method="post">
-
+            <form  action="${pageContext.request.contextPath}/member/EditProfile.do" method="post">
 
                 <label for="fname">First Name</label>
-                <input type="text" name="firstName" placeholder="First Name" value="${formErrors.firstName}">
+                <input type="text" name="firstName"  value="${profileInfo.firstName}">
                 <c:out value="${errors.firstName}"/><br>
 
                 <label for="lname">Last Name</label>
-                <input type="text" name="lastName" placeholder="Last Name" value="${formErrors.lastName}">
+                <input type="text" name="lastName"  value="${profileInfo.lastName}">
                 <c:out value="${errors.lastName}"/><br>
 
                 <label >Address</label>
-                <input type="text" name="address" placeholder="Address" value="${formErrors.address}">
+                <input type="text" name="address"  value="${profileInfo.address}">
                 <c:out value="${errors.address}"/><br>
 
                 <label> Phone </label>
-                <input type="text" name="phone" placeholder="Phone" value="${formErrors.phone}">
+                <input type="text" name="phone"  value="${profileInfo.phone}">
                 <c:out value="${errors.phone}"/><br>
 
                 <label>Zip Code</label>
-                <input type="text" name="zipCode" placeholder="Zip Code(Six digits)" value="${formErrors.zipCode}">
+                <input type="text" name="zipCode"  value="${profileInfo.zipCode}">
                 <c:out value="${errors.zipCode}"/><br>
 
-                <input type="text" name="experience" placeholder="Experience(Years)" value="${formErrors.experience}">
-                <c:out value="${errors.experience}"/><br>
+                <label> Spouse Name</label>
+                <input type="text" name="spouseName"  value="${profileInfo.spouseName}">
+                <c:out value="${errors.spouseName}"/><br>
 
-                <input type="text" name="expectedPay" placeholder="Expected Pay" value="${formErrors.expectedPay}">
-                <c:out value="${errors.expectedPay}"/><br>
+                <label>Number of Children</label>
+                <input type="text" name="children"  value="${profileInfo.numberOfChildren}">
+                <c:out value="${errors.numberOfChildren}"/><br>
 
                 <input type="hidden" name="memberType" value="SEEKER">
 

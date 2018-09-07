@@ -16,7 +16,7 @@ public class EmailValidator extends Validator {
     public <T> boolean isValid(T value) {
         String val = (String)value;
         boolean result = false;
-        if (required == false){
+        if (required == false && val == null){
             result = true;
         }
         if (val != null ){

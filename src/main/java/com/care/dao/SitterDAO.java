@@ -1,7 +1,5 @@
 package com.care.dao;
 
-import com.care.model.Application;
-import com.care.model.Job;
 import com.care.model.Sitter;
 
 import java.sql.SQLException;
@@ -15,6 +13,8 @@ public interface SitterDAO extends DAO {
     int editSitter(int sitterId, Sitter sitter) throws SQLException;
 
     Sitter getSitter(int memberId) throws SQLException;
+
+    List<Sitter> getSitterByEmail(String email) throws SQLException;
 
     /*
     Sitter close job may be added here.

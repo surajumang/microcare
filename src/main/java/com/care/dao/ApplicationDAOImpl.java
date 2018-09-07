@@ -47,7 +47,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
      */
     public List<Application> getAllApplications(int sitterId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT APPLICATION.ID, TITLE, EXPECTED_PAY, HOURLY_PAY, APPLICATION.STATUS FROM APPLICATION INNER JOIN JOB ON JOB.ID = APPLICATION.JOB_ID WHERE SITTER_ID = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT APPLICATION.ID, TITLE, EXPECTED_PAY, HOURLY_PAY, APPLICATION.STATUS FROM APPLICATION INNER JOIN JOB ON JOB.ID = APPLICATION.JOB_ID WHERE SITTER_ID = ? AND APPLICATION.STATUS <> 'CLOSED'");
         statement.setInt(1, sitterId);
 
         ResultSet resultSet = statement.executeQuery();

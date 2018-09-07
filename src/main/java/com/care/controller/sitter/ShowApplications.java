@@ -38,11 +38,11 @@ public class ShowApplications extends HttpServlet {
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         OperationStatus operationStatus = OperationStatus.FAILURE;
-
-        List<Application> allMyApplications = sitterService.listAllApplications(currentMember, operationStatus);
+        List<Application> allMyApplications = sitterService.listAllApplications(currentMember);
 
         if (allMyApplications != null && !allMyApplications.isEmpty()){
             page = "/sitter/ShowMyApplications.jsp";
+            operationStatus = OperationStatus.SUCCESS;
             request.setAttribute("allMyApplications", allMyApplications);
         }
         logger.info(allMyApplications.toString());

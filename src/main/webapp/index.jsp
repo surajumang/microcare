@@ -21,12 +21,12 @@
 
 
             <c:out value = "${message}">
-            <form action="visitor/login.do" method="post">
+            <form action="${pageContext.request.contextPath}/visitor/login.do" method="post">
                 <label>Email</label>
-                <input type="text" name="email" placeholder="User Name">
-                <label>Email</label>
+                <input type="text" name="email" placeholder="Email" value="${loginDetails.email}">
+                <c:out value="${errors.email}"/>
+                <label>Password</label>
                 <input type="password" name="password" placeholder="Password">
-
                 <input type="submit" name="sb" value="Submit">
             </form>
             New User

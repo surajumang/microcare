@@ -16,7 +16,7 @@
 
     <body>
     <jsp:include page="/header.jsp"/>
-        <h1>Enter Your Details</h1>
+
         <div class="">
             <form  action="${pageContext.request.contextPath}/sitter/ApplyToJob.do" method="post">
 

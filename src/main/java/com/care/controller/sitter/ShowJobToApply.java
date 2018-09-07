@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShowJobToApply extends HttpServlet {
@@ -22,9 +21,9 @@ public class ShowJobToApply extends HttpServlet {
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
     static {
-        message.put(OperationStatus.FAILURE, "Can't apply");
-        message.put(OperationStatus.SUCCESS, "Applied Successfully");
-        message.put(OperationStatus.INVALID, "Invalid job");
+        message.put(OperationStatus.FAILURE, "Unable to Get Job for Application");
+        message.put(OperationStatus.SUCCESS, "Got a job");
+        message.put(OperationStatus.INVALID, "Invalid jobID");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,12 +38,13 @@ public class ShowJobToApply extends HttpServlet {
         String page = "/sitter/Home.jsp";
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        int id = CommonUtil.getJobIdFromRequest(request, operationStatus);
+        int id = CommonUtil.getJobIdFromRequest(request);
 
-        if (operationStatus == OperationStatus.SUCCESS){
-            Job job = sitterService.getJob(id, operationStatus );
-            if (job != Job.EMPTY_JOB){
+        if (id >= 0){
+            Job job = sitterService.getJob(id);
+            if (job != null && job != Job.EMPTY_JOB){
                 page = "/sitter/ShowJobToApply.jsp";
+                operationStatus = OperationStatus.SUCCESS;
                 request.getSession().setAttribute("job", job);
             }
         }

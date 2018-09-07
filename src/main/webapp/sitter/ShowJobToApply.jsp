@@ -9,15 +9,38 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+        <style>
+                        table {
+                            font-family: arial, sans-serif;
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+
+                        td, th {
+                            border: 1px solid #dddddd;
+                            text-align: left;
+                            padding: 8px;
+                        }
+
+                        tr:nth-child(even) {
+                            background-color: #dddddd;
+                        }
+                        </style>
+
+                    <script type="text/javascript">
+                        function confirmDeletion(form) {
+                            if(window.confirm("Are you sure you want to Delete this Job")){
+                                form.submit();
+                            }
+                        }
+                    </script>
+
     </head>
     <body>
     <jsp:include page="/header.jsp"/>
         <h2>${SUCCESS}</h2>
                 <h2>${FAILURE}</h2>
                 <h2>${INVALID}</h2>
-
-
-
             <table>
                         <thead>
                             <tr>
@@ -33,7 +56,7 @@
                             <td>${job.startDate}</td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/sitter/ApplyToJob.do" method="get">
-                                    <input type="text" name="expectedPay" value="">
+                                    <input type="text" name="expectedPay" value="${application.expectedPay}">
                                     <c:out value="${errors.expectedPay}"/>
                                     <input type="hidden" name="id" value="${job.id}">
                                     <input type="submit" name="" value="Apply">

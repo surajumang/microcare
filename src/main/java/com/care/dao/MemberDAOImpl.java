@@ -41,6 +41,7 @@ public class MemberDAOImpl implements MemberDAO {
         Member member = Member.EMPTY_MEMBER;
         if (resultSet.next()){
             member = populateMember(resultSet);
+            logger.info(member + "");
         }
         return member;
     }

@@ -2,7 +2,6 @@ package com.care.controller.sitter;
 
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
-import com.care.model.Sitter;
 import com.care.service.*;
 
 import javax.servlet.ServletException;
@@ -31,7 +30,7 @@ public class CloseApplication extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = "/sitter/Home.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        int applicationToBeClosed = CommonUtil.getJobIdFromRequest(request, operationStatus);
+        int applicationToBeClosed = CommonUtil.getJobIdFromRequest(request);
 
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);

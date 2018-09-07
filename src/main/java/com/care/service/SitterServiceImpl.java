@@ -5,6 +5,7 @@ import com.care.model.*;
 import com.care.dao.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,7 +17,7 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
 
     public SitterServiceImpl(){ }
 
-    public List<Job> listAllAvailableJobs(Member sitter, OperationStatus operationStatus) {
+    public List<Job> listAllAvailableJobs(Member sitter) {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         List<Job> allJobs;
 
@@ -29,7 +30,7 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
         return allJobs;
     }
 
-    public List<Application> listAllApplications(Member sitter, OperationStatus operationStatus) {
+    public List<Application> listAllApplications(Member sitter) {
         ApplicationDAO applicationDAO= DAOFactory.get(ApplicationDAOImpl.class);
         List<Application> applications ;
         try{
@@ -42,7 +43,7 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
     }
 
     @Override
-    public Job getJob(int jobId, OperationStatus operationStatus) {
+    public Job getJob(int jobId) {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = Job.EMPTY_JOB;
         try {
@@ -54,51 +55,62 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
     }
 
     @Override
-    public Sitter getSitter(int sitterId, OperationStatus operationStatus) {
+    public Sitter getSitter(int sitterId) {
         SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         Sitter sitter = Sitter.EMPTY_SITTER;
-
         try {
             sitter = sitterDAO.getSitter(sitterId);
         }catch (SQLException e){
-            logger.log(Level.SEVERE, "While fetching Sitter");
+            logger.log(Level.SEVERE, "While fetching Sitter", e);
         }
         return sitter;
     }
 
-    public OperationStatus applyToJob(ApplicationDTO applicationDTO) {
+    @Override
+    public List<Sitter> getSitterByEmail(String email) {
+        List<Sitter> sitters = Collections.emptyList();
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
+        try {
+            sitters = sitterDAO.getSitterByEmail(email);
+        }catch (SQLException e){
+            logger.log(Level.SEVERE, "ads", e);
+        }
+        return sitters;
+    }
 
+
+    public OperationStatus applyToJob(ApplicationDTO applicationDTO) {
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
         Application application = new Application();
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        int val = -1;
+
         ObjectMapper.mapObject(applicationDTO, application, true);
         logger.info(application.toString() + " AFTER MAPPING");
         try {
-            val = applicationDAO.addApplication(application);
+            int val = applicationDAO.addApplication(application);
+            if (val == 1){
+                operationStatus = OperationStatus.SUCCESS;
+            }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "While Applying", e);
             operationStatus = OperationStatus.FAILURE;
-        }
-
-        if (val == 1){
-            operationStatus = OperationStatus.SUCCESS;
         }
         return operationStatus;
     }
 
     public OperationStatus deleteApplication(Member sitter, int applicationId) {
-        int val = 0;
+
         OperationStatus operationStatus = OperationStatus.FAILURE;
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+        logger.info("APPLICATion being deleted : " + applicationId + "BYY" + sitter.getId());
         try {
-            val = applicationDAO.setApplicationStatus(applicationId, );
+            int val = applicationDAO.setApplicationStatus(applicationId,Status.CLOSED );
+            if (val == 1){
+                operationStatus = OperationStatus.SUCCESS;
+            }
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Error Closing application", e);
             operationStatus = OperationStatus.FAILURE;
-        }
-        if (val == 1){
-            operationStatus = OperationStatus.SUCCESS;
         }
         return operationStatus;
     }

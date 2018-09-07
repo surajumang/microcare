@@ -47,6 +47,7 @@ public class Registration extends HttpServlet {
 
         if (memberType == MemberType.SEEKER){
             detailPage = SeekerRegistrationDTO.class;
+            logger.info("ITTTT SEEKEEEE");
             page = "/visitor/SeekerRegistration.jsp";
         }
         else {

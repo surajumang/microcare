@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditForm extends FormBean {
-    private Logger logger = Logger.getLogger("EditProfile");
+    private Logger logger = Logger.getLogger("PutProfileInfo");
 
     private String firstName;
     private String lastName;

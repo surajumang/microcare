@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.exception.IllegalApplicationAccessException;
 import com.care.model.Application;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
@@ -7,7 +8,6 @@ import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
-import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShowApplications extends HttpServlet {
@@ -39,28 +40,27 @@ public class ShowApplications extends HttpServlet {
 
         String page = "/seeker/Home.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        int jobIdToViewApplications = CommonUtil.getJobIdFromRequest(request, operationStatus);
+        int jobIdToViewApplications = CommonUtil.getJobIdFromRequest(request);
 
-        if (operationStatus == OperationStatus.INVALID){
-            request.setAttribute(operationStatus.name(), message.get(operationStatus));
-            getServletContext().getRequestDispatcher(page).forward(request, response);
-            return;
+        if (jobIdToViewApplications >= 0){
+            SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
+            Member currentMember = (Member) request.getSession().getAttribute("currentUser");
+
+            logger.info("Called SeekerService listAppOnJob");
+            List<Application> applications = null;
+            try {
+                applications = seekerService.getApplications(currentMember, jobIdToViewApplications);
+            } catch (IllegalApplicationAccessException e) {
+                logger.log(Level.SEVERE, "Not allowed to see application");
+            }
+            if (applications != null && !applications.isEmpty()){
+                page = "/seeker/ViewApplications.jsp";
+                operationStatus = OperationStatus.SUCCESS;
+                request.setAttribute("getApplications", applications);
+            }
         }
 
-        SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-        Member currentMember = (Member) request.getSession().getAttribute("currentMember");
-
-        logger.info("Called SeekerService listAppOnJob");
-        List<Application> applications =
-                seekerService.getApplications(currentMember, jobIdToViewApplications, operationStatus);
-
-        // this has to changed to Collections.emptyList().
-        if (applications != null && !applications.isEmpty()){
-            page = "/seeker/ViewApplications.jsp";
-            request.setAttribute("getApplications", applications);
-        }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-
         getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }
