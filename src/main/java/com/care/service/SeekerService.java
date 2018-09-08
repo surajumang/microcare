@@ -12,19 +12,19 @@ import java.util.List;
 
 public interface SeekerService extends Service {
 
-    Seeker getSeeker(int seekerId);
+    Seeker getSeeker(long seekerId);
 
     List<Seeker> getSeekerByEmail(String email);
 
-    Job getJob(Member member, int jobId) throws JobNotPostedByUserException;
+    Job getJob(Member member, long jobId) throws JobNotPostedByUserException;
 
     OperationStatus postJob(Member member, JobDTO jobForm);
 
     List<Job> listJobs(Member member);
 
-    List<Application> getApplications(Member member, int jobId) throws IllegalApplicationAccessException;
+    List<Application> getApplications(Member member, long jobId) throws IllegalApplicationAccessException;
 
     OperationStatus editJob(Member member, JobDTO jobForm);
 
-    OperationStatus closeJob(Member member, int jobId) throws JobNotPostedByUserException;
+    OperationStatus closeJob(Member member, long jobId) throws JobNotPostedByUserException;
 }

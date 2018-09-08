@@ -22,8 +22,8 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("INSERT INTO APPLICATION (JOB_ID, SITTER_ID, EXPECTED_PAY)" +
                 "VALUES(?,?,?)");
-        statement.setInt(1,application.getJobId());
-        statement.setInt(2, application.getSitterId());
+        statement.setLong(1,application.getJobId());
+        statement.setLong(2, application.getSitterId());
         statement.setDouble(3,application.getExpectedPay());
         return statement.executeUpdate();
     }
@@ -32,10 +32,10 @@ public class ApplicationDAOImpl implements ApplicationDAO {
     Fetch everything related to application.
     Decide whether to fetch everything related or not.
      */
-    public Application getApplication(int applicationId) throws SQLException {
+    public Application getApplication(long applicationId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM APPLICATION WHERE ID = ?");
-        statement.setInt(1,applicationId);
+        statement.setLong(1,applicationId);
         ResultSet resultSet = statement.executeQuery();
         return populateApplication(resultSet);
     }
@@ -45,10 +45,10 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         This method is focussed on sitter only.
         May need to join with the member and/or the job table to fetch other details.
      */
-    public List<Application> getAllApplications(int sitterId) throws SQLException {
+    public List<Application> getAllApplications(long sitterId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT APPLICATION.ID, TITLE, EXPECTED_PAY, HOURLY_PAY, APPLICATION.STATUS FROM APPLICATION INNER JOIN JOB ON JOB.ID = APPLICATION.JOB_ID WHERE SITTER_ID = ? AND APPLICATION.STATUS <> 'CLOSED'");
-        statement.setInt(1, sitterId);
+        statement.setLong(1, sitterId);
 
         ResultSet resultSet = statement.executeQuery();
         List<Application> applications= new ArrayList<>();
@@ -59,7 +59,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
             job.setHourlyPay(resultSet.getDouble("HOURLY_PAY"));
             application.setStatus(Status.valueOf(resultSet.getString("APPLICATION.STATUS")));
             application.setExpectedPay(resultSet.getDouble("EXPECTED_PAY"));
-            application.setId(resultSet.getInt("APPLICATION.ID"));
+            application.setId(resultSet.getLong("APPLICATION.ID"));
             application.setJob(job);
 
             applications.add(application);
@@ -71,13 +71,13 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
         Make sure that the list<Application> returned by this method contains all the required info bu the front end.
      */
-    public List<Application> getAllApplicationsOnJob(int jobId) throws SQLException {
+    public List<Application> getAllApplicationsOnJob(long jobId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         List<Application> applications = new ArrayList<Application>();
         logger.info("Getting all application on a JOB");
 
         PreparedStatement statement = connection.prepareStatement("SELECT JOB.ID, JOB.TITLE, MEMBER.FIRST_NAME, MEMBER.LAST_NAME, APPLICATION.STATUS, APPLICATION.EXPECTED_PAY, JOB_ID FROM APPLICATION INNER JOIN MEMBER ON APPLICATION.SITTER_ID = MEMBER.ID INNER JOIN  JOB ON APPLICATION.JOB_ID = JOB.ID WHERE APPLICATION.JOB_ID = ? ");
-        statement.setInt(1, jobId);
+        statement.setLong(1, jobId);
 
         logger.info("Done with query " + statement);
 
@@ -89,7 +89,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
             Job job = new Job();
 
             job.setTitle(resultSet.getString("JOB.TITLE"));
-            job.setId(resultSet.getInt("JOB.ID"));
+            job.setId(resultSet.getLong("JOB.ID"));
             sitter.setFirstName(resultSet.getString("MEMBER.FIRST_NAME"));
             sitter.setLastName(resultSet.getString("MEMBER.LAST_NAME"));
             application.setExpectedPay(resultSet.getDouble("APPLICATION.EXPECTED_PAY"));
@@ -108,39 +108,39 @@ public class ApplicationDAOImpl implements ApplicationDAO {
     /*
         Fairly simple implementation.
      */
-    public int setApplicationStatus(int applicationId, Status status) throws SQLException {
+    public int setApplicationStatus(long applicationId, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE ID = ?");
         statement.setString(1, status.name());
-        statement.setInt(2,applicationId);
+        statement.setLong(2,applicationId);
 
         return statement.executeUpdate();
     }
 
-    public int setAllApplicationsStatusBySitter(int memberId, Status status) throws SQLException {
+    public int setAllApplicationsStatusBySitter(long memberId, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE SITTER_ID = ?");
         statement.setString(1, status.name());
-        statement.setInt(2, memberId);
+        statement.setLong(2, memberId);
 
         return statement.executeUpdate();
     }
 
-    public int setAllApplicationStatusByJob(int jobId, Status status) throws SQLException {
+    public int setAllApplicationStatusByJob(long jobId, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE JOB_ID = ?");
         statement.setString(1, status.name());
-        statement.setInt(2, jobId);
+        statement.setLong(2, jobId);
 
         return statement.executeUpdate();
     }
 
-    public int setAllApplicationsOnJobsPostedBy(int postedBy, Status status) throws SQLException {
+    public int setAllApplicationsOnJobsPostedBy(long postedBy, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE APPLICATION SET STATUS = ? WHERE JOB_ID IN(SELECT ID FROM JOB WHERE POSTED_BY =?) ");
         statement.setString(1, status.name());
-        statement.setInt(2, postedBy);
+        statement.setLong(2, postedBy);
 
         return statement.executeUpdate();
     }
@@ -151,9 +151,9 @@ public class ApplicationDAOImpl implements ApplicationDAO {
     private Application populateApplication( ResultSet resultSet) throws SQLException{
         Application application = new Application();
 
-        application.setId(resultSet.getInt("ID"));
-        application.setJobId(resultSet.getInt("JOB_ID"));
-        application.setSitterId(resultSet.getInt("SITTER_ID"));
+        application.setId(resultSet.getLong("ID"));
+        application.setJobId(resultSet.getLong("JOB_ID"));
+        application.setSitterId(resultSet.getLong("SITTER_ID"));
         application.setExpectedPay(resultSet.getDouble("EXPECTED_PAY"));
         application.setStatus(Status.valueOf(resultSet.getString("STATUS")));
         application.setDateCreated(resultSet.getDate("DATE_CREATED"));

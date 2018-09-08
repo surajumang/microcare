@@ -5,7 +5,6 @@ import com.care.model.*;
 import com.care.dao.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,8 +41,7 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
         return applications;
     }
 
-    @Override
-    public Job getJob(int jobId) {
+    public Job getJob(long jobId) {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = Job.EMPTY_JOB;
         try {
@@ -54,8 +52,7 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
         return job;
     }
 
-    @Override
-    public Sitter getSitter(int sitterId) {
+    public Sitter getSitter(long sitterId) {
         SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         Sitter sitter = Sitter.EMPTY_SITTER;
         try {
@@ -66,7 +63,6 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
         return sitter;
     }
 
-    @Override
     public List<Sitter> getSitterByEmail(String email) {
         List<Sitter> sitters = Collections.emptyList();
         logger.info("Fetching sitters by email" + email);
@@ -87,7 +83,7 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         ObjectMapper.mapObject(applicationDTO, application, true);
-        logger.info(application.toString() + " AFTER MAPPING");
+        logger.info(application + " AFTER MAPPING");
         try {
             int val = applicationDAO.addApplication(application);
             if (val == 1){
@@ -100,7 +96,7 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
         return operationStatus;
     }
 
-    public OperationStatus deleteApplication(Member sitter, int applicationId) {
+    public OperationStatus deleteApplication(Member sitter, long applicationId) {
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);

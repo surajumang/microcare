@@ -12,6 +12,6 @@ public interface AuthenticationService extends Service {
 
     int forgotPassword();
 
-    boolean isLoggedIn(int userId);
+    boolean isLoggedIn(long userId);
 
 }

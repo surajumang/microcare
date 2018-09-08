@@ -11,14 +11,14 @@ public interface SeekerDAO extends DAO {
 
     int addSeeker(Seeker seeker) throws SQLException;
 
-    Seeker getSeeker(int seekerId) throws SQLException;
+    Seeker getSeeker(long seekerId) throws SQLException;
 
     List<Seeker> getSeekerByEmail(String email) throws SQLException;
 
-    int editSeeker(int seekerId, Seeker seeker) throws SQLException;
+    int editSeeker(long seekerId, Seeker seeker) throws SQLException;
 
-    List<Job> listAllMyJobs(int memberId) throws SQLException;
+    List<Job> listAllMyJobs(long memberId) throws SQLException;
 
-    List<Application> listAllApplicationsOnMyJob(int jobId) throws SQLException;
+    List<Application> listAllApplicationsOnMyJob(long jobId) throws SQLException;
 
 }

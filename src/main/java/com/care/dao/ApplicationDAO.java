@@ -10,17 +10,17 @@ public interface ApplicationDAO extends DAO {
 
     int addApplication(Application application) throws SQLException;
 
-    Application getApplication(int applicationId) throws SQLException;
+    Application getApplication(long applicationId) throws SQLException;
 
-    List<Application> getAllApplications(int sitterId) throws SQLException;
+    List<Application> getAllApplications(long sitterId) throws SQLException;
 
-    List<Application> getAllApplicationsOnJob(int jobId) throws SQLException;
+    List<Application> getAllApplicationsOnJob(long jobId) throws SQLException;
 
-    int setApplicationStatus(int applicationId, Status status) throws SQLException;
+    int setApplicationStatus(long applicationId, Status status) throws SQLException;
 
-    int setAllApplicationsStatusBySitter(int sitterId, Status status) throws SQLException;
+    int setAllApplicationsStatusBySitter(long sitterId, Status status) throws SQLException;
 
-    int setAllApplicationStatusByJob(int jobId, Status status)throws SQLException;
+    int setAllApplicationStatusByJob(long jobId, Status status)throws SQLException;
 
-    int setAllApplicationsOnJobsPostedBy(int postedBy, Status status) throws SQLException;
+    int setAllApplicationsOnJobsPostedBy(long postedBy, Status status) throws SQLException;
 }

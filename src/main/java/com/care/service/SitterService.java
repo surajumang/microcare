@@ -14,14 +14,14 @@ public interface SitterService extends Service{
 
     List<Application> listAllApplications(Member sitter);
 
-    Job getJob(int jobId);
+    Job getJob(long jobId);
 
-    Sitter getSitter(int sitterId);
+    Sitter getSitter(long sitterId);
 
     List<Sitter> getSitterByEmail(String email);
 
     OperationStatus applyToJob(ApplicationDTO application);
 
-    OperationStatus deleteApplication(Member sitter, int applicationId);
+    OperationStatus deleteApplication(Member sitter, long applicationId);
 
 }

@@ -10,9 +10,9 @@ public interface SitterDAO extends DAO {
 
     int addSitter(Sitter sitter) throws SQLException;
 
-    int editSitter(int sitterId, Sitter sitter) throws SQLException;
+    int editSitter(long sitterId, Sitter sitter) throws SQLException;
 
-    Sitter getSitter(int memberId) throws SQLException;
+    Sitter getSitter(long memberId) throws SQLException;
 
     List<Sitter> getSitterByEmail(String email) throws SQLException;
 

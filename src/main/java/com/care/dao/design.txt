@@ -2,7 +2,7 @@ Member table
 1       ID              INT(10)                 AUTO INCREMENT
 2       First_Name      VARCHAR(100)             NOT NULL
 3       Last_Name       VARCHAR(100)             NOT NULL
-4       Phone           INT(10)
+4       Phone           BIGINT(10)
 6       Member_Type     ENUM {Seeker, Sitter, Admin}
 5       Email(ID)       VARCHAR(100)
 7       Address         VARCHAR(250)

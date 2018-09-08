@@ -12,5 +12,5 @@ public interface AccountService extends Service {
 
     OperationStatus deleteMember(Member member);
 
-    int editMember(int memberId, EditForm editForm);
+    int editMember(long memberId, EditForm editForm);
 }

@@ -2,17 +2,17 @@
 package com.care.model;
 
 public class Sitter extends Member {
-        private int id;
+        private long id;
         private int experience;
         private double expectedPay;
 
         public static final Sitter EMPTY_SITTER = new Sitter();
-
-        public int getId() {
+        @Override
+        public long getId() {
                 return id;
         }
-
-        public void setId(int id) {
+        @Override
+        public void setId(long id) {
                 this.id = id;
         }
 

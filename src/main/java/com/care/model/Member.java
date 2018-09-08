@@ -1,31 +1,28 @@
 
 package com.care.model;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
-import java.security.MessageDigest;
-import java.nio.charset.StandardCharsets;
 
 public class Member {
-        private int id;
+        private long id;
         private String firstName;
         private String lastName;
-        private int phone;
+        private long phone;
         private MemberType memberType;
         private String email;
         private String address;
-        private int zipCode;
+        private long zipCode;
         private Status status;
         private Date lastModified;
         private String password;
 
         public static final Member EMPTY_MEMBER = new Member();
 
-        public int getId() {
+        public long getId() {
                 return id;
         }
 
-        public void setId(int id) {
+        public void setId(long id) {
                 this.id = id;
         }
 
@@ -45,11 +42,11 @@ public class Member {
                 this.lastName = lastName;
         }
 
-        public int getPhone() {
+        public long getPhone() {
                 return phone;
         }
 
-        public void setPhone(int phone) {
+        public void setPhone(long phone) {
                 this.phone = phone;
         }
 
@@ -77,11 +74,11 @@ public class Member {
                 this.address = address;
         }
 
-        public int getZipCode() {
+        public long getZipCode() {
                 return zipCode;
         }
 
-        public void setZipCode(int zipCode) {
+        public void setZipCode(long zipCode) {
                 this.zipCode = zipCode;
         }
 

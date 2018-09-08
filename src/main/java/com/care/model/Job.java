@@ -5,9 +5,9 @@ import java.sql.Date;
 import java.util.List;
 
 public class Job {
-    private int id;
+    private long id;
     private String title;
-    private int seekerId;
+    private long seekerId;
     private double hourlyPay;
     private Date startDate;
     private Date endDate;
@@ -42,11 +42,11 @@ public class Job {
         this.hourlyPay = hourlyPay;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,11 +58,11 @@ public class Job {
         this.title = title;
     }
 
-    public int getSeekerId() {
+    public long getSeekerId() {
         return seekerId;
     }
 
-    public void setSeekerId(int seekerId) {
+    public void setSeekerId(long seekerId) {
         this.seekerId = seekerId;
     }
 

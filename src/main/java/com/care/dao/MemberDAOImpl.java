@@ -32,11 +32,11 @@ public class MemberDAOImpl implements MemberDAO {
         return member;
     }
 
-    public Member getMember(int memberId) throws SQLException {
+    public Member getMember(long memberId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Connection acquired  :" );
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM MEMBER WHERE ID=?");
-        preparedStatement.setInt(1, memberId);
+        preparedStatement.setLong(1, memberId);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         Member member = Member.EMPTY_MEMBER;
@@ -54,35 +54,35 @@ public class MemberDAOImpl implements MemberDAO {
                 "EMAIL, ADDRESS, ZIP_CODE, PASSWORD) VALUES(?,?,?,?,?,?,?,?)" );
         preparedStatement.setString(1, member.getFirstName());
         preparedStatement.setString(2, member.getLastName());
-        preparedStatement.setInt(3, member.getPhone());
+        preparedStatement.setLong(3, member.getPhone());
         preparedStatement.setString(4, member.getMemberType().name());
         preparedStatement.setString(5, member.getEmail());
         preparedStatement.setString(6, member.getAddress());
-        preparedStatement.setInt(7, member.getZipCode());
+        preparedStatement.setLong(7, member.getZipCode());
         preparedStatement.setString(8, member.getPassword());
 
         return preparedStatement.executeUpdate();
     }
 
-    public int editMember(int memberId, Member member) throws SQLException {
+    public int editMember(long memberId, Member member) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Editing Member");
         PreparedStatement statement = connection.prepareStatement("UPDATE MEMBER SET FIRST_NAME=?, LAST_NAME=?, PHONE=?, ADDRESS=?, ZIP_CODE=? WHERE ID=?");
         statement.setString(1, member.getFirstName());
         statement.setString(2, member.getLastName());
-        statement.setInt(3, member.getPhone());
+        statement.setLong(3, member.getPhone());
         statement.setString(4, member.getAddress());
-        statement.setInt(5, member.getZipCode());
-        statement.setInt(6, memberId);
+        statement.setLong(5, member.getZipCode());
+        statement.setLong(6, memberId);
 
         return statement.executeUpdate();
     }
 
-    public int setMemberStatus(int memberId, Status status) throws SQLException {
+    public int setMemberStatus(long memberId, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE MEMBER SET STATUS = ? WHERE ID = ?");
         statement.setString(1, status.name());
-        statement.setInt(2, memberId);
+        statement.setLong(2, memberId);
 
         return statement.executeUpdate();
     }
@@ -90,14 +90,14 @@ public class MemberDAOImpl implements MemberDAO {
     private Member populateMember(ResultSet resultSet) throws SQLException{
         Member member = new Member();
         logger.info("Row exist");
-        member.setId(resultSet.getInt("ID"));
+        member.setId(resultSet.getLong("ID"));
         member.setEmail(resultSet.getString("EMAIL"));
         member.setFirstName(resultSet.getString("FIRST_NAME"));
         member.setLastName(resultSet.getString("LAST_NAME"));
         member.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
         member.setAddress(resultSet.getString("ADDRESS"));
-        member.setPhone(resultSet.getInt("PHONE"));
-        member.setZipCode(resultSet.getInt("ZIP_CODE"));
+        member.setPhone(resultSet.getLong("PHONE"));
+        member.setZipCode(resultSet.getLong("ZIP_CODE"));
         member.setPassword(resultSet.getString("PASSWORD"));
 
         return member;

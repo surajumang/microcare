@@ -1,6 +1,5 @@
 package com.care.service;
 
-import com.care.controller.seeker.PostJob;
 import com.care.exception.IllegalApplicationAccessException;
 import com.care.exception.JobNotPostedByUserException;
 import com.care.model.*;
@@ -15,11 +14,11 @@ import java.util.logging.Logger;
 
 public class SeekerServiceImpl implements SeekerService {
 
-    Logger logger = Logger.getLogger("SeekerServiceImpl");
+    private Logger logger = Logger.getLogger("SeekerServiceImpl");
 
     public SeekerServiceImpl(){    }
 
-    public Seeker getSeeker(int seekerId) {
+    public Seeker getSeeker(long seekerId) {
         SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         Seeker seeker = Seeker.EMPTY_SEEKER;
         try{
@@ -30,7 +29,6 @@ public class SeekerServiceImpl implements SeekerService {
         return seeker;
     }
 
-    @Override
     public List<Seeker> getSeekerByEmail(String email) {
         logger.info("Fetching seekers by Email");
         SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
@@ -40,12 +38,12 @@ public class SeekerServiceImpl implements SeekerService {
         }catch (SQLException e){
             logger.log(Level.SEVERE, "fs", e);
         }
-        logger.info(seekers.size() + "");
+        logger.info(seekers.size() + " ");
         return seekers;
     }
 
-    @Override
-    public Job getJob(Member member, int jobId) throws JobNotPostedByUserException {
+
+    public Job getJob(Member member, long jobId) throws JobNotPostedByUserException {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = Job.EMPTY_JOB;
         try {
@@ -99,7 +97,7 @@ public class SeekerServiceImpl implements SeekerService {
         return memberJobs;
     }
 
-    public List<Application> getApplications(Member member, int jobId) throws IllegalApplicationAccessException {
+    public List<Application> getApplications(Member member, long jobId) throws IllegalApplicationAccessException {
         List<Application> applications;
         logger.info("ListApplications");
 
@@ -119,7 +117,7 @@ public class SeekerServiceImpl implements SeekerService {
         return applications;
     }
 
-    private boolean verifyJobBelongsToMember(Member member, int jobId){
+    private boolean verifyJobBelongsToMember(Member member, long jobId){
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         boolean status = false;
         try{
@@ -158,7 +156,7 @@ public class SeekerServiceImpl implements SeekerService {
     /*
     Check if member is the owner.
      */
-    public OperationStatus closeJob(Member member, int jobId) throws JobNotPostedByUserException {
+    public OperationStatus closeJob(Member member, long jobId) throws JobNotPostedByUserException {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
@@ -169,6 +167,7 @@ public class SeekerServiceImpl implements SeekerService {
                 applicationDAO.setAllApplicationStatusByJob(jobId, Status.EXPIRED);
             }else {
                 operationStatus = OperationStatus.UNAUTHORISED;
+                throw new  JobNotPostedByUserException("Can;t close job");
             }
         }catch (SQLException e){
             logger.log(Level.SEVERE, "Can't delete Job", e);

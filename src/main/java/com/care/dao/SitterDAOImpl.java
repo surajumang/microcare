@@ -28,34 +28,34 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
 
         PreparedStatement statement = connection.prepareStatement("INSERT INTO SITTER(ID, EXPERIENCE, EXPECTED_PAY)" +
                 "VALUES(?,?,?)");
-        statement.setInt(1,sitter.getId());
-        statement.setInt(2, sitter.getExperience());
+        statement.setLong(1,sitter.getId());
+        statement.setLong(2, sitter.getExperience());
         statement.setDouble(3, sitter.getExpectedPay());
 
         return statement.executeUpdate();
     }
 
     @Override
-    public int editSitter(int sitterId, Sitter sitter) throws SQLException {
+    public int editSitter(long sitterId, Sitter sitter) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         editMember(sitterId, sitter);
 
         PreparedStatement statement = connection.prepareStatement("UPDATE SITTER SET EXPERIENCE=?, EXPECTED_PAY=? WHERE ID =?");
-        statement.setInt(1, sitter.getExperience());
+        statement.setLong(1, sitter.getExperience());
         statement.setDouble(2, sitter.getExpectedPay());
-        statement.setInt(3, sitterId);
+        statement.setLong(3, sitterId);
 
         return statement.executeUpdate();
     }
 
     @Override
-    public Sitter getSitter(int memberId) throws SQLException {
+    public Sitter getSitter(long memberId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         //Member member = getMember(memberId);
         Sitter sitter = new Sitter();
 
         PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, EMAIL, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, MEMBER_TYPE, ZIP_CODE, EXPERIENCE, EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.ID =?");
-        statement.setInt(1, memberId);
+        statement.setLong(1, memberId);
 
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()){
@@ -86,14 +86,14 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
     private Sitter populateSitter(ResultSet resultSet) throws SQLException{
         Sitter sitter = new Sitter();
 
-        sitter.setId(resultSet.getInt("SITTER.ID"));
+        sitter.setId(resultSet.getLong("SITTER.ID"));
         sitter.setExpectedPay(resultSet.getDouble("EXPECTED_PAY"));
         sitter.setExperience(resultSet.getInt("EXPERIENCE"));
         sitter.setFirstName(resultSet.getString("FIRST_NAME"));
         sitter.setLastName(resultSet.getString("LAST_NAME"));
         sitter.setAddress(resultSet.getString("ADDRESS"));
-        sitter.setZipCode(resultSet.getInt("ZIP_CODE"));
-        sitter.setPhone(resultSet.getInt("PHONE"));
+        sitter.setZipCode(resultSet.getLong("ZIP_CODE"));
+        sitter.setPhone(resultSet.getLong("PHONE"));
         sitter.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
         sitter.setEmail(resultSet.getString("EMAIL"));
 

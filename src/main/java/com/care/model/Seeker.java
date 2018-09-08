@@ -3,19 +3,19 @@ package com.care.model;
 
 public class Seeker extends Member{
 
-    private int id;
+    private long id;
     private int numberOfChildren;
     private String spouseName;
 
     public static final Seeker EMPTY_SEEKER = new Seeker();
 
     @Override
-    public int getId() {
+    public long getId() {
         return id;
     }
 
     @Override
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

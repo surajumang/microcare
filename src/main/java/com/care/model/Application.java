@@ -8,9 +8,9 @@ import java.sql.Date;
 
 public class Application {
 
-        private int id;
-        private int jobId;
-        private int sitterId;
+        private long id;
+        private long jobId;
+        private long sitterId;
         private double expectedPay;
         private Status status;
         private Date dateCreated;
@@ -36,27 +36,27 @@ public class Application {
                 this.sitter = sitter;
         }
 
-        public int getId() {
+        public long getId() {
                 return id;
         }
 
-        public void setId(int id) {
+        public void setId(long id) {
                 this.id = id;
         }
 
-        public int getJobId() {
+        public long getJobId() {
                 return jobId;
         }
 
-        public void setJobId(int jobId) {
+        public void setJobId(long jobId) {
                 this.jobId = jobId;
         }
 
-        public int getSitterId() {
+        public long getSitterId() {
                 return sitterId;
         }
 
-        public void setSitterId(int sitterId) {
+        public void setSitterId(long sitterId) {
                 this.sitterId = sitterId;
         }
 

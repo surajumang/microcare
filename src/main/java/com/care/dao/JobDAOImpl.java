@@ -4,7 +4,6 @@
 package com.care.dao;
 
 import com.care.model.Job;
-import com.care.model.Member;
 import com.care.model.Status;
 
 import java.sql.*;
@@ -18,11 +17,11 @@ public final class JobDAOImpl implements JobDAO {
 
     public JobDAOImpl(){ }
 
-    public Job getJob(int jobId) throws SQLException {
+    public Job getJob(long jobId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Get job method");
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM JOB WHERE ID=?");
-        statement.setInt(1,jobId);
+        statement.setLong(1,jobId);
         ResultSet resultSet = statement.executeQuery();
         Job job = null;
 
@@ -41,7 +40,7 @@ public final class JobDAOImpl implements JobDAO {
         PreparedStatement statement = connection.prepareStatement("INSERT INTO JOB(TITLE, POSTED_BY, HOURLY_PAY, START_DATE, " +
                 "END_DATE) VALUES (?, ?, ?, ?, ? )");
         statement.setString(1, job.getTitle());
-        statement.setInt(2, job.getSeekerId());
+        statement.setLong(2, job.getSeekerId());
         statement.setDouble(3, job.getHourlyPay());
         statement.setDate(4, job.getStartDate());
         statement.setDate(5, job.getEndDate());
@@ -49,12 +48,12 @@ public final class JobDAOImpl implements JobDAO {
         return statement.executeUpdate();
     }
 
-    public int setJobStatus(int jobId, Status status) throws SQLException {
+    public int setJobStatus(long jobId, Status status) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info(jobId + "***********");
         PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS=? WHERE ID = ?");
         statement.setString(1, status.name());
-        statement.setInt(2, jobId);
+        statement.setLong(2, jobId);
 
         return statement.executeUpdate();
     }
@@ -67,7 +66,7 @@ public final class JobDAOImpl implements JobDAO {
         statement.setDate(2, job.getStartDate());
         statement.setDate(3, job.getEndDate());
         statement.setDouble(4, job.getHourlyPay());
-        statement.setInt(5, job.getId());
+        statement.setLong(5, job.getId());
 
         return statement.executeUpdate();
     }
@@ -76,14 +75,14 @@ public final class JobDAOImpl implements JobDAO {
     [todo]
     This is for Seeker to get all jobs posted by him,
      */
-    public List<Job> getAllJobs(int postedBy) throws SQLException {
+    public List<Job> getAllJobs(long postedBy) throws SQLException {
         logger.info("GetAllJobs Seeker");
         List<Job> jobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("SELECT ID, TITLE, STATUS, START_DATE, END_DATE, HOURLY_PAY, POSTED_BY " +
                 "FROM JOB " +
                 "WHERE POSTED_BY = ? AND STATUS <> ?");
-        statement.setInt(1, postedBy);
+        statement.setLong(1, postedBy);
         statement.setString(2, Status.CLOSED.name());
 
         logger.info(postedBy + " User ID to createObject job from DB");
@@ -98,12 +97,12 @@ public final class JobDAOImpl implements JobDAO {
     All active jobs only. and the ones not applied by the sitter.
     This will be called by Sitter.
      */
-    public List<Job> getAllAvailableJobs(int sitterId) throws SQLException {
+    public List<Job> getAllAvailableJobs(long sitterId) throws SQLException {
         List<Job> allAvailableJobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID,POSTED_BY, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE STATUS = ? AND JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE SITTER_ID = ? AND APPLICATION.STATUS <> 'ACTIVE' )");
+        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID,POSTED_BY, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE STATUS = ? AND JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE SITTER_ID = ? AND APPLICATION.STATUS = 'ACTIVE' )");
         statement.setString(1, Status.ACTIVE.name());
-        statement.setInt(2, sitterId);
+        statement.setLong(2, sitterId);
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -114,21 +113,8 @@ public final class JobDAOImpl implements JobDAO {
         return allAvailableJobs;
     }
 
-//    public int deleteJob(Member member, int jobId) throws SQLException {
-//        logger.info("Close Seeker's Job");
-//        Connection connection = ConnectionUtil.getConnection();
-//        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS='INACTIVE'" +
-//                "WHERE ID=? AND POSTED_BY=?");
-//
-//
-//        logger.info(jobId + " JobId ID to createObject job from DB" + member.getId());
-//
-//        statement.setInt(1, jobId);
-//        return statement.executeUpdate();
-//
-//    }
 
-    public int setAllJobsStatus(int postedBy, Status status) throws SQLException {
+    public int setAllJobsStatus(long postedBy, Status status) throws SQLException {
         logger.info("Close Seeker's Job");
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Acquired connection");
@@ -136,7 +122,7 @@ public final class JobDAOImpl implements JobDAO {
                 "WHERE POSTED_BY=?");
         logger.info( " JobId ID to create job from DB" + postedBy);
         statement.setString(1, status.name());
-        statement.setInt(2, postedBy);
+        statement.setLong(2, postedBy);
         return statement.executeUpdate();
     }
 
@@ -144,8 +130,8 @@ public final class JobDAOImpl implements JobDAO {
         Job job = new Job();
 
         job.setTitle(resultSet.getString("TITLE"));
-        job.setId(resultSet.getInt("ID"));
-        job.setSeekerId(resultSet.getInt("POSTED_BY"));
+        job.setId(resultSet.getLong("ID"));
+        job.setSeekerId(resultSet.getLong("POSTED_BY"));
         job.setHourlyPay(resultSet.getDouble("HOURLY_PAY"));
         job.setStartDate(resultSet.getDate("START_DATE"));
         job.setEndDate(resultSet.getDate("END_DATE"));

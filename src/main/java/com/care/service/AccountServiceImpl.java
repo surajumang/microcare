@@ -18,18 +18,21 @@ public class AccountServiceImpl implements AccountService {
 
         OperationStatus status = OperationStatus.FAILURE;
         int val = -1;
-        logger.info("Called enroll");
+        logger.info("Called enroll  " + registrationFormDTO);
 
         if (registrationFormDTO.getMemberType().equals("SEEKER") ){
             Seeker seeker = new Seeker();
             registrationFormDTO.setPassword(Hash.createHash(registrationFormDTO.getPassword()));
 
+            logger.info("Seeker details--" + seeker);
             ObjectMapper.mapObject(registrationFormDTO, seeker, true);
             val = addSeeker(seeker);
         }
         else {
             Sitter sitter = new Sitter();
             registrationFormDTO.setPassword(Hash.createHash(registrationFormDTO.getPassword()));
+            logger.info("WIth UPdated Password " + registrationFormDTO.getPassword());
+            logger.info("Seeker details--" + sitter);
             ObjectMapper.mapObject(registrationFormDTO, sitter, true);
             val = addSitter(sitter);
         }
@@ -67,9 +70,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public Member getMember(String memberId) {
-
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
-        Member member = null;
+        Member member;
         try {
             member = memberDAO.getMember(memberId);
             logger.info(member.toString());
@@ -102,14 +104,14 @@ public class AccountServiceImpl implements AccountService {
             }
             memberDAO.setMemberStatus(member.getId(), Status.CLOSED);
 
-        } catch (java.sql.SQLException e) {
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error fetching member");
             status = OperationStatus.FAILURE;
         }
         return status;
     }
 
-    public int editMember(int memberId, EditForm editForm) {
+    public int editMember(long memberId, EditForm editForm) {
         int status = -1;
         logger.info("Called enroll");
 
@@ -126,7 +128,7 @@ public class AccountServiceImpl implements AccountService {
         return status ;
     }
 
-    private int editSeeker(int seekerId, Seeker seeker) {
+    private int editSeeker(long seekerId, Seeker seeker) {
 
         SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         logger.info(seeker.toString());
@@ -139,7 +141,7 @@ public class AccountServiceImpl implements AccountService {
         return status;
     }
 
-    private int editSitter(int sitterId, Sitter sitter){
+    private int editSitter(long sitterId, Sitter sitter){
         SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         logger.info(sitter.toString());
         int status = -1;

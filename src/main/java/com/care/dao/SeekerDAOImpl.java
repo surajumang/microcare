@@ -23,21 +23,21 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
         seeker.setId(getMember(seeker.getEmail()).getId());
         PreparedStatement statement = connection.prepareStatement("INSERT INTO SEEKER(ID, NO_CHILDREN, SPOUSE_NAME)" +
                 "VALUES(?,?,?)");
-        statement.setInt(1,seeker.getId());
-        statement.setInt(2, seeker.getNumberOfChildren());
+        statement.setLong(1,seeker.getId());
+        statement.setLong(2, seeker.getNumberOfChildren());
         statement.setString(3, seeker.getSpouseName());
 
         return statement.executeUpdate();
     }
 
     @Override
-    public Seeker getSeeker(int seekerId) throws SQLException {
+    public Seeker getSeeker(long seekerId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         Member member = getMember(seekerId);
         Seeker seeker = new Seeker();
 
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM SEEKER WHERE ID = ?" );
-        statement.setInt(1, seekerId);
+        statement.setLong(1, seekerId);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()){
             seeker.setNumberOfChildren(resultSet.getInt("NO_CHILDREN"));
@@ -67,23 +67,23 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
     }
 
     @Override
-    public int editSeeker(int seekerId, Seeker seeker) throws SQLException {
+    public int editSeeker(long seekerId, Seeker seeker) throws SQLException {
         editMember(seekerId, seeker);
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE SEEKER SET NO_CHILDREN = ?, SPOUSE_NAME=? WHERE ID=?");
-        statement.setInt(1, seeker.getNumberOfChildren());
+        statement.setLong(1, seeker.getNumberOfChildren());
         statement.setString(2, seeker.getSpouseName());
-        statement.setInt(3, seekerId);
+        statement.setLong(3, seekerId);
 
         return statement.executeUpdate();
     }
 
-    public List<Job> listAllMyJobs(int postedBy) throws SQLException {
+    public List<Job> listAllMyJobs(long postedBy) throws SQLException {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         return jobDAO.getAllAvailableJobs(postedBy);
     }
 
-    public List<Application> listAllApplicationsOnMyJob(int jobId) throws SQLException {
+    public List<Application> listAllApplicationsOnMyJob(long jobId) throws SQLException {
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
         //return applicationDAO.getAllApplicationsOnJob(jobId);
         return null;
@@ -91,9 +91,9 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
     private Seeker populateSeeker(ResultSet resultSet) throws SQLException{
         Seeker seeker = new Seeker();
 
-        seeker.setPhone(resultSet.getInt("PHONE"));
-        seeker.setId(resultSet.getInt("SEEKER.ID"));
-        seeker.setZipCode(resultSet.getInt("ZIP_CODE"));
+        seeker.setPhone(resultSet.getLong("PHONE"));
+        seeker.setId(resultSet.getLong("SEEKER.ID"));
+        seeker.setZipCode(resultSet.getLong("ZIP_CODE"));
         seeker.setFirstName(resultSet.getString("FIRST_NAME"));
         seeker.setLastName(resultSet.getString("LAST_NAME"));
         seeker.setSpouseName(resultSet.getString("SPOUSE_NAME"));
