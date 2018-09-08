@@ -101,7 +101,7 @@ public final class JobDAOImpl implements JobDAO {
     public List<Job> getAllAvailableJobs(int sitterId) throws SQLException {
         List<Job> allAvailableJobs = new ArrayList<Job>();
         Connection connection = ConnectionUtil.getConnection();
-        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID,POSTED_BY, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE STATUS = ? AND JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE SITTER_ID = ?)");
+        PreparedStatement statement = connection.prepareStatement("SELECT STATUS, ID,POSTED_BY, TITLE, HOURLY_PAY, START_DATE, END_DATE FROM JOB WHERE STATUS = ? AND JOB.ID NOT IN (SELECT APPLICATION.JOB_ID FROM APPLICATION WHERE SITTER_ID = ? AND APPLICATION.STATUS <> 'ACTIVE' )");
         statement.setString(1, Status.ACTIVE.name());
         statement.setInt(2, sitterId);
 

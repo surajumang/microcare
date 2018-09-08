@@ -59,7 +59,7 @@
 
 
       <div class="right">
-                   <form class="" action="${pageContext.request.contextPath}/seeker/CloseAccount.do" method="post">
+                   <form class="" action="${pageContext.request.contextPath}/member/CloseAccount.do" method="post">
                        <input type="button" name="closeAccount" value="Close Account" onclick="confirmDeletion(this.form, 'close your account')">
                    </form>
       </div>

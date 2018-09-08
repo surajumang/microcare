@@ -48,7 +48,7 @@
                 <c:out value="${errors.spouseName}"/><br>
 
                 <label>Number of Children</label>
-                <input type="text" name="children"  value="${profileInfo.numberOfChildren}">
+                <input type="text" name="numberOfChildren"  value="${profileInfo.numberOfChildren}">
                 <c:out value="${errors.numberOfChildren}"/><br>
 
                 <input type="hidden" name="memberType" value="SEEKER">

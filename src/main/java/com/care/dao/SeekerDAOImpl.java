@@ -54,15 +54,16 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Fetching seekers from DB");
         List<Seeker> seekers = new ArrayList<>();
-        PreparedStatement statement = connection.prepareStatement("SELECT SEEKER.ID, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, ZIP_CODE, SPOUSE_NAME, NO_CHILDREN  FROM SEEKER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.EMAIL LIKE ? ");
+        PreparedStatement statement = connection.prepareStatement("SELECT SEEKER.ID, FIRST_NAME, LAST_NAME, EMAIL, ADDRESS,MEMBER_TYPE, PHONE, ZIP_CODE, SPOUSE_NAME, NO_CHILDREN  FROM SEEKER JOIN MEMBER ON MEMBER.ID=SEEKER.ID WHERE MEMBER.EMAIL LIKE ? ");
         statement.setString(1, "%" + email + "%");
 
         logger.info(statement.toString());
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()){
-            seekers.add(populateSitter(resultSet));
+            logger.info("fetched one  seeker row");
+            seekers.add(populateSeeker(resultSet));
         }
-        return null;
+        return seekers;
     }
 
     @Override
@@ -87,15 +88,19 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
         //return applicationDAO.getAllApplicationsOnJob(jobId);
         return null;
     }
-    private Seeker populateSitter(ResultSet resultSet) throws SQLException{
+    private Seeker populateSeeker(ResultSet resultSet) throws SQLException{
         Seeker seeker = new Seeker();
 
         seeker.setPhone(resultSet.getInt("PHONE"));
-        seeker.setId(resultSet.getInt("SITTER.ID"));
+        seeker.setId(resultSet.getInt("SEEKER.ID"));
         seeker.setZipCode(resultSet.getInt("ZIP_CODE"));
+        seeker.setFirstName(resultSet.getString("FIRST_NAME"));
+        seeker.setLastName(resultSet.getString("LAST_NAME"));
         seeker.setSpouseName(resultSet.getString("SPOUSE_NAME"));
         seeker.setAddress(resultSet.getString("ADDRESS"));
         seeker.setNumberOfChildren(resultSet.getInt("NO_CHILDREN"));
+        seeker.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
+        seeker.setEmail(resultSet.getString("EMAIL"));
 
         return seeker;
     }

@@ -27,6 +27,7 @@ public class MemberDAOImpl implements MemberDAO {
         Member member = Member.EMPTY_MEMBER;
         if (resultSet.next()){
             member = populateMember(resultSet);
+            logger.info(member + "");
         }
         return member;
     }
@@ -94,6 +95,9 @@ public class MemberDAOImpl implements MemberDAO {
         member.setFirstName(resultSet.getString("FIRST_NAME"));
         member.setLastName(resultSet.getString("LAST_NAME"));
         member.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
+        member.setAddress(resultSet.getString("ADDRESS"));
+        member.setPhone(resultSet.getInt("PHONE"));
+        member.setZipCode(resultSet.getInt("ZIP_CODE"));
         member.setPassword(resultSet.getString("PASSWORD"));
 
         return member;

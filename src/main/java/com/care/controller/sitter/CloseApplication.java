@@ -19,7 +19,7 @@ public class CloseApplication extends HttpServlet {
 
     static {
         message.put(OperationStatus.FAILURE, "Can't Edit Job");
-        message.put(OperationStatus.SUCCESS, "Edit Successful");
+        message.put(OperationStatus.SUCCESS, "Successfully Deleted");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

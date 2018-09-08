@@ -76,10 +76,10 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         List<Application> applications = new ArrayList<Application>();
         logger.info("Getting all application on a JOB");
 
-        PreparedStatement statement = connection.prepareStatement("SELECT JOB.ID, JOB.TITLE, MEMBER.FIRST_NAME, MEMBER.LAST_NAME, APPLICATION.STATUS, APPLICATION.EXPECTED_PAY, JOB_ID FROM APPLICATION INNER JOIN MEMBER ON APPLICATION.SITTER_ID = MEMBER.ID INNER JOIN  JOB ON APPLICATION.JOB_ID = JOB.ID WHERE APPLICATION.JOB_ID = ? AND APPLICATION.STATUS = ?");
+        PreparedStatement statement = connection.prepareStatement("SELECT JOB.ID, JOB.TITLE, MEMBER.FIRST_NAME, MEMBER.LAST_NAME, APPLICATION.STATUS, APPLICATION.EXPECTED_PAY, JOB_ID FROM APPLICATION INNER JOIN MEMBER ON APPLICATION.SITTER_ID = MEMBER.ID INNER JOIN  JOB ON APPLICATION.JOB_ID = JOB.ID WHERE APPLICATION.JOB_ID = ? ");
         statement.setInt(1, jobId);
-        statement.setString(2,Status.ACTIVE.name());
-        logger.info("Done with query");
+
+        logger.info("Done with query " + statement);
 
         ResultSet resultSet = statement.executeQuery();
         while(resultSet.next()){

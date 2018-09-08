@@ -36,10 +36,15 @@
             <input type="submit" name="EditProfile" value="Edit Profile"/>
       </form>
 
-        <a href="/member/Search.jsp"> Search Seekers</a>
+      <div class="sitter">
+          <form class="" action="${pageContext.request.contextPath}/member/Search.jsp" method="post">
+              <input type="submit" name="search" value="Search Sitters"/>
+          </form>
+      </div>
+
 
       <div class="right">
-          <form class="" action="${pageContext.request.contextPath}/sitter/CloseAccount.do" method="post">
+          <form class="" action="${pageContext.request.contextPath}/member/CloseAccount.do" method="post">
                <input type="button" name="closeAccount" value="Close Account" onclick="confirmDeletion(this.form, 'close your account')">
           </form>
      </div>

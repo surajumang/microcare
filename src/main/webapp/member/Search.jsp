@@ -9,9 +9,29 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+        <style>
+                        table {
+                            font-family: arial, sans-serif;
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+
+                        td, th {
+                            border: 1px solid #dddddd;
+                            text-align: left;
+                            padding: 8px;
+                        }
+
+                        tr:nth-child(even) {
+                            background-color: #dddddd;
+                        }
+                        </style>
+
     </head>
     <body>
-
+    <jsp:include page="/header.jsp"/>
+    <h2>${SUCCESS}</h2>
+            <h2>${FAILURE}</h2>
     <h2>Enter Email(partial accepted) to search </h2>
     <form class="" action="${pageContext.request.contextPath}/member/Search.do" method="post">
         <label>Email</label>
@@ -22,7 +42,7 @@
 
     <table>
         <c:forEach var ="member" items="${members}">
-        <c:if test="$member.memberType eq 'SEEKER' ">
+        <c:if test="${type eq 'SITTER'}">
         <tr>
             <td>${member.firstName}</td>
             <td>${member.lastName}</td>
@@ -32,7 +52,7 @@
             <td>${member.phone}</td>
         </tr>
         </c:if>
-        <c:if test="$member.memberType eq 'SITTER'">
+        <c:if test="${type eq 'SEEKER'}">
         <tr>
                     <td>${member.firstName}</td>
                     <td>${member.lastName}</td>

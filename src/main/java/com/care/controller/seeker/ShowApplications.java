@@ -27,7 +27,7 @@ public class ShowApplications extends HttpServlet {
 
     static {
         message.put(OperationStatus.FAILURE, "No Applications on Job");
-        message.put(OperationStatus.SUCCESS, "Successfully fetched applications");
+        message.put(OperationStatus.SUCCESS, "All applications on this Job");
     }
 
     @Override

@@ -4,6 +4,7 @@
 
 package com.care.dao;
 
+import com.care.model.MemberType;
 import com.care.model.Sitter;
 
 import java.sql.Connection;
@@ -53,7 +54,7 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
         //Member member = getMember(memberId);
         Sitter sitter = new Sitter();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, ZIP_CODE, EXPERIENCE,EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.ID =?");
+        PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, EMAIL, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, MEMBER_TYPE, ZIP_CODE, EXPERIENCE, EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.ID =?");
         statement.setInt(1, memberId);
 
         ResultSet resultSet = statement.executeQuery();
@@ -69,7 +70,7 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
         Connection connection = ConnectionUtil.getConnection();
         List<Sitter> sitters = new ArrayList<>();
         logger.info("Fetching sitters from DB" );
-        PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, ZIP_CODE, EXPERIENCE,EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.EMAIL LIKE ? ");
+        PreparedStatement statement = connection.prepareStatement("SELECT SITTER.ID, EMAIL, FIRST_NAME, LAST_NAME, ADDRESS, PHONE, MEMBER_TYPE, ZIP_CODE, EXPERIENCE, EXPECTED_PAY FROM SITTER JOIN MEMBER ON MEMBER.ID=SITTER.ID WHERE MEMBER.EMAIL LIKE ? ");
         statement.setString(1, "%" + email + "%");
 
         logger.info(statement.toString());
@@ -93,6 +94,8 @@ public class SitterDAOImpl extends MemberDAOImpl implements SitterDAO {
         sitter.setAddress(resultSet.getString("ADDRESS"));
         sitter.setZipCode(resultSet.getInt("ZIP_CODE"));
         sitter.setPhone(resultSet.getInt("PHONE"));
+        sitter.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
+        sitter.setEmail(resultSet.getString("EMAIL"));
 
         return sitter;
     }

@@ -22,8 +22,8 @@ public class Search extends HttpServlet {
     Logger logger = Logger.getLogger("SearchingMembers");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
     static {
-        message.put(OperationStatus.FAILURE, "Can't Edit this Job");
-        message.put(OperationStatus.SUCCESS, "Edit Successful");
+        message.put(OperationStatus.FAILURE, "Couldn't find any Match");
+        message.put(OperationStatus.SUCCESS, "Matches Found");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,6 +37,7 @@ public class Search extends HttpServlet {
         searchCriteria.validateCustom(errors);
 
         Member member = (Member) req.getSession().getAttribute("currentUser");
+        OperationStatus operationStatus = OperationStatus.FAILURE;
 
         String page = "/member/Search.jsp";
         logger.info(errors + " ");
@@ -46,15 +47,25 @@ public class Search extends HttpServlet {
                 SeekerService seekerService= ServiceFactory.get(SeekerServiceImpl.class);
                 List<Seeker> seekers = seekerService.getSeekerByEmail(searchCriteria.getEmail());
                 logger.info("Fetched Seekers " + seekers);
+                if (!seekers.isEmpty()){
+                    operationStatus = OperationStatus.SUCCESS;
+                }
+                req.setAttribute("type", "SEEKER");
                 req.setAttribute("members", seekers);
             }
             else {
                 SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
                 List<Sitter> sitters = sitterService.getSitterByEmail(searchCriteria.getEmail());
                 logger.info("Fetched sitters");
+                if (!sitters.isEmpty()){
+                    operationStatus = OperationStatus.SUCCESS;
+                }
+                req.setAttribute("type", "SITTER");
                 req.setAttribute("members", sitters);
             }
         }
+
+        req.setAttribute(operationStatus.name(), message.get(operationStatus));
         req.setAttribute("errors", errors);
         getServletContext().getRequestDispatcher(page).forward(req, resp);
 

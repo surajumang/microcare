@@ -8,7 +8,7 @@ import java.util.Map;
 public class SeekerEditForm extends EditForm {
 
     private String spouseName;
-    private String noOfChildren;
+    private String numberOfChildren;
 
     @Name(required = false)
     public String getSpouseName() {
@@ -20,19 +20,19 @@ public class SeekerEditForm extends EditForm {
     }
 
     @Number(required = false)
-    public String getNoOfChildren() {
-        return noOfChildren;
+    public String getNumberOfChildren() {
+        return numberOfChildren;
     }
 
-    public void setNoOfChildren(String noOfChildren) {
-        this.noOfChildren = noOfChildren;
+    public void setNumberOfChildren(String numberOfChildren) {
+        this.numberOfChildren = numberOfChildren;
     }
 
     @Override
     public String toString() {
         return "SeekerEditForm{" +
                 "spouseName='" + spouseName + '\'' +
-                ", noOfChildren='" + noOfChildren + '\'' +
+                ", numberOfChildren='" + numberOfChildren + '\'' +
                 '}';
     }
 

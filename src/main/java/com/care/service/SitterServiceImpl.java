@@ -76,7 +76,7 @@ public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
         }catch (SQLException e){
             logger.log(Level.SEVERE, "ads", e);
         }
-        logger.info(" " + sitters.size());
+        logger.info(" " + sitters);
         return sitters;
     }
 
