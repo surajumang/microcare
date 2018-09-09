@@ -16,13 +16,6 @@
                 float: left;
             }
         </style>
-        <script type="text/javascript">
-                        function confirmDeletion(form) {
-                            if(window.confirm("Are you sure you want to Delete this Job")){
-                                form.submit();
-                            }
-                        }
-        </script>
     </head>
     <body>
 
@@ -60,7 +53,7 @@
 
       <div class="right">
                    <form class="" action="${pageContext.request.contextPath}/member/CloseAccount.do" method="post">
-                       <input type="button" name="closeAccount" value="Close Account" onclick="confirmDeletion(this.form, 'close your account')">
+                       <input type="button" name="closeAccount" value="Close Account" onclick="confirmation(this.form, 'close your account')">
                    </form>
       </div>
 

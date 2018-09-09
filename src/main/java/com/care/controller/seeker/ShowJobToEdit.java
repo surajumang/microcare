@@ -43,7 +43,7 @@ public class ShowJobToEdit extends HttpServlet {
         String page = "/seeker/Home.jsp";
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        int id = CommonUtil.getJobIdFromRequest(request);
+        long id = CommonUtil.getIdFromRequest(request, "id");
 
         if (id >= 0){
             logger.info("Editing job with id " + id );

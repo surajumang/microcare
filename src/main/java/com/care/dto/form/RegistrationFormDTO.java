@@ -24,6 +24,10 @@ public class RegistrationFormDTO extends FormBean{
     private String password2;
     private String address;
     private String phone;
+    private String spouseName;
+    private String experience;
+    private String numberOfChildren;
+    private String expectedPay;
 
 
     @Email(message = "Email must be alphanumeric and contain an @")
@@ -95,6 +99,42 @@ public class RegistrationFormDTO extends FormBean{
         this.memberType = memberType;
     }
 
+    @Name(required = false)
+    public String getSpouseName() {
+        return spouseName;
+    }
+
+    public void setSpouseName(String spouseName) {
+        this.spouseName = spouseName;
+    }
+
+    @Number(regex = "\\d{1,2}", message = "At most two digits and at least one digit")
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    @Number(required = false)
+    public String getNumberOfChildren() {
+        return numberOfChildren;
+    }
+
+    public void setNumberOfChildren(String numberOfChildren) {
+        this.numberOfChildren = numberOfChildren;
+    }
+
+    @Number(required = false, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "At Max three digits before decimal")
+    public String getExpectedPay() {
+        return expectedPay;
+    }
+
+    public void setExpectedPay(String expectedPay) {
+        this.expectedPay = expectedPay;
+    }
+
     @Number(regex = "\\d{10}", message = "Must be exactly 10 digits ")
     public String getPhone() {
         return phone;
@@ -119,8 +159,6 @@ public class RegistrationFormDTO extends FormBean{
         if(! password.equals(password2)){
             errors.put("password2", "Passwords should match");
         }
-
-
     }
 
     @Override
@@ -130,11 +168,15 @@ public class RegistrationFormDTO extends FormBean{
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", zipCode='" + zipCode + '\'' +
-                ", password='" + password + '\'' +
                 ", memberType='" + memberType + '\'' +
+                ", password='" + password + '\'' +
                 ", password2='" + password2 + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
+                ", spouseName='" + spouseName + '\'' +
+                ", experience='" + experience + '\'' +
+                ", numberOfChildren='" + numberOfChildren + '\'' +
+                ", expectedPay='" + expectedPay + '\'' +
                 '}';
     }
 }

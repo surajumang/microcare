@@ -40,7 +40,7 @@ public class ShowApplications extends HttpServlet {
 
         String page = "/seeker/Home.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        int jobIdToViewApplications = CommonUtil.getJobIdFromRequest(request);
+        long jobIdToViewApplications = CommonUtil.getIdFromRequest(request, "id" );
 
         if (jobIdToViewApplications >= 0){
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);

@@ -33,11 +33,11 @@ public class ApplyToJob extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = "/sitter/ShowJobToApply.jsp";
 
-        int jobToApplyOn = CommonUtil.getJobIdFromRequest(request);
+        long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
 
         ApplicationDTO application = FormPopulator.populate(request, ApplicationDTO.class);
         Map<String, String> errors = new HashMap<>();
-        OperationStatus status=OperationStatus.FAILURE;
+        OperationStatus status = OperationStatus.FAILURE;
         application.validateCustom(errors);
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);

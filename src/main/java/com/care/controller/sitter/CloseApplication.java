@@ -30,7 +30,7 @@ public class CloseApplication extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = "/sitter/Home.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        int applicationToBeClosed = CommonUtil.getJobIdFromRequest(request);
+        long applicationToBeClosed = CommonUtil.getIdFromRequest(request, "id");
 
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);

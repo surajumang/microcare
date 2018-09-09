@@ -1,7 +1,6 @@
 package com.care.controller;
 
 import com.care.model.Member;
-import com.care.service.OperationStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,11 +14,11 @@ public class CommonUtil {
         return (Member)httpSession.getAttribute("currentUser");
     }
 
-    public static int getJobIdFromRequest(HttpServletRequest request){
+    public static long getIdFromRequest(HttpServletRequest request, String id){
         int jobId = -1;
         try {
-            logger.info("-------- " + request.getParameter("id") + " -------");
-            jobId = Integer.parseInt(request.getParameter("id"));
+            logger.info("-------- " + request.getParameter(id) + " -------");
+            jobId = Integer.parseInt(request.getParameter(id));
         }catch (IllegalArgumentException e){
             logger.log(Level.SEVERE, "Application ID", e);
         }

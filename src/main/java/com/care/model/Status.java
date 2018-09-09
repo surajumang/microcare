@@ -11,5 +11,5 @@ public enum Status {
     ACTIVE,
     CLOSED,
     EXPIRED,
-
+    SUSPENDED,
 }

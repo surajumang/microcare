@@ -8,6 +8,8 @@ import com.care.validation.FormValidator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,21 +76,8 @@ public class JobDTO extends FormBean {
     }
 
     @Override
-    public String toString() {
-        return "JobDTO{" +
-                "id=" + seekerId +
-                ", title='" + title + '\'' +
-                ", hourlyPay=" + hourlyPay +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                '}';
-    }
-
-    @Override
     public void validateCustom(Map<String, String> errors) {
-        /*
-        Check if start date is greater than the end Date.
-         */
+
         try {
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {
@@ -100,15 +89,26 @@ public class JobDTO extends FormBean {
 
         boolean dateError = errors.containsKey("startDate") || errors.containsKey("endDate");
 
-        //[TODO] use try catch
-        if (! dateError){
 
-            if (Date.valueOf(startDate).before(new Date(System.currentTimeMillis()))){
-                errors.put("currentDate", "StartDate must be greater than current date");
+        //[TODO] use try catch
+        try {
+            if (! dateError ){
+                startDate +=":00";
+                endDate   +=":00";
+                Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+                Timestamp startTime = Timestamp.valueOf(startDate);
+                Timestamp endTime = Timestamp.valueOf(endDate);
+
+                if (startTime.before(currentTime)){
+                    errors.put("currentDate", "Start Time must be greater than current Time");
+                }
+                if (endTime.before(startTime)){
+                    errors.put("startDate", "Start Time must be less than end Time");
+                }
             }
-            if (Date.valueOf(startDate).after(Date.valueOf(endDate))){
-                errors.put("startDate", "Start date must be less than end Date");
-            }
+        }catch (Exception e){
+            logger.log(Level.SEVERE, "Exception while validating Time values", e);
+            errors.put("startDate", "Not in proper format");
         }
         logger.info("Done with validation");
 

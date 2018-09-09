@@ -1,9 +1,9 @@
-package com.care.controller.seeker;
+package com.care.controller;
 
-import com.care.model.Member;
 import com.care.dto.form.RegistrationFormDTO;
 import com.care.dto.form.SeekerRegistrationDTO;
 import com.care.dto.form.SitterRegistrationDTO;
+import com.care.exception.MemberAlreadyRegisteredException;
 import com.care.model.MemberType;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
@@ -27,6 +27,7 @@ public class Registration extends HttpServlet {
 
     static {
         message.put(OperationStatus.FAILURE, "Unable to Register");
+        message.put(OperationStatus.OTHER, "ALready Registered Try Forgot password");
         message.put(OperationStatus.SUCCESS, "Successful Registered, Now you can Log in");
     }
 
@@ -38,24 +39,13 @@ public class Registration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = "/visitor/Register.jsp";
+        String page = "/visitor/Registration.jsp";
         logger.info(page);
 
-        MemberType memberType = MemberType.valueOf(request.getParameter("memberType"));
         OperationStatus operationStatus = OperationStatus.FAILURE;
         Class<? extends FormBean> detailPage;
 
-        if (memberType == MemberType.SEEKER){
-            detailPage = SeekerRegistrationDTO.class;
-            logger.info("ITTTT SEEKEEEE");
-            page = "/visitor/SeekerRegistration.jsp";
-        }
-        else {
-            detailPage = SitterRegistrationDTO.class;
-            page = "/visitor/SitterRegistration.jsp";
-        }
-
-        FormBean registrationDetails = FormPopulator.populate(request, detailPage);
+        RegistrationFormDTO registrationDetails = FormPopulator.populate(request, RegistrationFormDTO.class);
         logger.info(registrationDetails + " " );
         Map<String, String> errors = new HashMap<String, String>();
 
@@ -67,11 +57,15 @@ public class Registration extends HttpServlet {
 
         if(errors.isEmpty()){
             page = "/index.jsp";
-            RegistrationFormDTO registrationFormDTO = (RegistrationFormDTO)registrationDetails;
 
-            operationStatus = accountService.enroll(registrationFormDTO);
+            try {
+                operationStatus = accountService.enroll(registrationDetails);
+            }catch (MemberAlreadyRegisteredException e){
+                operationStatus = OperationStatus.OTHER;
+            }
             logger.info("Back at servlet");
         }
+
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
         request.setAttribute("formErrors", (RegistrationFormDTO)registrationDetails);

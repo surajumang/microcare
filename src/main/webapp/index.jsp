@@ -17,7 +17,8 @@
         <div class="form1" al>
             <h1>welcome</h1>
             <h2>${SUCCESS}</h2>
-            <p>${FAILURE}</p>
+            <h2>${FAILURE}</h2>
+            <h2>${OTHER}</h2>
 
 
             <c:out value = "${message}">
@@ -30,7 +31,8 @@
                 <input type="submit" name="sb" value="Submit">
             </form>
             New User
-            <a href="${pageContext.request.contextPath}/visitor/Register.jsp">Register Here</a>
+            <a href="${pageContext.request.contextPath}/visitor/Registration.jsp">Register Here</a>
+            <a href="${pageContext.request.contextPath}/visitor/ResetPassword.jsp">Forgot Passwod</a>
         </div>
     </body>
 </html>

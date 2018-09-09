@@ -40,7 +40,7 @@ public class CloseJob extends HttpServlet {
         String page = "/seeker/ShowMyJobs.do";
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
-        int jobToBeClosed = CommonUtil.getJobIdFromRequest(request);
+        long jobToBeClosed = CommonUtil.getIdFromRequest(request, "id" );
 
         if (jobToBeClosed < 0){
             operationStatus = OperationStatus.INVALID;

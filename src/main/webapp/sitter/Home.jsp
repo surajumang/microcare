@@ -10,13 +10,7 @@
     <head>
         <meta charset="utf-8">
         <title></title>
-        <script type="text/javascript">
-                                function confirmDeletion(form) {
-                                    if(window.confirm("Are you sure you want to Delete this Job")){
-                                        form.submit();
-                                    }
-                                }
-        </script>
+
     </head>
     <body>
         <h2>${SUCCESS}</h2>
@@ -26,7 +20,7 @@
       <jsp:include page="/header.jsp"/>
 
       <form class="" action="${pageContext.request.contextPath}/sitter/ShowAllJobs.do" method="post">
-            <input type="submit" name="PostJob" value="Show Jobs"/>
+            <input type="submit" name="Show Job" value="Show Jobs"/>
       </form>
       <form class="" action="${pageContext.request.contextPath}/sitter/ShowMyApplications.do" method="post">
             <input type="submit" name="ViewApplications" value="My Applications"/>
@@ -45,7 +39,7 @@
 
       <div class="right">
           <form class="" action="${pageContext.request.contextPath}/member/CloseAccount.do" method="post">
-               <input type="button" name="closeAccount" value="Close Account" onclick="confirmDeletion(this.form, 'close your account')">
+               <input type="button" name="closeAccount" value="Close Account" onclick="confirmation(this.form, 'close your account')">
           </form>
      </div>
 

@@ -12,7 +12,7 @@
 
 <div class="footer">
     <p>
-        copyright Apostek.com
+        About us:
     </p>
 
 </div>

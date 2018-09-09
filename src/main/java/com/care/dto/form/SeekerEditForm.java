@@ -19,7 +19,7 @@ public class SeekerEditForm extends EditForm {
         this.spouseName = spouseName;
     }
 
-    @Number(required = false)
+    @Number(required = false, regex = "\\d{0,2}")
     public String getNumberOfChildren() {
         return numberOfChildren;
     }

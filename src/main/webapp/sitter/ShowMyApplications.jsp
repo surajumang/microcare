@@ -49,7 +49,7 @@
                     <td>Pay per Hour</td>
                     <td>Expected Pay</td>
                     <td>Status</td>
-                    <td>Delete</td>
+                    <td></td>
                 </tr>
             </thead>
             <c:forEach var="app" items="${allMyApplications}">
@@ -60,7 +60,7 @@
                 <td>${app.status}</td>
 
                 <td>
-                    <c:if test="${job.status ne 'EXPIRED'}">
+                    <c:if test="${app.status ne 'EXPIRED'}">
                     <form action="${pageContext.request.contextPath}/sitter/DeleteApplication.do" method="get">
                         <input type="hidden" name="id" value="${app.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">

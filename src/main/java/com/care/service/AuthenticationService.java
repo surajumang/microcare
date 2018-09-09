@@ -1,6 +1,7 @@
 package com.care.service;
 
 import com.care.dto.form.LoginDetails;
+import com.care.dto.form.PasswordDTO;
 
 public interface AuthenticationService extends Service {
 
@@ -8,7 +9,7 @@ public interface AuthenticationService extends Service {
 
     boolean logout();
 
-    int updatePassword();
+    OperationStatus updatePassword(PasswordDTO passwordDTO);
 
     int forgotPassword();
 

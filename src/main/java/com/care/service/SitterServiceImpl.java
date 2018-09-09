@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SitterServiceImpl extends MemberDAOImpl implements SitterService {
+public class SitterServiceImpl implements SitterService {
 
     private Logger logger = Logger.getLogger("SitterServiceImpl");
 

@@ -79,15 +79,15 @@
     </error-page>
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/error.jsp</location>
+        <location>/errors.jsp</location>
     </error-page>
     <servlet>
-            <servlet-name>SeekerRegistration</servlet-name>
-            <servlet-class>com.care.controller.seeker.Registration</servlet-class>
+            <servlet-name>Registration</servlet-name>
+            <servlet-class>com.care.controller.Registration</servlet-class>
     </servlet>
     <servlet-mapping>
-            <servlet-name>SeekerRegistration</servlet-name>
-            <url-pattern>/visitor/SeekerRegistration.do</url-pattern>
+            <servlet-name>Registration</servlet-name>
+            <url-pattern>/visitor/Registration.do</url-pattern>
     </servlet-mapping>
 
 
@@ -251,6 +251,33 @@
     <servlet-mapping>
         <servlet-name>CloseAccount</servlet-name>
         <url-pattern>/member/CloseAccount.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResetPasswordToken</servlet-name>
+        <servlet-class>com.care.controller.GeneratePasswordResetToken</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordToken</servlet-name>
+        <url-pattern>/visitor/ResetPassword.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdatePassword</servlet-name>
+        <servlet-class>com.care.controller.UpdatePassword</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdatePassword</servlet-name>
+        <url-pattern>/visitor/UpdatePassword.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>VerifyToken</servlet-name>
+        <servlet-class>com.care.controller.VerifyToken</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VerifyToken</servlet-name>
+        <url-pattern>/visitor/VerifyToken.do</url-pattern>
     </servlet-mapping>
 
 

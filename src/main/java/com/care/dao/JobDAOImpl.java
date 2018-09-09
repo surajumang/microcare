@@ -42,8 +42,8 @@ public final class JobDAOImpl implements JobDAO {
         statement.setString(1, job.getTitle());
         statement.setLong(2, job.getSeekerId());
         statement.setDouble(3, job.getHourlyPay());
-        statement.setDate(4, job.getStartDate());
-        statement.setDate(5, job.getEndDate());
+        statement.setTimestamp(4, job.getStartDate());
+        statement.setTimestamp(5, job.getEndDate());
 
         return statement.executeUpdate();
     }
@@ -63,8 +63,8 @@ public final class JobDAOImpl implements JobDAO {
         Connection connection = ConnectionUtil.getConnection();
         PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET TITLE = ?, START_DATE=?, END_DATE=?, HOURLY_PAY=? WHERE ID = ?");
         statement.setString(1, job.getTitle());
-        statement.setDate(2, job.getStartDate());
-        statement.setDate(3, job.getEndDate());
+        statement.setTimestamp(2, job.getStartDate());
+        statement.setTimestamp(3, job.getEndDate());
         statement.setDouble(4, job.getHourlyPay());
         statement.setLong(5, job.getId());
 
@@ -133,8 +133,8 @@ public final class JobDAOImpl implements JobDAO {
         job.setId(resultSet.getLong("ID"));
         job.setSeekerId(resultSet.getLong("POSTED_BY"));
         job.setHourlyPay(resultSet.getDouble("HOURLY_PAY"));
-        job.setStartDate(resultSet.getDate("START_DATE"));
-        job.setEndDate(resultSet.getDate("END_DATE"));
+        job.setStartDate(resultSet.getTimestamp("START_DATE"));
+        job.setEndDate(resultSet.getTimestamp("END_DATE"));
         job.setStatus(Status.valueOf(resultSet.getString("STATUS")));
 
         logger.info("Added one job successfully " + job);

@@ -4,7 +4,7 @@
         }
 </style>
 <script type="text/javascript">
-                function confirmDeletion(form, msg) {
+                function confirmation(form, msg) {
                     if(window.confirm("Are you sure you want to " + msg)){
                         form.submit();
                     }
@@ -20,6 +20,6 @@
 
         <div class="right">
             <form class="" action="${pageContext.request.contextPath}/member/Logout.do" method="post">
-                <input type="button" name="logout" value="Log Out" onclick="confirmDeletion(this.form, 'log out')">
+                <input type="button" name="logout" value="Log Out" onclick="confirmation(this.form, 'log out')">
             </form>
         </div>

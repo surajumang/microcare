@@ -5,4 +5,5 @@ public enum OperationStatus {
     UNAUTHORISED,
     INVALID,
     FAILURE,
+    OTHER,
 }

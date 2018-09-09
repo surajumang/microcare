@@ -18,38 +18,38 @@ If the member's status changes to inactive then all jobs posted by him and all j
 must also be marked inactive.use triggers.
 
 CREATE TABLE SEEKER(
-       ID              INT(10)  ,
+       ID              BIGINT(10)  ,
        NO_CHILDREN     INT(3)   ,
        SPOUSE_NAME     VARCHAR(50),
        FOREIGN KEY (ID) REFERENCES MEMBER(ID)
 );
 
 CREATE TABLE SITTER (
-       ID               INT(10)         PRIMARY KEY,
+       ID               BIGINT(10)         PRIMARY KEY,
        EXPERIENCE       INT(2)          NOT NULL,
        EXPECTED_PAY     DECIMAL(5, 2)   NOT NULL,
        FOREIGN KEY (ID) REFERENCES MEMBER(ID)
 );
 
 CREATE TABLE JOB (
-       ID              INT(10)         AUTO_INCREMENT PRIMARY KEY,
-       TITLE           VARCHAR(100)    NOT NULL,
-       POSTED_BY       INT(10)         NOT NULL,
-       HOURLY_PAY      DECIMAL(5,3)    NOT NULL,
-       START_DATE      DATE            NOT NULL,
-       END_DATE        DATE            NOT NULL,
-       DATE_CREATED    TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+       ID              BIGINT(10)           AUTO_INCREMENT PRIMARY KEY,
+       TITLE           VARCHAR(100)         NOT NULL,
+       POSTED_BY       BIGINT(10)           NOT NULL,
+       HOURLY_PAY      DECIMAL(5,3)         NOT NULL,
+       START_DATE      TIMESTAMP            NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       END_DATE        TIMESTAMP            NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       DATE_CREATED    TIMESTAMP            NOT NULL DEFAULT CURRENT_TIMESTAMP ,
        STATUS          ENUM ("ACTIVE", "CLOSED", "EXPIRED") DEFAULT "ACTIVE" NOT NULL,
-       LAST_MODIFIED   TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+       LAST_MODIFIED   TIMESTAMP            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
        FOREIGN KEY (POSTED_BY) REFERENCES SEEKER(ID)
 );
 
 CREATE TABLE APPLICATION(
-       ID              INT(10)        AUTO_INCREMENT PRIMARY KEY,
-       JOB_ID          INT(10)        NOT NULL,
+       ID              BIGINT(10)        AUTO_INCREMENT PRIMARY KEY,
+       JOB_ID          BIGINT(10)        NOT NULL,
        SITTER_ID INT(10)              NOT NULL,
-       EXPECTED_PAY    DECIMAL(5,3)    NOT NULL,
-       STATUS         ENUM ("ACTIVE", "EXPIRED", "CLOSED") DEFAULT "ACTIVE" NOT NULL ,
+       EXPECTED_PAY    DECIMAL(8,3)    NOT NULL,
+       STATUS           ENUM ("ACTIVE", "EXPIRED", "CLOSED") DEFAULT "ACTIVE" NOT NULL ,
        DATE_CREATED    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
        LAST_MODIFIED   TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
        FOREIGN KEY (JOB_ID) REFERENCES JOB(ID) ,
@@ -57,17 +57,25 @@ CREATE TABLE APPLICATION(
 );
 
 create table MEMBER (
-        ID              INT(10)                 NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        ID              BIGINT(10)                 NOT NULL AUTO_INCREMENT PRIMARY KEY,
         FIRST_NAME      VARCHAR(100)             NOT NULL,
-        LAST_NAME      VARCHAR(100)             NOT NULL,
-        PHONE           INT(10)                 NOT NULL,
+        LAST_NAME       VARCHAR(100)             NOT NULL,
+        PHONE           BIGINT(10)                 NOT NULL,
         MEMBER_TYPE     ENUM ("SEEKER", "SITTER", "ADMIN") DEFAULT "SEEKER" ,
-        EMAIL       VARCHAR(100)            UNIQUE NOT NULL,
+        EMAIL           VARCHAR(100)            UNIQUE NOT NULL,
         ADDRESS         VARCHAR(250)  ,
         ZIP_CODE        INT(6)                  NOT NULL,
-        STATUS        ENUM ("ACTIVE", "CLOSED", "SUSPENDED") DEFAULT "ACTIVE",
+        STATUS          ENUM ("ACTIVE", "CLOSED", "SUSPENDED") DEFAULT "ACTIVE",
         LAST_MODIFIED   TIMESTAMP  DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PASSWORD        VARCHAR(64)             NOT NULL
+  );
+
+CREATE TABLE TOKEN (
+    ID              INT(10)              PRIMARY KEY,
+    TOKEN           VARCHAR(32)             NOT NULL,
+    EXPIRATION_DATE TIMESTAMP               NOT NULL,
+    STATUS          ENUM('ACTIVE', 'CLOSED') DEFAULT 'ACTIVE',
+    FOREIGN KEY (ID) REFERENCES MEMBER(ID)
   );
 
 insert into MEMBER(first_name, last_name, address, phone, email, zip_code, password)

@@ -35,10 +35,10 @@ public class ShowJobToApply extends HttpServlet {
         /*
         Fetch the job from the database and show it to the user, also collect the expectedPay.
          */
-        String page = "/sitter/Home.jsp";
+        String page = "/sitter/ShowAllJobs.do";
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        int id = CommonUtil.getJobIdFromRequest(request);
+        long id = CommonUtil.getIdFromRequest(request, "id" );
 
         if (id >= 0){
             Job job = sitterService.getJob(id);

@@ -25,7 +25,7 @@ public class Login extends HttpServlet{
 
     static {
         message.put(OperationStatus.FAILURE, "Invalid credentials");
-        message.put(OperationStatus.SUCCESS, "Login Successful");
+        message.put(OperationStatus.SUCCESS, "");
     }
 
     @Override

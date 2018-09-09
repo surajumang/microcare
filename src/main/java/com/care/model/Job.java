@@ -2,6 +2,7 @@
 package com.care.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Job {
@@ -9,10 +10,10 @@ public class Job {
     private String title;
     private long seekerId;
     private double hourlyPay;
-    private Date startDate;
-    private Date endDate;
+    private Timestamp startDate;
+    private Timestamp endDate;
     private Status status;
-    private Date dateOfCreation;
+    private Timestamp dateOfCreation;
     private Seeker seeker;
     private List<Application> applications;
 
@@ -66,19 +67,19 @@ public class Job {
         this.seekerId = seekerId;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 
@@ -90,11 +91,11 @@ public class Job {
         this.status = status;
     }
 
-    public Date getDateOfCreation() {
+    public Timestamp getDateOfCreation() {
         return dateOfCreation;
     }
 
-    public void setDateOfCreation(Date dateOfCreation) {
+    public void setDateOfCreation(Timestamp dateOfCreation) {
         this.dateOfCreation = dateOfCreation;
     }
 

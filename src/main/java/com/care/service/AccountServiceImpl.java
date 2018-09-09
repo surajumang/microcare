@@ -2,19 +2,26 @@ package com.care.service;
 
 import com.care.dao.*;
 import com.care.dto.form.EditForm;
+import com.care.exception.MemberAlreadyRegisteredException;
 import com.care.model.*;
 import com.care.dto.form.RegistrationFormDTO;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Properties;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class AccountServiceImpl implements AccountService {
 
-    private Logger logger = Logger.getLogger("AccountService");
+    private static Logger logger = Logger.getLogger("AccountService");
     public AccountServiceImpl() {  }
 
-    public OperationStatus enroll(RegistrationFormDTO registrationFormDTO) {
+    public OperationStatus enroll(RegistrationFormDTO registrationFormDTO) throws MemberAlreadyRegisteredException {
 
         OperationStatus status = OperationStatus.FAILURE;
         int val = -1;
@@ -42,8 +49,7 @@ public class AccountServiceImpl implements AccountService {
         return status;
     }
 
-    private int addSeeker(Seeker seeker){
-
+    private int addSeeker(Seeker seeker) throws MemberAlreadyRegisteredException{
         SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         logger.info(seeker.toString());
         int status = -1;
@@ -51,11 +57,13 @@ public class AccountServiceImpl implements AccountService {
             status = seekerDAO.addSeeker(seeker);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);
+            // throw exception.
+            throw new MemberAlreadyRegisteredException("Already Registered");
         }
         return status;
     }
 
-    private int addSitter(Sitter sitter){
+    private int addSitter(Sitter sitter) throws MemberAlreadyRegisteredException{
 
         SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         logger.info(sitter.toString());
@@ -65,22 +73,63 @@ public class AccountServiceImpl implements AccountService {
             status = sitterDAO.addSitter(sitter);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't add", e);
+            throw new MemberAlreadyRegisteredException("Already registered");
         }
         return status;
     }
 
-    public Member getMember(String memberId) {
+    public Member getMember(String email) {
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member member;
         try {
-            member = memberDAO.getMember(memberId);
+            member = memberDAO.getMember(email);
             logger.info(member.toString());
         } catch (java.sql.SQLException e) {
-           logger.log(Level.SEVERE, "Error fetching member");
+           logger.log(Level.SEVERE, "Error fetching member", e);
            member = Member.EMPTY_MEMBER;
         }
         return member;
     }
+
+    @Override
+    public Member getMemberUsingToken(String token) {
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        Member member;
+        try {
+            member = memberDAO.getMemberUsingToken(token);
+            logger.info(member + "found using Token" + token);
+        } catch (java.sql.SQLException e) {
+            logger.log(Level.SEVERE, "Error fetching member using token. Doesn't exist", e);
+            member = Member.EMPTY_MEMBER;
+        }
+        return member;
+
+    }
+
+    public OperationStatus mailPasswordResetToken(String email, String contextPath) {
+
+        OperationStatus operationStatus = OperationStatus.FAILURE;
+        Member member = getMember(email);
+
+        if (member != Member.EMPTY_MEMBER){
+            logger.info("Member okay" + member);
+            PasswordResetToken token = generatePasswordResetToken(member);
+            //set token to DB.
+            MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+           try {
+               memberDAO.addToken(token);
+               // code to send email.
+               SendMail.sendMail(email, contextPath + "/visitor/VerifyToken.do?token=" + token.getToken());
+               logger.info("mail sent");
+               operationStatus = OperationStatus.SUCCESS;
+           }catch (SQLException e){
+               operationStatus = OperationStatus.FAILURE;
+           }
+
+        }
+        return operationStatus;
+    }
+
     /*
     Write code related to authorization here.
     Deleting member requires all jobs and application deletion as well based on the member type..
@@ -105,10 +154,37 @@ public class AccountServiceImpl implements AccountService {
             memberDAO.setMemberStatus(member.getId(), Status.CLOSED);
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error fetching member");
+            logger.log(Level.SEVERE, "Error Deleting member", e);
             status = OperationStatus.FAILURE;
         }
         return status;
+    }
+
+    private PasswordResetToken generatePasswordResetToken(Member member) {
+
+        String token = "";
+        for (int i = 0; i<10; i++){
+            token += String.valueOf((int)(Math.random()*10));
+        }
+        PasswordResetToken passwordResetToken = new PasswordResetToken();
+        passwordResetToken.setId(member.getId());
+        passwordResetToken.setExpirationDate(new Date(System.currentTimeMillis() + 24*3600*1000));
+        passwordResetToken.setStatus(Status.ACTIVE);
+        passwordResetToken.setToken(token);
+
+        return passwordResetToken;
+    }
+
+    private OperationStatus setToken(PasswordResetToken passwordResetToken){
+        OperationStatus operationStatus=OperationStatus.SUCCESS;
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        try{
+            memberDAO.addToken(passwordResetToken);
+        }catch(SQLException e){
+            operationStatus = OperationStatus.FAILURE;
+            logger.log(Level.SEVERE, "Can't set token ", e);
+        }
+        return operationStatus;
     }
 
     public int editMember(long memberId, EditForm editForm) {
@@ -136,7 +212,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             status = seekerDAO.editSeeker(seekerId, seeker);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Can't add", e);
+            logger.log(Level.SEVERE, "Can't edit ", e);
         }
         return status;
     }
@@ -148,9 +224,48 @@ public class AccountServiceImpl implements AccountService {
         try {
             status = sitterDAO.editSitter(sitterId, sitter);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Can't add", e);
+            logger.log(Level.SEVERE, "Can't edit", e);
         }
         return status;
+    }
+
+    private static final class SendMail {
+
+        public static void sendMail(String email, String token) {
+
+            final String username = "sjkumar@apostek.com";
+            final String password = "me@company512";
+
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+
+            Session session = Session.getInstance(props,
+                    new Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
+
+            try {
+
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress("sjkumar@apostek.com"));
+                message.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(email));
+                message.setSubject("Password reset token");
+                message.setText(token);
+
+                Transport.send(message);
+
+                logger.info("Done");
+
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }
