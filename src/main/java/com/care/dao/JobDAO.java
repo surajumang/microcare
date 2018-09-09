@@ -14,6 +14,8 @@ public interface JobDAO extends DAO {
 
     int setAllJobsStatus(long postedBy, Status status) throws SQLException;
 
+    int expireStaleJobs() throws SQLException;
+
     int editJob(Job jobId) throws SQLException;
 
     Job getJob(long jobId) throws SQLException;

@@ -35,7 +35,7 @@ public class ShowJobs extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = "/seeker/Home.jsp";
+        String page = "/seeker/ShowMyJobs.jsp";
 
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
@@ -45,10 +45,9 @@ public class ShowJobs extends HttpServlet {
         logger.info(myJobs.size() + "--------");
 
         if (myJobs != null && !myJobs.isEmpty()){
-            page = "/seeker/ShowMyJobs.jsp";
             status = OperationStatus.SUCCESS;
-            request.setAttribute("myJobs", myJobs);
         }
+        request.setAttribute("myJobs", myJobs);
         request.setAttribute(status.name(), messege.get(status));
 
         logger.info("Dispatching to Page" + page);

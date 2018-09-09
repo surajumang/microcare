@@ -33,7 +33,7 @@ public class ApplicationDTO extends FormBean {
         this.sitterId = sitterId;
     }
 
-    @Number(required = true, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "At Max three digits before decimal")
+    @Number(required = true, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "Format: DDD.DD")
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -51,5 +51,14 @@ public class ApplicationDTO extends FormBean {
         } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, "ILLgalAccess", e);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicationDTO{" +
+                "jobId='" + jobId + '\'' +
+                ", sitterId='" + sitterId + '\'' +
+                ", expectedPay='" + expectedPay + '\'' +
+                '}';
     }
 }

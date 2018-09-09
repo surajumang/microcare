@@ -20,7 +20,7 @@ public class ApplyToJob extends HttpServlet {
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
     static {
         message.put(OperationStatus.FAILURE, "Unable to Get Job for Application");
-        message.put(OperationStatus.SUCCESS, "Got a job");
+        message.put(OperationStatus.SUCCESS, "");
         message.put(OperationStatus.INVALID, "Invalid jobID");
     }
 
@@ -34,8 +34,8 @@ public class ApplyToJob extends HttpServlet {
         String page = "/sitter/ShowJobToApply.jsp";
 
         long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
-
         ApplicationDTO application = FormPopulator.populate(request, ApplicationDTO.class);
+
         Map<String, String> errors = new HashMap<>();
         OperationStatus status = OperationStatus.FAILURE;
         application.validateCustom(errors);
@@ -55,7 +55,7 @@ public class ApplyToJob extends HttpServlet {
             logger.info("Status okay " + status);
 
             if (status == OperationStatus.SUCCESS){
-                page = "/sitter/ShowMyApplications.do";
+                page = "/sitter/ShowAllJobs.do";
             }
         }
 
@@ -63,6 +63,6 @@ public class ApplyToJob extends HttpServlet {
         logger.info(page);
         request.setAttribute("application", application);
         request.setAttribute("errors", errors);
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        getServletContext().getRequestDispatcher(page).include(request, response);
     }
 }

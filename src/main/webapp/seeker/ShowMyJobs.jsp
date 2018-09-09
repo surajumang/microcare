@@ -41,9 +41,8 @@
                     <h2>${FAILURE}</h2>
                     <h2>${INVALID}</h2>
          <jsp:include page="/header.jsp"/>
-        <p>Show all the jobs created by the user.</p>
 
-
+    <c:if test="${fn:length(myJobs) > 0}">
         <table>
             <thead>
                 <tr>
@@ -71,12 +70,12 @@
                     </c:if>
                 </td>
                 <td>
-                    <c:if test="${job.status != 'EXPIRED'}">
+
                     <form action="${pageContext.request.contextPath}/seeker/DeleteJob.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
-                    </c:if>
+
                 </td>
                 <td>
                    <c:if test="${job.status != 'EXPIRED'}">
@@ -90,6 +89,7 @@
             </tr>
         </c:forEach>
         </table>
+    </c:if>
         </body>
         <jsp:include page="/footer.jsp"/>
 </html>

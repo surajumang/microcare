@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,28 +39,28 @@ public class ShowApplications extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String page = "/seeker/Home.jsp";
+        String page = "/seeker/ViewApplications.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
         long jobIdToViewApplications = CommonUtil.getIdFromRequest(request, "id" );
+
+        List<Application> applications = Collections.emptyList();
 
         if (jobIdToViewApplications >= 0){
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
             Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
             logger.info("Called SeekerService listAppOnJob");
-            List<Application> applications = null;
             try {
                 applications = seekerService.getApplications(currentMember, jobIdToViewApplications);
             } catch (IllegalApplicationAccessException e) {
                 logger.log(Level.SEVERE, "Not allowed to see application");
             }
             if (applications != null && !applications.isEmpty()){
-                page = "/seeker/ViewApplications.jsp";
                 operationStatus = OperationStatus.SUCCESS;
-                request.setAttribute("getApplications", applications);
             }
         }
 
+        request.setAttribute("getApplications", applications);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         getServletContext().getRequestDispatcher(page).forward(request, response);
     }

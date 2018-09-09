@@ -46,13 +46,13 @@ public class EditProfile extends HttpServlet {
         SeekerEditForm seekerEditForm = FormPopulator.populate(request, SeekerEditForm.class);
         seekerEditForm.validateCustom(errors);
         String page = "PutProfileInfo.jsp";
+        request.setAttribute("profileInfo", seekerEditForm);
 
         if (errors.isEmpty()){
             Member member = (Member) request.getSession().getAttribute("currentUser");
             AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
             accountService.editMember(member.getId(), seekerEditForm);
 
-            request.setAttribute("profileInfo", seekerEditForm);
             request.setAttribute("SUCCESS", "Profile info edited successfully");
             page = "Home.jsp";
         }
@@ -63,12 +63,13 @@ public class EditProfile extends HttpServlet {
         SitterEditForm sitterEditForm = FormPopulator.populate(request, SitterEditForm.class);
         sitterEditForm.validateCustom(errors);
         String page = "PutProfileInfo.jsp";
+        request.setAttribute("profileInfo", sitterEditForm);
+
         if (errors.isEmpty()){
             Member member = (Member) request.getSession().getAttribute("currentUser");
             AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
             accountService.editMember(member.getId(), sitterEditForm);
 
-            request.setAttribute("profileInfo", sitterEditForm);
             request.setAttribute("SUCCESS", "Profile info edited successfully");
             page = "Home.jsp";
         }

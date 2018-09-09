@@ -22,6 +22,8 @@ public interface MemberDAO extends DAO{
 
     int invalidateToken(String token) throws SQLException;
 
+    int expireStaleTokens() throws SQLException;
+
     int addMember(Member member) throws SQLException;
 
     int editMember(long memberId, Member member) throws SQLException;

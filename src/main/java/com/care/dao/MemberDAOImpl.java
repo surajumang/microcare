@@ -123,6 +123,19 @@ public class MemberDAOImpl implements MemberDAO {
         return statement.executeUpdate();
     }
 
+    @Override
+    public int expireStaleTokens() throws SQLException {
+        logger.info("BackOffice deleting tokens");
+        Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM TOKEN WHERE EXPIRATION_DATE < ? OR STATUS = ?");
+
+        statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+        statement.setString(2, Status.CLOSED.name());
+
+        logger.info("" + statement);
+        return statement.executeUpdate();
+    }
+
     public int addMember(Member member) throws SQLException {
         logger.info(member + " ");
         Connection connection = ConnectionUtil.getConnection();

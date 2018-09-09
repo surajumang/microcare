@@ -21,6 +21,7 @@ public class GeneratePasswordResetToken extends HttpServlet {
     static {
         message.put(OperationStatus.FAILURE, "Email not found.");
         message.put(OperationStatus.SUCCESS, "Password reset link sent to your Email");
+        message.put(OperationStatus.OTHER, "Enter a Valid Email");
     }
 
     @Override
@@ -32,17 +33,24 @@ public class GeneratePasswordResetToken extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String page = "/visitor/ResetPassword.jsp";
         String email = req.getParameter("email");
-        //String regex = "\\w+@([a-z])+(\\.[a-z])+";
+        String regex = "\\w+@([a-z])+(\\.[a-z])+";
+
         OperationStatus operationStatus = OperationStatus.FAILURE;
         logger.info("Request recieved" + email);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
+
         // check if email exist.
-        Member member = accountService.getMember(email);
+        boolean match = email.matches(regex);
+        Member member = null;
 
-        if (member != Member.EMPTY_MEMBER){
-            logger.info("Member exist for the email "+ email);
-            operationStatus = accountService.mailPasswordResetToken(email, req.getContextPath());
-
+        if (match){
+            if (accountService.getMember(email) != Member.EMPTY_MEMBER){
+                logger.info("Member exist for the email "+ email);
+                operationStatus = accountService.mailPasswordResetToken(email, req.getContextPath());
+                if (operationStatus == OperationStatus.SUCCESS){
+                    page = "/index.jsp";
+                }
+            }
         }
 
         req.setAttribute(operationStatus.name(), message.get(operationStatus));

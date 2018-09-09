@@ -27,10 +27,14 @@ tr:nth-child(even) {
 
 </head>
     <body>
-    <h2>${SUCCESS}</h2>
-            <h2>${FAILURE}</h2>
-            <h2>${INVALID}</h2>
+
     <jsp:include page="/header.jsp"/>
+    <h2>${SUCCESS}</h2>
+                <h2>${FAILURE}</h2>
+                <h2>${INVALID}</h2>
+
+
+    <c:if test="${fn:length(getApplications) > 0}">
         <center><h2>${getApplications[0].job.title}</h2></center>
         <h2>html table</h2>
         <table>
@@ -51,6 +55,7 @@ tr:nth-child(even) {
             </tr>
         </c:forEach>
         </table>
+    </c:if>
     </body>
     <jsp:include page="/footer.jsp"/>
 </html>

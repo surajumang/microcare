@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Name {
-    String regex() default "[A-Za-z]+";
-    String message() default "Name must not contain any digits or Special character";
+    String regex() default "[A-Za-z ]+";
+    String message() default "Name must not contain any digits or special characters";
     boolean required() default true;
 }

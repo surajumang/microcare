@@ -36,10 +36,11 @@
                 </script>
         </head>
         <body>
-        <h2>${SUCCESS}</h2>
-                <h2>${FAILURE}</h2>
-                <h2>${INVALID}</h2>
+
         <jsp:include page="/header.jsp"/>
+
+
+       <h2>${INVALID}</h2>
        <h2>${SUCCESS}</h2>
        <h2>${FAILURE}</h2>
         <table>
@@ -60,12 +61,12 @@
                 <td>${app.status}</td>
 
                 <td>
-                    <c:if test="${app.status ne 'EXPIRED'}">
+
                     <form action="${pageContext.request.contextPath}/sitter/DeleteApplication.do" method="get">
                         <input type="hidden" name="id" value="${app.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
-                    </c:if>
+
                 </td>
             </tr>
         </c:forEach>

@@ -22,7 +22,7 @@ public class ShowJobToApply extends HttpServlet {
 
     static {
         message.put(OperationStatus.FAILURE, "Unable to Get Job for Application");
-        message.put(OperationStatus.SUCCESS, "Got a job");
+        message.put(OperationStatus.SUCCESS, "Apply to Job");
         message.put(OperationStatus.INVALID, "Invalid jobID");
     }
     @Override

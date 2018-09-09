@@ -19,7 +19,7 @@ public class SeekerEditForm extends EditForm {
         this.spouseName = spouseName;
     }
 
-    @Number(required = false, regex = "\\d{0,2}")
+    @Number(required = false, regex = "\\d{0,2}", message = "At max two digits allowed")
     public String getNumberOfChildren() {
         return numberOfChildren;
     }

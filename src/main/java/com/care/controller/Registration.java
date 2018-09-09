@@ -49,10 +49,17 @@ public class Registration extends HttpServlet {
         logger.info(registrationDetails + " " );
         Map<String, String> errors = new HashMap<String, String>();
 
+        //  Avoids validation conflict
+        if (registrationDetails.getMemberType().equals(MemberType.SEEKER.name())){
+            registrationDetails.setExpectedPay("0");
+            registrationDetails.setExperience("0");
+        }
+
         registrationDetails.validateCustom(errors);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
 
         logger.info(errors + " ");
+        logger.info(registrationDetails + "");
         request.setAttribute("errors", errors);
 
         if(errors.isEmpty()){

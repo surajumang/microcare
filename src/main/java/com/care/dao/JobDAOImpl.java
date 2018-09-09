@@ -126,6 +126,18 @@ public final class JobDAOImpl implements JobDAO {
         return statement.executeUpdate();
     }
 
+    @Override
+    public int expireStaleJobs() throws SQLException {
+        logger.info("Expiring stale jobs ");
+        Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE JOB SET STATUS=? WHERE START_DATE < ? AND STATUS <> ? " );
+
+        statement.setString(1, Status.EXPIRED.name());
+        statement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+        statement.setString(3, Status.CLOSED.name());
+        return statement.executeUpdate();
+    }
+
     private Job populateJob(ResultSet resultSet) throws SQLException{
         Job job = new Job();
 

@@ -14,7 +14,7 @@
 </style>
 <script type="text/javascript">
     function display(radioValue){
-        if(radioValue.value == "SEEKER"){
+        if("${formErrors.memberType}" == "SEEKER" || radioValue.value == "SEEKER"){
             document.getElementById("seeker").style.display ="block";
             document.getElementById("sitter").style.display ="none";
         }

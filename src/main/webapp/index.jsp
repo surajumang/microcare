@@ -11,17 +11,20 @@
             input {
                 width: 100px;
             }
+            .right{
+                float:right;
+            }
         </style>
     </head>
     <body>
         <div class="form1" al>
-            <h1>welcome</h1>
+            <h1>Welcome to Home Job Marketplace</h1>
             <h2>${SUCCESS}</h2>
             <h2>${FAILURE}</h2>
             <h2>${OTHER}</h2>
 
 
-            <c:out value = "${message}">
+            <c:out value = "${message}"/>
             <form action="${pageContext.request.contextPath}/visitor/login.do" method="post">
                 <label>Email</label>
                 <input type="text" name="email" placeholder="Email" value="${loginDetails.email}">
@@ -30,9 +33,15 @@
                 <input type="password" name="password" placeholder="Password">
                 <input type="submit" name="sb" value="Submit">
             </form>
-            New User
-            <a href="${pageContext.request.contextPath}/visitor/Registration.jsp">Register Here</a>
-            <a href="${pageContext.request.contextPath}/visitor/ResetPassword.jsp">Forgot Passwod</a>
+
+        </div>
+
+        <div class="right">
+        <br>
+                    New User
+                    <a href="${pageContext.request.contextPath}/visitor/Registration.jsp">Register Here</a>
+                    <br>
+                    <a href="${pageContext.request.contextPath}/visitor/ResetPassword.jsp">Forgot Passwod</a>
         </div>
     </body>
 </html>

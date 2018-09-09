@@ -8,7 +8,7 @@ public class SitterEditForm extends EditForm {
 
     private String expectedPay;
     private String experience;
-    @Number(regex = "\\d{1,3}(\\.\\d{0,2})?")
+    @Number(regex = "\\d{1,3}(\\.\\d{0,2})?", message = "Number format is DDD.DD")
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -16,7 +16,7 @@ public class SitterEditForm extends EditForm {
     public void setExpectedPay(String expectedPay) {
         this.expectedPay = expectedPay;
     }
-    @Number(regex = "\\d{1,2}")
+    @Number(regex = "\\d{1,2}", message = "At max two digits allowed")
     public String getExperience() {
         return experience;
     }

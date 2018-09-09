@@ -1,0 +1,30 @@
+09-Sep-2018 23:46:37.003 INFO [BackOffice Thread] org.apache.catalina.loader.WebappClassLoaderBase.checkStateForResourceLoading Illegal access: this web application instance has been stopped already. Could not load [com.mysql.jdbc.SQLError]. The following stack trace is thrown for debugging purposes as well as to attempt to terminate the thread which caused the illegal access.
+ java.lang.IllegalStateException: Illegal access: this web application instance has been stopped already. Could not load [com.mysql.jdbc.SQLError]. The following stack trace is thrown for debugging purposes as well as to attempt to terminate the thread which caused the illegal access.
+	at org.apache.catalina.loader.WebappClassLoaderBase.checkStateForResourceLoading(WebappClassLoaderBase.java:1329)
+	at org.apache.catalina.loader.WebappClassLoaderBase.checkStateForClassLoading(WebappClassLoaderBase.java:1317)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1176)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1138)
+	at com.mysql.jdbc.ConnectionImpl.checkClosed(ConnectionImpl.java:1098)
+	at com.mysql.jdbc.ConnectionImpl.prepareStatement(ConnectionImpl.java:4076)
+	at com.mysql.jdbc.ConnectionImpl.prepareStatement(ConnectionImpl.java:4042)
+	at com.care.dao.JobDAOImpl.expireStaleJobs(JobDAOImpl.java:133)
+	at com.care.service.BackOfficeProcess$BackOfficeThread.run(BackOfficeProcess.java:40)
+	at java.lang.Thread.run(Thread.java:748)
+
+Exception in thread "BackOffice Thread" java.lang.NoClassDefFoundError: com/mysql/jdbc/SQLError
+	at com.mysql.jdbc.ConnectionImpl.checkClosed(ConnectionImpl.java:1098)
+	at com.mysql.jdbc.ConnectionImpl.prepareStatement(ConnectionImpl.java:4076)
+	at com.mysql.jdbc.ConnectionImpl.prepareStatement(ConnectionImpl.java:4042)
+	at com.care.dao.JobDAOImpl.expireStaleJobs(JobDAOImpl.java:133)
+	at com.care.service.BackOfficeProcess$BackOfficeThread.run(BackOfficeProcess.java:40)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.ClassNotFoundException: Illegal access: this web application instance has been stopped already. Could not load [com.mysql.jdbc.SQLError]. The following stack trace is thrown for debugging purposes as well as to attempt to terminate the thread which caused the illegal access.
+	at org.apache.catalina.loader.WebappClassLoaderBase.checkStateForClassLoading(WebappClassLoaderBase.java:1319)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1176)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1138)
+	... 6 more
+Caused by: java.lang.IllegalStateException: Illegal access: this web application instance has been stopped already. Could not load [com.mysql.jdbc.SQLError]. The following stack trace is thrown for debugging purposes as well as to attempt to terminate the thread which caused the illegal access.
+	at org.apache.catalina.loader.WebappClassLoaderBase.checkStateForResourceLoading(WebappClassLoaderBase.java:1329)
+	at org.apache.catalina.loader.WebappClassLoaderBase.checkStateForClassLoading(WebappClassLoaderBase.java:1317)
+	... 8 more
+09-Sep-2
