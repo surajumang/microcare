@@ -18,21 +18,21 @@ If the member's status changes to inactive then all jobs posted by him and all j
 must also be marked inactive.use triggers.
 
 CREATE TABLE SEEKER(
-       ID              BIGINT(10)  ,
+       ID              INT(10)  ,
        NO_CHILDREN     INT(3)   ,
        SPOUSE_NAME     VARCHAR(50),
        FOREIGN KEY (ID) REFERENCES MEMBER(ID)
 );
 
 CREATE TABLE SITTER (
-       ID               BIGINT(10)         PRIMARY KEY,
+       ID               INT(10)         PRIMARY KEY,
        EXPERIENCE       INT(2)          NOT NULL,
        EXPECTED_PAY     DECIMAL(5, 2)   NOT NULL,
        FOREIGN KEY (ID) REFERENCES MEMBER(ID)
 );
 
 CREATE TABLE JOB (
-       ID              BIGINT(10)           AUTO_INCREMENT PRIMARY KEY,
+       ID              INT(10)           AUTO_INCREMENT PRIMARY KEY,
        TITLE           VARCHAR(100)         NOT NULL,
        POSTED_BY       BIGINT(10)           NOT NULL,
        HOURLY_PAY      DECIMAL(5,3)         NOT NULL,
@@ -45,9 +45,9 @@ CREATE TABLE JOB (
 );
 
 CREATE TABLE APPLICATION(
-       ID              BIGINT(10)        AUTO_INCREMENT PRIMARY KEY,
-       JOB_ID          BIGINT(10)        NOT NULL,
-       SITTER_ID INT(10)              NOT NULL,
+       ID              INT(10)        AUTO_INCREMENT PRIMARY KEY,
+       JOB_ID          INT(10)        NOT NULL,
+       SITTER_ID       INT(10)              NOT NULL,
        EXPECTED_PAY    DECIMAL(8,3)    NOT NULL,
        STATUS           ENUM ("ACTIVE", "EXPIRED", "CLOSED") DEFAULT "ACTIVE" NOT NULL ,
        DATE_CREATED    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -57,7 +57,7 @@ CREATE TABLE APPLICATION(
 );
 
 create table MEMBER (
-        ID              BIGINT(10)                 NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        ID              INT(10)                 NOT NULL AUTO_INCREMENT PRIMARY KEY,
         FIRST_NAME      VARCHAR(100)             NOT NULL,
         LAST_NAME       VARCHAR(100)             NOT NULL,
         PHONE           BIGINT(10)                 NOT NULL,

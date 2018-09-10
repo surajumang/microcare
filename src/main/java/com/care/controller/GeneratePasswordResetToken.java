@@ -40,9 +40,9 @@ public class GeneratePasswordResetToken extends HttpServlet {
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
 
         // check if email exist.
-        boolean match = email.matches(regex);
+        boolean match = true;
         Member member = null;
-
+        logger.info(match + "email status");
         if (match){
             if (accountService.getMember(email) != Member.EMPTY_MEMBER){
                 logger.info("Member exist for the email "+ email);

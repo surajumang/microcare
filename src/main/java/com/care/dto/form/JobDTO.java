@@ -40,7 +40,6 @@ public class JobDTO extends FormBean {
         this.id = id;
     }
 
-    @Name(regex = "[a-zA-Z0-9 ]+", message = "AlphaNumeric only")
     public String getTitle() {
         return title;
     }

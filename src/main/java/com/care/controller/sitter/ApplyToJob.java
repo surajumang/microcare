@@ -19,7 +19,7 @@ public class ApplyToJob extends HttpServlet {
     private Logger logger = Logger.getLogger("ApplyToJob");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
     static {
-        message.put(OperationStatus.FAILURE, "Unable to Get Job for Application");
+        message.put(OperationStatus.FAILURE, "Unable to Apply");
         message.put(OperationStatus.SUCCESS, "");
         message.put(OperationStatus.INVALID, "Invalid jobID");
     }
