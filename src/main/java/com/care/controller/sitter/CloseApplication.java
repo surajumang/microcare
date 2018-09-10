@@ -42,6 +42,7 @@ public class CloseApplication extends HttpServlet {
 
         if (operationStatus == OperationStatus.SUCCESS){
             page = "/sitter/ShowMyApplications.do";
+            request.setAttribute("DELSUCCESS", "Successfully deleted");
         }
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));

@@ -9,24 +9,24 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BackOfficeProcess implements ServletContextListener {
+public class BackOfficeProcess  {
 
     private static Logger logger = Logger.getLogger("BackOfficeProcess");
 
     private Thread backOfficeThread;
 
-    @Override
-    public void contextInitialized(ServletContextEvent servletContextEvent) {
-        //start a thread
-        backOfficeThread = new Thread(new BackOfficeThread(),"BackOffice Thread");
-        backOfficeThread.setDaemon(true);
-        backOfficeThread.start();
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        
-    }
+//    @Override
+//    public void contextInitialized(ServletContextEvent servletContextEvent) {
+//        //start a thread
+//        backOfficeThread = new Thread(new BackOfficeThread(),"BackOffice Thread");
+//        backOfficeThread.setDaemon(true);
+//        backOfficeThread.start();
+//    }
+//
+//    @Override
+//    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+//
+//    }
 
     private static class BackOfficeThread implements Runnable{
         @Override

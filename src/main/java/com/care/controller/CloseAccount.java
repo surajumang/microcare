@@ -20,7 +20,7 @@ public class CloseAccount extends HttpServlet {
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
     static {
-        message.put(OperationStatus.FAILURE, "Couldn't delete");
+        message.put(OperationStatus.FAILURE, "Couldn't Close");
         message.put(OperationStatus.SUCCESS, "Successfully Closed Account");
     }
     @Override

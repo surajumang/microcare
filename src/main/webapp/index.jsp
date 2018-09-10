@@ -24,7 +24,7 @@
             <h2>${OTHER}</h2>
 
 
-            <c:out value = "${message}"/>
+            <h2>${message}</h2>
             <form action="${pageContext.request.contextPath}/visitor/login.do" method="post">
                 <label>Email</label>
                 <input type="text" name="email" placeholder="Email" value="${loginDetails.email}">

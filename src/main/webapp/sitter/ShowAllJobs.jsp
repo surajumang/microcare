@@ -29,10 +29,12 @@
                 </style>
         </head>
         <body>
-        <h2>${SUCCESS}</h2>
-                <h2>${FAILURE}</h2>
-                <h2>${INVALID}</h2>
+
         <jsp:include page="/header.jsp"/>
+        <h2>${SUCCESS}</h2>
+        <h2>${FAILURE}</h2>
+        <h2>${INVALID}</h2>
+        <h2>${APPSUCCESS}</h2>
 
 
         <table>

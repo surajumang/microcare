@@ -19,12 +19,13 @@
     </head>
     <body>
 
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${UNAUTHORIZED}</h2>
-        <h2>${INVALID}</h2>
-        <h2>${ACCOUNT_STATUS}</h2>
+
       <jsp:include page="/header.jsp"/>
+      <h2>${SUCCESS}</h2>
+              <h2>${FAILURE}</h2>
+              <h2>${UNAUTHORIZED}</h2>
+              <h2>${INVALID}</h2>
+              <h2>${ACCOUNT_STATUS}</h2>
 
       <div class="seeker">
           <form class="" action="${pageContext.request.contextPath}/seeker/PostJob.jsp" method="post">

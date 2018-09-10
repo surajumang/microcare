@@ -12,10 +12,20 @@ import java.util.logging.Logger;
 public class PasswordDTO extends FormBean {
     private Logger logger = Logger.getLogger("PasswordDTO");
 
+
+    private String currentPassword;
     private String password;
     private String password2;
     private String id;
     private String token;
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
 
     @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "Must be 5 or more characters without whitespaces ")
     public String getPassword() {
@@ -53,9 +63,10 @@ public class PasswordDTO extends FormBean {
     @Override
     public String toString() {
         return "PasswordDTO{" +
-                "password='" + password + '\'' +
+                "currentPassword='" + currentPassword + '\'' +
+                ", password='" + password + '\'' +
                 ", password2='" + password2 + '\'' +
-                ", id=" + id +
+                ", id='" + id + '\'' +
                 ", token='" + token + '\'' +
                 '}';
     }

@@ -37,7 +37,7 @@ public class ApplyToJob extends HttpServlet {
         ApplicationDTO application = FormPopulator.populate(request, ApplicationDTO.class);
 
         Map<String, String> errors = new HashMap<>();
-        OperationStatus status = OperationStatus.FAILURE;
+        OperationStatus operationStatus = OperationStatus.FAILURE;
         application.validateCustom(errors);
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
@@ -51,16 +51,18 @@ public class ApplyToJob extends HttpServlet {
             application.setJobId(String.valueOf(jobToApplyOn));
             application.setSitterId(String.valueOf(currentMember.getId()));
 
-            status = sitterService.applyToJob(application);
-            logger.info("Status okay " + status);
+            operationStatus = sitterService.applyToJob(application);
+            logger.info("Status okay " + operationStatus);
 
-            if (status == OperationStatus.SUCCESS){
+            if (operationStatus == OperationStatus.SUCCESS){
                 page = "/sitter/ShowAllJobs.do";
+                request.setAttribute("APPSUCCESS", "Applied successfully");
             }
         }
 
 
         logger.info(page);
+        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         request.setAttribute("application", application);
         request.setAttribute("errors", errors);
         getServletContext().getRequestDispatcher(page).include(request, response);

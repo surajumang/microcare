@@ -22,4 +22,7 @@
             <form class="" action="${pageContext.request.contextPath}/member/Logout.do" method="post">
                 <input type="button" name="logout" value="Log Out" onclick="confirmation(this.form, 'log out')">
             </form>
+            <form class="" action="${pageContext.request.contextPath}/member/UpdatePassword.jsp" method="post">
+                <input type="submit" name="Update Password" value="Update Password">
+            </form>
         </div>

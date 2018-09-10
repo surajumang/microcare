@@ -37,10 +37,12 @@
             </script>
         </head>
         <body>
-            <h2>${SUCCESS}</h2>
-                    <h2>${FAILURE}</h2>
-                    <h2>${INVALID}</h2>
+
          <jsp:include page="/header.jsp"/>
+         <h2>${SUCCESS}</h2>
+         <h2>${FAILURE}</h2>
+         <h2>${INVALID}</h2>
+         <h2>${DELSUCCESS}</h2>
 
     <c:if test="${fn:length(myJobs) > 0}">
         <table>

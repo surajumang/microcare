@@ -40,7 +40,7 @@
         <jsp:include page="/header.jsp"/>
 
 
-       <h2>${INVALID}</h2>
+       <h2>${DELSUCCESS}</h2>
        <h2>${SUCCESS}</h2>
        <h2>${FAILURE}</h2>
         <table>

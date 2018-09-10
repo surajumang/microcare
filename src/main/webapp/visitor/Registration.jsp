@@ -46,7 +46,7 @@
                 <c:out value="${errors.lastName}"/><br>
 
                 <label >Address</label>
-                <input type="text" name="address" placeholder="Address" value="${formErrors.address}">
+                <input type="address" name="address" placeholder="Address" value="${formErrors.address}">
                 <c:out value="${errors.address}"/><br>
 
                 <label> Phone </label>

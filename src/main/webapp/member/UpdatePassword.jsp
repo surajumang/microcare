@@ -16,20 +16,24 @@
         </style>
     </head>
     <body>
-        <h2>Password reset link will be sent to your mail</h2><br>
-        <h3>Please enter your email to continue </h3>
+        <jsp:include page="/header.jsp"/>
+        <h3></h3>
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${OTHER}</h2>
 
-        <form class="" action="${pageContext.request.contextPath}/index.jsp" method="get">
-             <input type="submit" name="home" value="Home">
-        </form>
+        <form action="${pageContext.request.contextPath}/member/ResetPassword.do" method="get">
+            <label>Current Password</label>
+            <input type="password" name="currentPassword" value="">
+            <br>
+             <label>New Password</label>
+             <input type="Password" name="password" value="">
+             <c:out value="${errors.password}"/>
+             <br>
+             <label>Re-Enter Password</label>
+             <input type="Password" name="password2" value="">
+             <c:out value="${errors.password2}"/>
 
-        <form action="${pageContext.request.contextPath}/visitor/ResetPassword.do" method="get">
-            <label>Email </label>
-            <input type="text" name="email" value="">
-            <c:out value="${emailError}"/>
             <input type="submit" value="Submit">
         </form>
 

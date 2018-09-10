@@ -1,7 +1,11 @@
 package com.care.controller;
 
 import com.care.dto.form.PasswordDTO;
-import com.care.service.*;
+import com.care.model.Member;
+import com.care.service.AuthenticationService;
+import com.care.service.AuthenticationServiceImpl;
+import com.care.service.OperationStatus;
+import com.care.service.ServiceFactory;
 import com.care.validation.FormPopulator;
 
 import javax.servlet.ServletException;
@@ -13,48 +17,41 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class UpdatePassword extends HttpServlet {
-
-    private Logger logger = Logger.getLogger("UpdatePassword");
+public class ChangePassword extends HttpServlet {
+    Logger logger = Logger.getLogger("CHnagePassword");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
     static {
-        message.put(OperationStatus.FAILURE, "Password Reset Failed");
-        message.put(OperationStatus.SUCCESS, "Password Reset Successful, You can now log in");
+        message.put(OperationStatus.FAILURE, "Invalid Password");
+        message.put(OperationStatus.SUCCESS, "Password Updated Successfully");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
+        doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*
+        Member member = (Member)req.getSession().getAttribute("currentUser");
 
-         */
-        String page = "/visitor/UpdatePassword.jsp";
-        String token = req.getParameter("token");
-
-        logger.info(token + "Updated");
-        logger.info("**********" + req + "****************");
-
-        AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
+        String page = "/member/UpdatePassword.jsp";
         PasswordDTO passwordDTO = FormPopulator.populate(req, PasswordDTO.class);
+        passwordDTO.setId(String.valueOf(member.getId()));
 
         Map<String, String> errors = new HashMap<>();
         passwordDTO.validateCustom(errors);
-        logger.info(passwordDTO + " found");
+
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
+        req.setAttribute("errors", errors);
         if (errors.isEmpty()){
-            operationStatus = authenticationService.updatePasswordWithToken(passwordDTO);
-            if (operationStatus == OperationStatus.SUCCESS){
-                page = "/index.jsp";
-            }
+            AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
+            operationStatus = authenticationService.updatePassword(member, passwordDTO);
+            page = "/"+ member.getMemberType().name().toLowerCase() + "/Home.jsp";
         }
+
         req.setAttribute(operationStatus.name(), message.get(operationStatus));
         getServletContext().getRequestDispatcher(page).forward(req, resp);
-
     }
 }

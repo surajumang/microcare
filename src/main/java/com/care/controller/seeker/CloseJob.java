@@ -54,15 +54,17 @@ public class CloseJob extends HttpServlet {
         logger.info("Called CloseApplication  " + currentMember);
         try {
             operationStatus = seekerService.closeJob(currentMember, jobToBeClosed);
+            if (operationStatus == OperationStatus.SUCCESS){
+                request.setAttribute("DELSUCCESS", "Successfully deleted");
+            }
         } catch (JobNotPostedByUserException e) {
             logger.log(Level.SEVERE, "Job not pos", e);
             //replace it with bad request.
             operationStatus = OperationStatus.UNAUTHORISED;
         }
+
         request.setAttribute(operationStatus.name(), messege.get(operationStatus));
-
         logger.info(page);
-
         getServletContext().getRequestDispatcher(page).forward(request, response);
     }
 }

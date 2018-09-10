@@ -35,11 +35,11 @@
         </listener-class>
     </listener>
 
-    <listener>
-        <listener-class>
-            com.care.service.BackOfficeProcess
-        </listener-class>
-    </listener>
+    <!--<listener>-->
+        <!--<listener-class>-->
+            <!--com.care.service.BackOfficeProcess-->
+        <!--</listener-class>-->
+    <!--</listener>-->
 
     <filter>
         <filter-name>SitterFilter</filter-name> <!-- mandatory -->
@@ -284,6 +284,15 @@
     <servlet-mapping>
         <servlet-name>VerifyToken</servlet-name>
         <url-pattern>/visitor/VerifyToken.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ChangePassword</servlet-name>
+        <servlet-class>com.care.controller.ChangePassword</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangePassword</servlet-name>
+        <url-pattern>/member/ResetPassword.do</url-pattern>
     </servlet-mapping>
 
 

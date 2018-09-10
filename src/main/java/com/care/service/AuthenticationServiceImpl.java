@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return false;
     }
 
-    public OperationStatus updatePassword(PasswordDTO passwordDTO) {
+    public OperationStatus updatePasswordWithToken(PasswordDTO passwordDTO) {
         logger.info("Updating Password");
         OperationStatus status = OperationStatus.FAILURE;
         int value = -1;
@@ -68,6 +68,38 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 if((value = memberDAO.updatePassword(member)) == 1){
                     value = memberDAO.invalidateToken(passwordDTO.getToken());
                 }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Can't update password", e);
+            status = OperationStatus.FAILURE;
+        }
+        if (value == 1){
+            status = OperationStatus.SUCCESS;
+        }
+
+        logger.info(status.name() + "STATUS");
+        return status;
+    }
+
+    @Override
+    public OperationStatus updatePassword(Member member, PasswordDTO passwordDTO) {
+        logger.info("Updating Password with current Password");
+        OperationStatus status = OperationStatus.FAILURE;
+        int value = -1;
+        passwordDTO.setPassword(Hash.createHash(passwordDTO.getPassword()));
+
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        Member newmember = new Member();
+        logger.info(passwordDTO + "PASSSWORD");
+        ObjectMapper.mapObject(passwordDTO, newmember, true);
+        logger.info(member + "Only password");
+        try {
+            //double check
+            Member existingMember = memberDAO.getMember(member.getId());
+            String currentPasswordHash = Hash.createHash(passwordDTO.getCurrentPassword());
+            logger.info(currentPasswordHash);
+            if (existingMember.getPassword().equals(currentPasswordHash) ){
+                value = memberDAO.updatePassword(newmember);
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't update password", e);

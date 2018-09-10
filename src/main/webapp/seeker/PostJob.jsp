@@ -11,11 +11,12 @@
         <title></title>
     </head>
     <body>
-        <h2>${SUCCESS}</h2>
-                <h2>${FAILURE}</h2>
-                <h2>${INVALID}</h2>
+
      <jsp:include page="/header.jsp"/>
-     <p>Page for posting a job. It will show a form to the user.</p>
+     <h2>${SUCCESS}</h2>
+                     <h2>${FAILURE}</h2>
+                     <h2>${INVALID}</h2>
+
 
      <form class="" action="${pageContext.request.contextPath}/seeker/PostJob.do" method="post">
         <label>Job Title</label>
