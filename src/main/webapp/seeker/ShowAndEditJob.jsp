@@ -26,12 +26,12 @@
             <input type="text" name="hourlyPay" placeholder="Hourly Pay" value="${editJob.hourlyPay}">
             <c:out value="${errors.hourlyPay}"/><br>
 
-            <fmt:formatDate var="startDate" value="${editJob.startDate}" pattern="yyyy-MM-dd hh:mm"/>
-            <input type="text" name="startDate" placeholder="Start Date" value="${startDate}">
+
+            <input type="text" name="startDate" placeholder="Start Date" value="${editJob.startDate}">
             <c:out value="${errors.startDate}"/><br>
 
-            <fmt:formatDate var="endDate" value="${editJob.endDate}" pattern="yyyy-MM-dd hh:mm"/>
-            <input type="text" name="endDate" placeholder="End Date" value="${endDate}">
+
+            <input type="text" name="endDate" placeholder="End Date" value="${editJob.endDate}">
             <c:out value="${errors.endDate}"/><br>
             <c:out value="${errors.currentDate}"/><br>
 
