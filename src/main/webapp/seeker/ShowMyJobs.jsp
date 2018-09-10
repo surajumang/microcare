@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"
        uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="fn"
        uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -61,8 +61,10 @@
             <tr>
                 <td>${job.title}</td>
                 <td>${job.status}</td>
-                <td>${job.startDate}</td>
-                <td>${job.endDate}</td>
+                <fmt:formatDate var="startDate" value="${job.startDate}" pattern="yyyy-MM-dd hh:mm"/>
+                <td>${startDate}</td>
+                <fmt:formatDate var="endDate" value="${job.endDate}" pattern="yyyy-MM-dd hh:mm"/>
+                <td>${endDate}</td>
                 <td>
                     <c:if test="${job.status != 'EXPIRED'}">
                     <form action="${pageContext.request.contextPath}/seeker/ShowJobToEdit.do" method="get">

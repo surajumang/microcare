@@ -4,6 +4,7 @@ package com.care.controller;
 import com.care.model.Member;
 import com.care.model.MemberType;
 import com.care.dto.form.LoginDetails;
+import com.care.model.Status;
 import com.care.service.*;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
@@ -55,7 +56,7 @@ public class Login extends HttpServlet{
 
             if (status == OperationStatus.SUCCESS){
                 Member member = accountService.getMember(userLoginDetails.getEmail());
-                if (member != Member.EMPTY_MEMBER){
+                if (member != Member.EMPTY_MEMBER && member.getStatus() == Status.ACTIVE){
 
                     request.getSession().setAttribute("currentUser" ,member);
                     logger.info("Member set to sesion" + member);
@@ -65,6 +66,12 @@ public class Login extends HttpServlet{
                     logger.info("Back at LoginServlet");
 
                     page = setMemberPage(member.getMemberType());
+                }
+                else if (member != Member.EMPTY_MEMBER && member.getStatus() == Status.CLOSED){
+                    request.setAttribute("STATUS", member.getStatus().name());
+                    request.getSession().setAttribute("closedUser", member);
+                    logger.info("CLosed user trying to log in");
+                    page="/visitor/ClosedMember.jsp";
                 }
             }
             request.setAttribute(status.name(), message.get(status));

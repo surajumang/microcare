@@ -103,7 +103,21 @@ public class AccountServiceImpl implements AccountService {
             member = Member.EMPTY_MEMBER;
         }
         return member;
+    }
 
+    @Override
+    public OperationStatus setMemberStatus(Member member, Status status) {
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        OperationStatus operationStatus = OperationStatus.FAILURE;
+        try {
+            if (memberDAO.setMemberStatus(member.getId(), Status.ACTIVE) == 1){
+                operationStatus = OperationStatus.SUCCESS;
+            }
+        }catch (SQLException e){
+            logger.log(Level.SEVERE, "CAN't set member status", e);
+            operationStatus = OperationStatus.FAILURE;
+        }
+        return operationStatus;
     }
 
     public OperationStatus mailPasswordResetToken(String email, String contextPath) {

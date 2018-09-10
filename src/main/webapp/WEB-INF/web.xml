@@ -295,6 +295,15 @@
         <url-pattern>/member/ResetPassword.do</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ClosedUserLogin</servlet-name>
+        <servlet-class>com.care.controller.LoginClosedUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClosedUserLogin</servlet-name>
+        <url-pattern>/visitor/ClosedUserLogin.do</url-pattern>
+    </servlet-mapping>
+
 
 
 

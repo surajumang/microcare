@@ -33,7 +33,7 @@
 
       <div class="sitter">
           <form class="" action="${pageContext.request.contextPath}/member/Search.jsp" method="post">
-              <input type="submit" name="search" value="Search Sitters"/>
+              <input type="submit" name="search" value="Search Seekers"/>
           </form>
       </div>
 

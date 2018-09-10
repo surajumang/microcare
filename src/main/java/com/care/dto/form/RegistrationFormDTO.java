@@ -108,7 +108,6 @@ public class RegistrationFormDTO extends FormBean{
         this.spouseName = spouseName;
     }
 
-    @Number(regex = "\\d{1,2}", message = "At most two digits and at least one digit")
     public String getExperience() {
         return experience;
     }
@@ -117,7 +116,7 @@ public class RegistrationFormDTO extends FormBean{
         this.experience = experience;
     }
 
-    @Number(required = false)
+    @Number(required = false, regex = "\\d{0,3}")
     public String getNumberOfChildren() {
         return numberOfChildren;
     }
@@ -126,7 +125,6 @@ public class RegistrationFormDTO extends FormBean{
         this.numberOfChildren = numberOfChildren;
     }
 
-    @Number(required = false, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "At Max three digits before decimal")
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -158,6 +156,16 @@ public class RegistrationFormDTO extends FormBean{
 
         if(! password.equals(password2)){
             errors.put("password2", "Passwords should match");
+        }
+        if (memberType.equals("SITTER")){
+            String expRegex;
+            String expectedPay;
+            if (!getExperience().matches("\\d{1,2}")){
+                errors.put("experience", "At most two digits allowed");
+            }
+            if (!getExpectedPay().matches("\\d{1,3}(\\.\\d{0,2})?")){
+                errors.put("expectedPay", "Proper format is ddd.dd");
+            }
         }
     }
 

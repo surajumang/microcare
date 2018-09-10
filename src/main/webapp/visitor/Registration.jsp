@@ -14,22 +14,37 @@
 </style>
 <script type="text/javascript">
     function display(radioValue){
-        if("${formErrors.memberType}" == "SEEKER" || radioValue.value == "SEEKER"){
-            document.getElementById("seeker").style.display ="block";
-            document.getElementById("sitter").style.display ="none";
+            if(radioValue == "SEEKER"){
+                document.getElementById("seeker").style.display ="block";
+                document.getElementById("sitter").style.display ="none";
+            }
+            else{
+                document.getElementById("sitter").style.display ="block";
+                document.getElementById("seeker").style.display ="none";
+            }
         }
-        else{
-            document.getElementById("sitter").style.display ="block";
-            document.getElementById("seeker").style.display ="none";
-        }
-    }
+
+    	function displayMemberType(){
+    		var memberType = document.getElementsByClassName("memberType");
+    		var i;
+    		for (i = 0; i < memberType.length; i++) {
+    			if(memberType[i].checked){
+    				display(memberType[i].value);
+    					break;
+    			}
+    		}
+    	}
 </script>
     </head>
 
-    <body>
+    <body onload="displayMemberType()">
     <h2>${SUCCESS}</h2>
             <h2>${FAILURE}</h2>
             <h2>${INVALID}</h2>
+
+
+
+         <a href="${pageContext.request.contextPath}/member/Search.jsp" role="button">Home</a>
         <h1>Enter Your Details</h1>
         <div class="">
             <form name="regform" action="${pageContext.request.contextPath}/visitor/Registration.do" method="post">
@@ -58,8 +73,13 @@
                 <c:out value="${errors.zipCode}"/><br>
 
                 <label>Register as a</label>
-               <input type="radio" name="memberType" value="SEEKER" checked="checked" onclick="display(this);">Seeker
-               <input type="radio" name="memberType" value="SITTER" onclick="display(this);">Sitter
+                <c:set var="memberType" value="SEEKER"/>
+               	<c:if test="${formErrors.memberType=='SITTER'}">
+               	    <c:set var="memberType" value="SITTER"/>
+               	</c:if>
+
+                <input type="radio" class="memberType" name="memberType" value="SEEKER" <c:if test="${memberType=='SEEKER'}">checked="checked"</c:if> onclick="display('SEEKER');">Seeker
+                <input type="radio" class="memberType" name="memberType" value="SITTER" <c:if test="${memberType=='SITTER'}">checked="checked"</c:if> onclick="display('SITTER');">Sitter
 
                 <div id="seeker">
 

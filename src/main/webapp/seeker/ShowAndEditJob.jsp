@@ -2,6 +2,8 @@
 <%@ taglib prefix="c"
        uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%@ taglib prefix="fn"
        uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -24,15 +26,16 @@
             <input type="text" name="hourlyPay" placeholder="Hourly Pay" value="${editJob.hourlyPay}">
             <c:out value="${errors.hourlyPay}"/><br>
 
-            <input type="text" name="startDate" placeholder="Start Date" value="${editJob.startDate}">
+            <fmt:formatDate var="startDate" value="${editJob.startDate}" pattern="yyyy-MM-dd hh:mm"/>
+            <input type="text" name="startDate" placeholder="Start Date" value="${startDate}">
             <c:out value="${errors.startDate}"/><br>
 
-            <input type="text" name="endDate" placeholder="End Date" value="${editJob.endDate}">
+            <fmt:formatDate var="endDate" value="${editJob.endDate}" pattern="yyyy-MM-dd hh:mm"/>
+            <input type="text" name="endDate" placeholder="End Date" value="${endDate}">
             <c:out value="${errors.endDate}"/><br>
             <c:out value="${errors.currentDate}"/><br>
 
             <input type="hidden" name="id" value="${editJob.id}">
-
             <input type="submit" name="" value="Submit">
         </form>
     </body>
