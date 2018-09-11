@@ -1,11 +1,11 @@
 package com.care.service;
 
-import com.care.dto.form.PasswordDTO;
+import com.care.form.LoginForm;
+import com.care.form.PasswordUpdateForm;
 import com.care.model.Member;
 import com.care.dao.DAOFactory;
 import com.care.dao.MemberDAO;
 import com.care.dao.MemberDAOImpl;
-import com.care.dto.form.LoginDetails;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -18,26 +18,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
-    public OperationStatus loginUser(LoginDetails loginDetails) {
+    public OperationStatus loginUser(LoginForm loginForm) {
         logger.info("User trying to Log in");
         OperationStatus status = OperationStatus.FAILURE;
 
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member member = null;
         try {
-            member = memberDAO.getMember(loginDetails.getEmail());
+            member = memberDAO.getMember(loginForm.getEmail());
             logger.info(member + " ");
         } catch (java.sql.SQLException e) {
-            logger.log(Level.SEVERE, "Can't fetch member for Login", e);
+            logger.log(Level.SEVERE, "Can't fetch member for LoginAction", e);
             status = OperationStatus.FAILURE;
         }
 
         if(member != null){
             logger.info("Member Exists " + member);
 
-            if (Hash.createHash(loginDetails.getPassword()).equals(member.getPassword())){
+            if (Hash.createHash(loginForm.getPassword()).equals(member.getPassword())){
                 status =OperationStatus.SUCCESS;
-                logger.info("Login success");
+                logger.info("LoginAction success");
             }
         }
         logger.info(status.name() + "STATUS");
@@ -49,24 +49,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return false;
     }
 
-    public OperationStatus updatePasswordWithToken(PasswordDTO passwordDTO) {
+    public OperationStatus updatePasswordWithToken(PasswordUpdateForm passwordUpdateForm) {
         logger.info("Updating Password");
         OperationStatus status = OperationStatus.FAILURE;
         int value = -1;
-        passwordDTO.setPassword(Hash.createHash(passwordDTO.getPassword()));
+        passwordUpdateForm.setPassword(Hash.createHash(passwordUpdateForm.getPassword()));
 
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member member = new Member();
-        logger.info(passwordDTO + "PASSSWORD");
-        ObjectMapper.mapObject(passwordDTO, member, true);
+        logger.info(passwordUpdateForm + "PASSSWORD");
+        ObjectMapper.mapObject(passwordUpdateForm, member, true);
         logger.info(member + "Only password");
         try {
             //double check
-            Member existingMember = memberDAO.getMemberUsingToken(passwordDTO.getToken());
+            Member existingMember = memberDAO.getMemberUsingToken(passwordUpdateForm.getToken());
 
             if (existingMember.getId() == member.getId()){
                 if((value = memberDAO.updatePassword(member)) == 1){
-                    value = memberDAO.invalidateToken(passwordDTO.getToken());
+                    value = memberDAO.invalidateToken(passwordUpdateForm.getToken());
                 }
             }
         } catch (SQLException e) {
@@ -82,21 +82,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public OperationStatus updatePassword(Member member, PasswordDTO passwordDTO) {
+    public OperationStatus updatePassword(Member member, PasswordUpdateForm passwordUpdateForm) {
         logger.info("Updating Password with current Password");
         OperationStatus status = OperationStatus.FAILURE;
         int value = -1;
-        passwordDTO.setPassword(Hash.createHash(passwordDTO.getPassword()));
+        passwordUpdateForm.setPassword(Hash.createHash(passwordUpdateForm.getPassword()));
 
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member newmember = new Member();
-        logger.info(passwordDTO + "PASSSWORD");
-        ObjectMapper.mapObject(passwordDTO, newmember, true);
+        logger.info(passwordUpdateForm + "PASSSWORD");
+        ObjectMapper.mapObject(passwordUpdateForm, newmember, true);
         logger.info(member + "Only password");
         try {
             //double check
             Member existingMember = memberDAO.getMember(member.getId());
-            String currentPasswordHash = Hash.createHash(passwordDTO.getCurrentPassword());
+            String currentPasswordHash = Hash.createHash(passwordUpdateForm.getCurrentPassword());
             logger.info(currentPasswordHash);
             if (existingMember.getPassword().equals(currentPasswordHash) ){
                 value = memberDAO.updatePassword(newmember);

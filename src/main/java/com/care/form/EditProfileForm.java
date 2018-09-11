@@ -1,16 +1,20 @@
-package com.care.dto.form;
+package com.care.form;
 
 import com.care.annotation.Name;
 import com.care.annotation.Number;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EditForm extends FormBean {
+public class EditProfileForm extends ActionForm {
     private Logger logger = Logger.getLogger("PutProfileInfo");
 
     private String firstName;
@@ -69,14 +73,32 @@ public class EditForm extends FormBean {
         this.phone = phone;
     }
 
+//    @Override
+//    public void validateCustom(Map<String, String> errors) {
+//        try {
+//            FormValidator.validate(this, errors);
+//        } catch (InvocationTargetException e) {
+//            logger.log(Level.SEVERE, "While validating", e);
+//        } catch (IllegalAccessException e) {
+//            logger.log(Level.SEVERE, "While validating", e);
+//        }
+//    }
+
     @Override
-    public void validateCustom(Map<String, String> errors) {
-        try {
-            FormValidator.validate(this, errors);
-        } catch (InvocationTargetException e) {
-            logger.log(Level.SEVERE, "While validating", e);
-        } catch (IllegalAccessException e) {
-            logger.log(Level.SEVERE, "While validating", e);
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        ActionErrors errors = new ActionErrors();
+        if (firstName.matches("")){
+
         }
+        if (lastName.matches("")){
+
+        }
+        if (zipCode.matches("")){
+
+        }
+        if (phone.matches("")){
+
+        }
+        return errors;
     }
 }

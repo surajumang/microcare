@@ -1,16 +1,21 @@
-package com.care.dto.form;
+package com.care.form;
 
 import com.care.annotation.Name;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PasswordDTO extends FormBean {
-    private Logger logger = Logger.getLogger("PasswordDTO");
+public class PasswordUpdateForm extends ActionForm {
+    private Logger logger = Logger.getLogger("PasswordUpdateForm");
 
 
     private String currentPassword;
@@ -62,7 +67,7 @@ public class PasswordDTO extends FormBean {
 
     @Override
     public String toString() {
-        return "PasswordDTO{" +
+        return "PasswordUpdateForm{" +
                 "currentPassword='" + currentPassword + '\'' +
                 ", password='" + password + '\'' +
                 ", password2='" + password2 + '\'' +
@@ -71,18 +76,29 @@ public class PasswordDTO extends FormBean {
                 '}';
     }
 
-    @Override
-    public void validateCustom(Map<String, String> errors) {
-        try {
-            FormValidator.validate(this, errors);
-        } catch (InvocationTargetException e) {
-            logger.log(Level.SEVERE, "While validating", e);
-        } catch (IllegalAccessException e) {
-            logger.log(Level.SEVERE, "While validating", e);
-        }
+//    @Override
+//    public void validateCustom(Map<String, String> errors) {
+//        try {
+//            FormValidator.validate(this, errors);
+//        } catch (InvocationTargetException e) {
+//            logger.log(Level.SEVERE, "While validating", e);
+//        } catch (IllegalAccessException e) {
+//            logger.log(Level.SEVERE, "While validating", e);
+//        }
+//
+//        if(! password.equals(password2)){
+//            errors.put("password2", "Passwords should match");
+//        }
+//    }
 
-        if(! password.equals(password2)){
-            errors.put("password2", "Passwords should match");
+    @Override
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        ActionErrors errors = new ActionErrors();
+        if (password != null && password2 != null){
+            if (!password.equals(password2)){
+                errors.add("password2", new ActionMessage("errors.password.match"));
+            }
         }
+        return errors;
     }
 }

@@ -1,18 +1,18 @@
 package com.care.service;
 
-import com.care.dto.form.LoginDetails;
-import com.care.dto.form.PasswordDTO;
+import com.care.form.LoginForm;
+import com.care.form.PasswordUpdateForm;
 import com.care.model.Member;
 
 public interface AuthenticationService extends Service {
 
-    OperationStatus loginUser(LoginDetails loginDetails);
+    OperationStatus loginUser(LoginForm loginForm);
 
     boolean logout();
 
-    OperationStatus updatePasswordWithToken(PasswordDTO passwordDTO);
+    OperationStatus updatePasswordWithToken(PasswordUpdateForm passwordUpdateForm);
 
-    OperationStatus updatePassword(Member member, PasswordDTO passwordDTO);
+    OperationStatus updatePassword(Member member, PasswordUpdateForm passwordUpdateForm);
 
     int forgotPassword();
 

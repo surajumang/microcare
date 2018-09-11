@@ -1,10 +1,10 @@
 package com.care.service;
 
 import com.care.dao.*;
-import com.care.dto.form.EditForm;
+import com.care.form.EditProfileForm;
 import com.care.exception.MemberAlreadyRegisteredException;
+import com.care.form.RegistrationForm;
 import com.care.model.*;
-import com.care.dto.form.RegistrationFormDTO;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -21,26 +21,26 @@ public class AccountServiceImpl implements AccountService {
     private static Logger logger = Logger.getLogger("AccountService");
     public AccountServiceImpl() {  }
 
-    public OperationStatus enroll(RegistrationFormDTO registrationFormDTO) throws MemberAlreadyRegisteredException {
+    public OperationStatus enroll(RegistrationForm registrationForm) throws MemberAlreadyRegisteredException {
 
         OperationStatus status = OperationStatus.FAILURE;
         int val = -1;
-        logger.info("Called enroll  " + registrationFormDTO);
+        logger.info("Called enroll  " + registrationForm);
 
-        if (registrationFormDTO.getMemberType().equals("SEEKER") ){
+        if (registrationForm.getMemberType().equals("SEEKER") ){
             Seeker seeker = new Seeker();
-            registrationFormDTO.setPassword(Hash.createHash(registrationFormDTO.getPassword()));
+            registrationForm.setPassword(Hash.createHash(registrationForm.getPassword()));
 
             logger.info("Seeker details--" + seeker);
-            ObjectMapper.mapObject(registrationFormDTO, seeker, true);
+            ObjectMapper.mapObject(registrationForm, seeker, true);
             val = addSeeker(seeker);
         }
         else {
             Sitter sitter = new Sitter();
-            registrationFormDTO.setPassword(Hash.createHash(registrationFormDTO.getPassword()));
-            logger.info("WIth UPdated Password " + registrationFormDTO.getPassword());
+            registrationForm.setPassword(Hash.createHash(registrationForm.getPassword()));
+            logger.info("WIth UPdated Password " + registrationForm.getPassword());
             logger.info("Seeker details--" + sitter);
-            ObjectMapper.mapObject(registrationFormDTO, sitter, true);
+            ObjectMapper.mapObject(registrationForm, sitter, true);
             val = addSitter(sitter);
         }
         if (val == 1){
@@ -201,18 +201,18 @@ public class AccountServiceImpl implements AccountService {
         return operationStatus;
     }
 
-    public int editMember(long memberId, EditForm editForm) {
+    public int editMember(long memberId, EditProfileForm editProfileForm) {
         int status = -1;
         logger.info("Called enroll");
 
-        if (editForm.getMemberType().equals("SEEKER") ){
+        if (editProfileForm.getMemberType().equals("SEEKER") ){
             Seeker seeker = new Seeker();
-            ObjectMapper.mapObject(editForm, seeker, true);
+            ObjectMapper.mapObject(editProfileForm, seeker, true);
             status = editSeeker( memberId, seeker);
         }
         else {
             Sitter sitter = new Sitter();
-            ObjectMapper.mapObject(editForm, sitter, true);
+            ObjectMapper.mapObject(editProfileForm, sitter, true);
             status = editSitter(memberId, sitter);
         }
         return status ;

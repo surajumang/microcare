@@ -1,14 +1,14 @@
 package com.care.service;
 
-import com.care.dto.form.EditForm;
+import com.care.form.EditProfileForm;
 import com.care.exception.MemberAlreadyRegisteredException;
+import com.care.form.RegistrationForm;
 import com.care.model.Member;
-import com.care.dto.form.RegistrationFormDTO;
 import com.care.model.Status;
 
 public interface AccountService extends Service {
 
-    OperationStatus enroll(RegistrationFormDTO registrationFormDTO) throws MemberAlreadyRegisteredException;
+    OperationStatus enroll(RegistrationForm registrationForm) throws MemberAlreadyRegisteredException;
 
     Member getMember(String email);
 
@@ -20,5 +20,5 @@ public interface AccountService extends Service {
 
     OperationStatus deleteMember(Member member);
 
-    int editMember(long memberId, EditForm editForm);
+    int editMember(long memberId, EditProfileForm editProfileForm);
 }

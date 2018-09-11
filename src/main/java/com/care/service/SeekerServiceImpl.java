@@ -4,7 +4,7 @@ import com.care.exception.IllegalApplicationAccessException;
 import com.care.exception.JobNotPostedByUserException;
 import com.care.model.*;
 import com.care.dao.*;
-import com.care.dto.form.JobDTO;
+import com.care.form.JobForm;
 
 import java.sql.SQLException;
 import java.util.Collections;
@@ -58,7 +58,7 @@ public class SeekerServiceImpl implements SeekerService {
         return job;
     }
 
-    public OperationStatus postJob(Member member, JobDTO jobForm)  {
+    public OperationStatus postJob(Member member, JobForm jobForm)  {
         logger.info("Post job called by" + member.getId());
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = new Job();
@@ -130,7 +130,7 @@ public class SeekerServiceImpl implements SeekerService {
         return status;
     }
 
-    public OperationStatus editJob(Member member, JobDTO jobForm){
+    public OperationStatus editJob(Member member, JobForm jobForm){
         int status = 1;
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = new Job();

@@ -1,7 +1,7 @@
 package com.care.controller.seeker;
 
 
-import com.care.dto.form.JobDTO;
+import com.care.form.JobForm;
 import com.care.model.Member;
 import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
@@ -37,25 +37,25 @@ public class PostJob extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String page ="/seeker/PostJob.jsp";
-        FormBean postJobForm = FormPopulator.populate(request, JobDTO.class);
+        FormBean postJobForm = FormPopulator.populate(request, JobForm.class);
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
 
         Map<String, String> errors = new HashMap<String, String>();
         postJobForm.validateCustom(errors);
-        JobDTO jobDTO = (JobDTO)postJobForm;
+        JobForm jobForm = (JobForm)postJobForm;
         int status = -1;
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         request.setAttribute("errors", errors);
-        request.setAttribute("formErrors", jobDTO);
+        request.setAttribute("formErrors", jobForm);
         logger.info(errors + " ");
-        logger.info(jobDTO + " " );
+        logger.info(jobForm + " " );
         if(errors.isEmpty()){
             logger.info("Without errors");
-            jobDTO.setSeekerId(String.valueOf(currentUser.getId()));
+            jobForm.setSeekerId(String.valueOf(currentUser.getId()));
 
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-            operationStatus = seekerService.postJob(currentUser, jobDTO);
+            operationStatus = seekerService.postJob(currentUser, jobForm);
             logger.info("Returned with status"  + operationStatus);
 
             if (operationStatus == OperationStatus.SUCCESS){

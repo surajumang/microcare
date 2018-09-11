@@ -1,17 +1,22 @@
-package com.care.dto.form;
+package com.care.form;
 
 import com.care.annotation.Email;
 import com.care.annotation.Name;
 import com.care.annotation.Number;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RegistrationFormDTO extends FormBean{
+public class RegistrationForm extends ActionForm {
 
     private Logger logger = Logger.getLogger("RegistrationFormDto");
 
@@ -142,36 +147,36 @@ public class RegistrationFormDTO extends FormBean{
         this.phone = phone;
     }
 
-    @Override
-    public void validateCustom(Map<String, String> errors) {
-        try {
-            FormValidator.validate(this, errors);
-        } catch (InvocationTargetException e) {
-            logger.log(Level.SEVERE, "While validating", e);
-        } catch (IllegalAccessException e) {
-            logger.log(Level.SEVERE, "While validating", e);
-        }
-        String errorValue = "";
-        boolean flag = false;
-
-        if(! password.equals(password2)){
-            errors.put("password2", "Passwords should match");
-        }
-        if (memberType.equals("SITTER")){
-            String expRegex;
-            String expectedPay;
-            if (!getExperience().matches("\\d{1,2}")){
-                errors.put("experience", "At most two digits allowed");
-            }
-            if (!getExpectedPay().matches("\\d{1,3}(\\.\\d{0,2})?")){
-                errors.put("expectedPay", "Proper format is ddd.dd");
-            }
-        }
-    }
+//    @Override
+//    public void validateCustom(Map<String, String> errors) {
+//        try {
+//            FormValidator.validate(this, errors);
+//        } catch (InvocationTargetException e) {
+//            logger.log(Level.SEVERE, "While validating", e);
+//        } catch (IllegalAccessException e) {
+//            logger.log(Level.SEVERE, "While validating", e);
+//        }
+//        String errorValue = "";
+//        boolean flag = false;
+//
+//        if(! password.equals(password2)){
+//            errors.put("password2", "Passwords should match");
+//        }
+//        if (memberType.equals("SITTER")){
+//            String expRegex;
+//            String expectedPay;
+//            if (!getExperience().matches("\\d{1,2}")){
+//                errors.put("experience", "At most two digits allowed");
+//            }
+//            if (!getExpectedPay().matches("\\d{1,3}(\\.\\d{0,2})?")){
+//                errors.put("expectedPay", "Proper format is ddd.dd");
+//            }
+//        }
+//    }
 
     @Override
     public String toString() {
-        return "RegistrationFormDTO{" +
+        return "RegistrationForm{" +
                 "email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -186,5 +191,28 @@ public class RegistrationFormDTO extends FormBean{
                 ", numberOfChildren='" + numberOfChildren + '\'' +
                 ", expectedPay='" + expectedPay + '\'' +
                 '}';
+    }
+
+    @Override
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        ActionErrors errors = new ActionErrors();
+        String nameRegex  = "";
+        String emailRegex = "";
+        String phoneRegex = "";
+        if (! email.matches(emailRegex)){
+            errors.add("email", new ActionMessage("errors.email"));
+        }
+        if (! firstName.matches(nameRegex)){
+            errors.add("firstName", new ActionMessage("errors.name"));
+        }
+        if (! lastName.matches(nameRegex)){
+            errors.add("lastName", new ActionMessage("errors.name"));
+        }
+        if (! phone.matches(phoneRegex)){
+            errors.add("phone", new ActionMessage("errors.number"));
+        }
+
+
+        return errors;
     }
 }

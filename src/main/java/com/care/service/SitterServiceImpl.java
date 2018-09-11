@@ -1,6 +1,6 @@
 package com.care.service;
 
-import com.care.dto.form.ApplicationDTO;
+import com.care.form.ApplicationForm;
 import com.care.model.*;
 import com.care.dao.*;
 
@@ -77,12 +77,12 @@ public class SitterServiceImpl implements SitterService {
     }
 
 
-    public OperationStatus applyToJob(ApplicationDTO applicationDTO) {
+    public OperationStatus applyToJob(ApplicationForm applicationForm) {
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
         Application application = new Application();
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
-        ObjectMapper.mapObject(applicationDTO, application, true);
+        ObjectMapper.mapObject(applicationForm, application, true);
         logger.info(application + " AFTER MAPPING");
         try {
             int val = applicationDAO.addApplication(application);

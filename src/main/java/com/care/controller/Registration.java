@@ -1,16 +1,17 @@
 package com.care.controller;
 
-import com.care.dto.form.RegistrationFormDTO;
-import com.care.dto.form.SeekerRegistrationDTO;
-import com.care.dto.form.SitterRegistrationDTO;
+import com.care.form.RegistrationForm;
 import com.care.exception.MemberAlreadyRegisteredException;
-import com.care.model.MemberType;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,10 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class Registration extends HttpServlet {
-    Logger logger = Logger.getLogger("SeekerRegistration");
+public class Registration extends Action {
+    Logger logger = Logger.getLogger("Registration");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
     static {
         message.put(OperationStatus.FAILURE, "Unable to Register");
         message.put(OperationStatus.OTHER, "ALready Registered Try Forgot password");
@@ -32,45 +32,29 @@ public class Registration extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "/visitor/Registration.jsp";
         logger.info(page);
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        Class<? extends FormBean> detailPage;
 
-        RegistrationFormDTO registrationDetails = FormPopulator.populate(request, RegistrationFormDTO.class);
+        RegistrationForm registrationDetails = (RegistrationForm) form;
         logger.info(registrationDetails + " " );
-        Map<String, String> errors = new HashMap<String, String>();
-
-        registrationDetails.validateCustom(errors);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
 
-        logger.info(errors + " ");
         logger.info(registrationDetails + "");
-        request.setAttribute("errors", errors);
+        page = "/index.jsp";
 
-        if(errors.isEmpty()){
-            page = "/index.jsp";
-
-            try {
-                operationStatus = accountService.enroll(registrationDetails);
-            }catch (MemberAlreadyRegisteredException e){
-                operationStatus = OperationStatus.OTHER;
-            }
-            logger.info("Back at servlet");
+        try {
+            operationStatus = accountService.enroll(registrationDetails);
+        }catch (MemberAlreadyRegisteredException e){
+            operationStatus = OperationStatus.OTHER;
         }
-
+        logger.info("Back at servlet");
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
-        request.setAttribute("formErrors", (RegistrationFormDTO)registrationDetails);
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        request.setAttribute("formErrors", (RegistrationForm)registrationDetails);
+        return mapping.findForward(page);
 
     }
 }

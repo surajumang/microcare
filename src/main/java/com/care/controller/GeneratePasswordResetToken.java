@@ -14,20 +14,15 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class GeneratePasswordResetToken extends HttpServlet {
-
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
     static {
         message.put(OperationStatus.FAILURE, "Email not found.");
         message.put(OperationStatus.SUCCESS, "Password reset link sent to your Email");
         message.put(OperationStatus.OTHER, "Enter a Valid Email");
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

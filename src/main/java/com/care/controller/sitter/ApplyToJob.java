@@ -1,7 +1,7 @@
 package com.care.controller.sitter;
 
 import com.care.controller.CommonUtil;
-import com.care.dto.form.ApplicationDTO;
+import com.care.form.ApplicationForm;
 import com.care.model.Member;
 import com.care.service.*;
 import com.care.validation.FormPopulator;
@@ -34,7 +34,7 @@ public class ApplyToJob extends HttpServlet {
         String page = "/sitter/ShowJobToApply.jsp";
 
         long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
-        ApplicationDTO application = FormPopulator.populate(request, ApplicationDTO.class);
+        ApplicationForm application = FormPopulator.populate(request, ApplicationForm.class);
 
         Map<String, String> errors = new HashMap<>();
         OperationStatus operationStatus = OperationStatus.FAILURE;

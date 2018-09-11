@@ -1,10 +1,10 @@
-package com.care.dto.form;
+package com.care.form;
 
 import com.care.annotation.Number;
 
 import java.util.Map;
 
-public class SitterEditForm extends EditForm {
+public class SitterEditProfileForm extends EditProfileForm {
 
     private String expectedPay;
     private String experience;
@@ -27,7 +27,7 @@ public class SitterEditForm extends EditForm {
 
     @Override
     public String toString() {
-        return "SitterEditForm{" +
+        return "SitterEditProfileForm{" +
                 "expectedPay='" + expectedPay + '\'' +
                 ", experience='" + experience + '\'' +
                 '}';

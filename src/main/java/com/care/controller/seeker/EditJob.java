@@ -1,9 +1,8 @@
 package com.care.controller.seeker;
 
-import com.care.dto.form.JobDTO;
+import com.care.form.JobForm;
 import com.care.model.Member;
 import com.care.service.*;
-import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
 
 import javax.servlet.ServletException;
@@ -32,7 +31,7 @@ public class EditJob extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String page = "/seeker/ShowAndEditJob.jsp";
-        JobDTO jobForm = FormPopulator.populate(req, JobDTO.class);
+        JobForm jobForm = FormPopulator.populate(req, JobForm.class);
         Map<String, String> errors = new HashMap<>();
         jobForm.validateCustom(errors);
         OperationStatus operationStatus = OperationStatus.FAILURE;

@@ -5,6 +5,10 @@ import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class CloseAccount extends HttpServlet {
+public class CloseAccount extends Action {
     Logger logger = Logger.getLogger("CloseAccount");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
@@ -23,17 +27,12 @@ public class CloseAccount extends HttpServlet {
         message.put(OperationStatus.FAILURE, "Couldn't Close");
         message.put(OperationStatus.SUCCESS, "Successfully Closed Account");
     }
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         /*
         First Sets the member status to inactive and then dispatches the rquest to Logout servlet.
          */
-
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
         String page = "/"+currentUser.getMemberType().name().toLowerCase()+"/Home.jsp";
@@ -46,7 +45,6 @@ public class CloseAccount extends HttpServlet {
             request.getSession().invalidate();
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        getServletContext().getRequestDispatcher(page).forward(request, response);
-
+        return mapping.findForward(page);
     }
 }

@@ -1,13 +1,13 @@
-package com.care.dto.form;
+package com.care.form;
 
 import com.care.annotation.Number;
 
 import java.util.Map;
 
-public class SitterRegistrationDTO extends RegistrationFormDTO {
+public class SitterRegistration extends RegistrationForm {
     @Override
     public String toString() {
-        return "SitterRegistrationDTO{" +
+        return "SitterRegistration{" +
                 "experience='" + experience + '\'' +
                 ", expectedPay='" + expectedPay + '\'' +
                 '}' + super.toString();

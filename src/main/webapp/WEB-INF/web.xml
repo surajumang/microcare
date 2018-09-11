@@ -99,7 +99,7 @@
 
     <servlet>
             <servlet-name>Login</servlet-name>
-            <servlet-class>com.care.controller.Login</servlet-class>
+            <servlet-class>com.care.controller.LoginAction</servlet-class>
     </servlet>
     <servlet-mapping>
             <servlet-name>Login</servlet-name>
@@ -288,7 +288,7 @@
 
     <servlet>
         <servlet-name>ChangePassword</servlet-name>
-        <servlet-class>com.care.controller.ChangePassword</servlet-class>
+        <servlet-class>com.care.controller.ChangePasswordAction</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>

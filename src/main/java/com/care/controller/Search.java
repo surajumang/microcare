@@ -1,6 +1,6 @@
 package com.care.controller;
 
-import com.care.dto.form.SearchCriteria;
+import com.care.form.SearchCriteria;
 import com.care.model.Member;
 import com.care.model.MemberType;
 import com.care.model.Seeker;

@@ -1,11 +1,14 @@
-package com.care.dto.form;
+package com.care.form;
 
 import com.care.annotation.Name;
 import com.care.annotation.Number;
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionMapping;
 
+import javax.servlet.ServletRequest;
 import java.util.Map;
 
-public class SeekerEditForm extends EditForm {
+public class SeekerEditProfileForm extends EditProfileForm {
 
     private String spouseName;
     private String numberOfChildren;
@@ -30,14 +33,19 @@ public class SeekerEditForm extends EditForm {
 
     @Override
     public String toString() {
-        return "SeekerEditForm{" +
+        return "SeekerEditProfileForm{" +
                 "spouseName='" + spouseName + '\'' +
                 ", numberOfChildren='" + numberOfChildren + '\'' +
                 '}';
     }
 
     @Override
-    public void validateCustom(Map<String, String> errors) {
-        super.validateCustom(errors);
+    public ActionErrors validate(ActionMapping mapping, ServletRequest request) {
+        return super.validate(mapping, request);
     }
+
+    //    @Override
+//    public void validateCustom(Map<String, String> errors) {
+//        super.validateCustom(errors);
+//    }
 }

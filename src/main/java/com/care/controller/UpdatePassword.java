@@ -1,6 +1,6 @@
 package com.care.controller;
 
-import com.care.dto.form.PasswordDTO;
+import com.care.form.PasswordUpdateForm;
 import com.care.service.*;
 import com.care.validation.FormPopulator;
 
@@ -40,15 +40,15 @@ public class UpdatePassword extends HttpServlet {
         logger.info("**********" + req + "****************");
 
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
-        PasswordDTO passwordDTO = FormPopulator.populate(req, PasswordDTO.class);
+        PasswordUpdateForm passwordUpdateForm = FormPopulator.populate(req, PasswordUpdateForm.class);
 
         Map<String, String> errors = new HashMap<>();
-        passwordDTO.validateCustom(errors);
-        logger.info(passwordDTO + " found");
+        passwordUpdateForm.validateCustom(errors);
+        logger.info(passwordUpdateForm + " found");
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         if (errors.isEmpty()){
-            operationStatus = authenticationService.updatePasswordWithToken(passwordDTO);
+            operationStatus = authenticationService.updatePasswordWithToken(passwordUpdateForm);
             if (operationStatus == OperationStatus.SUCCESS){
                 page = "/index.jsp";
             }
