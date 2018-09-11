@@ -3,6 +3,10 @@ package com.care.controller.sitter;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
 import com.care.service.*;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class CloseApplication extends HttpServlet {
+public class CloseApplication extends Action {
     Logger logger = Logger.getLogger("CloseJobSitter");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
@@ -21,13 +25,9 @@ public class CloseApplication extends HttpServlet {
         message.put(OperationStatus.FAILURE, "Can't Edit Job");
         message.put(OperationStatus.SUCCESS, "Successfully Deleted");
     }
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "/sitter/Home.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
         long applicationToBeClosed = CommonUtil.getIdFromRequest(request, "id");
@@ -46,6 +46,6 @@ public class CloseApplication extends HttpServlet {
         }
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        return mapping.findForward(page);
     }
 }

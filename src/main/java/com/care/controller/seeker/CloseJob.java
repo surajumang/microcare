@@ -7,6 +7,10 @@ import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +22,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CloseJob extends HttpServlet {
-
+public class CloseJob extends Action {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
     private static final Map<OperationStatus, String> messege = new HashMap<OperationStatus, String>();
-
     static {
         messege.put(OperationStatus.SUCCESS, "Successfully Closed");
         messege.put(OperationStatus.FAILURE, "No records exist");
@@ -29,14 +32,8 @@ public class CloseJob extends HttpServlet {
         messege.put(OperationStatus.INVALID, "Invalid JobId");
     }
 
-    private Logger logger = Logger.getLogger("CLoseJob");
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "/seeker/ShowMyJobs.do";
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
@@ -45,8 +42,8 @@ public class CloseJob extends HttpServlet {
         if (jobToBeClosed < 0){
             operationStatus = OperationStatus.INVALID;
             request.setAttribute(operationStatus.name(), messege.get(operationStatus));
-            getServletContext().getRequestDispatcher(page).forward(request, response);
-            return;
+            //getServletContext().getRequestDispatcher(page).forward(request, response);
+            return ;
         }
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
@@ -65,6 +62,6 @@ public class CloseJob extends HttpServlet {
 
         request.setAttribute(operationStatus.name(), messege.get(operationStatus));
         logger.info(page);
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        return mapping.findForward(page);
     }
 }

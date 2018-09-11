@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Number {
     String regex() default "\\d*";
-    String message() default "Only digits allowed here";
+    String message() default "errors.number";
     boolean required() default true;
 }

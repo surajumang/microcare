@@ -4,7 +4,8 @@
 
 <%@ taglib prefix="fn"
        uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ taglib uri="http://struts.apache.org/tags-html"
+           prefix="html" %>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>

@@ -1,17 +1,12 @@
 package com.care.form;
 
 import com.care.annotation.Number;
+import com.care.validation.FormBean;
+import org.apache.struts.action.ActionErrors;
 
 import java.util.Map;
 
-public class SitterRegistration extends RegistrationForm {
-    @Override
-    public String toString() {
-        return "SitterRegistration{" +
-                "experience='" + experience + '\'' +
-                ", expectedPay='" + expectedPay + '\'' +
-                '}' + super.toString();
-    }
+public class SitterRegistration extends RegistrationForm implements FormBean {
 
     private String experience;
     private String expectedPay;
@@ -35,8 +30,17 @@ public class SitterRegistration extends RegistrationForm {
     }
 
     @Override
-    public void validateCustom(Map<String, String> errors) {
+    public void validateCustom(ActionErrors errors) {
         super.validateCustom(errors);
     }
+
+    @Override
+    public String toString() {
+        return "SitterRegistration{" +
+                "experience='" + experience + '\'' +
+                ", expectedPay='" + expectedPay + '\'' +
+                '}' + super.toString();
+    }
+
 }
 

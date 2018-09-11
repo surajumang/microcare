@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Name {
     String regex() default "[A-Za-z ]+";
-    String message() default "Name must not contain any digits or special characters";
+    String message() default "errors.email";
     boolean required() default true;
 }

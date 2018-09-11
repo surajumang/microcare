@@ -6,6 +6,10 @@ import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
 import com.care.service.SitterService;
 import com.care.service.SitterServiceImpl;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,22 +20,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class ShowJobToApply extends HttpServlet {
+public class ShowJobToApply extends Action {
     private Logger logger = Logger.getLogger("ShowJobToApply");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
     static {
         message.put(OperationStatus.FAILURE, "Unable to Get Job for Application");
         message.put(OperationStatus.SUCCESS, "Apply to Job");
         message.put(OperationStatus.INVALID, "Invalid jobID");
     }
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         /*
         Fetch the job from the database and show it to the user, also collect the expectedPay.
          */
@@ -49,6 +48,6 @@ public class ShowJobToApply extends HttpServlet {
             }
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus) );
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        return mapping.findForward(page);
     }
 }

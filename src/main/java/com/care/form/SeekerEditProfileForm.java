@@ -44,8 +44,8 @@ public class SeekerEditProfileForm extends EditProfileForm {
         return super.validate(mapping, request);
     }
 
-    //    @Override
-//    public void validateCustom(Map<String, String> errors) {
-//        super.validateCustom(errors);
-//    }
+        @Override
+    public void validateCustom(ActionErrors errors) {
+        super.validateCustom(errors);
+    }
 }

@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class JobForm extends ActionForm {
+public class JobForm extends ActionForm implements FormBean {
 
     private Logger logger = Logger.getLogger("JobForm");
     private String id;
@@ -76,66 +76,39 @@ public class JobForm extends ActionForm {
         this.endDate = endDate;
     }
 
-//    @Override
-//    public void validateCustom(Map<String, String> errors) {
-//        try {
-//            FormValidator.validate(this, errors);
-//        } catch (InvocationTargetException e) {
-//            logger.log(Level.SEVERE, "Invok", e);
-//        } catch (IllegalAccessException e) {
-//            logger.log(Level.SEVERE, "Invok", e);
-//        }
-//        logger.info(errors+ "");
-//        boolean dateError = errors.containsKey("startDate") || errors.containsKey("endDate");
-//        //[TODO] use try catch
-//        try {
-//            if (! dateError ){
-//                startDate +=":00";
-//                endDate   +=":00";
-//                Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-//                Timestamp startTime = Timestamp.valueOf(startDate);
-//                Timestamp endTime = Timestamp.valueOf(endDate);
-//                if (startTime.before(currentTime)){
-//                    errors.put("currentDate", "Start Time must be greater than current Time");
-//                }
-//                if (endTime.before(startTime)){
-//                    errors.put("startDate", "Start Time must be less than end Time");
-//                }
-//            }
-//        }catch (Exception e){
-//            logger.log(Level.SEVERE, "Exception while validating Time values", e);
-//            errors.put("startDate", "Not in proper format");
-//        }
-//        logger.info("Done with validation");
-//    }
-
     @Override
-    public void reset(ActionMapping mapping, HttpServletRequest request) {
-
+    public void validateCustom(ActionErrors errors) {
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            logger.log(Level.SEVERE, "Invok", e);
+        } catch (IllegalAccessException e) {
+            logger.log(Level.SEVERE, "Invok", e);
+        }
+        logger.info(errors+ "");
+        // If the dates are not okay then a parse exception will be generated and that will be handled here.
+        try {
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            Timestamp startTime = Timestamp.valueOf(startDate + ":00");
+            Timestamp endTime = Timestamp.valueOf(endDate + ":00");
+            if (startTime.before(currentTime)){
+                errors.add("currentDate", new ActionMessage("Start Time must be greater than current Time"));
+            }
+            if (endTime.before(startTime)){
+                errors.add("startDate", new ActionMessage("Start Time must be less than end Time"));
+            }
+        }catch (Exception e){
+            logger.log(Level.SEVERE, "Exception while validating Time values", e);
+            //errors.put("startDate", "Not in proper format");
+        }
+        logger.info("Done with validation");
     }
 
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors actionErrors = new ActionErrors();
-        String dateRegex = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}";
+        validateCustom(actionErrors);
 
-        if (hourlyPay == null){
-
-        }
-        if (! hourlyPay.matches("\\d{1,3}(\\.\\d{0,2})?")){
-            actionErrors.add("hourlyPay", new ActionMessage("erorrs.number.double"));
-        }
-        if (startDate != null && endDate != null){
-            if (! startDate.matches(dateRegex)){
-
-            }else{
-
-            }
-            actionErrors.add("startDate", new ActionMessage("errors.date"));
-        }
-        if (! endDate.matches(dateRegex)){
-
-        }
         return actionErrors;
     }
 

@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c"
        uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib uri="http://struts.apache.org/tags-html"
+           prefix="html" %>
 <%@ taglib prefix="fn"
        uri="http://java.sun.com/jsp/jstl/functions" %>
 <html lang="en" dir="ltr">

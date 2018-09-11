@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SearchCriteria extends ActionForm {
+public class SearchCriteria extends ActionForm implements FormBean {
     private Logger logger = Logger.getLogger("SearchCriteria");
 
     private String email;
@@ -26,19 +26,21 @@ public class SearchCriteria extends ActionForm {
         this.email = email;
     }
 
-//    @Override
-//    public void validateCustom(Map<String, String> errors) {
-//        try {
-//            FormValidator.validate(this, errors);
-//        } catch (InvocationTargetException e) {
-//            logger.log(Level.SEVERE, "Invok", e);
-//        } catch (IllegalAccessException e) {
-//            logger.log(Level.SEVERE, "Invok", e);
-//        }
-//    }
+    @Override
+    public void validateCustom(ActionErrors errors) {
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            logger.log(Level.SEVERE, "Invok", e);
+        } catch (IllegalAccessException e) {
+            logger.log(Level.SEVERE, "Invok", e);
+        }
+    }
 
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        return super.validate(mapping, request);
+       ActionErrors errors = new ActionErrors();
+       validateCustom(errors);
+       return errors;
     }
 }

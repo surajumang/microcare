@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RegistrationForm extends ActionForm {
+public class RegistrationForm extends ActionForm implements FormBean {
 
     private Logger logger = Logger.getLogger("RegistrationFormDto");
 
@@ -147,32 +147,32 @@ public class RegistrationForm extends ActionForm {
         this.phone = phone;
     }
 
-//    @Override
-//    public void validateCustom(Map<String, String> errors) {
-//        try {
-//            FormValidator.validate(this, errors);
-//        } catch (InvocationTargetException e) {
-//            logger.log(Level.SEVERE, "While validating", e);
-//        } catch (IllegalAccessException e) {
-//            logger.log(Level.SEVERE, "While validating", e);
-//        }
-//        String errorValue = "";
-//        boolean flag = false;
-//
-//        if(! password.equals(password2)){
-//            errors.put("password2", "Passwords should match");
-//        }
-//        if (memberType.equals("SITTER")){
-//            String expRegex;
-//            String expectedPay;
-//            if (!getExperience().matches("\\d{1,2}")){
-//                errors.put("experience", "At most two digits allowed");
-//            }
-//            if (!getExpectedPay().matches("\\d{1,3}(\\.\\d{0,2})?")){
-//                errors.put("expectedPay", "Proper format is ddd.dd");
-//            }
-//        }
-//    }
+    @Override
+    public void validateCustom(ActionErrors errors) {
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            logger.log(Level.SEVERE, "While validating", e);
+        } catch (IllegalAccessException e) {
+            logger.log(Level.SEVERE, "While validating", e);
+        }
+        String errorValue = "";
+        boolean flag = false;
+
+        if(! password.equals(password2)){
+            errors.add("password2", new ActionMessage("Passwords should match"));
+        }
+        if (memberType.equals("SITTER")){
+            String expRegex;
+            String expectedPay;
+            if (!getExperience().matches("\\d{1,2}")){
+                errors.add("experience", new ActionMessage("At most two digits allowed"));
+            }
+            if (!getExpectedPay().matches("\\d{1,3}(\\.\\d{0,2})?")){
+                errors.add("expectedPay", new ActionMessage("Proper format is ddd.dd"));
+            }
+        }
+    }
 
     @Override
     public String toString() {
@@ -196,23 +196,7 @@ public class RegistrationForm extends ActionForm {
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        String nameRegex  = "";
-        String emailRegex = "";
-        String phoneRegex = "";
-        if (! email.matches(emailRegex)){
-            errors.add("email", new ActionMessage("errors.email"));
-        }
-        if (! firstName.matches(nameRegex)){
-            errors.add("firstName", new ActionMessage("errors.name"));
-        }
-        if (! lastName.matches(nameRegex)){
-            errors.add("lastName", new ActionMessage("errors.name"));
-        }
-        if (! phone.matches(phoneRegex)){
-            errors.add("phone", new ActionMessage("errors.number"));
-        }
-
-
+        validateCustom(errors);
         return errors;
     }
 }

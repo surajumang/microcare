@@ -1,8 +1,7 @@
 package com.care.form;
 
 import com.care.annotation.Number;
-
-import java.util.Map;
+import org.apache.struts.action.ActionErrors;
 
 public class SitterEditProfileForm extends EditProfileForm {
 
@@ -34,7 +33,7 @@ public class SitterEditProfileForm extends EditProfileForm {
     }
 
     @Override
-    public void validateCustom(Map<String, String> errors) {
+    public void validateCustom(ActionErrors errors) {
         super.validateCustom(errors);
     }
 }

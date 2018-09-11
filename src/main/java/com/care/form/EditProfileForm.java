@@ -10,11 +10,10 @@ import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EditProfileForm extends ActionForm {
+public class EditProfileForm extends ActionForm implements FormBean {
     private Logger logger = Logger.getLogger("PutProfileInfo");
 
     private String firstName;
@@ -73,32 +72,21 @@ public class EditProfileForm extends ActionForm {
         this.phone = phone;
     }
 
-//    @Override
-//    public void validateCustom(Map<String, String> errors) {
-//        try {
-//            FormValidator.validate(this, errors);
-//        } catch (InvocationTargetException e) {
-//            logger.log(Level.SEVERE, "While validating", e);
-//        } catch (IllegalAccessException e) {
-//            logger.log(Level.SEVERE, "While validating", e);
-//        }
-//    }
+    @Override
+    public void validateCustom(ActionErrors errors) {
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            logger.log(Level.SEVERE, "While validating", e);
+        } catch (IllegalAccessException e) {
+            logger.log(Level.SEVERE, "While validating", e);
+        }
+    }
 
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        if (firstName.matches("")){
-
-        }
-        if (lastName.matches("")){
-
-        }
-        if (zipCode.matches("")){
-
-        }
-        if (phone.matches("")){
-
-        }
+        validateCustom(errors);
         return errors;
     }
 }

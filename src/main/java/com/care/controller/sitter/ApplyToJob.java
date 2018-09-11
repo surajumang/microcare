@@ -5,6 +5,10 @@ import com.care.form.ApplicationForm;
 import com.care.model.Member;
 import com.care.service.*;
 import com.care.validation.FormPopulator;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class ApplyToJob extends HttpServlet {
+public class ApplyToJob extends Action {
     private Logger logger = Logger.getLogger("ApplyToJob");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
     static {
@@ -25,29 +29,21 @@ public class ApplyToJob extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "/sitter/ShowJobToApply.jsp";
 
         long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
         ApplicationForm application = FormPopulator.populate(request, ApplicationForm.class);
 
-        Map<String, String> errors = new HashMap<>();
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        application.validateCustom(errors);
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
         logger.info(application + "**********");
-        logger.info(errors + " ");
         logger.info("Called ApplyToJob");
 
-        if (jobToApplyOn >=0 && errors.isEmpty() ){
+        if (jobToApplyOn >=0 ){
             application.setJobId(String.valueOf(jobToApplyOn));
             application.setSitterId(String.valueOf(currentMember.getId()));
 
@@ -64,7 +60,6 @@ public class ApplyToJob extends HttpServlet {
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         request.setAttribute("application", application);
-        request.setAttribute("errors", errors);
-        getServletContext().getRequestDispatcher(page).include(request, response);
+        return mapping.findForward(page);
     }
 }

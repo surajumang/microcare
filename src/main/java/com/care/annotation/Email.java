@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Email {
     String regex() default "(\\w)+@([A-Za-z]+\\.?)+";
-    String message() default  "Email is a required field and must be in a proper format";
+    String message() default  "errors.email";
     boolean required() default true;
 }

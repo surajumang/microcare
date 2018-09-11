@@ -6,6 +6,7 @@ import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
+import org.apache.struts.action.Action;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class ShowJobs extends HttpServlet {
+public class ShowJobs extends Action {
     private static final Map<OperationStatus, String> messege = new HashMap<OperationStatus, String>();
 
     static {
@@ -25,12 +26,7 @@ public class ShowJobs extends HttpServlet {
         messege.put(OperationStatus.FAILURE, "You Don't have any Jobs");
         messege.put(OperationStatus.UNAUTHORISED, "You are not authorised to see the contents");
     }
-
     private Logger logger = Logger.getLogger("ShowJobs");
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

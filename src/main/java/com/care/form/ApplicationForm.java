@@ -1,15 +1,15 @@
 package com.care.form;
 
 import com.care.annotation.Number;
+import com.care.validation.FormBean;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.logging.Logger;
 
-public class ApplicationForm extends ActionForm {
+public class ApplicationForm extends ActionForm implements FormBean {
 
     Logger logger = Logger.getLogger("ApplicationForm");
 
@@ -42,19 +42,6 @@ public class ApplicationForm extends ActionForm {
         this.expectedPay = expectedPay;
     }
 
-//    @Override
-//    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-//        ActionErrors actionErrors = new ActionErrors();
-//
-//        if (expectedPay == null){
-//            actionErrors.add("expectedPay", new ActionMessage("errors.number"));
-//        }
-//        if (expectedPay != null && expectedPay.matches("\\d{1,3}(\\.\\d{1,2})?")){
-//            actionErrors.add("expectedPay", new ActionMessage("errors.number"));
-//        }
-//        return actionErrors;
-//    }
-
     @Override
     public String toString() {
         return "ApplicationForm{" +
@@ -65,12 +52,12 @@ public class ApplicationForm extends ActionForm {
     }
 
     @Override
-    public void reset(ActionMapping mapping, HttpServletRequest request) {
-        super.reset(mapping, request);
+    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+        return super.validate(mapping, request);
     }
 
     @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        return super.validate(mapping, request);
+    public void validateCustom(ActionErrors errors) {
+
     }
 }

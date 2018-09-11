@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
-public class LoginForm extends ActionForm {
+public class LoginForm extends ActionForm implements FormBean{
     private String email;
     private String password;
 
@@ -33,9 +33,6 @@ public class LoginForm extends ActionForm {
         this.password = password;
     }
 
-
-
-
     @Override
     public String toString() {
         return "LoginForm{" +
@@ -44,32 +41,21 @@ public class LoginForm extends ActionForm {
                 '}';
     }
 
-//    @Override
-//    public void validateCustom(Map<String, String> errors) {
-//        try {
-//            FormValidator.validate(this, errors);
-//        } catch (InvocationTargetException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
-    public void reset(ActionMapping mapping, HttpServletRequest request) {
-        email = "";
-        password = "";
+    public void validateCustom(ActionErrors errors) {
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        if (password.equals("")){
-            errors.add("password", new ActionMessage("errors.required"));
-        }
-        if (email.equals("")){
-            errors.add("email", new ActionMessage("errors.required"));
-        }
+        validateCustom(errors);
         return errors;
     }
 }

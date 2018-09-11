@@ -1,8 +1,8 @@
 package com.care.validation;
 
-import java.util.Map;
+import org.apache.struts.action.ActionErrors;
 
-public abstract class FormBean {
-    public abstract void validateCustom(Map<String, String> errors);
+public interface FormBean {
+    void validateCustom(ActionErrors errors);
 
 }

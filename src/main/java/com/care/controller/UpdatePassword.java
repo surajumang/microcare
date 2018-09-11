@@ -3,6 +3,10 @@ package com.care.controller;
 import com.care.form.PasswordUpdateForm;
 import com.care.service.*;
 import com.care.validation.FormPopulator;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class UpdatePassword extends HttpServlet {
+public class UpdatePassword extends Action {
 
     private Logger logger = Logger.getLogger("UpdatePassword");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
@@ -24,37 +28,22 @@ public class UpdatePassword extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req,resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /*
-
-         */
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "/visitor/UpdatePassword.jsp";
-        String token = req.getParameter("token");
+        String token = request.getParameter("token");
 
         logger.info(token + "Updated");
-        logger.info("**********" + req + "****************");
-
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
-        PasswordUpdateForm passwordUpdateForm = FormPopulator.populate(req, PasswordUpdateForm.class);
+        PasswordUpdateForm passwordUpdateForm = FormPopulator.populate(request, PasswordUpdateForm.class);
 
-        Map<String, String> errors = new HashMap<>();
-        passwordUpdateForm.validateCustom(errors);
         logger.info(passwordUpdateForm + " found");
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
-        if (errors.isEmpty()){
-            operationStatus = authenticationService.updatePasswordWithToken(passwordUpdateForm);
-            if (operationStatus == OperationStatus.SUCCESS){
-                page = "/index.jsp";
-            }
+        operationStatus = authenticationService.updatePasswordWithToken(passwordUpdateForm);
+        if (operationStatus == OperationStatus.SUCCESS){
+            page = "/index.jsp";
         }
-        req.setAttribute(operationStatus.name(), message.get(operationStatus));
-        getServletContext().getRequestDispatcher(page).forward(req, resp);
-
+        request.setAttribute(operationStatus.name(), message.get(operationStatus));
+        return mapping.findForward(page);
     }
 }

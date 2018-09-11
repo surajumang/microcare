@@ -14,9 +14,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PasswordUpdateForm extends ActionForm {
+public class PasswordUpdateForm extends ActionForm implements FormBean {
     private Logger logger = Logger.getLogger("PasswordUpdateForm");
-
 
     private String currentPassword;
     private String password;
@@ -76,20 +75,20 @@ public class PasswordUpdateForm extends ActionForm {
                 '}';
     }
 
-//    @Override
-//    public void validateCustom(Map<String, String> errors) {
-//        try {
-//            FormValidator.validate(this, errors);
-//        } catch (InvocationTargetException e) {
-//            logger.log(Level.SEVERE, "While validating", e);
-//        } catch (IllegalAccessException e) {
-//            logger.log(Level.SEVERE, "While validating", e);
-//        }
-//
-//        if(! password.equals(password2)){
-//            errors.put("password2", "Passwords should match");
-//        }
-//    }
+    @Override
+    public void validateCustom(ActionErrors errors) {
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            logger.log(Level.SEVERE, "While validating", e);
+        } catch (IllegalAccessException e) {
+            logger.log(Level.SEVERE, "While validating", e);
+        }
+
+        if(! password.equals(password2)){
+            errors.add("password2", new ActionMessage("Passwords should match"));
+        }
+    }
 
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
