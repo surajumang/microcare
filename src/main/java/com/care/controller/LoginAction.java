@@ -63,7 +63,7 @@ public class LoginAction extends Action {
                 request.getSession().setAttribute("memberType" , memberType);
                 logger.info("Back at LoginServlet");
 
-                page = setMemberPage(member.getMemberType());
+                page = "success";
             }
             else if (member != Member.EMPTY_MEMBER && member.getStatus() == Status.CLOSED){
                 request.setAttribute("STATUS", member.getStatus().name());

@@ -30,7 +30,7 @@ public class ChangePasswordAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Member member = (Member)request.getSession().getAttribute("currentUser");
 
-        String page = "/member/updatePassword.jsp";
+        String page = "success";
         PasswordUpdateForm passwordUpdateForm = (PasswordUpdateForm) form;
         passwordUpdateForm.setId(String.valueOf(member.getId()));
 

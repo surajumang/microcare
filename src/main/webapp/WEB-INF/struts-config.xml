@@ -16,25 +16,123 @@
                    type="com.care.form.RegistrationForm"/>
         <form-bean name="searchCriteria"
                    type="com.care.form.SearchCriteria"/>
+        <form-bean name="editProfile"
+                   type="com.care.form.EditProfileForm"/>
+
     </form-beans>
     <global-forwards>
 
     </global-forwards>
     <action-mappings>
 
-        <action name="loginForm" path="/visitor/login" type="org.apache.struts.actions.ForwardAction" validate="false" parameter="/index.jsp" />
+        <action name="loginForm"
+                path="/visitor/login"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/index.jsp" />
+
+        <action path="/home"
+                type="com.care.controller.TakeHomeAction">
+
+        </action>
 
         <action path="/visitor/captureLogin"
                 type="com.care.controller.LoginAction"
                 name="loginForm"
                 validate="true"
                 scope="request"
-                input="/visitor/login">
-            <forward name="seeker" path="/seeker/home.jsp"/>
-            <forward name="sitter" path="/sitter/home.jsp"/>
+                input="/index.jsp">
+            <forward name="success" path="/home.do"/>
             <forward name="failure" path="/index.jsp"/>
+            <forward name="closed" path="/closed.do"/>
         </action>
-        <action path="/visitor" />
+
+        <action path="/member/search"
+                type="com.care.controller.SearchAction"
+                name="captureSearchCriteria"
+                validate="true"
+                scope="request"
+                input="/member/search.jsp">
+            <forward name="found" path="/member/search.jsp"/>
+        </action>
+
+        <action path="/seeker/postJob"
+                type="com.care.controller.seeker.PostJob"
+                name="jobForm"
+                validate="true"
+                scope="request"
+                input="/seeker/postJob.jsp">
+            <forward name="success" path="/seeker/home.jsp"/>
+        </action>
+        <!--It will take a form as input which will contain details related to a Form, validates it and writes to DB if validation
+            is successful. User will stuck here until submits proper values or chooses another option-->
+        <action path="/seeker/editJob"
+                type="com.care.controller.seeker.EditJob"
+                name="jobForm"
+                validate="true"
+                scope="request"
+                input="/seeker/showAndEditJob.jsp">
+            <forward name="success" path="seeker/showMyJobs.jsp"/>
+        </action>
+
+        <action path="seeker/viewApplication"
+                type="com.care.controller.seeker.ShowApplications">
+            <forward name="success" path="viewApplications.jsp"/>
+        </action>
+        <!--It will take a form having member details as input and validates whether the data is correct and then updates the DB
+            User will remain stuck here until submit correct form or chooses another option-->
+        <action path="member/editProfile"
+                type="com.care.controller.EditProfile"
+                name="editProfile"
+                scope="request"
+                validate="true"
+                input="/member/editProfile.jsp">
+            <forward name="success" path="/home.do"/>
+        </action>
+
+        <action path="/member/closeAccount"
+                type="com.care.controller.CloseAccount">
+            <forward name="success" path="/index.jsp"/>
+        </action>
+
+        <action path="/member/logout"
+                type="com.care.controller.LogOut">
+            <forward name="success" path="/index.jsp"/>
+        </action>
+
+        <action path="/member/updatePassword"
+                type="com.care.controller.UpdatePassword">
+            <forward name="success" path="/home.do"/>
+        </action>
+
+        <action path="/member/forgotPassword"
+                type="com.care.controller.GeneratePasswordResetToken">
+            <forward name="success" path="/home.do"/>
+        </action>
+        <!--This will be called by a form which will provide the wxpected pay entered by the user
+            after the application is successful it will take it back to the all jobs page using an Action class such
+            that the changes are visible to the user -->
+        <action path="sitter/apply"
+                type="com.care.controller.sitter.ApplyToJob"
+                name="applicationForm"
+                scope="request"
+                validate="true"
+                input="sitter/applyToJob.jsp">
+            <forward name="success" path="/sitter/showJobs.do"/>
+        </action>
+        <!--Simply shows all the jobs available to the user( excludes already applied active jobs)-->
+        <action path="/sitter/showJobs"
+                type="com.care.controller.sitter.ShowJobs">
+            <forward name="success" path="/sitter/showAllJobs.jsp"/>
+        </action>
+
+        <action path="/sitter/closeApplication"
+                type="com.care.controller.sitter.CloseApplication">
+            <forward name="success" path="/home.do"/>
+        </action>
+
+
+
         <action path="/showJobs"
                 type="com.strutsexample.ShowJobAction"
                 name="jobForm"

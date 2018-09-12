@@ -21,15 +21,15 @@
 
         <h2>Welcome ${currentUser.email}</h2>
         <div class="left">
-            <form class="" action="${pageContext.request.contextPath}/${memberType}/Home.jsp" method="post">
-                 <input type="submit" name="home" value="Home">
-            </form>
+            <html:form class="" action="/home" method="post">
+                 <html:submit value="Home">
+            </form:form>
         </div>
 
         <div class="right">
-            <form class="" action="${pageContext.request.contextPath}/member/Logout.do" method="post">
-                <input type="button" name="logout" value="Log Out" onclick="confirmation(this.form, 'log out')">
-            </form>
+            <html:form class="" action="/member/logout.do" method="post">
+                <html:submit value="Log Out" onclick="confirmation(this.form, 'log out')">
+            </html:form>
             <form class="" action="${pageContext.request.contextPath}/member/UpdatePassword.jsp" method="post">
                 <input type="submit" name="Update Password" value="Update Password">
             </form>

@@ -31,17 +31,17 @@
     </head>
     <body>
     <jsp:include page="/header.jsp"/>
+    <h2>${SUCCESS}</h2>
+    <h2>${FAILURE}</h2>
 
     <h2>Enter Email(partial accepted) to search </h2>
 
-    <form class="" action="${pageContext.request.contextPath}/member/Search.do" method="post">
+    <html:form action="/member/Search.do" method="post">
         <label>Email</label>
-        <input type="text" name="email" placeholder="Email" value="${search.email}">
-        <c:out value="${errors.email}"/>
-        <input type="submit" name="" value="Go">
-    </form>
-    <h2>${SUCCESS}</h2>
-    <h2>${FAILURE}</h2>
+        <form:text property = "email"/>
+        <form:submit value = "GO"/>
+    </html:form>
+
 
 <c:if test="${fn:length(members) > 0}">
     <table>
