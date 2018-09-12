@@ -42,7 +42,7 @@ public class ShowJobToApply extends Action {
         if (id >= 0){
             Job job = sitterService.getJob(id);
             if (job != null && job != Job.EMPTY_JOB){
-                page = "/sitter/ShowJobToApply.jsp";
+                page = "/sitter/showJobToApply.jsp";
                 operationStatus = OperationStatus.SUCCESS;
                 request.getSession().setAttribute("job", job);
             }

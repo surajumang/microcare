@@ -29,7 +29,7 @@ public class UpdatePassword extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/visitor/UpdatePassword.jsp";
+        String page = "/visitor/updatePassword.jsp";
         String token = request.getParameter("token");
 
         logger.info(token + "Updated");

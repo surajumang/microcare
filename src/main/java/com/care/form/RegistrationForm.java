@@ -12,11 +12,10 @@ import org.apache.struts.action.ActionMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RegistrationForm extends ActionForm implements FormBean {
+public class RegistrationForm extends FormBean {
 
     private Logger logger = Logger.getLogger("RegistrationFormDto");
 
@@ -148,7 +147,8 @@ public class RegistrationForm extends ActionForm implements FormBean {
     }
 
     @Override
-    public void validateCustom(ActionErrors errors) {
+    public ActionErrors validateCustom() {
+        ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {
@@ -172,6 +172,7 @@ public class RegistrationForm extends ActionForm implements FormBean {
                 errors.add("expectedPay", new ActionMessage("Proper format is ddd.dd"));
             }
         }
+        return errors;
     }
 
     @Override
@@ -191,12 +192,5 @@ public class RegistrationForm extends ActionForm implements FormBean {
                 ", numberOfChildren='" + numberOfChildren + '\'' +
                 ", expectedPay='" + expectedPay + '\'' +
                 '}';
-    }
-
-    @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors errors = new ActionErrors();
-        validateCustom(errors);
-        return errors;
     }
 }

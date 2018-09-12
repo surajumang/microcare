@@ -2,14 +2,13 @@ package com.care.form;
 
 import com.care.annotation.Number;
 import com.care.validation.FormBean;
+import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 
-import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
 
-public class ApplicationForm extends ActionForm implements FormBean {
+public class ApplicationForm extends FormBean {
 
     Logger logger = Logger.getLogger("ApplicationForm");
 
@@ -43,21 +42,24 @@ public class ApplicationForm extends ActionForm implements FormBean {
     }
 
     @Override
+    public ActionErrors validateCustom() {
+        ActionErrors errors = new ActionErrors();
+        try {
+            FormValidator.validate(this, errors);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return errors;
+    }
+
+    @Override
     public String toString() {
         return "ApplicationForm{" +
                 "jobId='" + jobId + '\'' +
                 ", sitterId='" + sitterId + '\'' +
                 ", expectedPay='" + expectedPay + '\'' +
                 '}';
-    }
-
-    @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        return super.validate(mapping, request);
-    }
-
-    @Override
-    public void validateCustom(ActionErrors errors) {
-
     }
 }

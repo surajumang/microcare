@@ -32,9 +32,9 @@ public class LoginAction extends Action {
     private String setMemberPage(MemberType memberType){
         String page = "";
         if (memberType == MemberType.SEEKER){
-            page += "/seeker/Home.jsp";
+            page += "seeker";
         }else{
-            page += "/sitter/Home.jsp";
+            page += "sitter";
         }
         return page;
     }
@@ -44,7 +44,7 @@ public class LoginAction extends Action {
         LoginForm userLoginForm = (LoginForm) form;
         logger.info(userLoginForm.toString());
 
-        String page = "/index.jsp";
+        String page = "failure";
         OperationStatus status = OperationStatus.FAILURE;
 
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
@@ -69,7 +69,7 @@ public class LoginAction extends Action {
                 request.setAttribute("STATUS", member.getStatus().name());
                 request.getSession().setAttribute("closedUser", member);
                 logger.info("CLosed user trying to log in");
-                page="/visitor/ClosedMember.jsp";
+                page="closed";
             }
         }
 

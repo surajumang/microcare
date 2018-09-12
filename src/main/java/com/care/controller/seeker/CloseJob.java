@@ -38,26 +38,21 @@ public class CloseJob extends Action {
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         long jobToBeClosed = CommonUtil.getIdFromRequest(request, "id" );
-
-        if (jobToBeClosed < 0){
-            operationStatus = OperationStatus.INVALID;
-            request.setAttribute(operationStatus.name(), messege.get(operationStatus));
-            //getServletContext().getRequestDispatcher(page).forward(request, response);
-            return ;
-        }
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
-        logger.info("Called CloseApplication  " + currentMember);
-        try {
-            operationStatus = seekerService.closeJob(currentMember, jobToBeClosed);
-            if (operationStatus == OperationStatus.SUCCESS){
-                request.setAttribute("DELSUCCESS", "Successfully deleted");
+        if (jobToBeClosed >= 0){
+            logger.info("Called CloseApplication  " + currentMember);
+            try {
+                operationStatus = seekerService.closeJob(currentMember, jobToBeClosed);
+                if (operationStatus == OperationStatus.SUCCESS){
+                    request.setAttribute("DELSUCCESS", "Successfully deleted");
+                }
+            } catch (JobNotPostedByUserException e) {
+                logger.log(Level.SEVERE, "Job not deleted", e);
+                //[TODO]replace it with bad request.
+                operationStatus = OperationStatus.UNAUTHORISED;
             }
-        } catch (JobNotPostedByUserException e) {
-            logger.log(Level.SEVERE, "Job not pos", e);
-            //replace it with bad request.
-            operationStatus = OperationStatus.UNAUTHORISED;
         }
 
         request.setAttribute(operationStatus.name(), messege.get(operationStatus));

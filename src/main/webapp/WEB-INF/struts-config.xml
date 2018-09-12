@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="loginForm"
+                   type="com.care.form.LoginForm"/>
+        <form-bean name="jobForm"
+                   type="com.care.form.JobForm"/>
+        <form-bean name="applicationForm"
+                   type="com.care.form.ApplicationForm"/>
+        <form-bean name="updatePassword"
+                   type="com.care.form.PasswordUpdateForm"/>
+        <form-bean name="registrationForm"
+                   type="com.care.form.RegistrationForm"/>
+        <form-bean name="searchCriteria"
+                   type="com.care.form.SearchCriteria"/>
+    </form-beans>
+    <global-forwards>
+
+    </global-forwards>
+    <action-mappings>
+
+        <action name="loginForm" path="/visitor/login" type="org.apache.struts.actions.ForwardAction" validate="false" parameter="/index.jsp" />
+
+        <action path="/visitor/captureLogin"
+                type="com.care.controller.LoginAction"
+                name="loginForm"
+                validate="true"
+                scope="request"
+                input="/visitor/login">
+            <forward name="seeker" path="/seeker/home.jsp"/>
+            <forward name="sitter" path="/sitter/home.jsp"/>
+            <forward name="failure" path="/index.jsp"/>
+        </action>
+        <action path="/visitor" />
+        <action path="/showJobs"
+                type="com.strutsexample.ShowJobAction"
+                name="jobForm"
+                scope="request"
+                validate="true"
+                input="/showJobs.jsp">
+            <forward name="success" path="/success.jsp"/>
+            <forward name="failure" path="/login.jsp"/>
+        </action>
+
+
+    </action-mappings>
+
+    <message-resources parameter="resources/Application"/>
+
+</struts-config>
+

@@ -28,7 +28,7 @@ public class ShowJobs extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/sitter/Home.jsp";
+        String page = "/sitter/home.jsp";
 
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
@@ -38,7 +38,7 @@ public class ShowJobs extends Action {
 
         logger.info(allJobs.size() + " ");
         if (allJobs != null && !allJobs.isEmpty()){
-            page = "/sitter/ShowAllJobs.jsp";
+            page = "/sitter/showAllJobs.jsp";
             request.setAttribute("allJobs", allJobs);
             operationStatus = OperationStatus.SUCCESS;
         }

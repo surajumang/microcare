@@ -4,6 +4,10 @@ import com.care.form.JobForm;
 import com.care.model.Member;
 import com.care.service.*;
 import com.care.validation.FormPopulator;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class EditJob extends HttpServlet {
+public class EditJob extends Action {
     private Logger logger = Logger.getLogger("EditJob");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
@@ -22,34 +26,23 @@ public class EditJob extends HttpServlet {
         message.put(OperationStatus.FAILURE, "Can't Edit this Job");
         message.put(OperationStatus.SUCCESS, "Edit Successful");
     }
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String page = "/seeker/ShowAndEditJob.jsp";
-        JobForm jobForm = FormPopulator.populate(req, JobForm.class);
-        Map<String, String> errors = new HashMap<>();
-        jobForm.validateCustom(errors);
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String page = "/seeker/showAndEditJob.jsp";
+        JobForm jobForm = FormPopulator.populate(request, JobForm.class);
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
-        Member currentUser = (Member)req.getSession().getAttribute("currentUser");
-        logger.info(errors + "ERRORS");
+        Member currentUser = (Member)request.getSession().getAttribute("currentUser");
+        SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
 
-        if(errors.isEmpty()){
-            SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
+        operationStatus = seekerService.editJob(currentUser, jobForm);
+        logger.info("job status is " + operationStatus);
+        page = "/seeker/home.jsp";
 
-            operationStatus = seekerService.editJob(currentUser, jobForm);
-            logger.info("job status is " + operationStatus);
-            page = "/seeker/Home.jsp";
-        }
-        req.setAttribute("editJob", jobForm);
-        req.setAttribute("errors", errors);
-        req.setAttribute(operationStatus.name(), message.get(operationStatus));
+        request.setAttribute("editJob", jobForm);
+        request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
-        getServletContext().getRequestDispatcher(page).forward(req, resp);
+        return mapping.findForward(page);
     }
 }

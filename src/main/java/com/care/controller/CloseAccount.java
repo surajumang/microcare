@@ -35,7 +35,7 @@ public class CloseAccount extends Action {
          */
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-        String page = "/"+currentUser.getMemberType().name().toLowerCase()+"/Home.jsp";
+        String page = "/"+currentUser.getMemberType().name().toLowerCase()+"/home.jsp";
 
         logger.info("Member deleted successfully");
         OperationStatus operationStatus = accountService.deleteMember(currentUser);

@@ -28,7 +28,7 @@ public class CloseApplication extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/sitter/Home.jsp";
+        String page = "/sitter/home.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
         long applicationToBeClosed = CommonUtil.getIdFromRequest(request, "id");
 

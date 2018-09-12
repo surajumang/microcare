@@ -26,7 +26,7 @@ public class GeneratePasswordResetToken extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String page = "/visitor/ResetPassword.jsp";
+        String page = "/visitor/resetPassword.jsp";
         String email = req.getParameter("email");
         String regex = "\\w+@([a-z])+(\\.[a-z])+";
 

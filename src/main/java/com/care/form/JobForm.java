@@ -5,18 +5,16 @@ import com.care.annotation.StringDate;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class JobForm extends ActionForm implements FormBean {
+public class JobForm extends FormBean {
 
     private Logger logger = Logger.getLogger("JobForm");
     private String id;
@@ -77,7 +75,8 @@ public class JobForm extends ActionForm implements FormBean {
     }
 
     @Override
-    public void validateCustom(ActionErrors errors) {
+    public ActionErrors validateCustom() {
+        ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {
@@ -102,14 +101,6 @@ public class JobForm extends ActionForm implements FormBean {
             //errors.put("startDate", "Not in proper format");
         }
         logger.info("Done with validation");
+        return errors;
     }
-
-    @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-        ActionErrors actionErrors = new ActionErrors();
-        validateCustom(actionErrors);
-
-        return actionErrors;
-    }
-
 }

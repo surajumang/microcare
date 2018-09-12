@@ -33,7 +33,7 @@ public class EditProfile extends Action {
 
     private String editSeeker(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, Map<String, String> errors){
         SeekerEditProfileForm seekerEditForm = (SeekerEditProfileForm)form;
-        String page = "PutProfileInfo.jsp";
+        String page = "putProfileInfo.jsp";
         request.setAttribute("profileInfo", seekerEditForm);
 
         if (errors.isEmpty()){
@@ -42,14 +42,14 @@ public class EditProfile extends Action {
             accountService.editMember(member.getId(), seekerEditForm);
 
             request.setAttribute("SUCCESS", "Profile info edited successfully");
-            page = "Home.jsp";
+            page = "home.jsp";
         }
         return page;
     }
 
     private String editSitter(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, Map<String, String> errors){
         SitterEditProfileForm sitterEditForm = (SitterEditProfileForm) form;
-        String page = "PutProfileInfo.jsp";
+        String page = "putProfileInfo.jsp";
         request.setAttribute("profileInfo", sitterEditForm);
 
         if (errors.isEmpty()){
@@ -58,7 +58,7 @@ public class EditProfile extends Action {
             accountService.editMember(member.getId(), sitterEditForm);
 
             request.setAttribute("SUCCESS", "Profile info edited successfully");
-            page = "Home.jsp";
+            page = "home.jsp";
         }
         return page;
     }

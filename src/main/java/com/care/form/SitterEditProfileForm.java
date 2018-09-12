@@ -25,15 +25,15 @@ public class SitterEditProfileForm extends EditProfileForm {
     }
 
     @Override
+    public ActionErrors validateCustom() {
+        return super.validateCustom();
+    }
+
+    @Override
     public String toString() {
         return "SitterEditProfileForm{" +
                 "expectedPay='" + expectedPay + '\'' +
                 ", experience='" + experience + '\'' +
                 '}';
-    }
-
-    @Override
-    public void validateCustom(ActionErrors errors) {
-        super.validateCustom(errors);
     }
 }

@@ -9,11 +9,10 @@ import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SearchCriteria extends ActionForm implements FormBean {
+public class SearchCriteria extends FormBean {
     private Logger logger = Logger.getLogger("SearchCriteria");
 
     private String email;
@@ -27,7 +26,8 @@ public class SearchCriteria extends ActionForm implements FormBean {
     }
 
     @Override
-    public void validateCustom(ActionErrors errors) {
+    public ActionErrors validateCustom() {
+        ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {
@@ -35,12 +35,6 @@ public class SearchCriteria extends ActionForm implements FormBean {
         } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, "Invok", e);
         }
-    }
-
-    @Override
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-       ActionErrors errors = new ActionErrors();
-       validateCustom(errors);
-       return errors;
+        return errors;
     }
 }

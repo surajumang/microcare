@@ -9,6 +9,7 @@ import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
 import com.care.validation.FormBean;
 import com.care.validation.FormPopulator;
+import org.apache.struts.action.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class PostJob extends HttpServlet {
+public class PostJob extends Action {
     Logger logger = Logger.getLogger("PostJob");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
@@ -29,42 +30,29 @@ public class PostJob extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String page ="/seeker/PostJob.jsp";
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String page ="/seeker/postJob.jsp";
         FormBean postJobForm = FormPopulator.populate(request, JobForm.class);
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
 
-        Map<String, String> errors = new HashMap<String, String>();
-        postJobForm.validateCustom(errors);
         JobForm jobForm = (JobForm)postJobForm;
         int status = -1;
         OperationStatus operationStatus = OperationStatus.FAILURE;
-
-        request.setAttribute("errors", errors);
         request.setAttribute("formErrors", jobForm);
-        logger.info(errors + " ");
+
         logger.info(jobForm + " " );
-        if(errors.isEmpty()){
-            logger.info("Without errors");
-            jobForm.setSeekerId(String.valueOf(currentUser.getId()));
+        logger.info("Without errors");
+        jobForm.setSeekerId(String.valueOf(currentUser.getId()));
 
-            SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-            operationStatus = seekerService.postJob(currentUser, jobForm);
-            logger.info("Returned with status"  + operationStatus);
+        SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
+        operationStatus = seekerService.postJob(currentUser, jobForm);
+        logger.info("Returned with status"  + operationStatus);
 
-            if (operationStatus == OperationStatus.SUCCESS){
-                page = "/seeker/Home.jsp";
-            }
+        if (operationStatus == OperationStatus.SUCCESS){
+            page = "/seeker/home.jsp";
         }
-
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        return mapping.findForward(page);
 
     }
 }

@@ -30,7 +30,7 @@ public class ChangePasswordAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Member member = (Member)request.getSession().getAttribute("currentUser");
 
-        String page = "/member/UpdatePassword.jsp";
+        String page = "/member/updatePassword.jsp";
         PasswordUpdateForm passwordUpdateForm = (PasswordUpdateForm) form;
         passwordUpdateForm.setId(String.valueOf(member.getId()));
 
@@ -39,7 +39,7 @@ public class ChangePasswordAction extends Action {
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
         operationStatus = authenticationService.updatePassword(member, passwordUpdateForm);
 
-        page = "/"+ member.getMemberType().name().toLowerCase() + "/Home.jsp";
+        page = "/"+ member.getMemberType().name().toLowerCase() + "/home.jsp";
 
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(page);

@@ -6,7 +6,6 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletRequest;
-import java.util.Map;
 
 public class SeekerEditProfileForm extends EditProfileForm {
 
@@ -32,20 +31,15 @@ public class SeekerEditProfileForm extends EditProfileForm {
     }
 
     @Override
+    public ActionErrors validateCustom() {
+        return super.validateCustom();
+    }
+
+    @Override
     public String toString() {
         return "SeekerEditProfileForm{" +
                 "spouseName='" + spouseName + '\'' +
                 ", numberOfChildren='" + numberOfChildren + '\'' +
                 '}';
-    }
-
-    @Override
-    public ActionErrors validate(ActionMapping mapping, ServletRequest request) {
-        return super.validate(mapping, request);
-    }
-
-        @Override
-    public void validateCustom(ActionErrors errors) {
-        super.validateCustom(errors);
     }
 }

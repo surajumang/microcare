@@ -33,7 +33,7 @@ public class Registration extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/visitor/Registration.jsp";
+        String page = "/visitor/registration.jsp";
         logger.info(page);
 
         OperationStatus operationStatus = OperationStatus.FAILURE;

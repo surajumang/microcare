@@ -57,9 +57,9 @@ public class LoginClosedUser extends HttpServlet {
     private String setMemberPage(MemberType memberType){
         String page = "";
         if (memberType == MemberType.SEEKER){
-            page += "/seeker/Home.jsp";
+            page += "/seeker/home.jsp";
         }else{
-            page += "/sitter/Home.jsp";
+            page += "/sitter/home.jsp";
         }
         return page;
     }

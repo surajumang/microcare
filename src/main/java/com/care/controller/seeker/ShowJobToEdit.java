@@ -40,7 +40,7 @@ public class ShowJobToEdit extends HttpServlet {
         /*
         Get parameter from the request to refer to the job to be edited.
          */
-        String page = "/seeker/Home.jsp";
+        String page = "/seeker/home.jsp";
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
         long id = CommonUtil.getIdFromRequest(request, "id");
@@ -54,7 +54,7 @@ public class ShowJobToEdit extends HttpServlet {
                 job = seekerService.getJob(member, id);
                 if (job.getStatus() != Status.EXPIRED && job.getStatus() != Status.CLOSED){
                     operationStatus = OperationStatus.SUCCESS;
-                    page = "/seeker/ShowAndEditJob.jsp";
+                    page = "/seeker/showAndEditJob.jsp";
                     request.setAttribute("editJob", job);
                 }
             } catch (JobNotPostedByUserException e) {

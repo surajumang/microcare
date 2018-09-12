@@ -34,12 +34,12 @@ public class Search extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Map<String, String> errors = new HashMap<>();
         SearchCriteria searchCriteria = FormPopulator.populate(req, SearchCriteria.class);
-        searchCriteria.validateCustom(errors);
+        searchCriteria.validateCustom();
 
         Member member = (Member) req.getSession().getAttribute("currentUser");
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
-        String page = "/member/Search.jsp";
+        String page = "/member/search.jsp";
         logger.info(errors + " ");
 
         if(errors.isEmpty()){

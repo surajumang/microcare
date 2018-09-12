@@ -8,6 +8,10 @@ import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,25 +25,17 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ShowApplications extends HttpServlet {
+public class ShowApplications extends Action {
     Logger logger = Logger.getLogger("ShowApplicationsSeeker");
-
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
     static {
         message.put(OperationStatus.FAILURE, "No Applications on Job");
         message.put(OperationStatus.SUCCESS, "All applications on this Job");
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String page = "/seeker/ViewApplications.jsp";
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String page = "/seeker/viewApplications.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
         long jobIdToViewApplications = CommonUtil.getIdFromRequest(request, "id" );
 
@@ -62,6 +58,6 @@ public class ShowApplications extends HttpServlet {
 
         request.setAttribute("getApplications", applications);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        return mapping.findForward(page);
     }
 }

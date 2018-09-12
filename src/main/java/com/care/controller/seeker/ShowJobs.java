@@ -7,6 +7,9 @@ import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
 import com.care.service.ServiceFactory;
 import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,19 +22,17 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class ShowJobs extends Action {
+    private Logger logger = Logger.getLogger("ShowJobs");
     private static final Map<OperationStatus, String> messege = new HashMap<OperationStatus, String>();
-
     static {
         messege.put(OperationStatus.SUCCESS, "");
         messege.put(OperationStatus.FAILURE, "You Don't have any Jobs");
         messege.put(OperationStatus.UNAUTHORISED, "You are not authorised to see the contents");
     }
-    private Logger logger = Logger.getLogger("ShowJobs");
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String page = "/seeker/ShowMyJobs.jsp";
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String page = "/seeker/showMyJobs.jsp";
 
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
@@ -47,6 +48,6 @@ public class ShowJobs extends Action {
         request.setAttribute(status.name(), messege.get(status));
 
         logger.info("Dispatching to Page" + page);
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        return mapping.findForward(page);
     }
 }

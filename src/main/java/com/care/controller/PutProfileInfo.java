@@ -27,7 +27,7 @@ public class PutProfileInfo extends HttpServlet {
 
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
         MemberType memberType = currentUser.getMemberType();
-        String page = "/"+ memberType.name().toLowerCase()+"/PutProfileInfo.jsp";
+        String page = "/"+ memberType.name().toLowerCase()+"/putProfileInfo.jsp";
 
         if (memberType == MemberType.SEEKER){
 
