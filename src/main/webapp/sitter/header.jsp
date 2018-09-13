@@ -21,16 +21,18 @@
 
         <h2>Welcome ${currentUser.email}</h2>
         <div class="left">
-            <html:form class="" action="/home" method="post">
-                 <html:submit value="Home">
-            </form:form>
+            <form class="" action="${pageContext.request.contextPath}/member/home.do" method="post">
+                 <input type="submit" name="home" value="Home"/>
+            </form>
         </div>
 
         <div class="right">
-            <html:form class="" action="/member/logout.do" method="post">
-                <html:submit value="Log Out" onclick="confirmation(this.form, 'log out')">
-            </html:form>
-            <form class="" action="${pageContext.request.contextPath}/member/UpdatePassword.jsp" method="post">
+
+            <form class="" action="${pageContext.request.contextPath}/member/logout.do" method="post">
+                <input type="submit" value="Log Out" onclick="confirmation(this.form, 'log out')"/>
+            </form>
+
+            <form class="" action="${pageContext.request.contextPath}/member/updatePassword.jsp" method="post">
                 <input type="submit" name="Update Password" value="Update Password">
             </form>
         </div>

@@ -14,34 +14,34 @@
 
     </head>
     <body>
-     <jsp:include page="/header.jsp"/>
+     <jsp:include page="./header.jsp"/>
         <h2>${SUCCESS}</h2>
                 <h2>${FAILURE}</h2>
                 <h2>${INVALID}</h2>
                 <h2>${ACCOUNT_STATUS}</h2>
 
 
-      <form class="" action="${pageContext.request.contextPath}/sitter/ShowAllJobs.do" method="post">
+      <form action="${pageContext.request.contextPath}/sitter/showJobs.do" method="post">
             <input type="submit" name="Show Job" value="Show Jobs"/>
       </form>
-      <form class="" action="${pageContext.request.contextPath}/sitter/ShowMyApplications.do" method="post">
+      <form action="${pageContext.request.contextPath}/sitter/showApplications.do" method="post">
             <input type="submit" name="ViewApplications" value="My Applications"/>
       </form>
-      
-      <form class="" action="${pageContext.request.contextPath}/member/PutProfileInfo.do" method="post">
+
+      <form action="${pageContext.request.contextPath}/member/putProfileInfo.do" method="post">
             <input type="submit" name="EditProfile" value="Edit Profile"/>
       </form>
 
       <div class="sitter">
-          <form class="" action="${pageContext.request.contextPath}/member/Search.jsp" method="post">
+          <form class="" action="${pageContext.request.contextPath}/member/search.jsp" method="post">
               <input type="submit" name="search" value="Search Seekers"/>
           </form>
       </div>
 
 
       <div class="right">
-          <form class="" action="${pageContext.request.contextPath}/member/CloseAccount.do" method="post">
-               <input type="button" name="closeAccount" value="Close Account" onclick="confirmation(this.form, 'close your account')">
+          <form action="${pageContext.request.contextPath}/member/closeAccount.do" method="post">
+               <input type="submit" name="closeAccount" value="Close Account" onclick="confirmation(this.form, 'close your account')"/>
           </form>
      </div>
 

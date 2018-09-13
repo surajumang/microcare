@@ -29,11 +29,14 @@ public class EditJob extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Member currentUser = (Member) request.getSession().getAttribute("currentUser");
         String page = "/seeker/showAndEditJob.jsp";
-        JobForm jobForm = FormPopulator.populate(request, JobForm.class);
+        JobForm jobForm = (JobForm)form;
+        jobForm.setSeekerId(String.valueOf(currentUser.getId()));
+
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
-        Member currentUser = (Member)request.getSession().getAttribute("currentUser");
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
 
         operationStatus = seekerService.editJob(currentUser, jobForm);
@@ -43,6 +46,6 @@ public class EditJob extends Action {
         request.setAttribute("editJob", jobForm);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
-        return mapping.findForward(page);
+        return new ActionForward(page);
     }
 }

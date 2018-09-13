@@ -30,7 +30,7 @@ public class ApplyToJob extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/sitter/showJobToApply.jsp";
+        String page = "failure";
 
         long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
         ApplicationForm application = FormPopulator.populate(request, ApplicationForm.class);
@@ -51,11 +51,10 @@ public class ApplyToJob extends Action {
             logger.info("Status okay " + operationStatus);
 
             if (operationStatus == OperationStatus.SUCCESS){
-                page = "/sitter/ShowAllJobs.do";
+                page = "success";
                 request.setAttribute("APPSUCCESS", "Applied successfully");
             }
         }
-
 
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));

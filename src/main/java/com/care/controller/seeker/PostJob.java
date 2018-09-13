@@ -32,10 +32,11 @@ public class PostJob extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page ="/seeker/postJob.jsp";
-        FormBean postJobForm = FormPopulator.populate(request, JobForm.class);
+
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
 
-        JobForm jobForm = (JobForm)postJobForm;
+        JobForm jobForm = (JobForm)form;
+
         int status = -1;
         OperationStatus operationStatus = OperationStatus.FAILURE;
         request.setAttribute("formErrors", jobForm);
@@ -49,10 +50,11 @@ public class PostJob extends Action {
         logger.info("Returned with status"  + operationStatus);
 
         if (operationStatus == OperationStatus.SUCCESS){
-            page = "/seeker/home.jsp";
+            page = "/member/home.do";
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward(page);
+
+        return new ActionForward(page);
 
     }
 }

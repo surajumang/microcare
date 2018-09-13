@@ -34,14 +34,13 @@ public class ChangePasswordAction extends Action {
         PasswordUpdateForm passwordUpdateForm = (PasswordUpdateForm) form;
         passwordUpdateForm.setId(String.valueOf(member.getId()));
 
-        OperationStatus operationStatus = OperationStatus.FAILURE;
-
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
-        operationStatus = authenticationService.updatePassword(member, passwordUpdateForm);
+        OperationStatus operationStatus  =
+                authenticationService.updatePassword(member, passwordUpdateForm);
 
-        page = "/"+ member.getMemberType().name().toLowerCase() + "/home.jsp";
+
 
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward(page);
+        return new ActionForward("/member/home.do");
     }
 }

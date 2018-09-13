@@ -31,7 +31,7 @@
                 validate="false"
                 parameter="/index.jsp" />
 
-        <action path="/home"
+        <action path="/member/home"
                 type="com.care.controller.TakeHomeAction">
 
         </action>
@@ -42,14 +42,29 @@
                 validate="true"
                 scope="request"
                 input="/index.jsp">
-            <forward name="success" path="/home.do"/>
+            <forward name="success" path="/member/home.do"/>
             <forward name="failure" path="/index.jsp"/>
-            <forward name="closed" path="/closed.do"/>
+            <forward name="closed" path="/visitor/closedMember.jsp"/>
+        </action>
+
+        <action path="/visitor/closedMember"
+                type="com.care.controller.LoginClosedMember">
+            <forward name="success" path="/member/home.do"/>
+        </action>
+
+        <action path="/visitor/captureRegistration"
+                type="com.care.controller.Registration"
+                name="registrationForm"
+                validate="true"
+                scope="request"
+                input="/visitor/registration.jsp">
+            <forward name="success" path="/visitor/captureLogin.do"/>
+            <forward name="failure" path="/visitor/captureLogin.do"/>
         </action>
 
         <action path="/member/search"
                 type="com.care.controller.SearchAction"
-                name="captureSearchCriteria"
+                name="searchCriteria"
                 validate="true"
                 scope="request"
                 input="/member/search.jsp">
@@ -62,7 +77,7 @@
                 validate="true"
                 scope="request"
                 input="/seeker/postJob.jsp">
-            <forward name="success" path="/seeker/home.jsp"/>
+            <forward name="success" path="/member/home.do"/>
         </action>
         <!--It will take a form as input which will contain details related to a Form, validates it and writes to DB if validation
             is successful. User will stuck here until submits proper values or chooses another option-->
@@ -75,19 +90,55 @@
             <forward name="success" path="seeker/showMyJobs.jsp"/>
         </action>
 
-        <action path="seeker/viewApplication"
+        <action path="/seeker/showJobToEdit"
+                type="com.care.controller.seeker.ShowJobToEdit">
+        </action>
+
+        <action path="/seeker/deleteJob"
+                type="com.care.controller.seeker.CloseJob">
+        </action>
+
+
+        <action path="/seeker/showJobs"
+                type="com.care.controller.seeker.ShowJobs">
+            <forward name="success" path="seeker/ShowMyJobs.jsp"/>
+        </action>
+
+        <action path="/seeker/viewApplications"
                 type="com.care.controller.seeker.ShowApplications">
             <forward name="success" path="viewApplications.jsp"/>
         </action>
         <!--It will take a form having member details as input and validates whether the data is correct and then updates the DB
             User will remain stuck here until submit correct form or chooses another option-->
-        <action path="member/editProfile"
-                type="com.care.controller.EditProfile"
+        <action path="/member/editProfile"
+                type="com.care.controller.EditProfileAction"
                 name="editProfile"
                 scope="request"
                 validate="true"
-                input="/member/editProfile.jsp">
-            <forward name="success" path="/home.do"/>
+                input="/member/putProfileInfo.jsp">
+            <forward name="success" path="/member/home.do"/>
+        </action>
+
+        <action path="/member/putProfileInfo"
+                type="com.care.controller.PutProfileInfo">
+            <forward name="success" path="/member/putProfileInfo.jsp"/>
+        </action>
+        
+        <action path="/member/resetPassword"
+                type="com.care.controller.ChangePasswordAction"
+                name="updatePassword"
+                scope="request"
+                validate="true"
+                input="/member/updatePassword.jsp">
+        </action>
+
+        <action path="/visitor/forgotPassword"
+                type="com.care.controller.GeneratePasswordResetToken">
+        </action>
+
+        <action path="/visitor/verifyToken"
+                type="com.care.controller.VerifyToken">
+
         </action>
 
         <action path="/member/closeAccount"
@@ -101,34 +152,50 @@
         </action>
 
         <action path="/member/updatePassword"
-                type="com.care.controller.UpdatePassword">
-            <forward name="success" path="/home.do"/>
+                type="com.care.controller.ResetPassword">
+            <forward name="success" path="/member/home.do"/>
         </action>
 
         <action path="/member/forgotPassword"
                 type="com.care.controller.GeneratePasswordResetToken">
-            <forward name="success" path="/home.do"/>
+            <forward name="success" path="/index.jsp"/>
         </action>
         <!--This will be called by a form which will provide the wxpected pay entered by the user
             after the application is successful it will take it back to the all jobs page using an Action class such
             that the changes are visible to the user -->
-        <action path="sitter/apply"
+        <action path="/sitter/apply"
                 type="com.care.controller.sitter.ApplyToJob"
                 name="applicationForm"
                 scope="request"
                 validate="true"
                 input="sitter/applyToJob.jsp">
             <forward name="success" path="/sitter/showJobs.do"/>
+            <forward name="failure" path="/sitter/applyToJob.jsp"/>
         </action>
         <!--Simply shows all the jobs available to the user( excludes already applied active jobs)-->
+
         <action path="/sitter/showJobs"
                 type="com.care.controller.sitter.ShowJobs">
             <forward name="success" path="/sitter/showAllJobs.jsp"/>
+            <forward name="failure" path="/member/home.do"/>
         </action>
 
-        <action path="/sitter/closeApplication"
+        <action path="/sitter/showJobToApply"
+                type="com.care.controller.sitter.ShowJobToApply">
+
+        </action>
+
+        <action path="/sitter/showApplications"
+                type="com.care.controller.sitter.ShowApplications">
+            <forward name="success" path="/sitter/showMyApplications.jsp"/>
+            <forward name="failure" path="/sitter/showMyApplications.jsp"/>
+        </action>
+
+
+        <action path="/sitter/deleteApplication"
                 type="com.care.controller.sitter.CloseApplication">
-            <forward name="success" path="/home.do"/>
+            <forward name="success" path="/sitter/showApplications.do"/>
+            <forward name="failure" path="/member/home.do"/>
         </action>
 
 

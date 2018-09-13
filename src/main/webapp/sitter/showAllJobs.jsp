@@ -32,7 +32,7 @@
         </head>
         <body>
 
-        <jsp:include page="/header.jsp"/>
+        <jsp:include page="./header.jsp"/>
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${INVALID}</h2>
@@ -59,7 +59,7 @@
                 <td>${endDate}</td>
                 <td>
                     <%-- Send it to a form so that relevant input can be accepted --%>
-                    <form action="${pageContext.request.contextPath}/sitter/ShowJobToApply.do" method="get">
+                    <form action="${pageContext.request.contextPath}/sitter/showJobToApply.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
                         <input type="submit" name="" value="Apply">
                     </form>

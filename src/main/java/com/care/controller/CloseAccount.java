@@ -35,7 +35,7 @@ public class CloseAccount extends Action {
          */
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-        String page = "/"+currentUser.getMemberType().name().toLowerCase()+"/home.jsp";
+        String page = "/member/home.do";
 
         logger.info("Member deleted successfully");
         OperationStatus operationStatus = accountService.deleteMember(currentUser);
@@ -45,6 +45,6 @@ public class CloseAccount extends Action {
             request.getSession().invalidate();
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward(page);
+        return new ActionForward(page);
     }
 }

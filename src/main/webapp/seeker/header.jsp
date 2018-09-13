@@ -13,16 +13,17 @@
 
         <h2>Welcome ${currentUser.email}</h2>
         <div class="left">
-            <form class="" action="${pageContext.request.contextPath}/${memberType}/home.jsp" method="post">
-                 <input type="submit" name="home" value="Home">
+            <form class="" action="${pageContext.request.contextPath}/member/home.do" method="post">
+                 <input type="submit" name="home" value="Home"/>
             </form>
         </div>
 
         <div class="right">
-            <form class="" action="${pageContext.request.contextPath}/member/logout.do" method="post">
+            <form  action="${pageContext.request.contextPath}/member/logout.do" method="post">
                 <input type="button" name="logout" value="Log Out" onclick="confirmation(this.form, 'log out')">
             </form>
-            <form class="" action="${pageContext.request.contextPath}/member/updatePassword.jsp" method="post">
+
+            <form  action="${pageContext.request.contextPath}/member/updatePassword.jsp" method="post">
                 <input type="submit" name="Update Password" value="Update Password">
             </form>
         </div>

@@ -28,7 +28,7 @@ public class CloseApplication extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/sitter/home.jsp";
+        String page = "failure";
         OperationStatus operationStatus = OperationStatus.FAILURE;
         long applicationToBeClosed = CommonUtil.getIdFromRequest(request, "id");
 
@@ -41,7 +41,7 @@ public class CloseApplication extends Action {
         operationStatus = sitterService.deleteApplication(currentMember, applicationToBeClosed);
 
         if (operationStatus == OperationStatus.SUCCESS){
-            page = "/sitter/ShowMyApplications.do";
+            page = "success";
             request.setAttribute("DELSUCCESS", "Successfully deleted");
         }
         logger.info(page);

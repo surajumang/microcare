@@ -36,10 +36,11 @@
             <html:form action="/visitor/captureLogin" method="post">
                 <label>Email</label>
                 <html:text property="email"/><br>
-                <c:out value="${errors.email}"/>
+
                 <label>Password</label>
                 <html:password property="password"/><br>
-                <html:submit value="Submit"/>
+                <html:submit property="submit" value="Submit"/>
+
             </html:form>
 
         </div>
@@ -47,9 +48,9 @@
         <div class="right">
         <br>
                     New User
-                    <a href="${pageContext.request.contextPath}/visitor/Registration.jsp">Register Here</a>
+                    <a href="${pageContext.request.contextPath}/visitor/registration.jsp">Register Here</a>
                     <br>
-                    <a href="${pageContext.request.contextPath}/visitor/ResetPassword.jsp">Forgot Passwod</a>
+                    <a href="${pageContext.request.contextPath}/visitor/forgotPassword.jsp">Forgot Passwod</a>
         </div>
     </body>
 </html>

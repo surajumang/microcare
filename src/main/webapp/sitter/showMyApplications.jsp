@@ -39,7 +39,7 @@
         </head>
         <body>
 
-        <jsp:include page="/header.jsp"/>
+        <jsp:include page="./header.jsp"/>
 
 
        <h2>${DELSUCCESS}</h2>
@@ -64,7 +64,7 @@
 
                 <td>
 
-                    <form action="${pageContext.request.contextPath}/sitter/DeleteApplication.do" method="get">
+                    <form action="${pageContext.request.contextPath}/sitter/deleteApplication.do" method="get">
                         <input type="hidden" name="id" value="${app.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>

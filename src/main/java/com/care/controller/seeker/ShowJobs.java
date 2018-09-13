@@ -48,6 +48,6 @@ public class ShowJobs extends Action {
         request.setAttribute(status.name(), messege.get(status));
 
         logger.info("Dispatching to Page" + page);
-        return mapping.findForward(page);
+        return new ActionForward(page);
     }
 }

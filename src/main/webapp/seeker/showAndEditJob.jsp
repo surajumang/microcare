@@ -14,31 +14,34 @@
         <title></title>
     </head>
     <body>
-    <jsp:include page="/header.jsp"/>
+    <jsp:include page="./header.jsp"/>
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${INVALID}</h2>
 
-        <form action="${pageContext.request.contextPath}/seeker/EditJob.do" method="post">
+        <html:form action="/seeker/editJob" method="post">
+            <table>
 
-            <input type="text" name="title" placeholder="Job Title" value="${editJob.title}">
-            <c:out value="${errors.title}"/><br>
-
-            <input type="text" name="hourlyPay" placeholder="Hourly Pay" value="${editJob.hourlyPay}">
-            <c:out value="${errors.hourlyPay}"/><br>
-
-
-            <input type="text" name="startDate" placeholder="Start Date" value="${editJob.startDate}">
-            <c:out value="${errors.startDate}"/><br>
-
-
-            <input type="text" name="endDate" placeholder="End Date" value="${editJob.endDate}">
-            <c:out value="${errors.endDate}"/><br>
-            <c:out value="${errors.currentDate}"/><br>
-
-            <input type="hidden" name="id" value="${editJob.id}">
-            <input type="submit" name="" value="Submit">
-        </form>
+                <tr>
+                     <td><label>Job Title</label></td>
+                     <td><html:text property="title" value="${editJob.title}"/></td>
+                </tr>
+                <tr>
+                     <td><label>Hourly Pay</label></td>
+                     <td><html:text property="hourlyPay" value="${editJob.hourlyPay}"/></td>
+                </tr>
+                <tr>
+                     <td><label>Start Date(Time)</label></td>
+                     <td><html:text property="startDate" value="${editJob.startDate}" /></td>
+                </tr>
+                <tr>
+                     <td><label>End Date(Time)</label></td>
+                     <td><html:text property="endDate" value="${editJob.endDate}"/></td>
+                </tr>
+            </table>
+            <html:hidden property="id" value="${editJob.id}"/>
+            <html:submit property="" value="Submit"/>
+        </html:form>
     </body>
     <jsp:include page="/footer.jsp"/>
 </html>

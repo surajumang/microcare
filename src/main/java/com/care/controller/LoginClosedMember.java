@@ -7,6 +7,10 @@ import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,22 +21,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class LoginClosedUser extends HttpServlet {
-    Logger logger = Logger.getLogger("LoginClosedUser");
+public class LoginClosedMember extends Action {
+    Logger logger = Logger.getLogger("LoginClosedMember");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
     static {
         message.put(OperationStatus.FAILURE, "Invalid credentials");
         message.put(OperationStatus.SUCCESS, "");
     }
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
-    }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Member member = (Member)request.getSession().getAttribute("closedUser");
-        String page = "/index.jsp";
+        String page = "failure";
         OperationStatus operationStatus = OperationStatus.FAILURE;
         String userResponse = request.getParameter("response");
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
@@ -48,10 +48,11 @@ public class LoginClosedUser extends HttpServlet {
             request.getSession().setAttribute("memberType" , memberType);
             logger.info("Back at LoginServlet");
 
-            page = setMemberPage(member.getMemberType());
+            page = "success";
         }
 
-        getServletContext().getRequestDispatcher(page).forward(request, response);
+        return mapping.findForward(page);
+
     }
 
     private String setMemberPage(MemberType memberType){

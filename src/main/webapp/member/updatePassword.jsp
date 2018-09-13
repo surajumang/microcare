@@ -17,26 +17,29 @@
         </style>
     </head>
     <body>
-        <jsp:include page="/header.jsp"/>
+        <jsp:include page="./header.jsp"/>
         <h3></h3>
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${OTHER}</h2>
 
-        <form action="${pageContext.request.contextPath}/member/ResetPassword.do" method="get">
-            <label>Current Password</label>
-            <input type="password" name="currentPassword" value="">
-            <br>
-             <label>New Password</label>
-             <input type="Password" name="password" value="">
-             <c:out value="${errors.password}"/>
-             <br>
-             <label>Re-Enter Password</label>
-             <input type="Password" name="password2" value="">
-             <c:out value="${errors.password2}"/>
-
-            <input type="submit" value="Submit">
-        </form>
+        <html:form action="/member/resetPassword" method="get">
+            <table>
+                <tr>
+                    <td><label>Current Password</label></td>
+                    <td><html:password name="currentPassword" /></td>
+                </tr>
+                <tr>
+                    <td><label>New Password</label></td>
+                    <td><html:password name="password" /></td>
+                </tr>
+                <tr>
+                    <td><label>Re-Enter Password</label></td>
+                    <td><html:password name="password2" /></td>
+                </tr>
+            </table>
+            <html:submit value="Submit"/>
+        </html:form>
 
     </body>
     <jsp:include page="/footer.jsp"/>

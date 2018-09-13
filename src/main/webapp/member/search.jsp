@@ -36,10 +36,10 @@
 
     <h2>Enter Email(partial accepted) to search </h2>
 
-    <html:form action="/member/Search.do" method="post">
+    <html:form action="/member/search" method="post">
         <label>Email</label>
-        <form:text property = "email"/>
-        <form:submit value = "GO"/>
+        <html:text property = "email"/>
+        <html:submit value = "GO"/>
     </html:form>
 
 

@@ -17,9 +17,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class UpdatePassword extends Action {
+public class ResetPassword extends Action {
+    /*
+    It will reset password after verifying that the user got the link in their mail.
+     */
 
-    private Logger logger = Logger.getLogger("UpdatePassword");
+    private Logger logger = Logger.getLogger("ResetPassword");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
 
     static {
@@ -37,13 +40,12 @@ public class UpdatePassword extends Action {
         PasswordUpdateForm passwordUpdateForm = FormPopulator.populate(request, PasswordUpdateForm.class);
 
         logger.info(passwordUpdateForm + " found");
-        OperationStatus operationStatus = OperationStatus.FAILURE;
-
-        operationStatus = authenticationService.updatePasswordWithToken(passwordUpdateForm);
+        OperationStatus operationStatus =
+                authenticationService.updatePasswordWithToken(passwordUpdateForm);
         if (operationStatus == OperationStatus.SUCCESS){
             page = "/index.jsp";
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward(page);
+        return new ActionForward(page);
     }
 }

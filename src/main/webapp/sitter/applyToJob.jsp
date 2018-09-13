@@ -17,7 +17,7 @@
     </head>
 
     <body>
-    <jsp:include page="/header.jsp"/>
+    <jsp:include page="./header.jsp"/>
 
         <div class="">
             <form  action="${pageContext.request.contextPath}/sitter/ApplyToJob.do" method="post">

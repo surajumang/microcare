@@ -40,7 +40,7 @@
         </head>
         <body>
 
-         <jsp:include page="/header.jsp"/>
+         <jsp:include page="./header.jsp"/>
          <h2>${SUCCESS}</h2>
          <h2>${FAILURE}</h2>
          <h2>${INVALID}</h2>
@@ -69,7 +69,7 @@
                 <td>${endDate}</td>
                 <td>
                     <c:if test="${job.status != 'EXPIRED'}">
-                    <form action="${pageContext.request.contextPath}/seeker/ShowJobToEdit.do" method="get">
+                    <form action="${pageContext.request.contextPath}/seeker/showJobToEdit.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
                         <input type="submit" name="" value="Edit">
                     </form>
@@ -77,7 +77,7 @@
                 </td>
                 <td>
 
-                    <form action="${pageContext.request.contextPath}/seeker/DeleteJob.do" method="get">
+                    <form action="${pageContext.request.contextPath}/seeker/deleteJob.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
@@ -85,7 +85,7 @@
                 </td>
                 <td>
                    <c:if test="${job.status != 'EXPIRED'}">
-                    <form action="${pageContext.request.contextPath}/seeker/ViewApplicants.do" method="get">
+                    <form action="${pageContext.request.contextPath}/seeker/viewApplications.do" method="get">
                         <input type="hidden" name="id" value="${job.id}">
 
                         <input type="submit" name="" value="View Applications">

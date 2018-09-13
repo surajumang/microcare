@@ -133,7 +133,7 @@ public class AccountServiceImpl implements AccountService {
            try {
                memberDAO.addToken(token);
                // code to send email.
-               SendMail.sendMail(email, contextPath + "/visitor/VerifyToken.do?token=" + token.getToken());
+               SendMail.sendMail(email, contextPath + "/visitor/verifyToken.do?token=" + token.getToken());
                logger.info("mail sent");
                operationStatus = OperationStatus.SUCCESS;
            }catch (SQLException e){

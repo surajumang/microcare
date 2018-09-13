@@ -20,7 +20,7 @@
         <h2>Password can be rest from here</h2>
         <c:out value="${FAILURE}"/>
         <c:if test="${SUCCESS eq 'VERIFIED'}">
-            <form action="${pageContext.request.contextPath}/visitor/UpdatePassword.do" method="get">
+            <form action="${pageContext.request.contextPath}/visitor/updatePassword.do" method="get">
                 <label>Enter Password</label>
                 <input type="password" name="password" value="">
                 <c:out value="${errors.password}"/>

@@ -34,7 +34,7 @@ public class CloseJob extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/seeker/ShowMyJobs.do";
+        String page = "/seeker/showJobs.do";
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         long jobToBeClosed = CommonUtil.getIdFromRequest(request, "id" );
@@ -57,6 +57,6 @@ public class CloseJob extends Action {
 
         request.setAttribute(operationStatus.name(), messege.get(operationStatus));
         logger.info(page);
-        return mapping.findForward(page);
+        return new ActionForward(page);
     }
 }

@@ -2,11 +2,13 @@ package com.care.form;
 
 import com.care.annotation.Name;
 import com.care.annotation.Number;
+import com.care.model.MemberType;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
@@ -22,6 +24,46 @@ public class EditProfileForm extends  FormBean {
     private String memberType;
     private String address;
     private String phone;
+    private String spouseName;
+    private String numberOfChildren;
+    private String expectedPay;
+    private String experience;
+
+    @Number(regex = "\\d{1,3}(\\.\\d{0,2})?", message = "Number format is DDD.DD", required = false)
+    public String getExpectedPay() {
+        return expectedPay;
+    }
+
+    public void setExpectedPay(String expectedPay) {
+        this.expectedPay = expectedPay;
+    }
+
+    @Number(regex = "\\d{1,2}", message = "At max two digits allowed", required = false)
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    @Name(required = false)
+    public String getSpouseName() {
+        return spouseName;
+    }
+
+    public void setSpouseName(String spouseName) {
+        this.spouseName = spouseName;
+    }
+
+    @Number(required = false, regex = "\\d{0,2}", message = "At max two digits allowed")
+    public String getNumberOfChildren() {
+        return numberOfChildren;
+    }
+
+    public void setNumberOfChildren(String numberOfChildren) {
+        this.numberOfChildren = numberOfChildren;
+    }
 
     @Name
     public String getFirstName() {
@@ -63,6 +105,7 @@ public class EditProfileForm extends  FormBean {
     public void setAddress(String address) {
         this.address = address;
     }
+
     @Number(regex = "\\d{10}", message = "Must be exactly ten digits only")
     public String getPhone() {
         return phone;
@@ -72,6 +115,7 @@ public class EditProfileForm extends  FormBean {
         this.phone = phone;
     }
 
+    //[TODO] write custom error check for optional fields
     @Override
     public ActionErrors validateCustom() {
         ActionErrors errors = new ActionErrors();
@@ -82,6 +126,21 @@ public class EditProfileForm extends  FormBean {
         } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, "While validating", e);
         }
+
+        if (numberOfChildren.equals("")){
+            numberOfChildren="0";
+        }
+
+        if (MemberType.valueOf(memberType) == MemberType.SITTER){
+            if (! expectedPay.matches("\\d{1,3}(\\.\\d{0,2})?")){
+                errors.add("expectedPay", new ActionMessage("errors.amount"));
+            }
+            if (! experience.matches("\\d{1,2}")){
+                errors.add("experience", new ActionMessage("errors.number"));
+            }
+
+        }
+
         return errors;
     }
 }

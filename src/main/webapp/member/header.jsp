@@ -13,7 +13,7 @@
 
         <h2>Welcome ${currentUser.email}</h2>
         <div class="left">
-            <form class="" action="${pageContext.request.contextPath}/${memberType}/home.jsp" method="post">
+            <form class="" action="${pageContext.request.contextPath}/member/home.do" method="post">
                  <input type="submit" name="home" value="Home">
             </form>
         </div>

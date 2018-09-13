@@ -3,6 +3,10 @@ package com.care.controller;
 import com.care.annotation.Email;
 import com.care.model.Member;
 import com.care.service.*;
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class GeneratePasswordResetToken extends HttpServlet {
+public class GeneratePasswordResetToken extends Action {
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
     static {
@@ -22,12 +26,10 @@ public class GeneratePasswordResetToken extends HttpServlet {
         message.put(OperationStatus.OTHER, "Enter a Valid Email");
     }
 
-
-
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String page = "/visitor/resetPassword.jsp";
-        String email = req.getParameter("email");
+    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String page = "/visitor/forgotPassword.jsp";
+        String email = request.getParameter("email");
         String regex = "\\w+@([a-z])+(\\.[a-z])+";
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
@@ -41,14 +43,14 @@ public class GeneratePasswordResetToken extends HttpServlet {
         if (match){
             if (accountService.getMember(email) != Member.EMPTY_MEMBER){
                 logger.info("Member exist for the email "+ email);
-                operationStatus = accountService.mailPasswordResetToken(email, req.getContextPath());
+                operationStatus = accountService.mailPasswordResetToken(email, request.getContextPath());
                 if (operationStatus == OperationStatus.SUCCESS){
                     page = "/index.jsp";
                 }
             }
         }
 
-        req.setAttribute(operationStatus.name(), message.get(operationStatus));
-        getServletContext().getRequestDispatcher(page).forward(req, resp);
+        request.setAttribute(operationStatus.name(), message.get(operationStatus));
+        return new ActionForward(page);
     }
 }

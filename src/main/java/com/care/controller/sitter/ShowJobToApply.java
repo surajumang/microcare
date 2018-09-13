@@ -34,7 +34,7 @@ public class ShowJobToApply extends Action {
         /*
         Fetch the job from the database and show it to the user, also collect the expectedPay.
          */
-        String page = "/sitter/ShowAllJobs.do";
+        String page = "/sitter/showAllJobs.do";
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         OperationStatus operationStatus = OperationStatus.FAILURE;
         long id = CommonUtil.getIdFromRequest(request, "id" );
@@ -48,6 +48,7 @@ public class ShowJobToApply extends Action {
             }
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus) );
-        return mapping.findForward(page);
+
+        return new ActionForward(page);
     }
 }

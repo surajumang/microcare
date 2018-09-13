@@ -13,13 +13,13 @@
     </head>
     <body>
 
-     <jsp:include page="/header.jsp"/>
+     <jsp:include page="./header.jsp"/>
      <h2>${SUCCESS}</h2>
                      <h2>${FAILURE}</h2>
                      <h2>${INVALID}</h2>
 
 
-     <form class="" action="${pageContext.request.contextPath}/seeker/PostJob.do" method="post">
+     <form class="" action="${pageContext.request.contextPath}/seeker/postJob.do" method="post">
         <label>Job Title</label>
          <input type="text" name="title" placeholder="Job Title" value="${formErrors.title}">
             <c:out value="${errors.title}"/>

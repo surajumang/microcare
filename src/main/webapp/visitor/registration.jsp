@@ -10,9 +10,7 @@
     <head>
         <meta charset="utf-8">
         <title></title>
-        <style>
 
-</style>
 <script type="text/javascript">
     function display(radioValue){
             if(radioValue == "SEEKER"){
@@ -45,77 +43,85 @@
 
 
 
-         <a href="${pageContext.request.contextPath}/member/Search.jsp" role="button">Home</a>
+         <a href="${pageContext.request.contextPath}/index.jsp" role="button">Home</a>
         <h1>Enter Your Details</h1>
         <div class="">
-            <form name="regform" action="${pageContext.request.contextPath}/visitor/Registration.do" method="post">
-                <label for="mail">Email</label>
-                <input type="text" name="email" placeholder="Email" value="${formErrors.email}">
-                <c:out value="${errors.email}"/><br>
-
-                <label for="fname">First Name</label>
-                <input type="text" name="firstName" placeholder="First Name" value="${formErrors.firstName}">
-                <c:out value="${errors.firstName}"/><br>
-
-                <label for="lname">Last Name</label>
-                <input type="text" name="lastName" placeholder="Last Name" value="${formErrors.lastName}">
-                <c:out value="${errors.lastName}"/><br>
-
-                <label >Address</label>
-                <input type="address" name="address" placeholder="Address" value="${formErrors.address}">
-                <c:out value="${errors.address}"/><br>
-
-                <label> Phone </label>
-                <input type="text" name="phone" placeholder="Phone" value="${formErrors.phone}">
-                <c:out value="${errors.phone}"/><br>
-
-                <label>Zip Code</label>
-                <input type="text" name="zipCode" placeholder="Zip Code(Six digits)" value="${formErrors.zipCode}">
-                <c:out value="${errors.zipCode}"/><br>
-
-                <label>Register as a</label>
-                <c:set var="memberType" value="SEEKER"/>
-               	<c:if test="${formErrors.memberType=='SITTER'}">
-               	    <c:set var="memberType" value="SITTER"/>
-               	</c:if>
-
-                <input type="radio" class="memberType" name="memberType" value="SEEKER" <c:if test="${memberType=='SEEKER'}">checked="checked"</c:if> onclick="display('SEEKER');">Seeker
-                <input type="radio" class="memberType" name="memberType" value="SITTER" <c:if test="${memberType=='SITTER'}">checked="checked"</c:if> onclick="display('SITTER');">Sitter
+            <html:form action="/visitor/captureRegistration" method="post">
+            <table>
+                <tr>
+                    <td><label for="mail">Email</label></td>
+                    <td><html:text property="email" /></td>
+                </tr>
+                <tr>
+                    <td><label for="fproperty">First Name</label></td>
+                    <td><html:text property="firstName" /></td>
+                </tr>
+                <tr>
+                    <td><label for="lproperty">Last Name</label></td>
+                    <td><html:text property="lastName" /></td>
+                </tr>
+                <tr>
+                    <td><label >Address</label></td>
+                    <td><html:text property="address" /></td>
+                </tr>
+                <tr>
+                    <td><label> Phone </label></td>
+                    <td><html:text property="phone" /></td>
+                </tr>
+                <tr>
+                    <td><label>Zip Code</label></td>
+                    <td><html:text property="zipCode" /></td>
+                </tr>
+                <tr>
+                    <td><label>Register as a</label></td>
+                    <c:set var="memberType" value="SEEKER"/>
+               	    <c:if test="${formErrors.memberType=='SITTER'}">
+               	        <c:set var="memberType" value="SITTER"/>
+               	    </c:if>
+                    <td>
+                    <input type="radio" class="memberType" name=""="memberType" value="SEEKER" <c:if test="${memberType=='SEEKER'}">checked="checked"</c:if> onclick="display('SEEKER');">Seeker
+                    <input type="radio" class="memberType" name="memberType" value="SITTER" <c:if test="${memberType=='SITTER'}">checked="checked"</c:if> onclick="display('SITTER');">Sitter
+                    </td>
+                </tr>
 
                 <div id="seeker">
-
-                    <label>Spouse Name</label>
-                     <input type="text" name="spouseName" placeholder="Spouse Name (optional)" value="${formErrors.spouseName}">
-                     <c:out value="${errors.spouseName}"/><br>
-                     <label>Number of Children</label>
-                     <input type="text" name="children" placeholder="Number of Children(optional)" value="${formErrors.numberOfChildren}">
-                     <c:out value="${errors.numberOfChildren}"/><br>
+                <tr>
+                    <td><label>Spouse Name</label></td>
+                    <td><html:text property="spouseName"/></td>
+                </tr>
+                <tr>
+                     <td><label>Number of Children</label></td>
+                     <td><html:text property="numberOfChildren" /></td>
+                </tr>
                 </div>
+
                 <div id="sitter" style="display:none;">
-                    <label>Years of Experience</label>
-                     <input type="text" name="experience" placeholder="Experience(Years)" value="${formErrors.experience}">
-                     <c:out value="${errors.experience}"/><br>
-                     <label>Expected Pay</label>
-                     <input type="text" name="expectedPay" placeholder="Expected Pay" value="${formErrors.expectedPay}">
-                     <c:out value="${errors.expectedPay}"/><br>
+                <tr>
+                    <td><label>Years of Experience</label></td>
+                    <td><html:text property="experience" /></td>
+                </tr>
+                <tr>
+                     <td> <label>Expected Pay</label></td>
+                     <td><html:text property="expectedPay" /></td>
                 </div>
 
-                <label>Password</label>
-                <input type="password" name="password" placeholder="Password">
-                <c:out value="${errors.password}"/><br>
+                <tr>
+                    <td><label>Password</label></td>
+                    <td><html:password property="password" /></td>
+                </tr>
 
-                <label>Re enter the Password</label>
-                <input type="password" name="password2" placeholder="Password" >
-                <c:out value="${errors.password2}"/><br>
+                <tr>
+                    <td><label>Re enter the Password</label></td>
+                    <td><input type="password" property="password2" placeholder="Password"></td>
+                </tr>
 
-                <input type="hidden" name="memberType" value="SEEKER">
-                <input type="hidden" name="currentPage" value="/visitor/SeekerRegistration.jsp">
+                <html:hidden property="memberType" value="SEEKER"/>
 
+                </table>
 
+                <html:submit property="" value="Submit"/>
 
-                <input type="submit" name="" value="Submit">
-
-            </form>
+            </html:form>
         </div>
     </body>
     <jsp:include page="/footer.jsp"/>

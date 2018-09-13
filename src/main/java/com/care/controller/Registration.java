@@ -53,8 +53,8 @@ public class Registration extends Action {
         logger.info("Back at servlet");
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
-        request.setAttribute("formErrors", (RegistrationForm)registrationDetails);
-        return mapping.findForward(page);
+        request.setAttribute("formErrors", registrationDetails);
+        return new ActionForward(page);
 
     }
 }

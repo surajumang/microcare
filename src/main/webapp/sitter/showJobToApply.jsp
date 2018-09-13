@@ -39,7 +39,7 @@
 
     </head>
     <body>
-    <jsp:include page="/header.jsp"/>
+    <jsp:include page="./header.jsp"/>
         <h2>${SUCCESS}</h2>
                 <h2>${FAILURE}</h2>
                 <h2>${INVALID}</h2>
@@ -56,17 +56,20 @@
                         <tr>
                             <td>${job.title}</td>
                             <td>${job.hourlyPay}</td>
+                            
                             <fmt:formatDate var="startDate" value="${job.startDate}" pattern="yyyy-MM-dd hh:mm"/>
                             <td>${startDate}</td>
+                            
                             <fmt:formatDate var="endDate" value="${job.endDate}" pattern="yyyy-MM-dd hh:mm"/>
                             <td>${endDate}</td>
+                            
                             <td>
-                                <form action="${pageContext.request.contextPath}/sitter/ApplyToJob.do" method="get">
-                                    <input type="text" name="expectedPay" value="${application.expectedPay}">
-                                    <c:out value="${errors.expectedPay}"/>
-                                    <input type="hidden" name="id" value="${job.id}">
-                                    <input type="submit" name="" value="Apply">
-                                </form>
+                                <html:form action="/sitter/apply" method="get">
+                                    <html:text property="expectedPay" value="${application.expectedPay}"/>
+                                    
+                                    <html:hidden property="id" value="${job.id}"/>
+                                    <html:submit property="" value="Apply"/>
+                                </html:form>
                             </td>
                         </tr>
 

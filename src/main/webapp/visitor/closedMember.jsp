@@ -27,11 +27,14 @@
     </head>
     <body>
         <h2>Your account is INACTIVE, Do you want to activate it <h2>
-             <form action="${pageContext.request.contextPath}/visitor/ClosedUserLogin.do" method="post">
-                    <input type="submit" name="response" value="Yes">
+        <%-- User input is to be passed to the action but without using any form. --%>
+
+             <form action="${pageContext.request.contextPath}/visitor/closedMember.do" method="post">
+                  <input type="submit" name="response" value="Yes"/>
              </form>
-             <form action="${pageContext.request.contextPath}/visitor/index.jsp" method="post">
-                    <input type="submit" name="response" value="No">
+
+             <form action="${pageContext.request.contextPath}/visitor/closedMember.do" method="post">
+                  <input type="submit" name="response" value="No"/>
              </form>
      </body>
 </html>
