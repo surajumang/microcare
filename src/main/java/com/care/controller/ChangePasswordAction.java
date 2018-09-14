@@ -1,19 +1,15 @@
 package com.care.controller;
 
-import com.care.form.PasswordUpdateForm;
+import com.care.form.PasswordForm;
 import com.care.model.Member;
 import com.care.service.AuthenticationService;
 import com.care.service.AuthenticationServiceImpl;
 import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
-import com.care.validation.FormPopulator;
 import org.apache.struts.action.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -31,16 +27,16 @@ public class ChangePasswordAction extends Action {
         Member member = (Member)request.getSession().getAttribute("currentUser");
 
         String page = "success";
-        PasswordUpdateForm passwordUpdateForm = (PasswordUpdateForm) form;
-        passwordUpdateForm.setId(String.valueOf(member.getId()));
+        PasswordForm passwordForm = (PasswordForm) form;
+        passwordForm.setId(String.valueOf(member.getId()));
 
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
         OperationStatus operationStatus  =
-                authenticationService.updatePassword(member, passwordUpdateForm);
+                authenticationService.updatePassword(member, passwordForm);
 
 
 
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return new ActionForward("/member/home.do");
+        return mapping.findForward("success");
     }
 }

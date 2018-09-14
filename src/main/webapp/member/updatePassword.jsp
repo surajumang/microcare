@@ -23,19 +23,19 @@
         <h2>${FAILURE}</h2>
         <h2>${OTHER}</h2>
 
-        <html:form action="/member/resetPassword" method="get">
+        <html:form action="/member/captureResetPassword" method="get">
             <table>
                 <tr>
                     <td><label>Current Password</label></td>
-                    <td><html:password name="currentPassword" /></td>
+                    <td><html:password property="currentPassword" /></td>
                 </tr>
                 <tr>
                     <td><label>New Password</label></td>
-                    <td><html:password name="password" /></td>
+                    <td><html:password property="password" /></td>
                 </tr>
                 <tr>
                     <td><label>Re-Enter Password</label></td>
-                    <td><html:password name="password2" /></td>
+                    <td><html:password property="password2" /></td>
                 </tr>
             </table>
             <html:submit value="Submit"/>

@@ -41,10 +41,10 @@ public class CloseAccount extends Action {
         OperationStatus operationStatus = accountService.deleteMember(currentUser);
         // take to login page when closed.
         if (operationStatus == OperationStatus.SUCCESS){
-            page="/index.jsp";
+            page="/login.jsp";
             request.getSession().invalidate();
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return new ActionForward(page);
+        return mapping.findForward("success");
     }
 }

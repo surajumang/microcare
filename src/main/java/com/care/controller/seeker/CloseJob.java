@@ -57,6 +57,6 @@ public class CloseJob extends Action {
 
         request.setAttribute(operationStatus.name(), messege.get(operationStatus));
         logger.info(page);
-        return new ActionForward(page);
+        return mapping.findForward("success");
     }
 }

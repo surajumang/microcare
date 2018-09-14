@@ -58,6 +58,6 @@ public class ShowApplications extends Action {
 
         request.setAttribute("getApplications", applications);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return new ActionForward(page);
+        return mapping.findForward("success");
     }
 }

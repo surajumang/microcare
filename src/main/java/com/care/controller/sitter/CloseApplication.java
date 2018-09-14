@@ -46,6 +46,6 @@ public class CloseApplication extends Action {
         }
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward(page);
+        return mapping.findForward("success");
     }
 }

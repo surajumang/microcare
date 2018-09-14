@@ -74,6 +74,6 @@ public class EditProfileAction extends Action {
         }
 
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return new ActionForward(page);
+        return mapping.findForward("success");
     }
 }

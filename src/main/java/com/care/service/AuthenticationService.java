@@ -1,7 +1,7 @@
 package com.care.service;
 
 import com.care.form.LoginForm;
-import com.care.form.PasswordUpdateForm;
+import com.care.form.PasswordForm;
 import com.care.model.Member;
 
 public interface AuthenticationService extends Service {
@@ -10,9 +10,9 @@ public interface AuthenticationService extends Service {
 
     boolean logout();
 
-    OperationStatus updatePasswordWithToken(PasswordUpdateForm passwordUpdateForm);
+    OperationStatus updatePasswordWithToken(PasswordForm passwordForm);
 
-    OperationStatus updatePassword(Member member, PasswordUpdateForm passwordUpdateForm);
+    OperationStatus updatePassword(Member member, PasswordForm passwordForm);
 
     int forgotPassword();
 

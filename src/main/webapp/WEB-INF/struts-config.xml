@@ -10,13 +10,13 @@
                    type="com.care.form.JobForm"/>
         <form-bean name="applicationForm"
                    type="com.care.form.ApplicationForm"/>
-        <form-bean name="updatePassword"
-                   type="com.care.form.PasswordUpdateForm"/>
+        <form-bean name="passwordForm"
+                   type="com.care.form.PasswordForm"/>
         <form-bean name="registrationForm"
                    type="com.care.form.RegistrationForm"/>
         <form-bean name="searchCriteria"
                    type="com.care.form.SearchCriteria"/>
-        <form-bean name="editProfile"
+        <form-bean name="profileForm"
                    type="com.care.form.EditProfileForm"/>
 
     </form-beans>
@@ -25,15 +25,13 @@
     </global-forwards>
     <action-mappings>
 
-        <action name="loginForm"
-                path="/visitor/login"
+        <action path="/visitor/login"
                 type="org.apache.struts.actions.ForwardAction"
                 validate="false"
-                parameter="/index.jsp" />
+                parameter="/login.jsp" />
 
         <action path="/member/home"
-                type="com.care.controller.TakeHomeAction">
-
+                type="com.care.controller.HomeAction">
         </action>
 
         <action path="/visitor/captureLogin"
@@ -41,9 +39,9 @@
                 name="loginForm"
                 validate="true"
                 scope="request"
-                input="/index.jsp">
+                input="/visitor/login.do">
             <forward name="success" path="/member/home.do"/>
-            <forward name="failure" path="/index.jsp"/>
+            <forward name="failure" path="/visitor/login.do"/>
             <forward name="closed" path="/visitor/closedMember.jsp"/>
         </action>
 
@@ -52,168 +50,267 @@
             <forward name="success" path="/member/home.do"/>
         </action>
 
-        <action path="/visitor/captureRegistration"
+        <action path="/visitor/register"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/visitor/registration.jsp">
+        </action>
+
+        <action path="/visitor/registration"
                 type="com.care.controller.Registration"
+                name="registrationForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/visitor/register.do"/>
+        </action>
+
+        <action path="/visitor/captureRegistration"
+                type="com.care.controller.CaptureRegistration"
                 name="registrationForm"
                 validate="true"
                 scope="request"
                 input="/visitor/registration.jsp">
-            <forward name="success" path="/visitor/captureLogin.do"/>
-            <forward name="failure" path="/visitor/captureLogin.do"/>
+            <forward name="success" path="/visitor/login.do"/>
         </action>
 
         <action path="/member/search"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/member/search.jsp">
+        </action>
+
+        <action path="/member/captureSearch"
                 type="com.care.controller.SearchAction"
                 name="searchCriteria"
                 validate="true"
                 scope="request"
-                input="/member/search.jsp">
-            <forward name="found" path="/member/search.jsp"/>
+                input="/member/search.do">
+            <forward name="success" path="/member/search.do"/>
         </action>
 
         <action path="/seeker/postJob"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/seeker/postJob.jsp">
+        </action>
+
+
+        <action path="/seeker/capturePostJob"
                 type="com.care.controller.seeker.PostJob"
                 name="jobForm"
                 validate="true"
                 scope="request"
-                input="/seeker/postJob.jsp">
+                input="/seeker/postJob.do">
             <forward name="success" path="/member/home.do"/>
+        </action>
+
+        <action path="/seeker/editJob"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/seeker/showAndEditJob.jsp">
         </action>
         <!--It will take a form as input which will contain details related to a Form, validates it and writes to DB if validation
             is successful. User will stuck here until submits proper values or chooses another option-->
-        <action path="/seeker/editJob"
+        <action path="/seeker/captureEditJob"
                 type="com.care.controller.seeker.EditJob"
                 name="jobForm"
                 validate="true"
                 scope="request"
-                input="/seeker/showAndEditJob.jsp">
-            <forward name="success" path="seeker/showMyJobs.jsp"/>
+                input="/seeker/editJob.do">
+            <forward name="success" path="/seeker/showJobs.do"/>
         </action>
-
+        <!-- This will not directly call the jsp rather it will user the ForwardAction class -->
         <action path="/seeker/showJobToEdit"
                 type="com.care.controller.seeker.ShowJobToEdit">
+            <forward name="success" path="/seeker/editJob.do"/>
         </action>
 
         <action path="/seeker/deleteJob"
                 type="com.care.controller.seeker.CloseJob">
         </action>
 
+        <!-- Both of them belong together*************START***********-->
+        <action path="/seeker/allJobs"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/seeker/showMyJobs.jsp">
+        </action>
 
         <action path="/seeker/showJobs"
                 type="com.care.controller.seeker.ShowJobs">
-            <forward name="success" path="seeker/ShowMyJobs.jsp"/>
+            <forward name="success" path="/seeker/allJobs.do"/>
+        </action>
+
+        <!-- Both of them belong together*************END*****************-->
+
+        <!-- Both of them belong together*************START***********-->
+        <action path="/seeker/allApplications"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/seeker/viewApplications">
         </action>
 
         <action path="/seeker/viewApplications"
                 type="com.care.controller.seeker.ShowApplications">
             <forward name="success" path="viewApplications.jsp"/>
         </action>
+        <!-- Both of them belong together*************END*****************-->
+
+        <!-- The three of them belong together*************START***********-->
         <!--It will take a form having member details as input and validates whether the data is correct and then updates the DB
             User will remain stuck here until submit correct form or chooses another option-->
+        <action path="/member/profile"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/member/putProfileInfo.jsp">
+        </action>
         <action path="/member/editProfile"
                 type="com.care.controller.EditProfileAction"
-                name="editProfile"
+                name="profileForm"
                 scope="request"
                 validate="true"
-                input="/member/putProfileInfo.jsp">
+                input="/member/profile.do">
             <forward name="success" path="/member/home.do"/>
         </action>
-
         <action path="/member/putProfileInfo"
                 type="com.care.controller.PutProfileInfo">
-            <forward name="success" path="/member/putProfileInfo.jsp"/>
+            <forward name="success" path="/member/profile.do"/>
         </action>
-        
+        <!--The three of them belong together*************END*****************-->
+
+        <!-- Both of them belong together*************START***********-->
         <action path="/member/resetPassword"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/member/updatePassword.jsp">
+        </action>
+        <action path="/member/captureResetPassword"
                 type="com.care.controller.ChangePasswordAction"
-                name="updatePassword"
+                name="passwordForm"
                 scope="request"
                 validate="true"
-                input="/member/updatePassword.jsp">
+                input="/member/resetPassword.do">
+            <forward name="success" path="/member/home.do"/>
         </action>
+        <!-- Both of them belong together*************END*****************-->
 
+        <!-- Both of them belong together*************START***********-->
         <action path="/visitor/forgotPassword"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/visitor/forgotPassword.jsp">
+        </action>
+        <action path="/visitor/captureEmail"
                 type="com.care.controller.GeneratePasswordResetToken">
+            <forward name="success" path="/visitor/login.do"/>
+            <forward name="failure" path="/visitor/forgotPassword.do"/>
         </action>
+        <!-- Both of them belong together*************END***********-->
 
-        <action path="/visitor/verifyToken"
-                type="com.care.controller.VerifyToken">
-        </action>
-
+        <!-- Both of them belong together*************START***********-->
         <action path="/visitor/updatePassword"
-                type="com.care.controller.ResetPassword">
-
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/visitor/updatePassword.jsp">
         </action>
+        <action path="/visitor/verifyToken"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/visitor/updatePassword.jsp">
+        </action>
+        <action path="/visitor/captureToken"
+                type="com.care.controller.VerifyToken">
+            <forward name="success" path="/visitor/updatePassword.do"/>
+            <forward name="failure" path="/visitor/login.do"/>
+        </action>
+
+        <!-- Both of them belong together*************START***********-->
 
         <action path="/member/closeAccount"
                 type="com.care.controller.CloseAccount">
-            <forward name="success" path="/index.jsp"/>
+            <forward name="success" path="/visitor/login.do"/>
         </action>
 
         <action path="/member/logout"
                 type="com.care.controller.LogOut">
-            <forward name="success" path="/index.jsp"/>
+            <forward name="success" path="/visitor/login.do"/>
         </action>
 
+        <!-- Both of them belong together*************START***********-->
         <action path="/member/updatePassword"
-                type="com.care.controller.ResetPassword">
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/member/updatePassword.jsp">
+        </action>
+        <action path="/member/captureUpdatePassword"
+                type="com.care.controller.ResetPassword"
+                name="passwordForm"
+                validate="true"
+                input="/member/updatePassword">
             <forward name="success" path="/member/home.do"/>
         </action>
 
-        <action path="/member/forgotPassword"
-                type="com.care.controller.GeneratePasswordResetToken">
-            <forward name="success" path="/index.jsp"/>
-        </action>
+        <!-- Both of them belong together*************END***********-->
+
+        <!-- Both of them belong together*************START***********-->
         <!--This will be called by a form which will provide the wxpected pay entered by the user
             after the application is successful it will take it back to the all jobs page using an Action class such
             that the changes are visible to the user -->
+
         <action path="/sitter/apply"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/sitter/applyToJob.jsp">
+        </action>
+        <action path="/sitter/captureApplication"
                 type="com.care.controller.sitter.ApplyToJob"
                 name="applicationForm"
                 scope="request"
                 validate="true"
-                input="sitter/applyToJob.jsp">
+                input="sitter/apply.do">
             <forward name="success" path="/sitter/showJobs.do"/>
-            <forward name="failure" path="/sitter/applyToJob.jsp"/>
         </action>
         <!--Simply shows all the jobs available to the user( excludes already applied active jobs)-->
-
+        <action path="/sitter/showAllJobs"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/sitter/showAllJobs.jsp">
+        </action>
         <action path="/sitter/showJobs"
                 type="com.care.controller.sitter.ShowJobs">
-            <forward name="success" path="/sitter/showAllJobs.jsp"/>
+            <forward name="success" path="/sitter/showAllJobs.do"/>
             <forward name="failure" path="/member/home.do"/>
         </action>
 
+        <!-- Both of them belong together*************START***********-->
         <action path="/sitter/showJobToApply"
-                type="com.care.controller.sitter.ShowJobToApply">
-
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/sitter/showJobToApply.jsp">
         </action>
+        <action path="/sitter/jobForApplication"
+                type="com.care.controller.sitter.ShowJobToApply">
+            <forward name="success" path="/sitter/showJobToApply.do"/>
+        </action>
+        <!-- Both of them belong together*************END***********-->
 
+        <!-- The three of them are chained together *************START***********-->
+        <action path="/sitter/showMyApplications"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/sitter/showMyApplications.jsp">
+        </action>
         <action path="/sitter/showApplications"
                 type="com.care.controller.sitter.ShowApplications">
-            <forward name="success" path="/sitter/showMyApplications.jsp"/>
-            <forward name="failure" path="/sitter/showMyApplications.jsp"/>
+            <forward name="success" path="/sitter/showMyApplications.do"/>
         </action>
-
-
         <action path="/sitter/deleteApplication"
                 type="com.care.controller.sitter.CloseApplication">
             <forward name="success" path="/sitter/showApplications.do"/>
             <forward name="failure" path="/member/home.do"/>
         </action>
 
-
-
-        <action path="/showJobs"
-                type="com.strutsexample.ShowJobAction"
-                name="jobForm"
-                scope="request"
-                validate="true"
-                input="/showJobs.jsp">
-            <forward name="success" path="/success.jsp"/>
-            <forward name="failure" path="/login.jsp"/>
-        </action>
-
+        <!-- Both of them belong together*************START***********-->
 
     </action-mappings>
 

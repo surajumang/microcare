@@ -43,10 +43,10 @@
 
 
 
-         <a href="${pageContext.request.contextPath}/index.jsp" role="button">Home</a>
+         <a href="${pageContext.request.contextPath}/visitor/login.do" role="button">Home</a>
         <h1>Enter Your Details</h1>
         <div class="">
-            <html:form action="/visitor/captureRegistration" method="post">
+            <html:form action="/visitor/captureRegistration" method="post" >
             <table>
                 <tr>
                     <td><label for="mail">Email</label></td>
@@ -79,13 +79,14 @@
                	        <c:set var="memberType" value="SITTER"/>
                	    </c:if>
                     <td>
-                    <input type="radio" class="memberType" name="memberType" value="SEEKER" <c:if test="${memberType=='SEEKER'}">checked="checked"</c:if> onclick="display('SEEKER');">Seeker
-                    <input type="radio" class="memberType" name="memberType" value="SITTER" <c:if test="${memberType=='SITTER'}">checked="checked"</c:if> onclick="display('SITTER');">Sitter
+                    Seeker<html:radio styleClass="memberType"  property="memberType" value="SEEKER"  onchange="display('SEEKER');"/>
+                    Sitter<html:radio styleClass="memberType"  property="memberType" value="SITTER"  onchange="display('SITTER');"/>
                     </td>
                 </tr>
 
-                <div id="seeker">
-                <tr>
+                <tr><td colspan="2">
+				<div id="seeker" style="display:block;">
+				<table><tr>
                     <td><label>Spouse Name</label></td>
                     <td><html:text property="spouseName"/></td>
                 </tr>
@@ -93,9 +94,12 @@
                      <td><label>Number of Children</label></td>
                      <td><html:text property="numberOfChildren" /></td>
                 </tr>
+				</table>
                 </div>
-
+				</td></tr>
+				<tr><td colspan="2">
                 <div id="sitter" style="display:none;">
+				<table>
                 <tr>
                     <td><label>Years of Experience</label></td>
                     <td><html:text property="experience" /></td>
@@ -103,8 +107,10 @@
                 <tr>
                      <td> <label>Expected Pay</label></td>
                      <td><html:text property="expectedPay" /></td>
+				 </tr>
+				</table>
                 </div>
-
+				</td></tr>
                 <tr>
                     <td><label>Password</label></td>
                     <td><html:password property="password" /></td>
@@ -112,10 +118,8 @@
 
                 <tr>
                     <td><label>Re enter the Password</label></td>
-                    <td><input type="password" property="password2" placeholder="Password"></td>
+                    <td><html:password property="password2"/></td>
                 </tr>
-
-                <html:hidden property="memberType" value="SEEKER"/>
 
                 </table>
 

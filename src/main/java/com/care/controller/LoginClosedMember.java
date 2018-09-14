@@ -51,7 +51,7 @@ public class LoginClosedMember extends Action {
             page = "success";
         }
 
-        return mapping.findForward(page);
+        return mapping.findForward("success");
 
     }
 

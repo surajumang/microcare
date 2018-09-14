@@ -48,7 +48,7 @@
         <div class="right">
         <br>
                     New User
-                    <a href="${pageContext.request.contextPath}/visitor/registration.jsp">Register Here</a>
+                    <a href="${pageContext.request.contextPath}/visitor/registration.do">Register Here</a>
                     <br>
                     <a href="${pageContext.request.contextPath}/visitor/forgotPassword.jsp">Forgot Passwod</a>
         </div>

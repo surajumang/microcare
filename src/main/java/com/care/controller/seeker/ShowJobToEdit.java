@@ -52,10 +52,11 @@ public class ShowJobToEdit extends Action {
             try {
                 job = seekerService.getJob(member, id);
                 //ObjectMapper.mapObject();
+                mapJob(job, jobForm);
                 if (job.getStatus() != Status.EXPIRED && job.getStatus() != Status.CLOSED){
                     operationStatus = OperationStatus.SUCCESS;
                     page = "/seeker/showAndEditJob.jsp";
-                    request.setAttribute("editJob", job);
+                    request.setAttribute("editJob", jobForm);
                 }
             } catch (JobNotPostedByUserException e) {
                 logger.log(Level.SEVERE, "Can't Edit an expired job", e);
@@ -65,7 +66,20 @@ public class ShowJobToEdit extends Action {
         logger.info("Dispatching to ---" + page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
-        return new ActionForward(page);
+        return mapping.findForward("success");
+    }
 
+    private void mapJob(Job job, JobForm jobForm){
+        String endDate = String.valueOf(job.getEndDate());
+        endDate = endDate.substring(0, endDate.length() - 5);
+        String startDate = String.valueOf(job.getStartDate());
+        startDate = startDate.substring(0, startDate.length() - 5);
+
+        jobForm.setEndDate(endDate);
+        jobForm.setStartDate(startDate);
+        jobForm.setHourlyPay(String.valueOf(job.getHourlyPay()));
+        jobForm.setSeekerId(String.valueOf(job.getSeekerId()));
+        jobForm.setTitle(job.getTitle());
+        jobForm.setId(String.valueOf(job.getId()));
     }
 }

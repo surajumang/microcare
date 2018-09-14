@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PasswordUpdateForm extends FormBean {
-    private Logger logger = Logger.getLogger("PasswordUpdateForm");
+public class PasswordForm extends FormBean {
+    private Logger logger = Logger.getLogger("PasswordForm");
 
     private String currentPassword;
     private String password;
@@ -31,7 +31,7 @@ public class PasswordUpdateForm extends FormBean {
         this.currentPassword = currentPassword;
     }
 
-    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "Must be 5 or more characters without whitespaces ")
+    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "error.password.length")
     public String getPassword() {
         return password;
     }
@@ -66,7 +66,7 @@ public class PasswordUpdateForm extends FormBean {
 
     @Override
     public String toString() {
-        return "PasswordUpdateForm{" +
+        return "PasswordForm{" +
                 "currentPassword='" + currentPassword + '\'' +
                 ", password='" + password + '\'' +
                 ", password2='" + password2 + '\'' +

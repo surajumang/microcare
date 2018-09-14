@@ -36,13 +36,13 @@
 
     <h2>Enter Email(partial accepted) to search </h2>
 
-    <html:form action="/member/search" method="post">
+    <html:form action="/member/captureSearch" method="post">
         <label>Email</label>
         <html:text property = "email"/>
         <html:submit value = "GO"/>
     </html:form>
 
-
+<div class="data">
 <c:if test="${fn:length(members) > 0}">
     <table>
             <c:if test="${members[0].memberType eq 'SITTER'}">
@@ -92,7 +92,7 @@
              </c:if>
     </table>
 </c:if>
-
+</div>
 
 
     </body>

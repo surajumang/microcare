@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 public class PostJob extends Action {
     Logger logger = Logger.getLogger("PostJob");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
     static {
         message.put(OperationStatus.FAILURE, "Can't Post Job");
         message.put(OperationStatus.SUCCESS, "Job Posted successfully");
@@ -34,9 +33,7 @@ public class PostJob extends Action {
         String page ="/seeker/postJob.jsp";
 
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
-
         JobForm jobForm = (JobForm)form;
-
         int status = -1;
         OperationStatus operationStatus = OperationStatus.FAILURE;
         request.setAttribute("formErrors", jobForm);
@@ -54,7 +51,7 @@ public class PostJob extends Action {
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
-        return new ActionForward(page);
+        return mapping.findForward("success");
 
     }
 }

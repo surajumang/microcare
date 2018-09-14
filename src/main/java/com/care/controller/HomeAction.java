@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Logger;
 
-public class TakeHomeAction extends Action {
-    Logger logger = Logger.getLogger("TakeHomeAction");
+public class HomeAction extends Action {
+    Logger logger = Logger.getLogger("HomeAction");
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
