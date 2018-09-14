@@ -59,6 +59,6 @@ public class SearchAction extends Action {
         }
 
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward(page);
+        return mapping.findForward("success");
     }
 }

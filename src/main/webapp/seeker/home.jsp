@@ -29,7 +29,7 @@
               <h2>${ACCOUNT_STATUS}</h2>
 
       <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/seeker/postJob.jsp" method="post">
+          <form class="" action="${pageContext.request.contextPath}/seeker/postJob.do" method="post">
                 <input type="submit" name="PostJob" value="Post Job"/>
           </form>
       </div>
@@ -41,25 +41,10 @@
       </div>
 
       <div class="seeker">
-                <form action="${pageContext.request.contextPath}/member/search.jsp" method="post">
+                <form action="${pageContext.request.contextPath}/member/search.do" method="post">
                       <input type="submit" name="search" value="Search Sitters"/>
                 </form>
-            </div>
-
-      <div class="seeker">
-          <form action="${pageContext.request.contextPath}/member/putProfileInfo.do" method="post">
-                <input type="submit" name="EditProfile" value="Edit Profile"/>
-          </form>
       </div>
-
-
-      <div class="right">
-                   <form class="" action="${pageContext.request.contextPath}/member/closeAccount.do" method="post">
-                       <input type="button" name="closeAccount" value="Close Account" onclick="confirmation(this.form, 'close your account')">
-                   </form>
-      </div>
-
-
       <jsp:include page="/footer.jsp"/>
     </body>
 </html>

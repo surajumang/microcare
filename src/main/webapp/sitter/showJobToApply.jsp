@@ -64,7 +64,7 @@
                             <td>${endDate}</td>
                             
                             <td>
-                                <html:form action="/sitter/apply" method="get">
+                                <html:form action="/sitter/captureApplication" method="get">
                                     <html:text property="expectedPay" value="${application.expectedPay}"/>
                                     
                                     <html:hidden property="id" value="${job.id}"/>

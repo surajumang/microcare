@@ -45,6 +45,7 @@
        <h2>${DELSUCCESS}</h2>
        <h2>${SUCCESS}</h2>
        <h2>${FAILURE}</h2>
+       <c:if test="${fn:length(allMyApplications) > 0}">
         <table>
             <thead>
                 <tr>
@@ -73,6 +74,7 @@
             </tr>
         </c:forEach>
         </table>
+       </c:if>
         </body>
         <jsp:include page="/footer.jsp"/>
 </html>

@@ -37,15 +37,6 @@
               <input type="submit" name="search" value="Search Seekers"/>
           </form>
       </div>
-
-
-      <div class="right">
-          <form action="${pageContext.request.contextPath}/member/closeAccount.do" method="post">
-               <input type="submit" name="closeAccount" value="Close Account" onclick="confirmation(this.form, 'close your account')"/>
-          </form>
-     </div>
-
-
       <jsp:include page="/footer.jsp"/>
     </body>
 </html>

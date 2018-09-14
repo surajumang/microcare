@@ -26,7 +26,7 @@ public class ShowApplications extends Action {
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
     static {
         message.put(OperationStatus.FAILURE, "No applications to show");
-        message.put(OperationStatus.SUCCESS, "All applications");
+        message.put(OperationStatus.SUCCESS, "");
     }
 
     @Override
@@ -45,8 +45,8 @@ public class ShowApplications extends Action {
         }
         logger.info(allMyApplications.toString());
         logger.info("Dispatching to Page" + page);
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
-        return mapping.findForward(page);
+        request.setAttribute(operationStatus.name(), message.get(operationStatus));
+        return mapping.findForward("success");
     }
 }

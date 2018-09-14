@@ -45,12 +45,11 @@ public class GeneratePasswordResetToken extends Action {
                 logger.info("Member exist for the email "+ email);
                 operationStatus = accountService.mailPasswordResetToken(email, request.getContextPath());
                 if (operationStatus == OperationStatus.SUCCESS){
-                    page = "/index.jsp";
+                    page = "/login.jsp";
                 }
             }
         }
-
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return new ActionForward(page);
+        return mapping.findForward("success");
     }
 }

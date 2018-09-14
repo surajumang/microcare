@@ -46,6 +46,6 @@ public class EditJob extends Action {
         request.setAttribute("editJob", jobForm);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
-        return new ActionForward(page);
+        return mapping.findForward("success");
     }
 }

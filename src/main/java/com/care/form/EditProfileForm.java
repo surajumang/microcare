@@ -1,5 +1,6 @@
 package com.care.form;
 
+import com.care.annotation.Email;
 import com.care.annotation.Name;
 import com.care.annotation.Number;
 import com.care.model.MemberType;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 public class EditProfileForm extends  FormBean {
     private Logger logger = Logger.getLogger("PutProfileInfo");
 
+    private String email;
     private String firstName;
     private String lastName;
     private String zipCode;
@@ -29,7 +31,15 @@ public class EditProfileForm extends  FormBean {
     private String expectedPay;
     private String experience;
 
-    @Number(regex = "\\d{1,3}(\\.\\d{0,2})?", message = "Number format is DDD.DD", required = false)
+    @Email(required = false)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -38,7 +48,6 @@ public class EditProfileForm extends  FormBean {
         this.expectedPay = expectedPay;
     }
 
-    @Number(regex = "\\d{1,2}", message = "At max two digits allowed", required = false)
     public String getExperience() {
         return experience;
     }
@@ -56,7 +65,7 @@ public class EditProfileForm extends  FormBean {
         this.spouseName = spouseName;
     }
 
-    @Number(required = false, regex = "\\d{0,2}", message = "At max two digits allowed")
+    @Number(required = false, regex = "\\d{0,2}", message = "errors.number.children.length")
     public String getNumberOfChildren() {
         return numberOfChildren;
     }
@@ -73,6 +82,7 @@ public class EditProfileForm extends  FormBean {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     @Name
     public String getLastName() {
         return lastName;
@@ -81,7 +91,8 @@ public class EditProfileForm extends  FormBean {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    @Number(regex = "\\d{6}", message = "Must be exactly six digits")
+
+    @Number(regex = "\\d{6}", message = "errors.number.zipcode.length")
     public String getZipCode() {
         return zipCode;
     }
@@ -106,7 +117,7 @@ public class EditProfileForm extends  FormBean {
         this.address = address;
     }
 
-    @Number(regex = "\\d{10}", message = "Must be exactly ten digits only")
+    @Number(regex = "\\d{10}", message = "errors.number.phone.length")
     public String getPhone() {
         return phone;
     }
@@ -127,7 +138,7 @@ public class EditProfileForm extends  FormBean {
             logger.log(Level.SEVERE, "While validating", e);
         }
 
-        if (numberOfChildren.equals("")){
+        if (numberOfChildren != null && numberOfChildren.equals("")){
             numberOfChildren="0";
         }
 
@@ -138,9 +149,7 @@ public class EditProfileForm extends  FormBean {
             if (! experience.matches("\\d{1,2}")){
                 errors.add("experience", new ActionMessage("errors.number"));
             }
-
         }
-
         return errors;
     }
 }

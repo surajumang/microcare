@@ -59,6 +59,6 @@ public class ApplyToJob extends Action {
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         request.setAttribute("application", application);
-        return mapping.findForward(page);
+        return mapping.findForward("success");
     }
 }

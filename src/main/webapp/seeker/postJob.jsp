@@ -19,33 +19,25 @@
                      <h2>${INVALID}</h2>
 
 
-     <form class="" action="${pageContext.request.contextPath}/seeker/postJob.do" method="post">
+     <html:form action="/seeker/capturePostJob" method="post">
         <label>Job Title</label>
-         <input type="text" name="title" placeholder="Job Title" value="${formErrors.title}">
-            <c:out value="${errors.title}"/>
-
+         <html:text property="title"/>
          <br><br>
+
          <label>Hourly Pay</label>
-         <input type="text" name="hourlyPay" placeholder="Hourly Pay" value="${formErrors.hourlyPay}">
-            <c:out value="${errors.hourlyPay}"/>
+         <html:text property="hourlyPay"/>
          <br><br>
 
          <label>Start Date</label>
-         <input type="text" name="startDate" placeholder="Start Date(YYYY-MM-DD HH:MM)" value="${formErrors.startDate}">
-            <c:out value="${errors.startDate}"/>
+         <html:text property="startDate"/>
+           <br><br>
 
-         <br><br>
          <label>End Date</label>
-         <input type="text" name="endDate" placeholder="End Date(YYYY-MM-DD HH:MM)" value="${formErrors.endDate}">
-         <c:out value="${errors.currentDate}"/>
-          <c:out value="${errors.endDate}"/>
+         <html:text property="endDate"/>
+       <br><br>
+         <html:submit property="submit" value="Submit"/>
 
-         <br><br>
-
-
-         <input type="submit" name="" value="Submit">
-
-     </form>
+     </html:form>
     </body>
     <jsp:include page="/footer.jsp"/>
 </html>

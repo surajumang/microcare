@@ -19,7 +19,7 @@
         <h2>${FAILURE}</h2>
         <h2>${INVALID}</h2>
 
-        <html:form action="/seeker/editJob" method="post">
+        <html:form action="/seeker/captureEditJob" method="post">
             <table>
 
                 <tr>
@@ -40,7 +40,7 @@
                 </tr>
             </table>
             <html:hidden property="id" value="${editJob.id}"/>
-            <html:submit property="" value="Submit"/>
+            <html:submit property="submit" value="Submit"/>
         </html:form>
     </body>
     <jsp:include page="/footer.jsp"/>

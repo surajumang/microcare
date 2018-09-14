@@ -27,7 +27,7 @@ public class LogOut extends Action {
 
         request.setAttribute(OperationStatus.SUCCESS.name(), "Successfully Logged Out");
 
-        return mapping.findForward(OperationStatus.SUCCESS.name().toLowerCase());
+        return mapping.findForward("success");
 
     }
 }

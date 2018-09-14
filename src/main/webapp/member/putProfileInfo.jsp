@@ -24,7 +24,7 @@
                 <h2>${INVALID}</h2>
                 <h1>Enter Your Details</h1>
         <div class="">
-            <html:form  action="/member/editProfile.do" method="post">
+            <html:form  action="/member/editProfile" method="post">
                 <table>
                 <tr>
                     <td><label for="fname">First Name</label></td>

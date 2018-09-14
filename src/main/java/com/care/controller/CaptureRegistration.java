@@ -1,6 +1,7 @@
 package com.care.controller;
 
-import com.care.model.Member;
+import com.care.exception.MemberAlreadyRegisteredException;
+import com.care.form.RegistrationForm;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.OperationStatus;
@@ -10,43 +11,43 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class VerifyToken extends Action {
-
-    private Logger logger = Logger.getLogger("ResetPassword");
+public class CaptureRegistration extends Action {
+    Logger logger = Logger.getLogger("Registration");
     private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
     static {
-        message.put(OperationStatus.FAILURE, "Invalid Token");
-        message.put(OperationStatus.SUCCESS, "VERIFIED");
+        message.put(OperationStatus.FAILURE, "Unable to Register");
+        message.put(OperationStatus.OTHER, "ALready Registered Try Forgot password");
+        message.put(OperationStatus.SUCCESS, "Successful Registered, Now you can Log in");
     }
-
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String token = request.getParameter("token");
-        String page = "/visitor/updatePassword.jsp";
+        String page = "/visitor/registration.jsp";
+        logger.info(page);
         OperationStatus operationStatus = OperationStatus.FAILURE;
-
+        RegistrationForm registrationDetails = (RegistrationForm) form;
+        logger.info(registrationDetails + " " );
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-        Member member = accountService.getMemberUsingToken(token);
 
-        if (member != Member.EMPTY_MEMBER){
-            request.setAttribute("id", member.getId());
-            request.setAttribute("token", token);
-            logger.info("member's password resetting");
+        logger.info(registrationDetails + "");
+        page = "/login.jsp";
 
-            operationStatus = OperationStatus.SUCCESS;
+        try {
+            operationStatus = accountService.enroll(registrationDetails);
+        }catch (MemberAlreadyRegisteredException e){
+            operationStatus = OperationStatus.OTHER;
         }
-        logger.info("Dispatching to ===" + page);
+        logger.info("Back at servlet");
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
+
+        request.setAttribute("formErrors", registrationDetails);
         return mapping.findForward("success");
+
     }
 }

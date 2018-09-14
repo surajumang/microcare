@@ -23,11 +23,11 @@
         <h2>${FAILURE}</h2>
         <h2>${OTHER}</h2>
 
-        <form action="${pageContext.request.contextPath}/index.jsp" method="get">
+        <form action="${pageContext.request.contextPath}/visitor/login.do" method="get">
              <input type="submit" name="home" value="Home">
         </form>
 
-        <form action="${pageContext.request.contextPath}/visitor/forgotPassword.do" method="get">
+        <form action="${pageContext.request.contextPath}/visitor/captureEmail.do" method="get">
             <label>Email </label>
             <input type="text" name="email" value="">
             <c:out value="${emailError}"/>

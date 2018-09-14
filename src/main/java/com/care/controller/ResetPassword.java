@@ -1,6 +1,6 @@
 package com.care.controller;
 
-import com.care.form.PasswordUpdateForm;
+import com.care.form.PasswordForm;
 import com.care.service.*;
 import com.care.validation.FormPopulator;
 import org.apache.struts.action.Action;
@@ -8,11 +8,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -37,15 +34,15 @@ public class ResetPassword extends Action {
 
         logger.info(token + "Updated");
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
-        PasswordUpdateForm passwordUpdateForm = FormPopulator.populate(request, PasswordUpdateForm.class);
+        PasswordForm passwordForm = FormPopulator.populate(request, PasswordForm.class);
 
-        logger.info(passwordUpdateForm + " found");
+        logger.info(passwordForm + " found");
         OperationStatus operationStatus =
-                authenticationService.updatePasswordWithToken(passwordUpdateForm);
+                authenticationService.updatePasswordWithToken(passwordForm);
         if (operationStatus == OperationStatus.SUCCESS){
-            page = "/index.jsp";
+            page = "/login.jsp";
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return new ActionForward(page);
+        return mapping.findForward("success");
     }
 }

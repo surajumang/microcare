@@ -15,60 +15,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RegistrationForm extends FormBean {
+public class RegistrationForm extends EditProfileForm {
 
-    private Logger logger = Logger.getLogger("RegistrationFormDto");
+    private Logger logger = Logger.getLogger("RegistrationForm");
 
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String zipCode;
-    private String memberType;
     private String password;
     private String password2;
-    private String address;
-    private String phone;
-    private String spouseName;
-    private String experience;
-    private String numberOfChildren;
-    private String expectedPay;
-
-
-    @Email(message = "Email must be alphanumeric and contain an @")
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Name
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @Name
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    @Number(regex = "\\d{6}", message = "exactly six digits required")
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
 
     @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "Must be 5 or more characters without whitespaces ")
     public String getPassword() {
@@ -87,110 +39,24 @@ public class RegistrationForm extends FormBean {
         this.password2 = password2;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getMemberType() {
-        return memberType;
-    }
-
-    public void setMemberType(String memberType) {
-        this.memberType = memberType;
-    }
-
-    @Name(required = false)
-    public String getSpouseName() {
-        return spouseName;
-    }
-
-    public void setSpouseName(String spouseName) {
-        this.spouseName = spouseName;
-    }
-
-    public String getExperience() {
-        return experience;
-    }
-
-    public void setExperience(String experience) {
-        this.experience = experience;
-    }
-
-    @Number(required = false, regex = "\\d{0,3}")
-    public String getNumberOfChildren() {
-        return numberOfChildren;
-    }
-
-    public void setNumberOfChildren(String numberOfChildren) {
-        this.numberOfChildren = numberOfChildren;
-    }
-
-    public String getExpectedPay() {
-        return expectedPay;
-    }
-
-    public void setExpectedPay(String expectedPay) {
-        this.expectedPay = expectedPay;
-    }
-
-    @Number(regex = "\\d{10}", message = "Must be exactly 10 digits ")
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     @Override
     public ActionErrors validateCustom() {
+
         ActionErrors errors = new ActionErrors();
         try {
+            errors = super.validateCustom();
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {
             logger.log(Level.SEVERE, "While validating", e);
         } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, "While validating", e);
         }
-        String errorValue = "";
-        boolean flag = false;
-
         if(! password.equals(password2)){
             errors.add("password2", new ActionMessage("Passwords should match"));
         }
-        if (memberType.equals("SITTER")){
-            String expRegex;
-            String expectedPay;
-            if (!getExperience().matches("\\d{1,2}")){
-                errors.add("experience", new ActionMessage("At most two digits allowed"));
-            }
-            if (!getExpectedPay().matches("\\d{1,3}(\\.\\d{0,2})?")){
-                errors.add("expectedPay", new ActionMessage("Proper format is ddd.dd"));
-            }
+        if (! getEmail().matches("(\\w)+@([A-Za-z]+\\.?)+")){
+            errors.add("email", new ActionMessage("errors.email"));
         }
         return errors;
-    }
-
-    @Override
-    public String toString() {
-        return "RegistrationForm{" +
-                "email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", memberType='" + memberType + '\'' +
-                ", password='" + password + '\'' +
-                ", password2='" + password2 + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", spouseName='" + spouseName + '\'' +
-                ", experience='" + experience + '\'' +
-                ", numberOfChildren='" + numberOfChildren + '\'' +
-                ", expectedPay='" + expectedPay + '\'' +
-                '}';
     }
 }
