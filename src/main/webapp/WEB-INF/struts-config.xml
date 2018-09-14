@@ -127,6 +127,7 @@
 
         <action path="/seeker/deleteJob"
                 type="com.care.controller.seeker.CloseJob">
+            <forward name="success" path="/member/home.do"/>
         </action>
 
         <!-- Both of them belong together*************START***********-->
@@ -147,12 +148,12 @@
         <action path="/seeker/allApplications"
                 type="org.apache.struts.actions.ForwardAction"
                 validate="false"
-                parameter="/seeker/viewApplications">
+                parameter="/seeker/viewApplications.jsp">
         </action>
 
         <action path="/seeker/viewApplications"
                 type="com.care.controller.seeker.ShowApplications">
-            <forward name="success" path="viewApplications.jsp"/>
+            <forward name="success" path="/seeker/allApplications.do"/>
         </action>
         <!-- Both of them belong together*************END*****************-->
 
@@ -314,7 +315,7 @@
 
     </action-mappings>
 
-    <message-resources parameter="resources/Application"/>
+    <message-resources parameter="resources/MessagingResource"/>
 
 </struts-config>
 
