@@ -49,7 +49,7 @@ public class GeneratePasswordResetToken extends Action {
                 }
             }
         }
-
+        logger.info("Dispatching to " + page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return new ActionForward(page);
     }

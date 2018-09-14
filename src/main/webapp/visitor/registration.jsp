@@ -79,7 +79,7 @@
                	        <c:set var="memberType" value="SITTER"/>
                	    </c:if>
                     <td>
-                    <input type="radio" class="memberType" name=""="memberType" value="SEEKER" <c:if test="${memberType=='SEEKER'}">checked="checked"</c:if> onclick="display('SEEKER');">Seeker
+                    <input type="radio" class="memberType" name="memberType" value="SEEKER" <c:if test="${memberType=='SEEKER'}">checked="checked"</c:if> onclick="display('SEEKER');">Seeker
                     <input type="radio" class="memberType" name="memberType" value="SITTER" <c:if test="${memberType=='SITTER'}">checked="checked"</c:if> onclick="display('SITTER');">Sitter
                     </td>
                 </tr>

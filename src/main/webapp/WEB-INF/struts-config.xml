@@ -138,6 +138,10 @@
 
         <action path="/visitor/verifyToken"
                 type="com.care.controller.VerifyToken">
+        </action>
+
+        <action path="/visitor/updatePassword"
+                type="com.care.controller.ResetPassword">
 
         </action>
 

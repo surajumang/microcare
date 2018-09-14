@@ -20,7 +20,7 @@ public class MemberDAOImpl implements MemberDAO {
     public Member getMember(String email) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Connection acquired  :" );
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * "+
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT MEMBER.ID, FIRST_NAME, LAST_NAME, ADDRESS, ZIP_CODE, MEMBER.STATUS, MEMBER_TYPE, EMAIL, PHONE, PASSWORD "+
                 "FROM MEMBER WHERE EMAIL=?");
         preparedStatement.setString(1, email);
 
@@ -36,7 +36,7 @@ public class MemberDAOImpl implements MemberDAO {
     public Member getMember(long memberId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Connection acquired  :" );
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT MEMBER.ID, FIRST_NAME, LAST_NAME, ADDRESS, ZIP_CODE, STATUS, MEMBER_TYPE, EMAIL, PHONE, PASSWORD FROM MEMBER WHERE ID=?");
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT MEMBER.ID, FIRST_NAME, LAST_NAME, ADDRESS, ZIP_CODE, MEMBER.STATUS, MEMBER_TYPE, EMAIL, PHONE, PASSWORD FROM MEMBER WHERE ID=?");
         preparedStatement.setLong(1, memberId);
 
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -54,7 +54,7 @@ public class MemberDAOImpl implements MemberDAO {
         Connection connection = ConnectionUtil.getConnection();
 
         PasswordResetToken passwordResetToken = PasswordResetToken.EMPTY_TOKEN;
-        PreparedStatement statement = connection.prepareStatement("SELECT MEMBER.ID, FIRST_NAME, LAST_NAME, ADDRESS, ZIP_CODE, MEMBER_TYPE, STATUS, EMAIL, PHONE, PASSWORD FROM MEMBER JOIN TOKEN ON MEMBER.ID=TOKEN.ID WHERE TOKEN=?");
+        PreparedStatement statement = connection.prepareStatement("SELECT MEMBER.ID, FIRST_NAME, LAST_NAME, ADDRESS, ZIP_CODE, MEMBER_TYPE, MEMBER.STATUS, EMAIL, PHONE, PASSWORD FROM MEMBER JOIN TOKEN ON MEMBER.ID=TOKEN.ID WHERE TOKEN=?");
         statement.setString(1, token);
 
         ResultSet resultSet = statement.executeQuery();
@@ -185,7 +185,7 @@ public class MemberDAOImpl implements MemberDAO {
         member.setLastName(resultSet.getString("LAST_NAME"));
         member.setMemberType(MemberType.valueOf(resultSet.getString("MEMBER_TYPE")));
         member.setAddress(resultSet.getString("ADDRESS"));
-        member.setStatus(Status.valueOf(resultSet.getString("STATUS")));
+        member.setStatus(Status.valueOf(resultSet.getString("MEMBER.STATUS")));
         member.setPhone(resultSet.getLong("PHONE"));
         member.setZipCode(resultSet.getLong("ZIP_CODE"));
         member.setPassword(resultSet.getString("PASSWORD"));
