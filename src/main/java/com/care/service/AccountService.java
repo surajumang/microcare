@@ -4,6 +4,7 @@ import com.care.form.EditProfileForm;
 import com.care.exception.MemberAlreadyRegisteredException;
 import com.care.form.RegistrationForm;
 import com.care.model.Member;
+import com.care.model.Token;
 import com.care.model.Status;
 
 public interface AccountService extends Service {
@@ -12,7 +13,7 @@ public interface AccountService extends Service {
 
     Member getMember(String email);
 
-    Member getMemberUsingToken(String token);
+    Token getToken(String token);
 
     OperationStatus setMemberStatus(Member member, Status status);
 

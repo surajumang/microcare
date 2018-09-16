@@ -2,14 +2,14 @@ package com.care.model;
 
 import java.sql.Date;
 
-public class PasswordResetToken {
+public class Token {
     private long id;
     private long memberId;
     private String token;
     private Date expirationDate;
     private Status status;  //tells whether token has been used or not.
 
-    public static final PasswordResetToken EMPTY_TOKEN = new PasswordResetToken();
+    public static final Token EMPTY_TOKEN = new Token();
 
     public long getId() {
         return id;
@@ -53,7 +53,7 @@ public class PasswordResetToken {
 
     @Override
     public String toString() {
-        return "PasswordResetToken{" +
+        return "Token{" +
                 "id=" + id +
                 ", memberId=" + memberId +
                 ", token='" + token + '\'' +

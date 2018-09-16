@@ -1,6 +1,7 @@
 package com.care.controller;
 
 import com.care.model.Member;
+import com.care.model.Token;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.OperationStatus;
@@ -10,11 +11,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -28,7 +27,6 @@ public class VerifyToken extends Action {
         message.put(OperationStatus.SUCCESS, "VERIFIED");
     }
 
-
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String token = request.getParameter("token");
@@ -36,10 +34,10 @@ public class VerifyToken extends Action {
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-        Member member = accountService.getMemberUsingToken(token);
+        Token token1 = accountService.getToken(token);
 
-        if (member != Member.EMPTY_MEMBER){
-            request.setAttribute("id", member.getId());
+        if (token1 != Token.EMPTY_TOKEN){
+            request.setAttribute("id", token1.getMemberId());
             request.setAttribute("token", token);
             logger.info("member's password resetting");
 

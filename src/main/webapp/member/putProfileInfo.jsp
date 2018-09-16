@@ -23,51 +23,53 @@
                 <h2>${FAILURE}</h2>
                 <h2>${INVALID}</h2>
                 <h1>Enter Your Details</h1>
+                <html:errors />
         <div class="">
             <html:form  action="/member/editProfile" method="post">
                 <table>
                 <tr>
                     <td><label for="fname">First Name</label></td>
-                    <td><html:text property="firstName" value="${profileInfo.firstName}" /></td>
+                    <td><html:text property="firstName"  /></td>
                 </tr>
                 <tr>
                     <td><label for="lname">Last Name</label></td>
-                    <td><html:text property="lastName"  value="${profileInfo.lastName}"/></td>
+                    <td><html:text property="lastName"  /></td>
                 </tr>
                 <tr>
                     <td><label >Address</label></td>
-                    <td><html:text property="address" value="${profileInfo.address}" /></td>
+                    <td><html:text property="address"  /></td>
                 </tr>
                 <tr>
                     <td><label> Phone </label></td>
-                    <td><html:text property="phone" value="${profileInfo.phone}"  /></td>
+                    <td><html:text property="phone"   /></td>
                 </tr>
                 <tr>
                     <td><label>Zip Code</label></td>
-                    <td><html:text property="zipCode" value="${profileInfo.zipCode}"/></td>
+                    <td><html:text property="zipCode" /></td>
                 </tr>
+                <c:out value="${memberType}"/>
                 <c:if test="${profileInfo.memberType == 'SEEKER'}">
                     <tr>
                         <td><label> Spouse Name</label></td>
-                        <td><html:text property="spouseName" value="${profileInfo.spouseName}"/></td>
+                        <td><html:text property="spouseName" /></td>
                     </tr>
                     <tr>
                         <td><label>Number of Children</label></td>
-                        <td><html:text property="numberOfChildren" value="${profileInfo.numberOfChildren}" /></td>
+                        <td><html:text property="numberOfChildren"  /></td>
                     </tr>
                 </c:if>
                 <c:if test="${profileInfo.memberType == 'SITTER'}">
                     <tr>
                      <td><label> Expected Pay</label></td>
-                     <td><html:text property="expectedPay" value="${profileInfo.expectedPay}" /></td>
+                     <td><html:text property="expectedPay"  /></td>
                     </tr>
                     <tr>
                      <td><label>Years of experience</label></td>
-                     <td><html:text property="experience" value="${profileInfo.experience}" /></td>
+                     <td><html:text property="experience"  /></td>
                     </tr>
                 </c:if>
                 </table>
-                <html:hidden property="memberType" value="${profileInfo.memberType}"/>
+                <html:hidden property="memberType" />
 
                 <html:submit property="" value="Submit"/>
 

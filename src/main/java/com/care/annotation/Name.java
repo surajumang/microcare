@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Name {
     String regex() default "[A-Za-z ]+";
-    String message() default "errors.email";
+    String message() default "errors.name";
     boolean required() default true;
 }

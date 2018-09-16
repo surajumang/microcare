@@ -110,7 +110,7 @@ public class JobForm extends FormBean {
             startDate += ":00";
             endDate += ":00";
         }
-        logger.info("Done with validation");
+        logger.info("Done with validation" + errors);
         return errors;
     }
 }

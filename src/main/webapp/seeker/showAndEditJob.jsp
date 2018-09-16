@@ -18,28 +18,28 @@
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${INVALID}</h2>
-
+        <html:errors/>
         <html:form action="/seeker/captureEditJob" method="post">
             <table>
 
                 <tr>
                      <td><label>Job Title</label></td>
-                     <td><html:text property="title" value="${editJob.title}"/></td>
+                     <td><html:text property="title" /></td>
                 </tr>
                 <tr>
                      <td><label>Hourly Pay</label></td>
-                     <td><html:text property="hourlyPay" value="${editJob.hourlyPay}"/></td>
+                     <td><html:text property="hourlyPay" /></td>
                 </tr>
                 <tr>
                      <td><label>Start Date(Time)</label></td>
-                     <td><html:text property="startDate" value="${editJob.startDate}" /></td>
+                     <td><html:text property="startDate"  /></td>
                 </tr>
                 <tr>
                      <td><label>End Date(Time)</label></td>
-                     <td><html:text property="endDate" value="${editJob.endDate}"/></td>
+                     <td><html:text property="endDate" /></td>
                 </tr>
             </table>
-            <html:hidden property="id" value="${editJob.id}"/>
+            <html:hidden property="id" />
             <html:submit property="submit" value="Submit"/>
         </html:form>
     </body>

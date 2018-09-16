@@ -32,7 +32,10 @@ public class MemberFilter implements Filter {
         String URI = request.getRequestURI();
         HttpSession session = request.getSession(false);
         //check if session != null only then proceed
-        Member currentUser = (Member) session.getAttribute("currentUser");
+        Member currentUser = null;
+        if (session != null){
+            currentUser = (Member) session.getAttribute("currentUser");
+        }
 
         if (currentUser != null){
             logger.info("Member logged in-------------->>>>>>>>>");

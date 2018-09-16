@@ -33,6 +33,7 @@
     <jsp:include page="/header.jsp"/>
     <h2>${SUCCESS}</h2>
     <h2>${FAILURE}</h2>
+    <html:errors />
 
     <h2>Enter Email(partial accepted) to search </h2>
 

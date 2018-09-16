@@ -2,6 +2,7 @@ package com.care.controller.sitter;
 
 import com.care.controller.CommonUtil;
 import com.care.form.ApplicationForm;
+import com.care.model.Application;
 import com.care.model.Member;
 import com.care.service.*;
 import com.care.validation.FormPopulator;
@@ -31,23 +32,27 @@ public class ApplyToJob extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "failure";
+        /*
+        JobID not required from scope now. It can be fetched from the applicationForm.
+         */
+        //long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
 
-        long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
-        ApplicationForm application = FormPopulator.populate(request, ApplicationForm.class);
+        ApplicationForm applicationForm = (ApplicationForm)form;
+        long jobToApplyOn = Long.valueOf(applicationForm.getJobId());
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute("currentUser");
 
-        logger.info(application + "**********");
+        logger.info(applicationForm + "**********");
         logger.info("Called ApplyToJob");
 
         if (jobToApplyOn >=0 ){
-            application.setJobId(String.valueOf(jobToApplyOn));
-            application.setSitterId(String.valueOf(currentMember.getId()));
+//            applicationForm.setJobId(String.valueOf(jobToApplyOn));
+//            applicationForm.setSitterId(String.valueOf(currentMember.getId()));
 
-            operationStatus = sitterService.applyToJob(application);
+            operationStatus = sitterService.applyToJob(applicationForm);
             logger.info("Status okay " + operationStatus);
 
             if (operationStatus == OperationStatus.SUCCESS){
@@ -58,7 +63,7 @@ public class ApplyToJob extends Action {
 
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        request.setAttribute("application", application);
+        request.setAttribute("applicationForm", applicationForm);
         return mapping.findForward("success");
     }
 }

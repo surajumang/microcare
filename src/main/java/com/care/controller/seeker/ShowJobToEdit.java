@@ -48,7 +48,7 @@ public class ShowJobToEdit extends Action {
             Member member = (Member)request.getSession().getAttribute("currentUser");
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
             Job job = null;
-            JobForm jobForm = new JobForm();
+            JobForm jobForm = (JobForm)form;
             try {
                 job = seekerService.getJob(member, id);
                 //ObjectMapper.mapObject();
@@ -70,16 +70,19 @@ public class ShowJobToEdit extends Action {
     }
 
     private void mapJob(Job job, JobForm jobForm){
-        String endDate = String.valueOf(job.getEndDate());
+        ObjectMapper.mapObject(job, jobForm, false);
+
+
+        String endDate = jobForm.getEndDate();
         endDate = endDate.substring(0, endDate.length() - 5);
-        String startDate = String.valueOf(job.getStartDate());
+        String startDate = jobForm.getStartDate();
         startDate = startDate.substring(0, startDate.length() - 5);
 
         jobForm.setEndDate(endDate);
         jobForm.setStartDate(startDate);
-        jobForm.setHourlyPay(String.valueOf(job.getHourlyPay()));
-        jobForm.setSeekerId(String.valueOf(job.getSeekerId()));
-        jobForm.setTitle(job.getTitle());
-        jobForm.setId(String.valueOf(job.getId()));
+//        jobForm.setHourlyPay(String.valueOf(job.getHourlyPay()));
+//        jobForm.setSeekerId(String.valueOf(job.getSeekerId()));
+//        jobForm.setTitle(job.getTitle());
+//        jobForm.setId(String.valueOf(job.getId()));
     }
 }

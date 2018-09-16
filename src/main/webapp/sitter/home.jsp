@@ -14,7 +14,7 @@
 
     </head>
     <body>
-     <jsp:include page="./header.jsp"/>
+     <jsp:include page="/member/header.jsp"/>
         <h2>${SUCCESS}</h2>
                 <h2>${FAILURE}</h2>
                 <h2>${INVALID}</h2>

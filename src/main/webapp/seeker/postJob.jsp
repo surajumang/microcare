@@ -18,7 +18,7 @@
                      <h2>${FAILURE}</h2>
                      <h2>${INVALID}</h2>
 
-
+    <html:errors/>
      <html:form action="/seeker/capturePostJob" method="post">
         <label>Job Title</label>
          <html:text property="title"/>

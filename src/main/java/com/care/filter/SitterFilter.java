@@ -28,7 +28,12 @@ public class SitterFilter implements Filter {
         String appContext = request.getContextPath();
         String URI = request.getRequestURI();
         HttpSession session = request.getSession(false);
-        Member currentUser = (Member) session.getAttribute("currentUser");
+        Member currentUser = null;
+
+        if (session != null){
+            currentUser = (Member) session.getAttribute("currentUser");
+        }
+
 
         if (currentUser != null && currentUser.getMemberType() == MemberType.SITTER){
             logger.info("Member logged in-------------->>>>>>>>>");

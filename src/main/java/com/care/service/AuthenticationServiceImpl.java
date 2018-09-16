@@ -6,8 +6,11 @@ import com.care.model.Member;
 import com.care.dao.DAOFactory;
 import com.care.dao.MemberDAO;
 import com.care.dao.MemberDAOImpl;
+import com.care.model.Status;
+import com.care.model.Token;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             member = memberDAO.getMember(loginForm.getEmail());
             logger.info(member + " ");
-        } catch (java.sql.SQLException e) {
+        } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't fetch member for LoginAction", e);
             status = OperationStatus.FAILURE;
         }
@@ -62,12 +65,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         logger.info(member + "Only password");
         try {
             //double check
-            Member existingMember = memberDAO.getMemberUsingToken(passwordForm.getToken());
+            Token existingToken = memberDAO.getToken(passwordForm.getToken());
 
-            if (existingMember.getId() == member.getId()){
-                if((value = memberDAO.updatePassword(member)) == 1){
-                    value = memberDAO.invalidateToken(passwordForm.getToken());
+            if (existingToken != Token.EMPTY_TOKEN && existingToken.getMemberId() == member.getId()){
+                if (existingToken.getStatus() == Status.ACTIVE &&
+                        existingToken.getExpirationDate().before(new Date(System.currentTimeMillis()))){
+
+                    if(memberDAO.updatePassword(member) == 1){
+                        value = memberDAO.invalidateToken(passwordForm.getToken());
+                    }
                 }
+
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Can't update password", e);

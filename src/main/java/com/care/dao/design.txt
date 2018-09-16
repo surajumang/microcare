@@ -71,11 +71,12 @@ create table MEMBER (
   );
 
 CREATE TABLE TOKEN (
-    ID              INT(10)              PRIMARY KEY,
+    ID              INT(10)              PRIMARY KEY AUTO_INCREMENT,
+    MEMBER_ID       INT(10)              NOT NULL,
     TOKEN           VARCHAR(32)             NOT NULL,
     EXPIRATION_DATE TIMESTAMP               NOT NULL,
     STATUS          ENUM('ACTIVE', 'CLOSED') DEFAULT 'ACTIVE',
-    FOREIGN KEY (ID) REFERENCES MEMBER(ID)
+    FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER(ID)
   );
 
 insert into MEMBER(first_name, last_name, address, phone, email, zip_code, password)

@@ -22,7 +22,7 @@
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${OTHER}</h2>
-
+        <html:errors />
         <html:form action="/member/captureResetPassword" method="get">
             <table>
                 <tr>

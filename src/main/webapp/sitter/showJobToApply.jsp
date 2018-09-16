@@ -39,6 +39,7 @@
 
     </head>
     <body>
+    <html:errors/>
     <jsp:include page="./header.jsp"/>
         <h2>${SUCCESS}</h2>
                 <h2>${FAILURE}</h2>
@@ -65,10 +66,11 @@
                             
                             <td>
                                 <html:form action="/sitter/captureApplication" method="get">
-                                    <html:text property="expectedPay" value="${application.expectedPay}"/>
+                                    <html:text property="expectedPay" />
                                     
-                                    <html:hidden property="id" value="${job.id}"/>
-                                    <html:submit property="" value="Apply"/>
+                                    <html:hidden property="jobId" />
+                                    <html:hidden  property="sitterId"/>
+                                    <html:submit value="Apply"/>
                                 </html:form>
                             </td>
                         </tr>
