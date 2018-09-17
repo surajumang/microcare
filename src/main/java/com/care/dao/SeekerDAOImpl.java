@@ -43,7 +43,7 @@ public class SeekerDAOImpl extends MemberDAOImpl implements SeekerDAO {
             seeker.setNumberOfChildren(resultSet.getInt("NO_CHILDREN"));
             seeker.setSpouseName(resultSet.getString("SPOUSE_NAME"));
         }
-        ObjectMapper.mapObject(member, seeker, false);
+        ObjectMapper.mapObject(member, seeker, true);
         logger.info(seeker + "");
 
         return seeker;

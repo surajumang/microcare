@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.form.EditProfileForm;
 import com.care.model.Member;
 import com.care.model.MemberType;
 import com.care.model.Seeker;
@@ -27,12 +28,15 @@ public class PutProfileInfo extends Action {
         Member currentUser = (Member) request.getSession().getAttribute("currentUser");
         MemberType memberType = currentUser.getMemberType();
         String page = "failure";
+        EditProfileForm editProfileForm = (EditProfileForm)form;
 
         if (memberType == MemberType.SEEKER){
 
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
             Seeker profileInfo = seekerService.getSeeker(currentUser.getId());
             page = "success";
+            //Map the Seeker to a EditProfileForm. No need to attach to a request scope.
+            ObjectMapper.mapObject(profileInfo, editProfileForm, false);
             request.getSession().setAttribute("profileInfo", profileInfo);
             //request.getRequestDispatcher(page).forward(request,response);
         }else {
@@ -40,9 +44,11 @@ public class PutProfileInfo extends Action {
             Sitter profileInfo = sitterService.getSitter(currentUser.getId());
 
             page = "success";
+            ObjectMapper.mapObject(profileInfo, editProfileForm, false);
             request.getSession().setAttribute("profileInfo", profileInfo);
            // request.getRequestDispatcher(page).forward(request,response);
         }
+
         return mapping.findForward(page);
     }
 }

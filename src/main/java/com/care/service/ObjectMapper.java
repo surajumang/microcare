@@ -58,6 +58,10 @@ public class ObjectMapper {
 
     }
 
+    /*
+        Maps a model class to a form or a DTO. from exact data types to String.
+        It will use the static method String.valueOf to do the mapping.
+     */
     private static void simpleMapping(Object src, Object dest) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
         /*
@@ -65,21 +69,33 @@ public class ObjectMapper {
          */
         for (String destSetterMethodName : destSetterMethods.keySet()){
             if (srcGetterMethods.containsKey(destSetterMethodName)){
-                //dest.setXXX(src.getXXX())
+                //dest.setXXX(String.valueOf( src.getXXX() ))
                 Method setter = destSetterMethods.get(destSetterMethodName);
                 Class[] arg = setter.getParameterTypes();
                 /*
+                Argument check is not necessary As the form classes must have Only Strings as members.
                 Check if the argument type is primitive. use Class.isPrimitive()
                  */
                 Method getter = srcGetterMethods.get(destSetterMethodName);
-
+                Method valueOf = String.class.getMethod("valueOf", Object.class);
+                /*
+                If the return type of getter is String then String.valueOf is not required.
+                 */
                 Class returnType = getter.getReturnType();
                 Object getterVal = getter.invoke(src);
-                logger.info(setter.getName() + " --- > " + getter.getName());
+
                 if (getterVal == null){
                     continue;
                 }
-                setter.invoke(dest, getterVal);
+                if (returnType == String.class){
+                    setter.invoke(dest, getterVal);
+                }
+                else{
+                    setter.invoke(dest, valueOf.invoke(null, getterVal));
+                }
+                logger.info(setter.getName() + " --- > " + getter.getName());
+
+                //setter.invoke(dest, getterVal);
             }
         }
     }
@@ -96,14 +112,13 @@ public class ObjectMapper {
                 Method getter = srcGetterMethods.get(srcGetterMethodName);
                 // The method should have exactly one parameter.
                 Class[] argTypes = setter.getParameterTypes();
+                Class returnType = getter.getReturnType();
                 /*
                 if the method takes a primitive as a parameter then it's corresponding wrapper will be used to
                 get the valueOf static method.
                  */
                 //logger.info(setter.getName() + "-------" + getter.getName() + "--------" + argTypes[0].getName());
-                if (argTypes[0].isPrimitive()){
-                    argTypes[0] = WRAPPER_TYPE.get(argTypes[0]);
-                }
+
                 if(argTypes.length != 1){
                     //throw some exception.
                 }
@@ -115,22 +130,30 @@ public class ObjectMapper {
                 /*
                 If the argument type is already a String then no valueOf conversion required.
                  */
-                if (argTypes[0] == String.class){
+                // if the types match(i.e argument of setter is same as return type of getter) then no
+                //  extra stuff required. Simple invocation will work.
+
+                if (returnType == argTypes[0]){
                     logger.info("String arg type of Model " + setter);
                     setter.invoke(dest,  getter.invoke(src));
                 }else {
+
+                    if (argTypes[0].isPrimitive()){
+                        argTypes[0] = WRAPPER_TYPE.get(argTypes[0]);
+                    }
                     //logger.info("Model populated using Static value of");
                     Method valueOf = argTypes[0].getMethod("valueOf", String.class);
                     Object getterValue = getter.invoke(src);
                     //logger.info(valueOf + "--------" + getterValue);
 
-                    if (getterValue == null || valueOf == null)
-                        continue;
-                    logger.info("Setter " + setter );
-                    logger.info("Static method " + valueOf);
-                    logger.info("Getter " + getter);
-                    logger.info("Value of Getter "+getterValue);
-                    setter.invoke(dest, valueOf.invoke(null, getterValue));
+                    if (getterValue != null && valueOf != null && getterValue instanceof String){
+                        logger.info("Setter " + setter.getName() );
+                        logger.info("Static method " + valueOf.getName());
+                        logger.info("Getter " + getter.getName());
+                        logger.info("Value of Getter "+getterValue);
+                        setter.invoke(dest, valueOf.invoke(null, getterValue));
+                    }
+
                 }
 
             }

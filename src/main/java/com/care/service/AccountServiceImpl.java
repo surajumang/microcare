@@ -92,17 +92,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Member getMemberUsingToken(String token) {
+    public Token getToken(String token) {
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
-        Member member;
+        Token token1 = Token.EMPTY_TOKEN;
         try {
-            member = memberDAO.getMemberUsingToken(token);
-            logger.info(member + "found using Token" + token);
+            token1 = memberDAO.getToken(token);
+            logger.info(token1 + "found using Token" + token);
         } catch (java.sql.SQLException e) {
-            logger.log(Level.SEVERE, "Error fetching member using token. Doesn't exist", e);
-            member = Member.EMPTY_MEMBER;
+            logger.log(Level.SEVERE, "Error fetching token. Doesn't exist", e);
+
         }
-        return member;
+        return token1;
     }
 
     @Override
@@ -127,13 +127,13 @@ public class AccountServiceImpl implements AccountService {
 
         if (member != Member.EMPTY_MEMBER){
             logger.info("Member okay" + member);
-            PasswordResetToken token = generatePasswordResetToken(member);
+            Token token = generatePasswordResetToken(member);
             //set token to DB.
             MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
            try {
                memberDAO.addToken(token);
                // code to send email.
-               SendMail.sendMail(email, contextPath + "/visitor/captureToken.do?token=" + token.getToken());
+               sendMail(email, contextPath + "/visitor/captureToken.do?token=" + token.getToken());
                logger.info("mail sent");
                operationStatus = OperationStatus.SUCCESS;
            }catch (SQLException e){
@@ -174,13 +174,13 @@ public class AccountServiceImpl implements AccountService {
         return status;
     }
 
-    private PasswordResetToken generatePasswordResetToken(Member member) {
+    private Token generatePasswordResetToken(Member member) {
 
         String token = "";
         for (int i = 0; i<10; i++){
             token += String.valueOf((int)(Math.random()*10));
         }
-        PasswordResetToken passwordResetToken = new PasswordResetToken();
+        Token passwordResetToken = new Token();
         passwordResetToken.setId(member.getId());
         passwordResetToken.setExpirationDate(new Date(System.currentTimeMillis() + 24*3600*1000));
         passwordResetToken.setStatus(Status.ACTIVE);
@@ -189,11 +189,11 @@ public class AccountServiceImpl implements AccountService {
         return passwordResetToken;
     }
 
-    private OperationStatus setToken(PasswordResetToken passwordResetToken){
+    private OperationStatus setToken(Token token){
         OperationStatus operationStatus=OperationStatus.SUCCESS;
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         try{
-            memberDAO.addToken(passwordResetToken);
+            memberDAO.addToken(token);
         }catch(SQLException e){
             operationStatus = OperationStatus.FAILURE;
             logger.log(Level.SEVERE, "Can't set token ", e);
@@ -243,9 +243,7 @@ public class AccountServiceImpl implements AccountService {
         return status;
     }
 
-    private static final class SendMail {
-
-        public static void sendMail(String email, String token) {
+    public void sendMail(String email, String token) {
 
             final String username = "sjkumar@apostek.com";
             final String password = "me@company512";
@@ -279,7 +277,6 @@ public class AccountServiceImpl implements AccountService {
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
             }
-        }
     }
 
 }

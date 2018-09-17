@@ -6,7 +6,7 @@ package com.care.dao;
 
 import com.care.model.Member;
 import com.care.model.MemberType;
-import com.care.model.PasswordResetToken;
+import com.care.model.Token;
 import com.care.model.Status;
 
 import java.sql.*;
@@ -32,7 +32,7 @@ public class MemberDAOImpl implements MemberDAO {
         }
         return member;
     }
-
+    @Override
     public Member getMember(long memberId) throws SQLException {
         Connection connection = ConnectionUtil.getConnection();
         logger.info("Connection acquired  :" );
@@ -49,22 +49,24 @@ public class MemberDAOImpl implements MemberDAO {
     }
 
     @Override
-    public Member getMemberUsingToken(String token) throws SQLException {
+    public Token getToken(String token) throws SQLException {
         logger.info(token + "Getting memebr using token ");
         Connection connection = ConnectionUtil.getConnection();
 
-        PasswordResetToken passwordResetToken = PasswordResetToken.EMPTY_TOKEN;
-        PreparedStatement statement = connection.prepareStatement("SELECT MEMBER.ID, FIRST_NAME, LAST_NAME, ADDRESS, ZIP_CODE, MEMBER_TYPE, MEMBER.STATUS, EMAIL, PHONE, PASSWORD FROM MEMBER JOIN TOKEN ON MEMBER.ID=TOKEN.ID WHERE TOKEN=?");
+        Token passwordResetToken = Token.EMPTY_TOKEN;
+        PreparedStatement statement = connection.prepareStatement("SELECT ID, MEMBER_ID, TOKEN, EXPIRATION_DATE, STATUS FROM TOKEN WHERE TOKEN=?");
         statement.setString(1, token);
 
         ResultSet resultSet = statement.executeQuery();
-        Member member = Member.EMPTY_MEMBER;
+        Token token1 = Token.EMPTY_TOKEN;
         if (resultSet.next()){
-            logger.info("Found a member using token");
-            member = populateMember(resultSet);
-            logger.info(member + "");
+            token1.setId(resultSet.getLong("ID"));
+            token1.setMemberId(resultSet.getLong("MEMBER_ID"));
+            token1.setToken(resultSet.getString("TOKEN"));
+            token1.setExpirationDate(resultSet.getDate("EXPIRATION_DATE"));
+            token1.setStatus(Status.valueOf(resultSet.getString("STATUS")));
         }
-        return member;
+        return token1;
     }
 
     @Override
@@ -79,35 +81,35 @@ public class MemberDAOImpl implements MemberDAO {
         return statement.executeUpdate();
     }
 
+//    @Override
+//    public Token getToken(String email) throws SQLException {
+//        logger.info(email + "Getting token ");
+//        Connection connection = ConnectionUtil.getConnection();
+//
+//        Token token = Token.EMPTY_TOKEN;
+//        PreparedStatement statement = connection.prepareStatement("SELECT MEMBER.ID, TOKEN, EXPIRATION_DATE, STATUS FROM MEMBER JOIN TOKEN ON MEMBER.ID=TOKEN.ID WHERE EMAIL=?");
+//        statement.setString(1, email);
+//
+//        ResultSet resultSet = statement.executeQuery();
+//        if (resultSet.next()){
+//            token = new Token();
+//            token.setId(resultSet.getLong("MEMBER.ID"));
+//            token.setToken(resultSet.getString("TOKEN"));
+//            token.setExpirationDate(resultSet.getDate("EXPIRATION_DATE"));
+//            token.setStatus(Status.valueOf(resultSet.getString("STATUS")));
+//        }
+//        return token;
+//    }
     @Override
-    public PasswordResetToken getToken(String email) throws SQLException {
-        logger.info(email + "Getting token ");
-        Connection connection = ConnectionUtil.getConnection();
-
-        PasswordResetToken passwordResetToken = PasswordResetToken.EMPTY_TOKEN;
-        PreparedStatement statement = connection.prepareStatement("SELECT MEMBER.ID, TOKEN, EXPIRATION_DATE, STATUS FROM MEMBER JOIN TOKEN ON MEMBER.ID=TOKEN.ID WHERE EMAIL=?");
-        statement.setString(1, email);
-
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()){
-            passwordResetToken = new PasswordResetToken();
-            passwordResetToken.setId(resultSet.getLong("MEMBER.ID"));
-            passwordResetToken.setToken(resultSet.getString("TOKEN"));
-            passwordResetToken.setExpirationDate(resultSet.getDate("EXPIRATION_DATE"));
-            passwordResetToken.setStatus(Status.valueOf(resultSet.getString("STATUS")));
-        }
-        return passwordResetToken;
-    }
-
-    public int addToken(PasswordResetToken passwordResetToken) throws SQLException {
-        logger.info(passwordResetToken + " ");
+    public int addToken(Token token) throws SQLException {
+        logger.info(token + " ");
         Connection connection = ConnectionUtil.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("INSERT INTO TOKEN(ID, TOKEN, EXPIRATION_DATE, STATUS) VALUES(?,?,?,?)");
-        statement.setLong(1, passwordResetToken.getId());
-        statement.setString(2, passwordResetToken.getToken());
-        statement.setDate(3, passwordResetToken.getExpirationDate());
-        statement.setString(4, passwordResetToken.getStatus().name());
+        statement.setLong(1, token.getId());
+        statement.setString(2, token.getToken());
+        statement.setDate(3, token.getExpirationDate());
+        statement.setString(4, token.getStatus().name());
 
         return statement.executeUpdate();
     }
@@ -117,8 +119,9 @@ public class MemberDAOImpl implements MemberDAO {
         logger.info(token + " to be invalidated ");
         Connection connection = ConnectionUtil.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM TOKEN WHERE TOKEN.TOKEN=? ");
-        statement.setString(1, token);
+        PreparedStatement statement = connection.prepareStatement("UPDATE TOKEN SET STATUS = ? WHERE TOKEN.TOKEN=? ");
+        statement.setString(1, Status.CLOSED.name());
+        statement.setString(2, token);
 
         return statement.executeUpdate();
     }

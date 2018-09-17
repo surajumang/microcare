@@ -21,13 +21,13 @@
     <body>
 
 
-      <jsp:include page="./header.jsp"/>
+      <jsp:include page="/member/header.jsp"/>
       <h2>${SUCCESS}</h2>
               <h2>${FAILURE}</h2>
               <h2>${UNAUTHORIZED}</h2>
               <h2>${INVALID}</h2>
               <h2>${ACCOUNT_STATUS}</h2>
-
+        <html:errors />
       <div class="seeker">
           <form class="" action="${pageContext.request.contextPath}/seeker/postJob.do" method="post">
                 <input type="submit" name="PostJob" value="Post Job"/>

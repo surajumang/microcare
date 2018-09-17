@@ -109,6 +109,14 @@
                 validate="false"
                 parameter="/seeker/showAndEditJob.jsp">
         </action>
+        <action path="/seeker/showJobToEdit"
+                type="com.care.controller.seeker.ShowJobToEdit"
+                name="jobForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/seeker/editJob.do"/>
+        </action>
+
         <!--It will take a form as input which will contain details related to a Form, validates it and writes to DB if validation
             is successful. User will stuck here until submits proper values or chooses another option-->
         <action path="/seeker/captureEditJob"
@@ -120,14 +128,11 @@
             <forward name="success" path="/seeker/showJobs.do"/>
         </action>
         <!-- This will not directly call the jsp rather it will user the ForwardAction class -->
-        <action path="/seeker/showJobToEdit"
-                type="com.care.controller.seeker.ShowJobToEdit">
-            <forward name="success" path="/seeker/editJob.do"/>
-        </action>
+
 
         <action path="/seeker/deleteJob"
                 type="com.care.controller.seeker.CloseJob">
-            <forward name="success" path="/member/home.do"/>
+            <forward name="success" path="/seeker/showJobs.do"/>
         </action>
 
         <!-- Both of them belong together*************START***********-->
@@ -165,6 +170,15 @@
                 validate="false"
                 parameter="/member/putProfileInfo.jsp">
         </action>
+
+        <action path="/member/putProfileInfo"
+                type="com.care.controller.PutProfileInfo"
+                name="profileForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/member/profile.do"/>
+        </action>
+
         <action path="/member/editProfile"
                 type="com.care.controller.EditProfileAction"
                 name="profileForm"
@@ -173,10 +187,7 @@
                 input="/member/profile.do">
             <forward name="success" path="/member/home.do"/>
         </action>
-        <action path="/member/putProfileInfo"
-                type="com.care.controller.PutProfileInfo">
-            <forward name="success" path="/member/profile.do"/>
-        </action>
+
         <!--The three of them belong together*************END*****************-->
 
         <!-- Both of them belong together*************START***********-->
@@ -258,17 +269,25 @@
             after the application is successful it will take it back to the all jobs page using an Action class such
             that the changes are visible to the user -->
 
-        <action path="/sitter/apply"
+
+        <action path="/sitter/showJobToApply"
                 type="org.apache.struts.actions.ForwardAction"
                 validate="false"
-                parameter="/sitter/applyToJob.jsp">
+                parameter="/sitter/showJobToApply.jsp">
+        </action>
+        <action path="/sitter/jobForApplication"
+                type="com.care.controller.sitter.ShowJobToApply"
+                name="applicationForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/sitter/showJobToApply.do"/>
         </action>
         <action path="/sitter/captureApplication"
                 type="com.care.controller.sitter.ApplyToJob"
                 name="applicationForm"
                 scope="request"
                 validate="true"
-                input="sitter/apply.do">
+                input="/sitter/showJobToApply.do">
             <forward name="success" path="/sitter/showJobs.do"/>
         </action>
         <!--Simply shows all the jobs available to the user( excludes already applied active jobs)-->
@@ -284,15 +303,7 @@
         </action>
 
         <!-- Both of them belong together*************START***********-->
-        <action path="/sitter/showJobToApply"
-                type="org.apache.struts.actions.ForwardAction"
-                validate="false"
-                parameter="/sitter/showJobToApply.jsp">
-        </action>
-        <action path="/sitter/jobForApplication"
-                type="com.care.controller.sitter.ShowJobToApply">
-            <forward name="success" path="/sitter/showJobToApply.do"/>
-        </action>
+
         <!-- Both of them belong together*************END***********-->
 
         <!-- The three of them are chained together *************START***********-->
@@ -315,7 +326,11 @@
 
     </action-mappings>
 
+<<<<<<< HEAD
     <message-resources parameter="resources/MessagingResource"/>
+=======
+    <message-resources parameter="MessagingResource.properties"/>
+>>>>>>> a03faa46ce43204ae1de926361e32139d267b007
 
 </struts-config>
 

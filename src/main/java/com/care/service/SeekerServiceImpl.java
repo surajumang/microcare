@@ -123,6 +123,7 @@ public class SeekerServiceImpl implements SeekerService {
         try{
             Job job = jobDAO.getJob(jobId);
             logger.info(job + " ");
+            //[todo] check if job is not null
             status = job.getSeekerId() == member.getId();
         }catch (SQLException e){
             status = false;

@@ -38,7 +38,7 @@
         <h2>${INVALID}</h2>
         <h2>${APPSUCCESS}</h2>
 
-
+    <c:if test="${fn:length(allJobs) > 0}">
         <table>
             <thead>
                 <tr>
@@ -67,6 +67,7 @@
             </tr>
         </c:forEach>
         </table>
+    </c:if>
         </body>
         <jsp:include page="/footer.jsp"/>
 </html>

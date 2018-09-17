@@ -41,7 +41,7 @@
             <h2>${FAILURE}</h2>
             <h2>${INVALID}</h2>
 
-
+        <html:errors/>
 
          <a href="${pageContext.request.contextPath}/visitor/login.do" role="button">Home</a>
         <h1>Enter Your Details</h1>

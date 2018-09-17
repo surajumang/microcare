@@ -23,7 +23,7 @@ public final class JobDAOImpl implements JobDAO {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM JOB WHERE ID=?");
         statement.setLong(1,jobId);
         ResultSet resultSet = statement.executeQuery();
-        Job job = null;
+        Job job = Job.EMPTY_JOB;
 
         if (resultSet.next()){
             job = populateJob(resultSet);

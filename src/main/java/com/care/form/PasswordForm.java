@@ -31,7 +31,7 @@ public class PasswordForm extends FormBean {
         this.currentPassword = currentPassword;
     }
 
-    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "error.password.length")
+    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "error.password")
     public String getPassword() {
         return password;
     }

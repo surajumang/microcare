@@ -1,7 +1,7 @@
 package com.care.dao;
 
 import com.care.model.Member;
-import com.care.model.PasswordResetToken;
+import com.care.model.Token;
 import com.care.model.Status;
 
 import java.sql.SQLException;
@@ -18,7 +18,7 @@ public class HMemberDAOImpl implements MemberDAO {
     }
 
     @Override
-    public Member getMemberUsingToken(String token) throws SQLException {
+    public Token getToken(String token) throws SQLException {
         return null;
     }
 
@@ -27,13 +27,9 @@ public class HMemberDAOImpl implements MemberDAO {
         return 0;
     }
 
-    @Override
-    public PasswordResetToken getToken(String email) throws SQLException {
-        return null;
-    }
 
     @Override
-    public int addToken(PasswordResetToken passwordResetToken) throws SQLException {
+    public int addToken(Token token) throws SQLException {
         return 0;
     }
 
