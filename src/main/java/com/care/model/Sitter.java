@@ -32,12 +32,4 @@ public class Sitter extends Member {
                 this.expectedPay = expectedPay;
         }
 
-        @Override
-        public String toString() {
-                return "Sitter{" +
-                        "id=" + id +
-                        ", experience=" + experience +
-                        ", expectedPay=" + expectedPay +
-                        '}' + super.toString();
-        }
 }

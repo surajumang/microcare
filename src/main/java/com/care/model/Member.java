@@ -106,23 +106,4 @@ public class Member {
                 this.password = password;
         }
 
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone=" + phone +
-                ", memberType=" + memberType +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", zipCode=" + zipCode +
-                ", status=" + status +
-                ", lastModified=" + lastModified +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
-
 }

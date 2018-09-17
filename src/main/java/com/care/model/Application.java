@@ -92,18 +92,5 @@ public class Application {
                 this.lastModified = lastModified;
         }
 
-        @Override
-        public String toString() {
-                return "Application{" +
-                        "id=" + id +
-                        ", jobId=" + jobId +
-                        ", sitterId=" + sitterId +
-                        ", expectedPay=" + expectedPay +
-                        ", status=" + status +
-                        ", dateCreated=" + dateCreated +
-                        ", lastModified=" + lastModified +
-                        ", job=" + job +
-                        ", sitter=" + sitter +
-                        '}';
-        }
+
 }

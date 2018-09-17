@@ -99,18 +99,4 @@ public class Job {
         this.dateOfCreation = dateOfCreation;
     }
 
-    @Override
-    public String toString() {
-        return "Job{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", seekerId=" + seekerId +
-                ", hourlyPay=" + hourlyPay +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", status=" + status +
-                ", dateOfCreation=" + dateOfCreation +
-                '}';
-    }
-
 }

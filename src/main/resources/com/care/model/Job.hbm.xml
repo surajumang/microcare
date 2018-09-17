@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.care.model.Job" table="JOB">
+        <id name="Id">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+
+        <property name="title" type="string">
+            <column name="TITLE" length="100" not-null="true" />
+        </property>
+
+        <property name="startDate" type="timestamp">
+            <column name="START_DATE"  not-null="true" />
+        </property>
+
+        <property name="endDate" type="timestamp">
+            <column name="END_DATE"/>
+        </property>
+
+        <property name="hourlyPay">
+            <column name="HOURLY_PAY"/>
+        </property>
+
+        <property name="dateCreated" type="timestamp" generated="always">
+            <column name="DATE_CREATED"/>
+        </property>
+
+        <!--<property name="seekerId">-->
+            <!--<column name="SEEKER_ID"/>-->
+        <!--</property>-->
+
+        <!--Enum type -->
+        <property name="status">
+            <column name="STATUS"/>
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.care.model.Status</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+        <many-to-one name="seeker" class="com.care.model.Seeker">
+            <column name="SEEKER_ID"/>
+        </many-to-one>
+
+        <set name="applications" table="APPLICATION">
+            <key column="JOB_ID"/>
+            <one-to-many class="com.care.model.Application"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

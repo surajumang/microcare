@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.care.model.Token" table="TOKEN">
+        <id name="id">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <property name="token" >
+            <column name="TOKEN"  />
+        </property>
+        <property name="expirationDate" type="timestamp">
+            <column name="EXPIRATION_DATE" />
+        </property>
+
+        <property name="status">
+            <column name="STATUS"  />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.care.model.Status</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        <many-to-one name="member" class="com.care.model.Member">
+            <column name="MEMBER_ID"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

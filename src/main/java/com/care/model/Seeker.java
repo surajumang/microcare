@@ -35,12 +35,4 @@ public class Seeker extends Member{
                 this.spouseName = spouseName;
         }
 
-    @Override
-    public String toString() {
-        return "Seeker{" +
-                "id=" + id +
-                ", numberOfChildren=" + numberOfChildren +
-                ", spouseName='" + spouseName + '\'' +
-                '}' + super.toString();
-    }
 }

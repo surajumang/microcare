@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+    <class name="com.care.model.Application" table="APPLICATION">
+        <id name="Id">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        <!--jobId and sitterId are refrences to other tables, so they will go with their
+            corresponding description-->
+
+        <property name="expectedPay">
+            <column name="EXPECTED_PAY"   />
+        </property>
+        <property name="status">
+            <column name="STATUS"  />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.care.model.Status</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+
+        <property name="dateCreated" type="timestamp" generated="always">
+            <column name="DATE_CREATED"/>
+        </property>
+
+        <property name="lastModified" type="timestamp" generated="always">
+            <column name="LAST_MODIFIED"/>
+        </property>
+
+        <!--<property name="jobId">-->
+            <!--<column name="JOB_ID"/>-->
+        <!--</property>-->
+        <!--<property name="sitterId">-->
+            <!--<column name="SITTER_ID"/>-->
+        <!--</property>-->
+
+        <many-to-one name="sitter" class="com.care.model.Sitter">
+            <column name="SITTER_ID"/>
+        </many-to-one>
+
+        <many-to-one name="job" class="com.care.model.Job">
+            <column name="JOB_ID"/>
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

@@ -51,14 +51,4 @@ public class Token {
         this.memberId = memberId;
     }
 
-    @Override
-    public String toString() {
-        return "Token{" +
-                "id=" + id +
-                ", memberId=" + memberId +
-                ", token='" + token + '\'' +
-                ", expirationDate=" + expirationDate +
-                ", status=" + status +
-                '}';
-    }
 }
