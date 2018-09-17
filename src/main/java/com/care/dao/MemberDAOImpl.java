@@ -105,8 +105,8 @@ public class MemberDAOImpl implements MemberDAO {
         logger.info(token + " ");
         Connection connection = ConnectionUtil.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO TOKEN(ID, TOKEN, EXPIRATION_DATE, STATUS) VALUES(?,?,?,?)");
-        statement.setLong(1, token.getId());
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO TOKEN( MEMBER_ID, TOKEN, EXPIRATION_DATE, STATUS) VALUES(?,?,?,?)");
+        statement.setLong(1, token.getMemberId());
         statement.setString(2, token.getToken());
         statement.setDate(3, token.getExpirationDate());
         statement.setString(4, token.getStatus().name());

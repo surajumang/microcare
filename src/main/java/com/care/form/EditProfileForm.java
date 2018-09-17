@@ -65,7 +65,7 @@ public class EditProfileForm extends  FormBean {
         this.spouseName = spouseName;
     }
 
-    @Number(required = false, regex = "\\d{0,2}", message = "errors.number.children.length")
+    @Number(required = false, regex = "\\d{0,2}", message = "errors.number.children")
     public String getNumberOfChildren() {
         return numberOfChildren;
     }
@@ -92,7 +92,7 @@ public class EditProfileForm extends  FormBean {
         this.lastName = lastName;
     }
 
-    @Number(regex = "\\d{6}", message = "errors.number.zipcode.length")
+    @Number(regex = "\\d{6}", message = "errors.number.zipcode")
     public String getZipCode() {
         return zipCode;
     }
@@ -117,7 +117,7 @@ public class EditProfileForm extends  FormBean {
         this.address = address;
     }
 
-    @Number(regex = "\\d{10}", message = "errors.number.phone.length")
+    @Number(regex = "\\d{10}", message = "errors.number.phone")
     public String getPhone() {
         return phone;
     }
@@ -147,7 +147,7 @@ public class EditProfileForm extends  FormBean {
                 errors.add("expectedPay", new ActionMessage("errors.amount"));
             }
             if (! experience.matches("\\d{1,2}")){
-                errors.add("experience", new ActionMessage("errors.number"));
+                errors.add("experience", new ActionMessage("errors.experience"));
             }
         }
         return errors;

@@ -32,7 +32,7 @@ public class ApplicationForm extends FormBean {
         this.sitterId = sitterId;
     }
 
-    @Number(required = true, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "Format: DDD.DD")
+    @Number(required = true, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "errors.amount")
     public String getExpectedPay() {
         return expectedPay;
     }

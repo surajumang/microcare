@@ -22,7 +22,7 @@ public class RegistrationForm extends EditProfileForm {
     private String password;
     private String password2;
 
-    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "Must be 5 or more characters without whitespaces ")
+    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "errors.password")
     public String getPassword() {
         return password;
     }
@@ -52,7 +52,7 @@ public class RegistrationForm extends EditProfileForm {
             logger.log(Level.SEVERE, "While validating", e);
         }
         if(! password.equals(password2)){
-            errors.add("password2", new ActionMessage("Passwords should match"));
+            errors.add("password2", new ActionMessage("errors.password.mismatch"));
         }
         if (! getEmail().matches("(\\w)+@([A-Za-z]+\\.?)+")){
             errors.add("email", new ActionMessage("errors.email"));

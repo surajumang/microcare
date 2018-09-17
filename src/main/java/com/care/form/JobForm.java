@@ -48,7 +48,7 @@ public class JobForm extends FormBean {
         this.title = title;
     }
 
-    @Number(regex = "\\d{1,3}(\\.\\d{0,2})?")
+    @Number(regex = "\\d{1,3}(\\.\\d{0,2})?", message = "errors.amount")
     public String getHourlyPay() {
         return hourlyPay;
     }

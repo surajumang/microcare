@@ -326,7 +326,8 @@
 
     </action-mappings>
 
-    <message-resources parameter="MessagingResource.properties"/>
+    <message-resources parameter="MessagingResource"/>
+
 
 </struts-config>
 
