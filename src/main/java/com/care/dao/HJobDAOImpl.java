@@ -9,6 +9,7 @@ import java.util.List;
 public class HJobDAOImpl implements JobDAO {
     @Override
     public int addJob(Job job) throws SQLException {
+
         return 0;
     }
 

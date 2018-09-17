@@ -21,15 +21,19 @@ public class HApplicationDAOImpl implements ApplicationDAO {
     @Override
     public Application getApplication(long applicationId) throws SQLException {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Application application = Application.EMPTY_APPLICATION;
-        application = (Application) session.get(Application.class, applicationId);
+        Application application = (Application) session.get(Application.class, applicationId);
+        if (application == null){
+            application = Application.EMPTY_APPLICATION;
+        }
+        session.getTransaction().commit();
+        session.close();
         return application;
     }
 
     @Override
     public List<Application> getAllApplications(long sitterId) throws SQLException {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+
         return null;
     }
 
