@@ -181,7 +181,7 @@ public class AccountServiceImpl implements AccountService {
             token += String.valueOf((int)(Math.random()*10));
         }
         Token passwordResetToken = new Token();
-        passwordResetToken.setId(member.getId());
+        passwordResetToken.setMemberId(member.getId());
         passwordResetToken.setExpirationDate(new Date(System.currentTimeMillis() + 24*3600*1000));
         passwordResetToken.setStatus(Status.ACTIVE);
         passwordResetToken.setToken(token);
