@@ -5,32 +5,41 @@
 
 <hibernate-mapping>
     <class name="com.care.model.Member" table="MEMBER">
+
         <id name="id">
             <column name="ID" />
             <generator class="identity" />
         </id>
+
         <property name="firstName" type="string">
             <column name="first_name" length="100" not-null="true" />
         </property>
+
         <property name="lastName" type="string">
             <column name="last_name" length="100" not-null="true" />
         </property>
+
         <property name="email" type="string">
             <column name="email" length="100" not-null="true"/>
         </property>
+
         <property name="phone">
-            <column name="phone" length="10" not-null="true"/>
+            <column name="phone" length="10" />
         </property>
+
         <property name="address" type="string" >
             <column name="ADDRESS" length="250"/>
         </property>
+
         <property name="zipCode">
-            <column name="ZIPCODE" length="6"/>
+            <column name="ZIPCODE" />
         </property>
+
         <property name="lastModified">
             <column name="LAST_MODIFIED"/>
         </property>
         <!--Enum type -->
+
         <property name="memberType" >
             <column name="MEMBER_TYPE"/>
             <type name="org.hibernate.type.EnumType">
@@ -38,6 +47,7 @@
                 <param name="useNamed">true</param>
             </type>
         </property>
+
         <property name="status">
             <column name="STATUS"/>
             <type name="org.hibernate.type.EnumType">
@@ -45,18 +55,24 @@
                 <param name="useNamed">true</param>
             </type>
         </property>
+
         <property name="password">
             <column name="PASSWORD" length="65"/>
         </property>
+
+        <set name="tokens" table="TOKEN">
+            <key column="MEMBER_ID"/>
+            <one-to-many class="com.care.model.Token"/>
+        </set>
 
         <joined-subclass name="com.care.model.Seeker"
                          table="SEEKER">
             <key column="ID"/>
             <property name="spouseName" type="string">
-                <column name="spouse_name" length="100" not-null="true" />
+                <column name="SPOUSE_NAME" length="100" not-null="true" />
             </property>
             <property name="numberOfChildren" >
-                <column name="number_children" />
+                <column name="NO_CHILDREN" />
             </property>
             <set name="jobs" table="JOB">
                 <key column="SEEKER_ID"/>
@@ -80,9 +96,6 @@
             </set>
 
         </joined-subclass>
-        <set name="tokens" table="TOKEN">
-            <key column="MEMBER_ID"/>
-            <one-to-many class="com.care.model.Token"/>
-        </set>
+
     </class>
 </hibernate-mapping>

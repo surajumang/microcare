@@ -1,13 +1,19 @@
 
 package com.care.model;
 
+import java.util.Set;
+
 public class Seeker extends Member{
 
     private long id;
     private int numberOfChildren;
     private String spouseName;
+    private Set<Job> jobs;
 
-    public static final Seeker EMPTY_SEEKER = new Seeker();
+    private static final Seeker EMPTY_SEEKER = new Seeker();
+
+    public Seeker() {
+    }
 
     @Override
     public long getId() {
@@ -34,5 +40,17 @@ public class Seeker extends Member{
     public void setSpouseName(String spouseName) {
                 this.spouseName = spouseName;
         }
+
+    public Set<Job> getJobs() {
+        return jobs;
+    }
+
+    public void setJobs(Set<Job> jobs) {
+        this.jobs = jobs;
+    }
+
+    public static Seeker emptySeeker(){
+        return EMPTY_SEEKER;
+    }
 
 }

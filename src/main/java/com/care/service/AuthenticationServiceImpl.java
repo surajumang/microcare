@@ -1,15 +1,14 @@
 package com.care.service;
 
+import com.care.dao.HMemberDAOImpl;
 import com.care.form.LoginForm;
 import com.care.form.PasswordForm;
 import com.care.model.Member;
 import com.care.dao.DAOFactory;
 import com.care.dao.MemberDAO;
-import com.care.dao.MemberDAOImpl;
 import com.care.model.Status;
 import com.care.model.Token;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,12 +24,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         logger.info("User trying to Log in");
         OperationStatus status = OperationStatus.FAILURE;
 
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
         Member member = null;
         try {
             member = memberDAO.getMember(loginForm.getEmail());
             logger.info(member + " ");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't fetch member for LoginAction", e);
             status = OperationStatus.FAILURE;
         }
@@ -58,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         int value = -1;
         passwordForm.setPassword(Hash.createHash(passwordForm.getPassword()));
 
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
         Member member = new Member();
         logger.info(passwordForm + "PASSSWORD");
         ObjectMapper.mapObject(passwordForm, member, true);
@@ -67,7 +66,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             //double check
             Token existingToken = memberDAO.getToken(passwordForm.getToken());
 
-            if (existingToken != Token.EMPTY_TOKEN && existingToken.getMemberId() == member.getId()){
+            if (existingToken != Token.emptyToken() && existingToken.getMember().getId() == member.getId()){
                 if (existingToken.getStatus() == Status.ACTIVE &&
                         existingToken.getExpirationDate().before(new Date(System.currentTimeMillis()))){
 
@@ -77,7 +76,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 }
 
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't update password", e);
             status = OperationStatus.FAILURE;
         }
@@ -96,7 +95,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         int value = -1;
         passwordForm.setPassword(Hash.createHash(passwordForm.getPassword()));
 
-        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
         Member newmember = new Member();
         logger.info(passwordForm + "PASSSWORD");
         ObjectMapper.mapObject(passwordForm, newmember, true);
@@ -109,7 +108,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             if (existingMember.getPassword().equals(currentPasswordHash) ){
                 value = memberDAO.updatePassword(newmember);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't update password", e);
             status = OperationStatus.FAILURE;
         }

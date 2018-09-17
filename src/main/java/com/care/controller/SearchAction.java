@@ -6,17 +6,13 @@ import com.care.model.MemberType;
 import com.care.model.Seeker;
 import com.care.model.Sitter;
 import com.care.service.*;
-import com.care.validation.FormPopulator;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +37,7 @@ public class SearchAction extends Action {
 
         if(member.getMemberType() == MemberType.SITTER){
             SeekerService seekerService= ServiceFactory.get(SeekerServiceImpl.class);
-            List<Seeker> seekers = seekerService.getSeekerByEmail(searchCriteria.getEmail());
+            List<Seeker> seekers = seekerService.getSeekersByEmail(searchCriteria.getEmail());
             logger.info("Fetched Seekers " + seekers);
             if (!seekers.isEmpty()){
                 operationStatus = OperationStatus.SUCCESS;
@@ -50,7 +46,7 @@ public class SearchAction extends Action {
         }
         else {
             SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-            List<Sitter> sitters = sitterService.getSitterByEmail(searchCriteria.getEmail());
+            List<Sitter> sitters = sitterService.getSittersByEmail(searchCriteria.getEmail());
             logger.info("Fetched sitters");
             if (!sitters.isEmpty()){
                 operationStatus = OperationStatus.SUCCESS;

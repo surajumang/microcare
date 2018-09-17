@@ -9,9 +9,11 @@
             <column name="ID" />
             <generator class="identity" />
         </id>
+
         <property name="token" >
             <column name="TOKEN"  />
         </property>
+
         <property name="expirationDate" type="timestamp">
             <column name="EXPIRATION_DATE" />
         </property>
@@ -23,8 +25,10 @@
                 <param name="useNamed">true</param>
             </type>
         </property>
+
         <many-to-one name="member" class="com.care.model.Member">
             <column name="MEMBER_ID"/>
         </many-to-one>
+
     </class>
 </hibernate-mapping>

@@ -2,6 +2,7 @@
 package com.care.model;
 
 import java.sql.Date;
+import java.util.Set;
 
 public class Member {
         private long id;
@@ -12,11 +13,15 @@ public class Member {
         private String email;
         private String address;
         private long zipCode;
-        private Status status;
+        private Status status = Status.ACTIVE;
         private Date lastModified;
         private String password;
+        private Set<Token> tokens;
 
-        public static final Member EMPTY_MEMBER = new Member();
+        private static final Member EMPTY_MEMBER = new Member();
+
+        public Member() {
+        }
 
         public long getId() {
                 return id;
@@ -104,6 +109,18 @@ public class Member {
 
         public void setPassword(String password) {
                 this.password = password;
+        }
+
+        public Set<Token> getTokens() {
+                return tokens;
+        }
+
+        public void setTokens(Set<Token> tokens) {
+                this.tokens = tokens;
+        }
+
+        public static Member emptyMember(){
+                return EMPTY_MEMBER;
         }
 
 }

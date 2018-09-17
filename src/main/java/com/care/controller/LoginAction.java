@@ -54,7 +54,7 @@ public class LoginAction extends Action {
 
         if (status == OperationStatus.SUCCESS){
             Member member = accountService.getMember(userLoginForm.getEmail());
-            if (member != Member.EMPTY_MEMBER && member.getStatus() == Status.ACTIVE){
+            if (member != Member.emptyMember() && member.getStatus() == Status.ACTIVE){
 
                 request.getSession().setAttribute("currentUser" ,member);
                 logger.info("Member set to sesion" + member);
@@ -65,7 +65,7 @@ public class LoginAction extends Action {
 
                 page = "success";
             }
-            else if (member != Member.EMPTY_MEMBER && member.getStatus() == Status.CLOSED){
+            else if (member != Member.emptyMember() && member.getStatus() == Status.CLOSED){
                 request.setAttribute("STATUS", member.getStatus().name());
                 request.getSession().setAttribute("closedUser", member);
                 logger.info("CLosed user trying to log in");

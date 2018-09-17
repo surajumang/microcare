@@ -1,21 +1,24 @@
 
 package com.care.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
 public class Job {
     private long id;
     private String title;
-    private long seekerId;
     private double hourlyPay;
     private Timestamp startDate;
     private Timestamp endDate;
-    private Status status;
-    private Timestamp dateOfCreation;
+    private Status status = Status.ACTIVE;
+    private Timestamp dateCreated;
     private Seeker seeker;
-    private List<Application> applications;
+    private Set<Application> applications;
+
+    private static final Job EMPTY_JOB = new Job();
+
+    public Job() {
+    }
 
     public Seeker getSeeker() {
         return seeker;
@@ -25,15 +28,13 @@ public class Job {
         this.seeker = seeker;
     }
 
-    public List<Application> getApplications() {
+    public Set<Application> getApplications() {
         return applications;
     }
 
-    public void setApplications(List<Application> applications) {
+    public void setApplications(Set<Application> applications) {
         this.applications = applications;
     }
-
-    public static final Job EMPTY_JOB = new Job();
 
     public double getHourlyPay() {
         return hourlyPay;
@@ -57,14 +58,6 @@ public class Job {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public long getSeekerId() {
-        return seekerId;
-    }
-
-    public void setSeekerId(long seekerId) {
-        this.seekerId = seekerId;
     }
 
     public Timestamp getStartDate() {
@@ -91,12 +84,16 @@ public class Job {
         this.status = status;
     }
 
-    public Timestamp getDateOfCreation() {
-        return dateOfCreation;
+    public Timestamp getDateCreated() {
+        return dateCreated;
     }
 
-    public void setDateOfCreation(Timestamp dateOfCreation) {
-        this.dateOfCreation = dateOfCreation;
+    public void setDateCreated(Timestamp dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public static Job emptyJob(){
+        return EMPTY_JOB;
     }
 
 }

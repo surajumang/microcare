@@ -4,12 +4,15 @@ import java.sql.Date;
 
 public class Token {
     private long id;
-    private long memberId;
+    private Member member;
     private String token;
     private Date expirationDate;
     private Status status;  //tells whether token has been used or not.
 
-    public static final Token EMPTY_TOKEN = new Token();
+    private static final Token EMPTY_TOKEN = new Token();
+
+    public Token() {
+    }
 
     public long getId() {
         return id;
@@ -43,12 +46,16 @@ public class Token {
         this.status = status;
     }
 
-    public long getMemberId() {
-        return memberId;
+    public Member getMember() {
+        return member;
     }
 
-    public void setMemberId(long memberId) {
-        this.memberId = memberId;
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public static Token emptyToken(){
+        return EMPTY_TOKEN;
     }
 
 }

@@ -33,8 +33,8 @@ public class BackOfficeProcess  {
         public void run() {
             while (true){
                 logger.info("BackOffice run");
-                JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-                MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+                JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+                MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
 
                 try {
                     int job = jobDAO.expireStaleJobs();
@@ -43,9 +43,8 @@ public class BackOfficeProcess  {
                     logger.info("Deleted jobs" + job);
                     logger.info("Deleted tokens" + tokens);
                     Thread.sleep(1000*60*30);
-                }catch (SQLException | InterruptedException e){
+                }catch (Exception e){
                     logger.log(Level.SEVERE, "can't delete ", e);
-
                 }
             }
         }

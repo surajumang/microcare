@@ -4,24 +4,23 @@ import com.care.model.Job;
 import com.care.model.Status;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 
 public interface JobDAO extends DAO {
-    int addJob(Job job) throws SQLException;
+    int addJob(Job job) throws Exception;
 
-    // deletion is nothing but marking the status flag as INACTIVE
-    int setJobStatus(long jobId, Status status) throws SQLException;
+    int setJobStatus(long jobId, Status status) throws Exception;
 
-    int setAllJobsStatus(long postedBy, Status status) throws SQLException;
+    int setAllJobsStatus(long postedBy, Status status) throws Exception;
 
-    int expireStaleJobs() throws SQLException;
+    int expireStaleJobs() throws Exception;
 
-    int editJob(Job jobId) throws SQLException;
+    int editJob(Job job) throws Exception;
 
-    Job getJob(long jobId) throws SQLException;
+    Job getJob(long jobId) throws Exception;
 
-    List<Job> getAllJobs(long postedBy) throws SQLException;
+    Set<Job> getAllJobs(long postedBy) throws Exception;
 
-    List<Job> getAllAvailableJobs(long sitterId)throws SQLException;
+    Set<Job> getAllAvailableJobs(long sitterId) throws Exception;
 
 }

@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
     <class name="com.care.model.Job" table="JOB">
-        <id name="Id">
+        <id name="id">
             <column name="ID" />
             <generator class="identity" />
         </id>
@@ -43,7 +43,7 @@
             </type>
         </property>
 
-        <many-to-one name="seeker" class="com.care.model.Seeker">
+        <many-to-one name="seeker" class="com.care.model.Seeker" not-null="true">
             <column name="SEEKER_ID"/>
         </many-to-one>
 

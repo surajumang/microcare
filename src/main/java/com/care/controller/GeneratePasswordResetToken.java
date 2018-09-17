@@ -41,7 +41,7 @@ public class GeneratePasswordResetToken extends Action {
         Member member = null;
         logger.info(match + "email status");
         if (match){
-            if (accountService.getMember(email) != Member.EMPTY_MEMBER){
+            if (accountService.getMember(email) != Member.emptyMember()){
                 logger.info("Member exist for the email "+ email);
                 operationStatus = accountService.mailPasswordResetToken(email, request.getContextPath());
                 if (operationStatus == OperationStatus.SUCCESS){

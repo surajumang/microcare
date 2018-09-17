@@ -14,7 +14,7 @@ public interface SeekerService extends Service {
 
     Seeker getSeeker(long seekerId);
 
-    List<Seeker> getSeekerByEmail(String email);
+    List<Seeker> getSeekersByEmail(String email);
 
     Job getJob(Member member, long jobId) throws JobNotPostedByUserException;
 

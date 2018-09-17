@@ -9,16 +9,18 @@ import java.sql.Date;
 public class Application {
 
         private long id;
-        private long jobId;
-        private long sitterId;
         private double expectedPay;
-        private Status status;
+        private Status status = Status.ACTIVE;
         private Date dateCreated;
         private Date lastModified;
         private Job job;
         private Sitter sitter;
 
-        public static final Application EMPTY_APPLICATION = new Application();
+        private static final Application EMPTY_APPLICATION = new Application();
+
+        public Application(){
+
+        }
 
         public Job getJob() {
                 return job;
@@ -42,22 +44,6 @@ public class Application {
 
         public void setId(long id) {
                 this.id = id;
-        }
-
-        public long getJobId() {
-                return jobId;
-        }
-
-        public void setJobId(long jobId) {
-                this.jobId = jobId;
-        }
-
-        public long getSitterId() {
-                return sitterId;
-        }
-
-        public void setSitterId(long sitterId) {
-                this.sitterId = sitterId;
         }
 
         public double getExpectedPay() {
@@ -90,6 +76,10 @@ public class Application {
 
         public void setLastModified(Date lastModified) {
                 this.lastModified = lastModified;
+        }
+
+        public static Application emptyApplication(){
+                return EMPTY_APPLICATION;
         }
 
 

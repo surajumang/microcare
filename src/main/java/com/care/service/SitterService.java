@@ -18,7 +18,7 @@ public interface SitterService extends Service{
 
     Sitter getSitter(long sitterId);
 
-    List<Sitter> getSitterByEmail(String email);
+    List<Sitter> getSittersByEmail(String email);
 
     OperationStatus applyToJob(ApplicationForm application);
 

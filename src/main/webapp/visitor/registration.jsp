@@ -86,15 +86,16 @@
 
                 <tr><td colspan="2">
 				<div id="seeker" style="display:block;">
-				<table><tr>
-                    <td><label>Spouse Name</label></td>
-                    <td><html:text property="spouseName"/></td>
-                </tr>
-                <tr>
-                     <td><label>Number of Children</label></td>
-                     <td><html:text property="numberOfChildren" /></td>
-                </tr>
-				</table>
+                    <table>
+                        <tr>
+                            <td><label>Spouse Name</label></td>
+                            <td><html:text property="spouseName"/></td>
+                        </tr>
+                        <tr>
+                             <td><label>Number of Children</label></td>
+                             <td><html:text property="numberOfChildren" /></td>
+                        </tr>
+                    </table>
                 </div>
 				</td></tr>
 				<tr><td colspan="2">

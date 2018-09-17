@@ -4,27 +4,26 @@ import com.care.model.Member;
 import com.care.model.Token;
 import com.care.model.Status;
 
-import java.sql.SQLException;
 
 public interface MemberDAO extends DAO{
 
-    Member getMember(String email) throws SQLException;
+    Member getMember(String email) throws Exception;
 
-    Member getMember(long memberId) throws SQLException;
+    Member getMember(long memberId) throws Exception;
 
-    Token getToken(String token)throws SQLException;
+    Token getToken(String token)throws Exception;
 
-    int updatePassword(Member member)throws SQLException;
+    int updatePassword(Member member)throws Exception;
 
-    int addToken(Token token) throws SQLException;
+    int addToken(Token token) throws Exception;
 
-    int invalidateToken(String token) throws SQLException;
+    int invalidateToken(String token) throws Exception;
 
-    int expireStaleTokens() throws SQLException;
+    int expireStaleTokens() throws Exception;
 
-    int addMember(Member member) throws SQLException;
+    int addMember(Member member) throws Exception;
 
-    int editMember(long memberId, Member member) throws SQLException;
+    int editMember(long memberId, Member member) throws Exception;
 
-    int setMemberStatus(long memberId, Status status) throws SQLException;
+    int setMemberStatus(long memberId, Status status) throws Exception;
 }

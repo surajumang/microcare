@@ -4,21 +4,22 @@ import com.care.model.Application;
 import com.care.model.Job;
 import com.care.model.Seeker;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 
 public interface SeekerDAO extends DAO {
 
-    int addSeeker(Seeker seeker) throws SQLException;
+    int addSeeker(Seeker seeker) throws Exception;
 
-    Seeker getSeeker(long seekerId) throws SQLException;
+    Seeker getSeeker(long seekerId) throws Exception;
+    /*
+    Used to implement the Search features
+     */
+    Set<Seeker> getSeekerByEmail(String email) throws Exception;
 
-    List<Seeker> getSeekerByEmail(String email) throws SQLException;
+    int editSeeker(long seekerId, Seeker seeker) throws Exception;
 
-    int editSeeker(long seekerId, Seeker seeker) throws SQLException;
+    Set<Job> listAllMyJobs(long seekerId) throws Exception;
 
-    List<Job> listAllMyJobs(long memberId) throws SQLException;
-
-    List<Application> listAllApplicationsOnMyJob(long jobId) throws SQLException;
+    Set<Application> listAllApplicationsOnMyJob(long jobId) throws Exception;
 
 }

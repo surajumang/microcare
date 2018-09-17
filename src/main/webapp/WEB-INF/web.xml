@@ -68,6 +68,12 @@
         </listener-class>
     </listener>
 
+    <listener>
+        <listener-class>
+            com.care.dao.HibernateUtil
+        </listener-class>
+    </listener>
+
     <filter>
         <filter-name>SitterFilter</filter-name> <!-- mandatory -->
         <filter-class>com.care.filter.SitterFilter</filter-class> <!-- mandatory -->
@@ -98,6 +104,17 @@
         <filter-name>MemberFilter</filter-name> <!-- mandatory -->
         <url-pattern>/member/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
         <servlet-name>MemberFilter</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>HibernateFilter</filter-name> <!-- mandatory -->
+        <filter-class>com.care.filter.HibernateFilter</filter-class> <!-- mandatory -->
+    </filter>
+    <filter-mapping>
+        <filter-name>HibernateFilter</filter-name> <!-- mandatory -->
+        <url-pattern>/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
+        <servlet-name>HibernateFilter</servlet-name>
         <dispatcher>REQUEST</dispatcher>
     </filter-mapping>
 

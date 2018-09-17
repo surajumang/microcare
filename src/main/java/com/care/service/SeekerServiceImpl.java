@@ -6,9 +6,10 @@ import com.care.model.*;
 import com.care.dao.*;
 import com.care.form.JobForm;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,40 +20,40 @@ public class SeekerServiceImpl implements SeekerService {
     public SeekerServiceImpl(){    }
 
     public Seeker getSeeker(long seekerId) {
-        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
-        Seeker seeker = Seeker.EMPTY_SEEKER;
+        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+        Seeker seeker = Seeker.emptySeeker();
         try{
             seeker = seekerDAO.getSeeker(seekerId);
-        }catch(SQLException e){
+        }catch(Exception e){
             logger.log(Level.SEVERE, "getting seeker", e);
         }
         return seeker;
     }
 
-    public List<Seeker> getSeekerByEmail(String email) {
+    public List<Seeker> getSeekersByEmail(String email) {
         logger.info("Fetching seekers by Email");
-        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
-        List<Seeker> seekers = Collections.emptyList();
+        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+        Set<Seeker> seekers = Collections.emptySet();
         try {
             seekers = seekerDAO.getSeekerByEmail(email);
-        }catch (SQLException e){
+        }catch (Exception e){
             logger.log(Level.SEVERE, "fs", e);
         }
         logger.info(seekers.size() + " ");
-        return seekers;
+        return new ArrayList<>(seekers);
     }
 
 
     public Job getJob(Member member, long jobId) throws JobNotPostedByUserException {
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        Job job = Job.EMPTY_JOB;
+        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        Job job = Job.emptyJob();
         try {
             if (verifyJobBelongsToMember(member, jobId)){
                 job = jobDAO.getJob(jobId);
             }else {
                 throw new JobNotPostedByUserException("INvalid request to get Job");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "exception Getting a single job", e);
         }
         return job;
@@ -60,7 +61,9 @@ public class SeekerServiceImpl implements SeekerService {
 
     public OperationStatus postJob(Member member, JobForm jobForm)  {
         logger.info("Post job called by" + member.getId());
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+
         Job job = new Job();
         OperationStatus status = OperationStatus.SUCCESS;
         int val = -1;
@@ -68,40 +71,42 @@ public class SeekerServiceImpl implements SeekerService {
 
         logger.info("After mapping " + job);
         try{
+            Seeker seeker = seekerDAO.getSeeker(member.getId());
+            job.setStatus(Status.ACTIVE);
+            job.setSeeker(seeker);
+
             val = jobDAO.addJob(job);
             if (val != 1){
                 status = OperationStatus.FAILURE;
                 logger.info("PostJob failed");
             }
-        }catch (SQLException e){
+        }catch (Exception e){
             logger.log(Level.SEVERE, "Posting Job", e);
             status = OperationStatus.FAILURE;
         }
-
-
 
         return status;
     }
 
     public List<Job> listJobs(Member member) {
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        List<Job> memberJobs ;
+        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        Set<Job> memberJobs ;
         try {
             memberJobs = jobDAO.getAllJobs(member.getId());
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't access database", e);
-            memberJobs = Collections.emptyList();
+            memberJobs = Collections.emptySet();
 
         }
         logger.info("Size of list-----" + memberJobs.size());
-        return memberJobs;
+        return new ArrayList<>(memberJobs);
     }
 
     public List<Application> getApplications(Member member, long jobId) throws IllegalApplicationAccessException {
-        List<Application> applications;
+        Set<Application> applications;
         logger.info("ListApplications");
 
-        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         logger.info(member + "MEMBER");
         try {
             if (verifyJobBelongsToMember(member, jobId)){
@@ -110,22 +115,22 @@ public class SeekerServiceImpl implements SeekerService {
                 throw new IllegalApplicationAccessException();
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't fetch All Applications on Job", e);
-            applications = Collections.emptyList();
+            applications = Collections.emptySet();
         }
-        return applications;
+        return new ArrayList<>(applications);
     }
 
     private boolean verifyJobBelongsToMember(Member member, long jobId){
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         boolean status = false;
         try{
             Job job = jobDAO.getJob(jobId);
             logger.info(job + " ");
             //[todo] check if job is not null
-            status = job.getSeekerId() == member.getId();
-        }catch (SQLException e){
+            status = job.getSeeker().getId() == member.getId();
+        }catch (Exception e){
             status = false;
         }
         return status;
@@ -133,7 +138,7 @@ public class SeekerServiceImpl implements SeekerService {
 
     public OperationStatus editJob(Member member, JobForm jobForm){
         int status = 1;
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         Job job = new Job();
         OperationStatus operationStatus = OperationStatus.SUCCESS;
 
@@ -146,7 +151,7 @@ public class SeekerServiceImpl implements SeekerService {
                 logger.info("Couldn't edit job");
                 operationStatus=OperationStatus.FAILURE;
             }
-        }catch (SQLException e){
+        }catch (Exception e){
             logger.log(Level.SEVERE, "Can't edit a Job", e);
             operationStatus = OperationStatus.FAILURE;
         }
@@ -159,8 +164,8 @@ public class SeekerServiceImpl implements SeekerService {
      */
     public OperationStatus closeJob(Member member, long jobId) throws JobNotPostedByUserException {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
-        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
-        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         int status = -1;
         try{
             if (verifyJobBelongsToMember(member, jobId)){
@@ -170,7 +175,7 @@ public class SeekerServiceImpl implements SeekerService {
                 operationStatus = OperationStatus.UNAUTHORISED;
                 throw new  JobNotPostedByUserException("Can;t close job");
             }
-        }catch (SQLException e){
+        }catch (Exception e){
             logger.log(Level.SEVERE, "Can't delete Job", e);
             operationStatus = OperationStatus.FAILURE;
         }
