@@ -18,29 +18,33 @@
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${INVALID}</h2>
-        <html:errors/>
+
         <html:form action="/seeker/captureEditJob" method="post">
-            <table>
+            <table align="center">
 
                 <tr>
                      <td><label>Job Title</label></td>
                      <td><html:text property="title" /></td>
+                     <td><font color="red"> <html:errors property="title" /> </font></td>
                 </tr>
                 <tr>
                      <td><label>Hourly Pay</label></td>
                      <td><html:text property="hourlyPay" /></td>
+                     <td><font color="red"> <html:errors property="hourlyPay" /> </font></td>
                 </tr>
                 <tr>
                      <td><label>Start Date(Time)</label></td>
                      <td><html:text property="startDate"  /></td>
+                     <td><font color="red"> <html:errors property="startDate" /> </font></td>
                 </tr>
                 <tr>
                      <td><label>End Date(Time)</label></td>
                      <td><html:text property="endDate" /></td>
+                     <td><font color="red"> <html:errors property="endDate" /> </font></td>
                 </tr>
             </table>
             <html:hidden property="id" />
-            <html:submit property="submit" value="Submit"/>
+            <center> <html:submit property="submit" value="Submit"/></center>
         </html:form>
     </body>
     <jsp:include page="/footer.jsp"/>

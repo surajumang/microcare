@@ -49,7 +49,7 @@ public class ShowApplications extends Action {
             try {
                 applications = seekerService.getApplications(currentMember, jobIdToViewApplications);
             } catch (IllegalApplicationAccessException e) {
-                logger.log(Level.SEVERE, "Not allowed to see application");
+                logger.log(Level.SEVERE, "Not allowed to see application", e);
             }
             if (applications != null && !applications.isEmpty()){
                 operationStatus = OperationStatus.SUCCESS;

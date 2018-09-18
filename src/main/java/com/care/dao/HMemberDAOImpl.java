@@ -48,23 +48,45 @@ public class HMemberDAOImpl implements MemberDAO {
         Query query = session.createQuery("from Token where TOKEN=?");
         query.setString(0, token);
 
-        return null;
+        Token token1 = (Token) query.uniqueResult();
+        if (token1 == null){
+            token1 = Token.emptyToken();
+        }
+
+        return token1;
     }
 
+    /*
+    It is provided with a member object completely filled with ID and all fields which were required to be updated.
+     */
     @Override
     public int updatePassword(Member member) throws Exception {
-        return 0;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.update(member);
+
+        return 1;
     }
 
 
     @Override
     public int addToken(Token token) throws Exception {
-        return 0;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.save(token);
+        return 1;
     }
-
+    // set status to Inactive
     @Override
     public int invalidateToken(String token) throws Exception {
-        return 0;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        int status = -1;
+        Query query = session.createQuery("from Token where token=?");
+        query.setString(0, token);
+        Token token1 = (Token)query.uniqueResult();
+        if (token != null){
+            status = 1;
+            token1.setStatus(Status.EXPIRED);
+        }
+        return status;
     }
 
     @Override
@@ -72,6 +94,7 @@ public class HMemberDAOImpl implements MemberDAO {
         return 0;
     }
 
+    // Two of the methods below are not being used.
     @Override
     public int addMember(Member member) throws Exception {
         return 0;
@@ -84,6 +107,11 @@ public class HMemberDAOImpl implements MemberDAO {
 
     @Override
     public int setMemberStatus(long memberId, Status status) throws Exception {
-        return 0;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Member member = (Member) session.get(Member.class, memberId);
+        if (member != null){
+            member.setStatus(status);
+        }
+        return 1;
     }
 }

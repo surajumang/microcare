@@ -1,5 +1,6 @@
 package com.care.form;
 
+import com.care.annotation.Name;
 import com.care.annotation.Number;
 import com.care.annotation.StringDate;
 import com.care.validation.FormBean;
@@ -35,7 +36,7 @@ public class JobForm extends FormBean {
     public String getId() {
         return id;
     }
-
+    @Name
     public void setId(String id) {
         this.id = id;
     }
@@ -93,20 +94,20 @@ public class JobForm extends FormBean {
             Timestamp endTime = Timestamp.valueOf(endDate + ":00");
 
             if (startTime.before(currentTime)){
-                errors.add("currentDate", new ActionMessage("Start Time must be greater than current Time"));
+                errors.add("currentDate", new ActionMessage("errors.startdate.greater",  "CurrentDate"));
                 flag = false;
             }
             if (endTime.before(startTime)){
-                errors.add("startDate", new ActionMessage("Start Time must be less than end Time"));
+                errors.add("startDate", new ActionMessage("errors.startdate.less", "EndDate"));
                 flag = false;
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Exception while validating Time values", e);
-            errors.add("startDate", new ActionMessage("Not in proper format"));
+            errors.add("startDate", new ActionMessage("errors.date.format"));
 
             flag = false;
         }
-        if (flag){
+        if (flag && errors.isEmpty()){
             startDate += ":00";
             endDate += ":00";
         }

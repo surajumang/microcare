@@ -135,11 +135,16 @@ public class ObjectMapper {
                 //  extra stuff required. Simple invocation will work.
 
                 Object getterValue = getter.invoke(src);
+                if(getterValue == null){
+                    continue;
+                }
 
-                if (returnType == argTypes[0] && getterValue != null){
+                if (returnType == argTypes[0] ){
                     logger.info("String arg type of Model " + setter);
                     setter.invoke(dest,  getterValue);
                 }else {
+                    //Try conversion of data from String to Proper data type.
+                    //[todo] handle or throw the exception and let the caller decide what to do.
 
                     if (argTypes[0].isPrimitive()){
                         argTypes[0] = WRAPPER_TYPE.get(argTypes[0]);
@@ -148,7 +153,7 @@ public class ObjectMapper {
                     Method valueOf = argTypes[0].getMethod("valueOf", String.class);
                     //logger.info(valueOf + "--------" + getterValue);
 
-                    if (getterValue != null && valueOf != null && getterValue instanceof String){
+                    if (valueOf != null && getterValue instanceof String){
                         logger.info("Setter " + setter.getName() );
                         logger.info("Static method " + valueOf.getName());
                         logger.info("Getter " + getter.getName());

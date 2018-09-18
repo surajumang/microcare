@@ -7,6 +7,7 @@ import com.care.form.RegistrationForm;
 import com.care.model.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Properties;
@@ -122,6 +123,7 @@ public class AccountServiceImpl implements AccountService {
     public OperationStatus mailPasswordResetToken(String email, String contextPath) {
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
+        //getting the member stored in database.
         Member member = getMember(email);
 
         if (member != Member.emptyMember()){
@@ -130,15 +132,14 @@ public class AccountServiceImpl implements AccountService {
             //set token to DB.
             MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
            try {
-               memberDAO.addToken(token);
-               // code to send email.
-               sendMail(email, contextPath + "/visitor/captureToken.do?token=" + token.getToken());
-               logger.info("mail sent");
-               operationStatus = OperationStatus.SUCCESS;
+               if (memberDAO.addToken(token) == 1){
+                   sendMail(email, contextPath + "/visitor/captureToken.do?token=" + token.getToken());
+                   logger.info("mail sent");
+                   operationStatus = OperationStatus.SUCCESS;
+               }
            }catch (Exception e){
                operationStatus = OperationStatus.FAILURE;
            }
-
         }
         return operationStatus;
     }
@@ -181,7 +182,7 @@ public class AccountServiceImpl implements AccountService {
         }
         Token passwordResetToken = new Token();
         passwordResetToken.setMember(member);
-        passwordResetToken.setExpirationDate(new Date(System.currentTimeMillis() + 24*3600*1000));
+        passwordResetToken.setExpirationDate(new Timestamp(System.currentTimeMillis() + 24*3600*1000));
         passwordResetToken.setStatus(Status.ACTIVE);
         passwordResetToken.setToken(token);
 
@@ -221,13 +222,14 @@ public class AccountServiceImpl implements AccountService {
 
         SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
         logger.info(newSeeker.toString());
-        int status = -1;
+        int status = 1;
         try {
             Seeker seeker = seekerDAO.getSeeker(seekerId);
             ObjectMapper.mapObject(newSeeker, seeker, true);
-            status = seekerDAO.editSeeker(seekerId, seeker);
+            //status = seekerDAO.editSeeker(seekerId, seeker);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't edit ", e);
+            status = -1;
         }
         return status;
     }
@@ -235,13 +237,14 @@ public class AccountServiceImpl implements AccountService {
     private int editSitter(long sitterId, EditProfileForm newSitter){
         SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
         logger.info(newSitter.toString());
-        int status = -1;
+        int status = 1;
         try {
             Sitter sitter = sitterDAO.getSitter(sitterId);
             ObjectMapper.mapObject(newSitter, sitter, true);
-            status = sitterDAO.editSitter(sitterId, sitter);
+            //status = sitterDAO.editSitter(sitterId, sitter);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't edit", e);
+            status = -1;
         }
         return status;
     }

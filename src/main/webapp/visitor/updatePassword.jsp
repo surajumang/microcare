@@ -17,20 +17,27 @@
         </style>
     </head>
     <body>
-        <html:errors/>
+
         <h2>Password can be reset from here</h2>
         <c:out value="${FAILURE}"/>
 
         <c:if test="${SUCCESS eq 'VERIFIED'}">
-            <form action="${pageContext.request.contextPath}/visitor/updatePassword.do" method="get">
-                <label>Enter Password</label>
-                <input type="password" name="password" value="">
-                <c:out value="${errors.password}"/>
-                <label>Re-enter Password</label>
-                <input type="password" name="password2" value="">
-                <c:out value="${errors.password2}"/>
+            <form action="${pageContext.request.contextPath}/visitor/captureResetPassword.do" method="post">
+                <table>
+                    <tr>
+                        <td><label>Enter Password</label></td>
+                        <td><input type="password" name="password" value=""></td>
+                        <td><c:out value="${errors.password}"/></td>
+                    </tr>
+                    <tr>
+                        <td><label>Re-enter Password</label></td>
+                        <td><input type="password" name="password2" value=""></td>
+                        <td><c:out value="${errors.password2}"/></td>
+                    </tr>
 
-                <input type="hidden" name="id" value="${id}">
+                </table>
+
+                 <input type="hidden" name="id" value="${id}">
                 <input type="hidden" name="token" value="${token}">
                 <input type="submit" value="Submit">
             </form>

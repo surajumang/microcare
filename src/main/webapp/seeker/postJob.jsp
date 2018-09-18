@@ -15,27 +15,35 @@
 
      <jsp:include page="./header.jsp"/>
      <h2>${SUCCESS}</h2>
-                     <h2>${FAILURE}</h2>
-                     <h2>${INVALID}</h2>
+     <h2>${FAILURE}</h2>
+     <h2>${INVALID}</h2>
 
-    <html:errors/>
+
      <html:form action="/seeker/capturePostJob" method="post">
-        <label>Job Title</label>
-         <html:text property="title"/>
-         <br><br>
+        <table align="center">
+            <tr>
+                 <td><label>Job Title* </label></td>
+                 <td><html:text property="title" /></td>
+                 <td><font color="red"> <html:errors property="title" /> </font></td>
+            </tr>
+            <tr>
+                 <td><label>Hourly Pay* </label></td>
+                 <td><html:text property="hourlyPay" /></td>
+                 <td><font color="red"> <html:errors property="hourlyPay" /> </font></td>
+            </tr>
+            <tr>
+                 <td><label>Start Date(YYYY-MM-DD HH:MM)* </label></td>
+                 <td><html:text property="startDate"  /></td>
+                 <td><font color="red"> <html:errors property="startDate" /> </font></td>
+            </tr>
+            <tr>
+                 <td><label>End Date(YYYY-MM-DD HH:MM)* </label></td>
+                 <td><html:text property="endDate" /></td>
+                 <td><font color="red"> <html:errors property="endDate" /> </font></td>
+            </tr>
+        </table>
 
-         <label>Hourly Pay</label>
-         <html:text property="hourlyPay"/>
-         <br><br>
-
-         <label>Start Date</label>
-         <html:text property="startDate"/>
-           <br><br>
-
-         <label>End Date</label>
-         <html:text property="endDate"/>
-       <br><br>
-         <html:submit property="submit" value="Submit"/>
+        <center> <html:submit property="submit" value="Submit"/> </center>
 
      </html:form>
     </body>

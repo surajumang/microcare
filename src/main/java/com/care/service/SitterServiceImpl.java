@@ -29,7 +29,9 @@ public class SitterServiceImpl implements SitterService {
         }
         return new ArrayList<>(allJobs);
     }
-
+    /*
+    Only the ACTIVE OR EXPIRED not closed.
+     */
     public List<Application> listAllApplications(Member sitter) {
         ApplicationDAO applicationDAO= DAOFactory.get(HApplicationDAOImpl.class);
         Set<Application> applications ;

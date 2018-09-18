@@ -30,8 +30,20 @@
                 validate="false"
                 parameter="/login.jsp" />
 
+        <action path="/seeker/home"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/seeker/home.jsp"/>
+
+        <action path="/sitter/home"
+                type="org.apache.struts.actions.ForwardAction"
+                validate="false"
+                parameter="/sitter/home.jsp"/>
+
         <action path="/member/home"
                 type="com.care.controller.HomeAction">
+            <forward name="seeker" path="/seeker/home.do"/>
+            <forward name="sitter" path="/sitter/home.do"/>
         </action>
 
         <action path="/visitor/captureLogin"
@@ -202,6 +214,7 @@
                 scope="request"
                 validate="true"
                 input="/member/resetPassword.do">
+            <forward name="failure" path="/member/resetPassword.do"/>
             <forward name="success" path="/member/home.do"/>
         </action>
         <!-- Both of them belong together*************END*****************-->
@@ -225,11 +238,15 @@
                 validate="false"
                 parameter="/visitor/updatePassword.jsp">
         </action>
-        <action path="/visitor/verifyToken"
-                type="org.apache.struts.actions.ForwardAction"
-                validate="false"
-                parameter="/visitor/updatePassword.jsp">
+
+        <action path="/visitor/captureResetPassword"
+                type="com.care.controller.ResetPassword"
+                scope="request">
+            <forward name="success" path="/visitor/login.do"/>
+            <!--<forward name="failure" path="/visitor/up"-->
         </action>
+
+
         <action path="/visitor/captureToken"
                 type="com.care.controller.VerifyToken">
             <forward name="success" path="/visitor/updatePassword.do"/>
@@ -249,18 +266,19 @@
         </action>
 
         <!-- Both of them belong together*************START***********-->
-        <action path="/member/updatePassword"
-                type="org.apache.struts.actions.ForwardAction"
-                validate="false"
-                parameter="/member/updatePassword.jsp">
-        </action>
-        <action path="/member/captureUpdatePassword"
-                type="com.care.controller.ResetPassword"
-                name="passwordForm"
-                validate="true"
-                input="/member/updatePassword">
-            <forward name="success" path="/member/home.do"/>
-        </action>
+        <!--<action path="/member/updatePassword"-->
+                <!--type="org.apache.struts.actions.ForwardAction"-->
+                <!--validate="false"-->
+                <!--parameter="/member/updatePassword.jsp">-->
+        <!--</action>-->
+        <!--<action path="/member/captureUpdatePassword"-->
+                <!--type="com.care.controller.ChangePasswordAction"-->
+                <!--name="passwordForm"-->
+                <!--validate="true"-->
+                <!--input="/member/updatePassword">-->
+            <!--<forward name="failure" path="/member/updatePassword.do"/>-->
+            <!--<forward name="success" path="/member/home.do"/>-->
+        <!--</action>-->
 
         <!-- Both of them belong together*************END***********-->
 

@@ -1,13 +1,14 @@
 package com.care.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Token {
     private long id;
     private Member member;
     private String token;
-    private Date expirationDate;
-    private Status status;  //tells whether token has been used or not.
+    private Timestamp expirationDate;
+    private Status status = Status.ACTIVE;  //tells whether token has been used or not.
 
     private static final Token EMPTY_TOKEN = new Token();
 
@@ -30,11 +31,11 @@ public class Token {
         this.token = token;
     }
 
-    public Date getExpirationDate() {
+    public Timestamp getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(Timestamp expirationDate) {
         this.expirationDate = expirationDate;
     }
 

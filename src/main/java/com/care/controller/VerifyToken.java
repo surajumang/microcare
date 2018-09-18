@@ -1,6 +1,7 @@
 package com.care.controller;
 
 import com.care.model.Member;
+import com.care.model.Status;
 import com.care.model.Token;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
@@ -36,7 +37,7 @@ public class VerifyToken extends Action {
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
         Token token1 = accountService.getToken(token);
 
-        if (token1 != Token.emptyToken()){
+        if (token1 != Token.emptyToken() && token1.getStatus()== Status.ACTIVE){
             request.setAttribute("id", token1.getMember().getId());
             request.setAttribute("token", token);
             logger.info("member's password resetting");

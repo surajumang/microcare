@@ -2,6 +2,7 @@ package com.care.dao;
 
 import com.care.model.Seeker;
 import com.care.model.Sitter;
+import com.care.model.Status;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -43,8 +44,10 @@ public class HSitterDAOImpl implements SitterDAO {
     @Override
     public Set<Sitter> getSitterByEmail(String email) throws SQLException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Seeker where email like '%?%'");
-        query.setString(0, email);
+        Query query = session.createQuery("from Sitter where email like ? and status = ?");
+        query.setString(0, "%" + email + "%");
+        query.setString(1, Status.ACTIVE.name());
+
         List<Sitter> sitters = query.list();
         if (sitters == null){
             sitters = Collections.emptyList();

@@ -44,41 +44,39 @@
         <h2>${SUCCESS}</h2>
                 <h2>${FAILURE}</h2>
                 <h2>${INVALID}</h2>
-            <table>
-                        <thead>
-                            <tr>
-                                <td>Title</td>
-                                <td>Pay per Hour</td>
-                                <td>Start Date</td>
-                                <td>End Date</td>
-                                <td>Expected Pay</td>
-                            </tr>
-                        </thead>
-                        <tr>
-                            <td>${job.title}</td>
-                            <td>${job.hourlyPay}</td>
-                            
-                            <fmt:formatDate var="startDate" value="${job.startDate}" pattern="yyyy-MM-dd hh:mm"/>
-                            <td>${startDate}</td>
-                            
-                            <fmt:formatDate var="endDate" value="${job.endDate}" pattern="yyyy-MM-dd hh:mm"/>
-                            <td>${endDate}</td>
-                            
-                            <td>
-                                <html:form action="/sitter/captureApplication" method="get">
-                                    <html:text property="expectedPay" />
-                                    
-                                    <html:hidden property="jobId" />
-                                    <html:hidden  property="sitterId"/>
-                                    <html:submit value="Apply"/>
-                                </html:form>
-                            </td>
-                        </tr>
+            <table align="center">
+                <thead>
+                    <tr>
+                        <td>Title</td>
+                        <td>Pay per Hour</td>
+                        <td>Start Date</td>
+                        <td>End Date</td>
+                        <td>Expected Pay</td>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>${job.title}</td>
+                    <td>${job.hourlyPay}</td>
+
+                    <fmt:formatDate var="startDate" value="${job.startDate}" pattern="yyyy-MM-dd hh:mm"/>
+                    <td>${startDate}</td>
+
+                    <fmt:formatDate var="endDate" value="${job.endDate}" pattern="yyyy-MM-dd hh:mm"/>
+                    <td>${endDate}</td>
+
+                    <td>
+                        <html:form action="/sitter/captureApplication" method="get">
+                            <html:text property="expectedPay" />
+                            <font color="red"> <html:errors property="expectedPay" /> </font>
+
+                            <html:hidden property="jobId" />
+                            <html:hidden  property="sitterId"/>
+                            <html:submit value="Apply"/>
+                        </html:form>
+                    </td>
+                </tr>
 
               </table>
-
-
-
     </body>
     <jsp:include page="/footer.jsp"/>
 </html>

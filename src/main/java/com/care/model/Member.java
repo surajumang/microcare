@@ -2,6 +2,7 @@
 package com.care.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Set;
 
 public class Member {
@@ -14,7 +15,7 @@ public class Member {
         private String address;
         private long zipCode;
         private Status status = Status.ACTIVE;
-        private Date lastModified;
+        private Timestamp lastModified;
         private String password;
         private Set<Token> tokens;
 
@@ -95,11 +96,11 @@ public class Member {
                 this.status = status;
         }
 
-        public Date getLastModified() {
+        public Timestamp getLastModified() {
                 return lastModified;
         }
 
-        public void setLastModified(Date lastModified) {
+        public void setLastModified(Timestamp lastModified) {
                 this.lastModified = lastModified;
         }
 

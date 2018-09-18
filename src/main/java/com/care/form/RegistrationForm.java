@@ -22,7 +22,7 @@ public class RegistrationForm extends EditProfileForm {
     private String password;
     private String password2;
 
-    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "errors.password")
+    @Name(regex = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]{5,}", message = "errors.password")
     public String getPassword() {
         return password;
     }
@@ -43,18 +43,19 @@ public class RegistrationForm extends EditProfileForm {
     public ActionErrors validateCustom() {
 
         ActionErrors errors = new ActionErrors();
-        try {
-            errors = super.validateCustom();
-            FormValidator.validate(this, errors);
-        } catch (InvocationTargetException e) {
-            logger.log(Level.SEVERE, "While validating", e);
-        } catch (IllegalAccessException e) {
-            logger.log(Level.SEVERE, "While validating", e);
-        }
+
+        errors = super.validateCustom();
+//        try {
+//
+//        }
+//        } catch (InvocationTargetException e) {
+//            logger.log(Level.SEVERE, "While validating", e);
+//        } catch (IllegalAccessException e) {
+//            logger.log(Level.SEVERE, "While validating", e);
+//        }
         if(! password.equals(password2)){
             errors.add("password2", new ActionMessage("errors.password.mismatch"));
-        }
-        if (! getEmail().matches("(\\w)+@([A-Za-z]+\\.?)+")){
+        }if (! getEmail().matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")){
             errors.add("email", new ActionMessage("errors.email"));
         }
         return errors;

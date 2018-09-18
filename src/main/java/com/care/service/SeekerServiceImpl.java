@@ -96,7 +96,6 @@ public class SeekerServiceImpl implements SeekerService {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't access database", e);
             memberJobs = Collections.emptySet();
-
         }
         logger.info("Size of list-----" + memberJobs.size());
         return new ArrayList<>(memberJobs);
@@ -149,18 +148,19 @@ public class SeekerServiceImpl implements SeekerService {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         //modify the values.
         ObjectMapper.mapObject(jobForm, job, true);
-        logger.info(job + "JOB TO BE EDITED");
-        try{
-            status = jobDAO.editJob(job);
-            logger.info(status + " ");
-            if (status != 1){
-                logger.info("Couldn't edit job");
-                operationStatus=OperationStatus.FAILURE;
-            }
-        }catch (Exception e){
-            logger.log(Level.SEVERE, "Can't edit a Job", e);
-            operationStatus = OperationStatus.FAILURE;
-        }
+
+//        logger.info(job + "JOB TO BE EDITED");
+//        try{
+//            status = jobDAO.editJob(job);
+//            logger.info(status + " ");
+//            if (status != 1){
+//                logger.info("Couldn't edit job");
+//                operationStatus=OperationStatus.FAILURE;
+//            }
+//        }catch (Exception e){
+//            logger.log(Level.SEVERE, "Can't edit a Job", e);
+//            operationStatus = OperationStatus.FAILURE;
+//        }
         logger.info("------- " +status + "-------- ");
         return operationStatus;
     }

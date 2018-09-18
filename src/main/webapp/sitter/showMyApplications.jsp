@@ -65,10 +65,12 @@
 
                 <td>
 
+
                     <form action="${pageContext.request.contextPath}/sitter/deleteApplication.do" method="get">
                         <input type="hidden" name="id" value="${app.id}">
                         <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
                     </form>
+
 
                 </td>
             </tr>

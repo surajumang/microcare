@@ -31,7 +31,6 @@ public class EditProfileForm extends  FormBean {
     private String expectedPay;
     private String experience;
 
-    @Email(required = false)
     public String getEmail() {
         return email;
     }

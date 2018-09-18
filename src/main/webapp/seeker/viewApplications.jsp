@@ -38,7 +38,7 @@ tr:nth-child(even) {
 
     <c:if test="${fn:length(getApplications) > 0}">
         <center><h2>${getApplications[0].job.title}</h2></center>
-        <h2>html table</h2>
+
         <table>
             <thead>
                 <tr>                    

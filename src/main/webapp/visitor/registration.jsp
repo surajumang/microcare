@@ -38,39 +38,46 @@
 
     <body onload="displayMemberType()">
     <h2>${SUCCESS}</h2>
-            <h2>${FAILURE}</h2>
-            <h2>${INVALID}</h2>
+    <h2>${FAILURE}</h2>
+    <h2>${INVALID}</h2>
 
-        <html:errors/>
+
 
          <a href="${pageContext.request.contextPath}/visitor/login.do" role="button">Home</a>
-        <h1>Enter Your Details</h1>
+        <center> <h1>Enter Your Details</h1></center>
+        <hr>
         <div class="">
             <html:form action="/visitor/captureRegistration" method="post" >
-            <table>
+            <table align="center">
                 <tr>
                     <td><label for="mail">Email*</label></td>
                     <td><html:text property="email" /></td>
+                    <td><font color="red"> <html:errors property="email" /> </font></td>
                 </tr>
                 <tr>
                     <td><label for="fproperty">First Name*</label></td>
                     <td><html:text property="firstName" /></td>
+                    <td><font color="red"> <html:errors property="firstName" /> </font></td>
                 </tr>
                 <tr>
                     <td><label for="lproperty">Last Name*</label></td>
                     <td><html:text property="lastName" /></td>
+                    <td><font color="red"> <html:errors property="lastName" /> </font></td>
                 </tr>
                 <tr>
                     <td><label >Address*</label></td>
                     <td><html:text property="address" /></td>
+                    <td><font color="red"> <html:errors property="address" /> </font></td>
                 </tr>
                 <tr>
-                    <td><label> Phone* </label></td>
+                    <td><label> Phone (Ten Digits)* </label></td>
                     <td><html:text property="phone" /></td>
+                    <td><font color="red"> <html:errors property="phone" /> </font></td>
                 </tr>
                 <tr>
-                    <td><label>Zip Code*</label></td>
+                    <td><label>Zip Code (Six Digits)*</label></td>
                     <td><html:text property="zipCode" /></td>
+                    <td><font color="red"> <html:errors property="zipCode" /> </font></td>
                 </tr>
                 <tr>
                     <td><label>Register as a</label></td>
@@ -90,10 +97,12 @@
                         <tr>
                             <td><label>Spouse Name</label></td>
                             <td><html:text property="spouseName"/></td>
+                            <td><font color="red"> <html:errors property="spouseName" /> </font></td>
                         </tr>
                         <tr>
-                             <td><label>Number of Children</label></td>
+                             <td><label>Number of Children   </label></td>
                              <td><html:text property="numberOfChildren" /></td>
+                             <td><font color="red"> <html:errors property="numberOfChildren" /> </font></td>
                         </tr>
                     </table>
                 </div>
@@ -104,10 +113,12 @@
                 <tr>
                     <td><label>Years of Experience*</label></td>
                     <td><html:text property="experience" /></td>
+                    <td><font color="red"> <html:errors property="experience" /> </font></td>
                 </tr>
                 <tr>
-                     <td> <label>Expected Pay*</label></td>
+                     <td> <label>Expected Pay* (ddd.dd)</label></td>
                      <td><html:text property="expectedPay" /></td>
+                     <td><font color="red"> <html:errors property="expectedPay" /> </font></td>
 				 </tr>
 				</table>
                 </div>
@@ -115,16 +126,18 @@
                 <tr>
                     <td><label>Password*</label></td>
                     <td><html:password property="password" /></td>
+                    <td><font color="red"> <html:errors property="password" /> </font></td>
                 </tr>
 
                 <tr>
                     <td><label>Re enter the Password*</label></td>
                     <td><html:password property="password2"/></td>
+                    <td><font color="red"> <html:errors property="password2" /> </font></td>
                 </tr>
 
                 </table>
 
-                <html:submit property="" value="Submit"/>
+                <center><html:submit property="" value="Submit"/></center>
 
             </html:form>
         </div>

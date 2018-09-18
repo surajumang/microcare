@@ -1,6 +1,7 @@
 package com.care.form;
 
 import com.care.annotation.Name;
+import com.care.service.Hash;
 import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
@@ -31,7 +32,7 @@ public class PasswordForm extends FormBean {
         this.currentPassword = currentPassword;
     }
 
-    @Name(regex = "[@#!\\w\\d]{5,}", required = true, message = "errors.password")
+    @Name(regex = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]{5,}", required = true, message = "errors.password")
     public String getPassword() {
         return password;
     }
@@ -87,7 +88,7 @@ public class PasswordForm extends FormBean {
         }
 
         if(! password.equals(password2)){
-            errors.add("password2", new ActionMessage("Passwords should match"));
+            errors.add("password2", new ActionMessage("errors.password.mismatch"));
         }
         return errors;
     }

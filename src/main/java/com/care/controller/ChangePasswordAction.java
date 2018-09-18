@@ -34,9 +34,7 @@ public class ChangePasswordAction extends Action {
         OperationStatus operationStatus  =
                 authenticationService.updatePassword(member, passwordForm);
 
-
-
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward("success");
+        return mapping.findForward(operationStatus.name().toLowerCase());
     }
 }

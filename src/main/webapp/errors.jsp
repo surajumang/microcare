@@ -14,6 +14,6 @@
     <body>
         <h1>Something bad happened</h1>
         <h2>${errorMessage}</h2>
-        <a href="${pageContext.request.contextPath}/index.jsp">Click here to go back</a>
+        <a href="${pageContext.request.contextPath}/member/home.do">Click here to go back</a>
     </body>
 </html>

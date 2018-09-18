@@ -3,6 +3,7 @@ package com.care.dao;
 import com.care.model.Application;
 import com.care.model.Job;
 import com.care.model.Seeker;
+import com.care.model.Status;
 import com.care.service.ObjectMapper;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -38,8 +39,10 @@ public class HSeekerDAOImpl implements SeekerDAO {
     public Set<Seeker> getSeekerByEmail(String email) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-        Query query = session.createQuery("from Seeker where email like '%?%'");
-        query.setString(0, email);
+        Query query = session.createQuery("from Seeker where email like ? and status=?");
+        query.setString(0, "%" + email + "%" );
+        query.setString(1, Status.ACTIVE.name());
+
         List<Seeker> seekers = query.list();
         if (seekers == null){
             seekers = Collections.emptyList();

@@ -35,8 +35,9 @@ public class HApplicationDAOImpl implements ApplicationDAO {
     @Override
     public Set<Application> getAllApplications(long sitterId) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Application where sitter.id=?");
+        Query query = session.createQuery("from Application where sitter.id=? and status != ?");
         query.setLong(0, sitterId);
+        query.setString(1, Status.CLOSED.name());
 
         List<Application> applications = query.list();
         if (applications == null){
@@ -112,6 +113,7 @@ public class HApplicationDAOImpl implements ApplicationDAO {
         Seeker seeker = seekerDAO.getSeeker(postedBy);
         for (Job job : seeker.getJobs()) {
             setAllApplicationStatusByJob(job.getId(), status);
+            //job.setStatus(status);
         }
         return 1;
     }

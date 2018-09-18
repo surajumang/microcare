@@ -64,12 +64,6 @@
 
     <listener>
         <listener-class>
-            com.care.dao.ConnectionUtil
-        </listener-class>
-    </listener>
-
-    <listener>
-        <listener-class>
             com.care.dao.HibernateUtil
         </listener-class>
     </listener>

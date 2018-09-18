@@ -9,6 +9,7 @@ import com.care.dao.MemberDAO;
 import com.care.model.Status;
 import com.care.model.Token;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,23 +59,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         passwordForm.setPassword(Hash.createHash(passwordForm.getPassword()));
 
         MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
-        Member member = new Member();
-        logger.info(passwordForm + "PASSSWORD");
-        ObjectMapper.mapObject(passwordForm, member, true);
-        logger.info(member + "Only password");
+
         try {
             //double check
+            Member member = memberDAO.getMember(Long.valueOf(passwordForm.getId()));
+            if (member == Member.emptyMember()){
+                //[todo] throw some
+            }
+            logger.info(passwordForm + "PASSSWORD");
+            ObjectMapper.mapObject(passwordForm, member, true);
             Token existingToken = memberDAO.getToken(passwordForm.getToken());
 
             if (existingToken != Token.emptyToken() && existingToken.getMember().getId() == member.getId()){
                 if (existingToken.getStatus() == Status.ACTIVE &&
-                        existingToken.getExpirationDate().before(new Date(System.currentTimeMillis()))){
+                        existingToken.getExpirationDate().after(new Timestamp(System.currentTimeMillis()))){
 
                     if(memberDAO.updatePassword(member) == 1){
                         value = memberDAO.invalidateToken(passwordForm.getToken());
                     }
                 }
-
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't update password", e);
@@ -94,19 +97,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         OperationStatus status = OperationStatus.FAILURE;
         int value = -1;
         passwordForm.setPassword(Hash.createHash(passwordForm.getPassword()));
-
         MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
-        Member newmember = new Member();
-        logger.info(passwordForm + "PASSSWORD");
-        ObjectMapper.mapObject(passwordForm, newmember, true);
-        logger.info(member + "Only password");
+
         try {
             //double check
+//            Member newMember = new Member();
+//            ObjectMapper.mapObject(passwordForm, newMember, true);
+//            logger.info(member + "Only password");
+//
             Member existingMember = memberDAO.getMember(member.getId());
             String currentPasswordHash = Hash.createHash(passwordForm.getCurrentPassword());
             logger.info(currentPasswordHash);
+
             if (existingMember.getPassword().equals(currentPasswordHash) ){
-                value = memberDAO.updatePassword(newmember);
+                existingMember.setPassword(passwordForm.getPassword());
+                value = memberDAO.updatePassword(existingMember);
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't update password", e);
