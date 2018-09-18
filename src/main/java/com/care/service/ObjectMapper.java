@@ -123,6 +123,7 @@ public class ObjectMapper {
                     //throw some exception.
                 }
                 /*
+                [todo] Make changes so as not to allow fields with null values.
                  valueOf is a static method which takes String as a Parameter. Handle the case if no such exist.
                  ValueOf not required if the parameter type is String.
                   */
@@ -133,9 +134,11 @@ public class ObjectMapper {
                 // if the types match(i.e argument of setter is same as return type of getter) then no
                 //  extra stuff required. Simple invocation will work.
 
-                if (returnType == argTypes[0]){
+                Object getterValue = getter.invoke(src);
+
+                if (returnType == argTypes[0] && getterValue != null){
                     logger.info("String arg type of Model " + setter);
-                    setter.invoke(dest,  getter.invoke(src));
+                    setter.invoke(dest,  getterValue);
                 }else {
 
                     if (argTypes[0].isPrimitive()){
@@ -143,7 +146,6 @@ public class ObjectMapper {
                     }
                     //logger.info("Model populated using Static value of");
                     Method valueOf = argTypes[0].getMethod("valueOf", String.class);
-                    Object getterValue = getter.invoke(src);
                     //logger.info(valueOf + "--------" + getterValue);
 
                     if (getterValue != null && valueOf != null && getterValue instanceof String){

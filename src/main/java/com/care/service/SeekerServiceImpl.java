@@ -140,8 +140,14 @@ public class SeekerServiceImpl implements SeekerService {
         int status = 1;
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         Job job = new Job();
-        OperationStatus operationStatus = OperationStatus.SUCCESS;
+        try{
+             job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
+        }catch (Exception e){
+            logger.log(Level.SEVERE, "Getting a job", e);
+        }
 
+        OperationStatus operationStatus = OperationStatus.SUCCESS;
+        //modify the values.
         ObjectMapper.mapObject(jobForm, job, true);
         logger.info(job + "JOB TO BE EDITED");
         try{

@@ -35,7 +35,7 @@ public class HApplicationDAOImpl implements ApplicationDAO {
     @Override
     public Set<Application> getAllApplications(long sitterId) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Application where id=?");
+        Query query = session.createQuery("from Application where sitter.id=?");
         query.setLong(0, sitterId);
 
         List<Application> applications = query.list();

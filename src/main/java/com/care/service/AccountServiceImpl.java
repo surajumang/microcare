@@ -205,24 +205,26 @@ public class AccountServiceImpl implements AccountService {
         logger.info("Called enroll");
 
         if (editProfileForm.getMemberType().equals("SEEKER") ){
-            Seeker seeker = new Seeker();
-            ObjectMapper.mapObject(editProfileForm, seeker, true);
-            status = editSeeker( memberId, seeker);
+//            Seeker seeker = new Seeker();
+//            ObjectMapper.mapObject(editProfileForm, seeker, true);
+            status = editSeeker( memberId, editProfileForm);
         }
         else {
-            Sitter sitter = new Sitter();
-            ObjectMapper.mapObject(editProfileForm, sitter, true);
-            status = editSitter(memberId, sitter);
+//            Sitter sitter = new Sitter();
+//            ObjectMapper.mapObject(editProfileForm, sitter, true);
+            status = editSitter(memberId, editProfileForm);
         }
         return status ;
     }
 
-    private int editSeeker(long seekerId, Seeker seeker) {
+    private int editSeeker(long seekerId, EditProfileForm newSeeker) {
 
         SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
-        logger.info(seeker.toString());
+        logger.info(newSeeker.toString());
         int status = -1;
         try {
+            Seeker seeker = seekerDAO.getSeeker(seekerId);
+            ObjectMapper.mapObject(newSeeker, seeker, true);
             status = seekerDAO.editSeeker(seekerId, seeker);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't edit ", e);
@@ -230,11 +232,13 @@ public class AccountServiceImpl implements AccountService {
         return status;
     }
 
-    private int editSitter(long sitterId, Sitter sitter){
+    private int editSitter(long sitterId, EditProfileForm newSitter){
         SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
-        logger.info(sitter.toString());
+        logger.info(newSitter.toString());
         int status = -1;
         try {
+            Sitter sitter = sitterDAO.getSitter(sitterId);
+            ObjectMapper.mapObject(newSitter, sitter, true);
             status = sitterDAO.editSitter(sitterId, sitter);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't edit", e);

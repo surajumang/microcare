@@ -1,10 +1,14 @@
 package com.care.dao;
 
+import com.care.model.Seeker;
 import com.care.model.Sitter;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class HSitterDAOImpl implements SitterDAO {
@@ -21,7 +25,8 @@ public class HSitterDAOImpl implements SitterDAO {
 
     @Override
     public int editSitter(long sitterId, Sitter sitter) throws SQLException {
-
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.saveOrUpdate(sitter);
         return 0;
     }
 
@@ -37,9 +42,13 @@ public class HSitterDAOImpl implements SitterDAO {
 
     @Override
     public Set<Sitter> getSitterByEmail(String email) throws SQLException {
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        Query query = session.createQuery("from Sitter where emai")
-//
-        return null;
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Query query = session.createQuery("from Seeker where email like '%?%'");
+        query.setString(0, email);
+        List<Sitter> sitters = query.list();
+        if (sitters == null){
+            sitters = Collections.emptyList();
+        }
+        return new HashSet<>(sitters);
     }
 }

@@ -49,27 +49,27 @@
             <html:form action="/visitor/captureRegistration" method="post" >
             <table>
                 <tr>
-                    <td><label for="mail">Email</label></td>
+                    <td><label for="mail">Email*</label></td>
                     <td><html:text property="email" /></td>
                 </tr>
                 <tr>
-                    <td><label for="fproperty">First Name</label></td>
+                    <td><label for="fproperty">First Name*</label></td>
                     <td><html:text property="firstName" /></td>
                 </tr>
                 <tr>
-                    <td><label for="lproperty">Last Name</label></td>
+                    <td><label for="lproperty">Last Name*</label></td>
                     <td><html:text property="lastName" /></td>
                 </tr>
                 <tr>
-                    <td><label >Address</label></td>
+                    <td><label >Address*</label></td>
                     <td><html:text property="address" /></td>
                 </tr>
                 <tr>
-                    <td><label> Phone </label></td>
+                    <td><label> Phone* </label></td>
                     <td><html:text property="phone" /></td>
                 </tr>
                 <tr>
-                    <td><label>Zip Code</label></td>
+                    <td><label>Zip Code*</label></td>
                     <td><html:text property="zipCode" /></td>
                 </tr>
                 <tr>
@@ -102,23 +102,23 @@
                 <div id="sitter" style="display:none;">
 				<table>
                 <tr>
-                    <td><label>Years of Experience</label></td>
+                    <td><label>Years of Experience*</label></td>
                     <td><html:text property="experience" /></td>
                 </tr>
                 <tr>
-                     <td> <label>Expected Pay</label></td>
+                     <td> <label>Expected Pay*</label></td>
                      <td><html:text property="expectedPay" /></td>
 				 </tr>
 				</table>
                 </div>
 				</td></tr>
                 <tr>
-                    <td><label>Password</label></td>
+                    <td><label>Password*</label></td>
                     <td><html:password property="password" /></td>
                 </tr>
 
                 <tr>
-                    <td><label>Re enter the Password</label></td>
+                    <td><label>Re enter the Password*</label></td>
                     <td><html:password property="password2"/></td>
                 </tr>
 

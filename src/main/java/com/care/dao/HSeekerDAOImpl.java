@@ -38,7 +38,7 @@ public class HSeekerDAOImpl implements SeekerDAO {
     public Set<Seeker> getSeekerByEmail(String email) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-        Query query = session.createQuery("from Seeker where email=?");
+        Query query = session.createQuery("from Seeker where email like '%?%'");
         query.setString(0, email);
         List<Seeker> seekers = query.list();
         if (seekers == null){
@@ -51,10 +51,7 @@ public class HSeekerDAOImpl implements SeekerDAO {
     public int editSeeker(long seekerId, Seeker seeker) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-        Seeker oldSeeker = (Seeker) session.get(Seeker.class, seekerId);
-        //[TODO] check if this is required or not.
-        ObjectMapper.mapObject(seeker, oldSeeker, true);
-        session.saveOrUpdate(oldSeeker);
+        session.saveOrUpdate(seeker);
 
 
         return 1;

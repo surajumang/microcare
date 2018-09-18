@@ -45,6 +45,7 @@
          <h2>${FAILURE}</h2>
          <h2>${INVALID}</h2>
          <h2>${DELSUCCESS}</h2>
+         <h2>${EDITSUCCESS}</h2>
 
     <c:if test="${fn:length(myJobs) > 0}">
         <table>

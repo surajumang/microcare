@@ -44,7 +44,7 @@ public class EditJob extends Action {
         page = "/seeker/home.jsp";
 
         request.setAttribute("editJob", jobForm);
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
+        request.setAttribute("EDITSUCCESS", message.get(operationStatus));
 
         return mapping.findForward("success");
     }

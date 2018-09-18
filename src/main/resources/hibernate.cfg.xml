@@ -31,6 +31,7 @@
         <!-- Drop and re-create the database schema on startup -->
        <property name="hbm2ddl.auto">validate</property>
 
+
         <mapping resource="com/care/model/Member.hbm.xml"/>
         <mapping resource="com/care/model/Application.hbm.xml"/>
         <mapping resource="com/care/model/Job.hbm.xml"/>

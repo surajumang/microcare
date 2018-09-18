@@ -101,10 +101,10 @@ public class HJobDAOImpl implements JobDAO {
     @Override
     public Set<Job> getAllAvailableJobs(long sitterId) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Job j where j.id not in (select jobId from Application where sitterId=? and status=? or ?)");
+        Query query = session.createQuery("from Job j where j.id not in (select job.id from Application where sitter.id =?)");
         query.setLong(0, sitterId);
-        query.setString(1, Status.ACTIVE.name());
-        query.setString(2, Status.CLOSED.name());
+//        query.setString(1, Status.ACTIVE.name());
+//        query.setString(2, Status.CLOSED.name());
         List<Job> jobs = query.list();
 
         return new HashSet<>(jobs);
