@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.filter.HibernateFilter;
 import com.care.form.PasswordForm;
 import com.care.service.*;
 import com.care.validation.FormPopulator;
@@ -41,6 +42,7 @@ public class ResetPassword extends Action {
                 authenticationService.updatePasswordWithToken(passwordForm);
         if (operationStatus == OperationStatus.SUCCESS){
             page = "/login.jsp";
+            request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward("success");

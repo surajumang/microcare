@@ -1,6 +1,7 @@
 package com.care.controller.seeker;
 
 import com.care.exception.JobNotPostedByUserException;
+import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
 import com.care.controller.ControllerUtil;
@@ -47,6 +48,7 @@ public class CloseJob extends Action {
             if (operationStatus == OperationStatus.SUCCESS){
                 request.setAttribute("DELSUCCESS", "Successfully deleted");
                 page = "success";
+                request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
             }
         } catch (JobNotPostedByUserException e) {
             logger.log(Level.SEVERE, "Job not deleted", e);

@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.filter.HibernateFilter;
 import com.care.form.EditProfileForm;
 import com.care.model.Member;
 import com.care.model.MemberType;
@@ -39,6 +40,7 @@ public class EditProfileAction extends Action {
         int status = accountService.editMember(currentUser.getId(), editProfileForm);
         if (status == 1){
             operationStatus = OperationStatus.SUCCESS;
+            request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }
 
         request.setAttribute(operationStatus.name(), message.get(operationStatus));

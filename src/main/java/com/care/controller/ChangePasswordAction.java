@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.filter.HibernateFilter;
 import com.care.form.PasswordForm;
 import com.care.model.Member;
 import com.care.service.AuthenticationService;
@@ -33,6 +34,9 @@ public class ChangePasswordAction extends Action {
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
         OperationStatus operationStatus  =
                 authenticationService.updatePassword(member, passwordForm);
+        if (operationStatus == OperationStatus.SUCCESS){
+            request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
+        }
 
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(operationStatus.name().toLowerCase());

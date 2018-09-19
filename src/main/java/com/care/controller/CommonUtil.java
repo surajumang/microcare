@@ -21,6 +21,7 @@ public class CommonUtil {
             jobId = Integer.parseInt(request.getParameter(id));
         }catch (IllegalArgumentException e){
             logger.log(Level.SEVERE, "Application ID", e);
+            throw e;
         }
         return jobId;
     }

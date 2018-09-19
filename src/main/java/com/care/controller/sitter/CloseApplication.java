@@ -1,5 +1,6 @@
 package com.care.controller.sitter;
 
+import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
 import com.care.service.*;
@@ -44,6 +45,7 @@ public class CloseApplication extends Action {
         if (operationStatus == OperationStatus.SUCCESS){
             page = "success";
             request.setAttribute("DELSUCCESS", "Successfully deleted");
+            request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
         }
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));

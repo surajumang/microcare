@@ -145,6 +145,7 @@
         <action path="/seeker/deleteJob"
                 type="com.care.controller.seeker.CloseJob">
             <forward name="success" path="/seeker/showJobs.do"/>
+            <forward name="failure" path="/member/home.do"/>
         </action>
 
         <!-- Both of them belong together*************START***********-->

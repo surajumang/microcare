@@ -48,6 +48,7 @@ public class HApplicationDAOImpl implements ApplicationDAO {
         if (applications == null){
             applications = Collections.emptyList();
         }
+        Application app = getApplication(applications.get(0).getId());
         return applications;
     }
 

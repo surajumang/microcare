@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.filter.HibernateFilter;
 import com.care.form.JobForm;
 import com.care.model.Member;
 import com.care.service.*;
@@ -45,6 +46,7 @@ public class EditJob extends Action {
 
         request.setAttribute("editJob", jobForm);
         request.setAttribute("EDITSUCCESS", message.get(operationStatus));
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
 
         return mapping.findForward("success");
     }

@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
@@ -43,6 +44,7 @@ public class CloseAccount extends Action {
         if (operationStatus == OperationStatus.SUCCESS){
             page="/login.jsp";
             request.getSession().setAttribute("currentUser", null);
+            request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward("success");

@@ -141,12 +141,17 @@ public class SeekerServiceImpl implements SeekerService {
         Job job = new Job();
         try{
              job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
+             ObjectMapper.mapObject(jobForm, job, true);
+             jobDAO.editJob(job);
         }catch (Exception e){
             logger.log(Level.SEVERE, "Getting a job", e);
+            //throw e;
         }
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         //modify the values.
-        ObjectMapper.mapObject(jobForm, job, true);
+
+        // saveOrUpdate
+
         logger.info("------- " +status + "-------- ");
         return operationStatus;
     }
@@ -158,7 +163,6 @@ public class SeekerServiceImpl implements SeekerService {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
-        int status = -1;
         try{
             Job job = jobDAO.getJob(jobId);
             logger.info(job + " ");
@@ -170,10 +174,6 @@ public class SeekerServiceImpl implements SeekerService {
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Can't delete Job", e);
-            operationStatus = OperationStatus.FAILURE;
-        }
-        //logger.info("------- " +status + "-------- ");
-        if (status != 1){
             operationStatus = OperationStatus.FAILURE;
         }
 
