@@ -18,7 +18,6 @@ public class HSeekerDAOImpl implements SeekerDAO {
     @Override
     public int addSeeker(Seeker seeker) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
         session.save(seeker);
         return 1;
     }
@@ -26,23 +25,19 @@ public class HSeekerDAOImpl implements SeekerDAO {
     @Override
     public Seeker getSeeker(long seekerId) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
         Seeker seeker = (Seeker) session.get(Seeker.class, seekerId);
         if (seeker == null){
             seeker = Seeker.emptySeeker();
         }
-
         return seeker;
     }
 
     @Override
     public Set<Seeker> getSeekerByEmail(String email) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
-        Query query = session.createQuery("from Seeker where email like ? and status=?");
-        query.setString(0, "%" + email + "%" );
-        query.setString(1, Status.ACTIVE.name());
-
+        Query query = session.createQuery("from Seeker where email like :pattern and status= :status");
+        query.setString("pattern", "%" + email + "%" );
+        query.setString("status", Status.ACTIVE.name());
         List<Seeker> seekers = query.list();
         if (seekers == null){
             seekers = Collections.emptyList();
@@ -53,10 +48,7 @@ public class HSeekerDAOImpl implements SeekerDAO {
     @Override
     public int editSeeker(long seekerId, Seeker seeker) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
         session.saveOrUpdate(seeker);
-
-
         return 1;
     }
 

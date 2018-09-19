@@ -26,41 +26,9 @@ public class EditProfileAction extends Action {
         message.put(OperationStatus.SUCCESS, "Successfully Edited your profile");
     }
 
-//    private String editSeeker(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, Map<String, String> errors){
-//        SeekerEditProfileForm seekerEditForm = (SeekerEditProfileForm)form;
-//        String page = "putProfileInfo.jsp";
-//        request.setAttribute("profileInfo", seekerEditForm);
-//
-//        if (errors.isEmpty()){
-//            Member member = (Member) request.getSession().getAttribute("currentUser");
-//            AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-//            accountService.editMember(member.getId(), seekerEditForm);
-//
-//            request.setAttribute("SUCCESS", "Profile info edited successfully");
-//            page = "home.jsp";
-//        }
-//        return page;
-//    }
-//
-//    private String editSitter(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, Map<String, String> errors){
-//        SitterEditProfileForm sitterEditForm = (SitterEditProfileForm) form;
-//        String page = "putProfileInfo.jsp";
-//        request.setAttribute("profileInfo", sitterEditForm);
-//
-//        if (errors.isEmpty()){
-//            Member member = (Member) request.getSession().getAttribute("currentUser");
-//            AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-//            accountService.editMember(member.getId(), sitterEditForm);
-//
-//            request.setAttribute("SUCCESS", "Profile info edited successfully");
-//            page = "home.jsp";
-//        }
-//        return page;
-//    }
-
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Member currentUser = (Member)request.getSession().getAttribute("currentUser");
+        Member currentUser = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         MemberType memberType = currentUser.getMemberType();
 
         String page = "/member/home.do";

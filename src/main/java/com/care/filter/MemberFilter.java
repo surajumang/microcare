@@ -1,7 +1,7 @@
 package com.care.filter;
 
 import com.care.model.Member;
-import com.care.model.MemberType;
+import com.care.controller.ControllerUtil;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +34,7 @@ public class MemberFilter implements Filter {
         //check if session != null only then proceed
         Member currentUser = null;
         if (session != null){
-            currentUser = (Member) session.getAttribute("currentUser");
+            currentUser = (Member) session.getAttribute(ControllerUtil.CURRENT_USER);
         }
 
         if (currentUser != null){

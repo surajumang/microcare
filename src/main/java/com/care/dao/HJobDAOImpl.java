@@ -1,14 +1,11 @@
 package com.care.dao;
 
-import com.care.filter.HibernateFilter;
 import com.care.model.Job;
 import com.care.model.Seeker;
 import com.care.model.Status;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class HJobDAOImpl implements JobDAO {
@@ -25,9 +22,7 @@ public class HJobDAOImpl implements JobDAO {
     public int setJobStatus(long jobId, Status status) throws Exception {
         int operationStatus = -1;
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
         Job job = (Job)session.get(Job.class, jobId);
-
         if (job != null){
             job.setStatus(status);
             operationStatus = 1;
@@ -64,8 +59,6 @@ public class HJobDAOImpl implements JobDAO {
     public int editJob(Job job) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.saveOrUpdate(job);
-
-
         return 1;
     }
 
@@ -76,22 +69,17 @@ public class HJobDAOImpl implements JobDAO {
         if (job == null){
             job = Job.emptyJob();
         }
-
         return job;
     }
 
     @Override
-    public Set<Job> getAllJobs(long postedBy) throws Exception {
+    public List<Job> getAllJobs(long postedBy) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        /*
-        If the eager fetch starategy works, then fetching a seeker will also fetch it's jobs.
-         */
-        Seeker seeker = (Seeker) session.get(Seeker.class, postedBy);
-        Set<Job> jobs = Collections.emptySet();
-        if (seeker != null){
-            jobs = seeker.getJobs();
-        }
-        return jobs;
+        Query query = session.createQuery("from Job where seeker.id = :seekerId and status = :status ");
+        query.setLong("seekerId", postedBy);
+        query.setString("status", Status.ACTIVE.name());
+        List<Job> jobList = query.list();
+        return jobList;
     }
 
     /*
@@ -99,16 +87,14 @@ public class HJobDAOImpl implements JobDAO {
         CLOSED application.
      */
     @Override
-    public Set<Job> getAllAvailableJobs(long sitterId) throws Exception {
+    public List<Job> getAllAvailableJobs(long sitterId) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Job j where j.id not in (select job.id from Application where sitter.id =? and status = ?) and status = ?");
-        query.setLong(0, sitterId);
-        query.setString(1, Status.ACTIVE.name());
-        query.setString(2, Status.ACTIVE.name());
-//        query.setString(1, Status.ACTIVE.name());
-//        query.setString(2, Status.CLOSED.name());
+        Query query = session.createQuery("from Job j where j.id not in (select job.id from Application where sitter.id = :sitterId and status = :appStatus) and status = :jobStatus");
+        query.setLong("sitterId", sitterId);
+        query.setString("appStatus", Status.ACTIVE.name());
+        query.setString("jobStatus", Status.ACTIVE.name());
         List<Job> jobs = query.list();
 
-        return new HashSet<>(jobs);
+        return jobs;
     }
 }

@@ -3,6 +3,7 @@ package com.care.controller.sitter;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
 import com.care.service.*;
+import com.care.controller.ControllerUtil;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,7 +35,7 @@ public class CloseApplication extends Action {
 
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-        Member currentMember = (Member) request.getSession().getAttribute("currentUser");
+        Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
         logger.info("Called CloseApplication for Sitter" + currentMember);
 

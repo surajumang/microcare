@@ -3,7 +3,7 @@ package com.care.controller.seeker;
 import com.care.form.JobForm;
 import com.care.model.Member;
 import com.care.service.*;
-import com.care.validation.FormPopulator;
+import com.care.controller.ControllerUtil;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -30,7 +30,7 @@ public class EditJob extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        Member currentUser = (Member) request.getSession().getAttribute("currentUser");
+        Member currentUser = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         String page = "/seeker/showAndEditJob.jsp";
         JobForm jobForm = (JobForm)form;
         jobForm.setSeekerId(String.valueOf(currentUser.getId()));

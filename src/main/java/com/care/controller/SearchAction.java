@@ -30,7 +30,7 @@ public class SearchAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         SearchCriteria searchCriteria = (SearchCriteria) form;
-        Member member = (Member) request.getSession().getAttribute("currentUser");
+        Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         String page = "found";

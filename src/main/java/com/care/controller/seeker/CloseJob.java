@@ -3,6 +3,7 @@ package com.care.controller.seeker;
 import com.care.exception.JobNotPostedByUserException;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
+import com.care.controller.ControllerUtil;
 import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
@@ -34,29 +35,29 @@ public class CloseJob extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/seeker/showJobs.do";
+        String page = "failure";
         OperationStatus operationStatus = OperationStatus.FAILURE;
-
-        long jobToBeClosed = CommonUtil.getIdFromRequest(request, "id" );
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-        Member currentMember = (Member) request.getSession().getAttribute("currentUser");
+        Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
-        if (jobToBeClosed >= 0){
-            logger.info("Called CloseApplication  " + currentMember);
-            try {
-                operationStatus = seekerService.closeJob(currentMember, jobToBeClosed);
-                if (operationStatus == OperationStatus.SUCCESS){
-                    request.setAttribute("DELSUCCESS", "Successfully deleted");
-                }
-            } catch (JobNotPostedByUserException e) {
-                logger.log(Level.SEVERE, "Job not deleted", e);
-                //[TODO]replace it with bad request.
-                operationStatus = OperationStatus.UNAUTHORISED;
+        logger.info("Called CloseApplication  " + currentMember);
+        try {
+            long jobToBeClosed = CommonUtil.getIdFromRequest(request, "id" );
+            operationStatus = seekerService.closeJob(currentMember, jobToBeClosed);
+            if (operationStatus == OperationStatus.SUCCESS){
+                request.setAttribute("DELSUCCESS", "Successfully deleted");
+                page = "success";
             }
+        } catch (JobNotPostedByUserException e) {
+            logger.log(Level.SEVERE, "Job not deleted", e);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            operationStatus = OperationStatus.UNAUTHORISED;
+        }catch (IllegalArgumentException e){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
 
         request.setAttribute(operationStatus.name(), messege.get(operationStatus));
         logger.info(page);
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 }

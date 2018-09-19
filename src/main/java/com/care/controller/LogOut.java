@@ -20,9 +20,9 @@ public class LogOut extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         logger.info("called logout");
-        Member member = (Member) request.getSession().getAttribute("currentUser");
+        Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         logger.info(member + "to be logged out");
-        request.getSession().invalidate();
+        request.getSession().setAttribute(ControllerUtil.CURRENT_USER, null);
         request.setAttribute("stat", member);
 
         request.setAttribute(OperationStatus.SUCCESS.name(), "Successfully Logged Out");

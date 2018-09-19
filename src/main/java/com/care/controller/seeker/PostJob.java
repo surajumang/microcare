@@ -3,6 +3,7 @@ package com.care.controller.seeker;
 
 import com.care.form.JobForm;
 import com.care.model.Member;
+import com.care.controller.ControllerUtil;
 import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
@@ -32,7 +33,7 @@ public class PostJob extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page ="/seeker/postJob.jsp";
 
-        Member currentUser = (Member) request.getSession().getAttribute("currentUser");
+        Member currentUser = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         JobForm jobForm = (JobForm)form;
         int status = -1;
         OperationStatus operationStatus = OperationStatus.FAILURE;

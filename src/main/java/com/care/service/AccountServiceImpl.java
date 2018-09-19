@@ -86,6 +86,7 @@ public class AccountServiceImpl implements AccountService {
             logger.info(member.toString());
         } catch (Exception e) {
            logger.log(Level.SEVERE, "Error fetching member", e);
+           //[No member exist for the given email]todo
            member = Member.emptyMember();
         }
         return member;
@@ -147,25 +148,27 @@ public class AccountServiceImpl implements AccountService {
     /*
     Write code related to authorization here.
     Deleting member requires all jobs and application deletion as well based on the member type..
-
+    [TODO] Move it to model class.
      */
     public OperationStatus deleteMember(Member member) {
-
         OperationStatus status = OperationStatus.SUCCESS;
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
-        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
 
         try {
             if (member.getMemberType() == MemberType.SEEKER){
                 logger.info("A SEEKer was deleted");
-                applicationDAO.setAllApplicationsOnJobsPostedBy(member.getId(), Status.EXPIRED);
-                jobDAO.setAllJobsStatus(member.getId(), Status.EXPIRED);
+                Seeker seeker = seekerDAO.getSeeker(member.getId());
+                seeker.closeAccount();
+//                applicationDAO.setAllApplicationsOnJobsPostedBy(member.getId(), Status.EXPIRED);
+//                jobDAO.setAllJobsStatus(member.getId(), Status.EXPIRED);
             }else {
                 logger.info("A sitter was deleted");
-                applicationDAO.setAllApplicationsStatusBySitter(member.getId(),Status.EXPIRED );
+                Sitter sitter = sitterDAO.getSitter(member.getId());
+                sitter.closeAccount();
+//                applicationDAO.setAllApplicationsStatusBySitter(member.getId(),Status.EXPIRED );
             }
-            memberDAO.setMemberStatus(member.getId(), Status.CLOSED);
+//            memberDAO.setMemberStatus(member.getId(), Status.CLOSED);
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error Deleting member", e);
@@ -175,7 +178,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private Token generatePasswordResetToken(Member member) {
-
         String token = "";
         for (int i = 0; i<10; i++){
             token += String.valueOf((int)(Math.random()*10));
@@ -206,13 +208,9 @@ public class AccountServiceImpl implements AccountService {
         logger.info("Called enroll");
 
         if (editProfileForm.getMemberType().equals("SEEKER") ){
-//            Seeker seeker = new Seeker();
-//            ObjectMapper.mapObject(editProfileForm, seeker, true);
             status = editSeeker( memberId, editProfileForm);
         }
         else {
-//            Sitter sitter = new Sitter();
-//            ObjectMapper.mapObject(editProfileForm, sitter, true);
             status = editSitter(memberId, editProfileForm);
         }
         return status ;
@@ -226,7 +224,6 @@ public class AccountServiceImpl implements AccountService {
         try {
             Seeker seeker = seekerDAO.getSeeker(seekerId);
             ObjectMapper.mapObject(newSeeker, seeker, true);
-            //status = seekerDAO.editSeeker(seekerId, seeker);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't edit ", e);
             status = -1;

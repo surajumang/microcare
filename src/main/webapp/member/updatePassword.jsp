@@ -27,17 +27,17 @@
             <table align="center">
                 <tr>
                     <td><label>Current Password</label></td>
-                    <td><html:password property="currentPassword" /></td>
+                    <td><input type="password" name="currentPassword" /></td>
                     <td><font color="red"> <html:errors property="currentPassword" /> </font></td>
                 </tr>
                 <tr>
                     <td><label>New Password</label></td>
-                    <td><html:password property="password" /></td>
+                    <td><input type="password" name="password"/></td>
                     <td><font color="red"> <html:errors property="password" /> </font></td>
                 </tr>
                 <tr>
                     <td><label>Re-Enter Password</label></td>
-                    <td><html:password property="password2" /></td>
+                    <td><input type="password" name="password2" /></td>
                     <td><font color="red"> <html:errors property="password2" /> </font></td>
                 </tr>
             </table>

@@ -1,13 +1,14 @@
 
 package com.care.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Sitter extends Member {
         private long id;
         private int experience;
         private double expectedPay;
-        private Set<Application> applications;
+        private Set<Application> applications = new HashSet<>();
 
         private static final Sitter EMPTY_SITTER = new Sitter();
 
@@ -49,6 +50,19 @@ public class Sitter extends Member {
 
         public static Sitter emptySitter(){
                 return EMPTY_SITTER;
+        }
+
+        public int closeAllApplications(){
+            for(Application application : getApplications()){
+                application.setStatus(Status.EXPIRED);
+            }
+            return 1;
+        }
+
+        public int closeAccount(){
+            this.closeAllApplications();
+            this.setStatus(Status.CLOSED);
+            return 1;
         }
 
 }

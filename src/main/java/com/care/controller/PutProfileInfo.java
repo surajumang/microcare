@@ -25,7 +25,7 @@ public class PutProfileInfo extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Member currentUser = (Member) request.getSession().getAttribute("currentUser");
+        Member currentUser = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         MemberType memberType = currentUser.getMemberType();
         String page = "failure";
         EditProfileForm editProfileForm = (EditProfileForm)form;

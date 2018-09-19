@@ -90,12 +90,12 @@ public class SeekerServiceImpl implements SeekerService {
 
     public List<Job> listJobs(Member member) {
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
-        Set<Job> memberJobs ;
+        List<Job> memberJobs ;
         try {
             memberJobs = jobDAO.getAllJobs(member.getId());
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't access database", e);
-            memberJobs = Collections.emptySet();
+            memberJobs = Collections.emptyList();
         }
         logger.info("Size of list-----" + memberJobs.size());
         return new ArrayList<>(memberJobs);
@@ -144,23 +144,9 @@ public class SeekerServiceImpl implements SeekerService {
         }catch (Exception e){
             logger.log(Level.SEVERE, "Getting a job", e);
         }
-
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         //modify the values.
         ObjectMapper.mapObject(jobForm, job, true);
-
-//        logger.info(job + "JOB TO BE EDITED");
-//        try{
-//            status = jobDAO.editJob(job);
-//            logger.info(status + " ");
-//            if (status != 1){
-//                logger.info("Couldn't edit job");
-//                operationStatus=OperationStatus.FAILURE;
-//            }
-//        }catch (Exception e){
-//            logger.log(Level.SEVERE, "Can't edit a Job", e);
-//            operationStatus = OperationStatus.FAILURE;
-//        }
         logger.info("------- " +status + "-------- ");
         return operationStatus;
     }
@@ -174,9 +160,10 @@ public class SeekerServiceImpl implements SeekerService {
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         int status = -1;
         try{
-            if (verifyJobBelongsToMember(member, jobId)){
-                status = jobDAO.setJobStatus(jobId, Status.CLOSED);
-                applicationDAO.setAllApplicationStatusByJob(jobId, Status.EXPIRED);
+            Job job = jobDAO.getJob(jobId);
+            logger.info(job + " ");
+            if (job.getSeeker().getId() == member.getId()){
+                job.close();
             }else {
                 operationStatus = OperationStatus.UNAUTHORISED;
                 throw new  JobNotPostedByUserException("Can;t close job");

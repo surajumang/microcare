@@ -137,10 +137,6 @@ public class EditProfileForm extends  FormBean {
             logger.log(Level.SEVERE, "While validating", e);
         }
 
-        if (numberOfChildren != null && numberOfChildren.equals("")){
-            numberOfChildren="0";
-        }
-
         if (MemberType.valueOf(memberType) == MemberType.SITTER){
             if (! expectedPay.matches("\\d{1,3}(\\.\\d{0,2})?")){
                 errors.add("expectedPay", new ActionMessage("errors.amount"));
@@ -148,6 +144,9 @@ public class EditProfileForm extends  FormBean {
             if (! experience.matches("\\d{1,2}")){
                 errors.add("experience", new ActionMessage("errors.experience"));
             }
+        }
+        if (numberOfChildren != null && numberOfChildren.equals("") && errors.isEmpty()){
+            numberOfChildren="0";
         }
         return errors;
     }

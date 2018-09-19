@@ -2,6 +2,7 @@
 package com.care.model;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Job {
@@ -12,8 +13,9 @@ public class Job {
     private Timestamp endDate;
     private Status status = Status.ACTIVE;
     private Timestamp dateCreated;
+    private Timestamp lastModified;
     private Seeker seeker;
-    private Set<Application> applications;
+    private Set<Application> applications = new HashSet<>();
 
     private static final Job EMPTY_JOB = new Job();
 
@@ -92,8 +94,23 @@ public class Job {
         this.dateCreated = dateCreated;
     }
 
+    public Timestamp getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Timestamp lastModified) {
+        this.lastModified = lastModified;
+    }
+
     public static Job emptyJob(){
         return EMPTY_JOB;
+    }
+
+    public void close(){
+        this.setStatus(Status.CLOSED);
+        for (Application application : getApplications()){
+            application.setStatus(Status.EXPIRED);
+        }
     }
 
 }

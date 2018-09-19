@@ -66,7 +66,7 @@
                 </tr>
                 <tr>
                     <td><label >Address*</label></td>
-                    <td><html:text property="address" /></td>
+                    <td><html:textarea property="address" rows="7" cols="17" /></td>
                     <td><font color="red"> <html:errors property="address" /> </font></td>
                 </tr>
                 <tr>

@@ -33,13 +33,13 @@
     <jsp:include page="/header.jsp"/>
     <h2>${SUCCESS}</h2>
     <h2>${FAILURE}</h2>
-    <html:errors />
 
     <h2>Enter Email(partial accepted) to search </h2>
 
     <html:form action="/member/captureSearch" method="post">
         <label>Email</label>
         <html:text property = "email"/>
+        <font color="red" ><html:errors property="email" /></font>
         <html:submit value = "GO"/>
     </html:form>
 

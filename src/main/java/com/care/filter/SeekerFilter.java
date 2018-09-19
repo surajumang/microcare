@@ -2,6 +2,7 @@ package com.care.filter;
 
 import com.care.model.Member;
 import com.care.model.MemberType;
+import com.care.controller.ControllerUtil;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class SeekerFilter implements Filter {
         HttpSession session = request.getSession(false);
         Member currentUser = null;
         if (session != null){
-            currentUser = (Member) session.getAttribute("currentUser");
+            currentUser = (Member) session.getAttribute(ControllerUtil.CURRENT_USER);
         }
 
 

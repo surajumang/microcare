@@ -1,6 +1,6 @@
 package com.care.controller.sitter;
 
-import com.care.controller.CommonUtil;
+import com.care.controller.ControllerUtil;
 import com.care.form.ApplicationForm;
 import com.care.model.Application;
 import com.care.model.Member;
@@ -43,7 +43,7 @@ public class ApplyToJob extends Action {
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-        Member currentMember = (Member) request.getSession().getAttribute("currentUser");
+        Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
         logger.info(applicationForm + "**********");
         logger.info("Called ApplyToJob");

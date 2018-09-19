@@ -18,16 +18,13 @@ public class HMemberDAOImpl implements MemberDAO {
     @Override
     public Member getMember(String email) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        String query = "from Member where email=?";
+        String query = "from Member where email= :email";
 
         Query query1 = session.createQuery(query);
-        query1.setString(0, email);
+        query1.setString("email", email);
 
-        Member member = Member.emptyMember();
-        List<Member> members = query1.list();
-        if (members.size() == 1){
-            member = members.get(0);
-        }
+        Member member = (Member) query1.uniqueResult();
+
         return member;
     }
 
@@ -45,8 +42,8 @@ public class HMemberDAOImpl implements MemberDAO {
     @Override
     public Token getToken(String token) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Token where TOKEN=?");
-        query.setString(0, token);
+        Query query = session.createQuery("from Token where TOKEN= :token");
+        query.setString("token", token);
 
         Token token1 = (Token) query.uniqueResult();
         if (token1 == null){
@@ -79,8 +76,8 @@ public class HMemberDAOImpl implements MemberDAO {
     public int invalidateToken(String token) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         int status = -1;
-        Query query = session.createQuery("from Token where token=?");
-        query.setString(0, token);
+        Query query = session.createQuery("from Token where token= :token");
+        query.setString("token", token);
         Token token1 = (Token)query.uniqueResult();
         if (token != null){
             status = 1;

@@ -4,6 +4,7 @@ import com.care.controller.CommonUtil;
 import com.care.exception.JobNotPostedByUserException;
 import com.care.form.JobForm;
 import com.care.model.Job;
+import com.care.controller.ControllerUtil;
 import com.care.model.Member;
 import com.care.model.Status;
 import com.care.service.*;
@@ -45,7 +46,7 @@ public class ShowJobToEdit extends Action {
 
         if (id >= 0){
             logger.info("Editing job with id " + id );
-            Member member = (Member)request.getSession().getAttribute("currentUser");
+            Member member = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
             Job job = null;
             JobForm jobForm = (JobForm)form;

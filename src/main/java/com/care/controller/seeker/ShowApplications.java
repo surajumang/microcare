@@ -3,6 +3,7 @@ package com.care.controller.seeker;
 import com.care.exception.IllegalApplicationAccessException;
 import com.care.model.Application;
 import com.care.model.Member;
+import com.care.controller.ControllerUtil;
 import com.care.controller.CommonUtil;
 import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
@@ -43,13 +44,14 @@ public class ShowApplications extends Action {
 
         if (jobIdToViewApplications >= 0){
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-            Member currentMember = (Member) request.getSession().getAttribute("currentUser");
+            Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
             logger.info("Called SeekerService listAppOnJob");
             try {
                 applications = seekerService.getApplications(currentMember, jobIdToViewApplications);
             } catch (IllegalApplicationAccessException e) {
                 logger.log(Level.SEVERE, "Not allowed to see application", e);
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }
             if (applications != null && !applications.isEmpty()){
                 operationStatus = OperationStatus.SUCCESS;

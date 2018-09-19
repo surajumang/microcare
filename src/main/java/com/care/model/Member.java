@@ -1,8 +1,9 @@
 
 package com.care.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Member {
@@ -17,7 +18,7 @@ public class Member {
         private Status status = Status.ACTIVE;
         private Timestamp lastModified;
         private String password;
-        private Set<Token> tokens;
+        private Set<Token> tokens = new HashSet<>();
 
         private static final Member EMPTY_MEMBER = new Member();
 

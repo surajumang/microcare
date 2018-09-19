@@ -41,7 +41,7 @@ public class LoginClosedMember extends Action {
 
             accountService.setMemberStatus(member, Status.ACTIVE);
             member.setStatus(Status.ACTIVE);
-            request.getSession().setAttribute("currentUser" ,member);
+            request.getSession().setAttribute(ControllerUtil.CURRENT_USER, member);
             logger.info("Member set to sesion" + member);
             String memberType = member.getMemberType().name().toLowerCase();
 
@@ -49,6 +49,8 @@ public class LoginClosedMember extends Action {
             logger.info("Back at LoginServlet");
 
             page = "success";
+        }else {
+            request.getSession().setAttribute("closedUser", null);
         }
 
         return mapping.findForward(page);

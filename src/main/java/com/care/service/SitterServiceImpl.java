@@ -19,13 +19,13 @@ public class SitterServiceImpl implements SitterService {
 
     public List<Job> listAllAvailableJobs(Member sitter) {
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
-        Set<Job> allJobs;
+        List<Job> allJobs;
 
         try{
             allJobs = jobDAO.getAllAvailableJobs(sitter.getId());
         }catch (Exception e){
             logger.log(Level.SEVERE, "Getting all Available Jobs" , e);
-            allJobs = Collections.emptySet();
+            allJobs = Collections.emptyList();
         }
         return new ArrayList<>(allJobs);
     }
@@ -34,12 +34,12 @@ public class SitterServiceImpl implements SitterService {
      */
     public List<Application> listAllApplications(Member sitter) {
         ApplicationDAO applicationDAO= DAOFactory.get(HApplicationDAOImpl.class);
-        Set<Application> applications ;
+        List<Application> applications ;
         try{
             applications = applicationDAO.getAllApplications(sitter.getId());
         }catch (Exception e){
             logger.log(Level.SEVERE , "All getApplications for Sitter", e);
-            applications = Collections.emptySet();
+            applications = Collections.emptyList();
         }
         return new ArrayList<>(applications);
     }
@@ -117,6 +117,7 @@ public class SitterServiceImpl implements SitterService {
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         logger.info("APPLICATion being deleted : " + applicationId + "BYY" + sitter.getId());
         try {
+            //[todo] check if belongs to sitter otherwise throw exception.
             int val = applicationDAO.setApplicationStatus(applicationId,Status.CLOSED );
             if (val == 1){
                 operationStatus = OperationStatus.SUCCESS;

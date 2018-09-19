@@ -103,7 +103,7 @@ public class JobForm extends FormBean {
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Exception while validating Time values", e);
-            errors.add("startDate", new ActionMessage("errors.date.format"));
+            errors.add("dateFormat", new ActionMessage("errors.date.format"));
 
             flag = false;
         }

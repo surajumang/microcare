@@ -3,6 +3,7 @@ package com.care.controller.sitter;
 import com.care.controller.CommonUtil;
 import com.care.form.ApplicationForm;
 import com.care.model.Job;
+import com.care.controller.ControllerUtil;
 import com.care.model.Member;
 import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
@@ -37,7 +38,7 @@ public class ShowJobToApply extends Action {
         Fetch the job from the database and show it to the user, also collect the expectedPay.
          */
         String page = "/sitter/showAllJobs.do";
-        Member member = (Member) request.getSession().getAttribute("currentUser");
+        Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         OperationStatus operationStatus = OperationStatus.FAILURE;
         long id = CommonUtil.getIdFromRequest(request, "id" );

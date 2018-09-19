@@ -30,6 +30,10 @@
             <column name="DATE_CREATED"/>
         </property>
 
+        <property name="lastModified" type="timestamp" generated="always">
+            <column name="LAST_MODIFIED"/>
+        </property>
+
         <!--<property name="seekerId">-->
             <!--<column name="SEEKER_ID"/>-->
         <!--</property>-->
@@ -47,7 +51,7 @@
             <column name="SEEKER_ID"/>
         </many-to-one>
 
-        <set name="applications" table="APPLICATION">
+        <set name="applications" table="APPLICATION" inverse="true">
             <key column="JOB_ID"/>
             <one-to-many class="com.care.model.Application"/>
         </set>

@@ -42,7 +42,7 @@ public class CloseAccount extends Action {
         // take to login page when closed.
         if (operationStatus == OperationStatus.SUCCESS){
             page="/login.jsp";
-            request.getSession().invalidate();
+            request.getSession().setAttribute("currentUser", null);
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward("success");

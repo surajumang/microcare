@@ -56,7 +56,7 @@ public class LoginAction extends Action {
             Member member = accountService.getMember(userLoginForm.getEmail());
             if (member != Member.emptyMember() && member.getStatus() == Status.ACTIVE){
 
-                request.getSession().setAttribute("currentUser" ,member);
+                request.getSession().setAttribute(ControllerUtil.CURRENT_USER ,member);
                 logger.info("Member set to sesion" + member);
                 String memberType = member.getMemberType().name().toLowerCase();
 

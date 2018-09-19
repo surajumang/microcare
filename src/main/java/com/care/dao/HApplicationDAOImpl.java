@@ -3,7 +3,6 @@ package com.care.dao;
 import com.care.model.*;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,17 +32,23 @@ public class HApplicationDAOImpl implements ApplicationDAO {
     }
 
     @Override
-    public Set<Application> getAllApplications(long sitterId) throws Exception {
+    public List<Application> getAllApplications(long sitterId) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Application where sitter.id=? and status != ?");
-        query.setLong(0, sitterId);
-        query.setString(1, Status.CLOSED.name());
+//        Sitter sitter = (Sitter) session.get(Sitter.class, sitterId);
+//        Set<Application> applications = Collections.emptySet();
+//        if (sitter != null){
+//            applications = sitter.getApplications();
+//        }
+
+        Query query = session.createQuery("from Application where sitter.id= :sitterId and status != :status");
+        query.setLong("sitterId", sitterId);
+        query.setString("status", Status.CLOSED.name());
 
         List<Application> applications = query.list();
         if (applications == null){
             applications = Collections.emptyList();
         }
-        return new HashSet<>(applications);
+        return applications;
     }
 
     /*
@@ -59,7 +64,7 @@ public class HApplicationDAOImpl implements ApplicationDAO {
         }
         return applications;
     }
-
+    //[todo] set  appropriate status
     @Override
     public int setApplicationStatus(long applicationId, Status status) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();

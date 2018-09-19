@@ -20,6 +20,7 @@
 
 
      <html:form action="/seeker/capturePostJob" method="post">
+        <center> <font color="red"><html:errors property="dateFormat" /> </font></center>
         <table align="center">
             <tr>
                  <td><label>Job Title* </label></td>

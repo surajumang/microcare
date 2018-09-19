@@ -44,9 +44,9 @@ public class HSitterDAOImpl implements SitterDAO {
     @Override
     public Set<Sitter> getSitterByEmail(String email) throws SQLException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Sitter where email like ? and status = ?");
-        query.setString(0, "%" + email + "%");
-        query.setString(1, Status.ACTIVE.name());
+        Query query = session.createQuery("from Sitter where email like :pattern and status = :status");
+        query.setString("pattern", "%" + email + "%");
+        query.setString("status", Status.ACTIVE.name());
 
         List<Sitter> sitters = query.list();
         if (sitters == null){

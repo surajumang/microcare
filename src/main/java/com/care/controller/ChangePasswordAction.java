@@ -24,7 +24,7 @@ public class ChangePasswordAction extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Member member = (Member)request.getSession().getAttribute("currentUser");
+        Member member = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
         String page = "success";
         PasswordForm passwordForm = (PasswordForm) form;

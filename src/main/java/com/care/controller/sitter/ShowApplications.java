@@ -2,6 +2,7 @@ package com.care.controller.sitter;
 
 import com.care.model.Application;
 import com.care.model.Member;
+import com.care.controller.ControllerUtil;
 import com.care.service.OperationStatus;
 import com.care.service.ServiceFactory;
 import com.care.service.SitterService;
@@ -33,7 +34,7 @@ public class ShowApplications extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "failure";
 
-        Member currentMember = (Member) request.getSession().getAttribute("currentUser");
+        Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         OperationStatus operationStatus = OperationStatus.FAILURE;
         List<Application> allMyApplications = sitterService.listAllApplications(currentMember);

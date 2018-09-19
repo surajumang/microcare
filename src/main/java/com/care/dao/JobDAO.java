@@ -3,8 +3,7 @@ package com.care.dao;
 import com.care.model.Job;
 import com.care.model.Status;
 
-import java.sql.SQLException;
-import java.util.Set;
+import java.util.List;
 
 public interface JobDAO extends DAO {
     int addJob(Job job) throws Exception;
@@ -19,8 +18,8 @@ public interface JobDAO extends DAO {
 
     Job getJob(long jobId) throws Exception;
 
-    Set<Job> getAllJobs(long postedBy) throws Exception;
+    List<Job> getAllJobs(long postedBy) throws Exception;
 
-    Set<Job> getAllAvailableJobs(long sitterId) throws Exception;
+    List<Job> getAllAvailableJobs(long sitterId) throws Exception;
 
 }

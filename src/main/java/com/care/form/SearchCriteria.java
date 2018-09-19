@@ -16,7 +16,7 @@ public class SearchCriteria extends FormBean {
     private Logger logger = Logger.getLogger("SearchCriteria");
 
     private String email;
-    @Name(regex = "(.)+", message = "errors.email")
+    @Name(regex = "(.)+", message = "errors.required")
     public String getEmail() {
         return email;
     }

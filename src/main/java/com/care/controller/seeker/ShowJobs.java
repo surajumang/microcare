@@ -2,6 +2,7 @@ package com.care.controller.seeker;
 
 import com.care.model.Job;
 import com.care.model.Member;
+import com.care.controller.ControllerUtil;
 import com.care.service.OperationStatus;
 import com.care.service.SeekerService;
 import com.care.service.SeekerServiceImpl;
@@ -34,7 +35,7 @@ public class ShowJobs extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "/seeker/showMyJobs.jsp";
 
-        Member currentMember = (Member) request.getSession().getAttribute("currentUser");
+        Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
 
         OperationStatus status = OperationStatus.FAILURE;

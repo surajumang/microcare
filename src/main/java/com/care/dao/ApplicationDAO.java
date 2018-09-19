@@ -3,6 +3,7 @@ package com.care.dao;
 import com.care.model.Application;
 import com.care.model.Status;
 
+import java.util.List;
 import java.util.Set;
 
 public interface ApplicationDAO extends DAO {
@@ -11,7 +12,7 @@ public interface ApplicationDAO extends DAO {
 
     Application getApplication(long applicationId) throws Exception;
 
-    Set<Application> getAllApplications(long sitterId) throws Exception;
+    List<Application> getAllApplications(long sitterId) throws Exception;
 
     Set<Application> getAllApplicationsOnJob(long jobId) throws Exception;
 

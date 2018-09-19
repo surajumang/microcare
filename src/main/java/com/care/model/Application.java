@@ -4,15 +4,15 @@
 
 package com.care.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Application {
 
         private long id;
         private double expectedPay;
         private Status status = Status.ACTIVE;
-        private Date dateCreated;
-        private Date lastModified;
+        private Timestamp dateCreated;
+        private Timestamp lastModified;
         private Job job;
         private Sitter sitter;
 
@@ -62,19 +62,19 @@ public class Application {
                 this.status = status;
         }
 
-        public Date getDateCreated() {
+        public Timestamp getDateCreated() {
                 return dateCreated;
         }
 
-        public void setDateCreated(Date dateCreated) {
+        public void setDateCreated(Timestamp dateCreated) {
                 this.dateCreated = dateCreated;
         }
 
-        public Date getLastModified() {
+        public Timestamp getLastModified() {
                 return lastModified;
         }
 
-        public void setLastModified(Date lastModified) {
+        public void setLastModified(Timestamp lastModified) {
                 this.lastModified = lastModified;
         }
 

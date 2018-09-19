@@ -1,6 +1,7 @@
 
 package com.care.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Seeker extends Member{
@@ -8,7 +9,7 @@ public class Seeker extends Member{
     private long id;
     private int numberOfChildren;
     private String spouseName;
-    private Set<Job> jobs;
+    private Set<Job> jobs = new HashSet<>();
 
     private static final Seeker EMPTY_SEEKER = new Seeker();
 
@@ -51,6 +52,23 @@ public class Seeker extends Member{
 
     public static Seeker emptySeeker(){
         return EMPTY_SEEKER;
+    }
+
+//    public postJob(){
+//
+//    }
+
+    public int closeAllJobs(){
+        for(Job job : jobs){
+            job.close();
+        }
+        return 1;
+    }
+
+    public int closeAccount(){
+        closeAllJobs();
+        this.setStatus(Status.CLOSED);
+        return 1;
     }
 
 }
