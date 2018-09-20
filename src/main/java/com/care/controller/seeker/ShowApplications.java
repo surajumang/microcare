@@ -1,6 +1,6 @@
 package com.care.controller.seeker;
 
-import com.care.exception.IllegalApplicationAccessException;
+import com.care.exception.InvalidApplicationException;
 import com.care.model.Application;
 import com.care.model.Member;
 import com.care.controller.ControllerUtil;
@@ -14,11 +14,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +46,7 @@ public class ShowApplications extends Action {
             logger.info("Called SeekerService listAppOnJob");
             try {
                 applications = seekerService.getApplications(currentMember, jobIdToViewApplications);
-            } catch (IllegalApplicationAccessException e) {
+            } catch (InvalidApplicationException e) {
                 logger.log(Level.SEVERE, "Not allowed to see application", e);
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             }

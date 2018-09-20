@@ -34,7 +34,7 @@ public class CloseAccount extends Action {
         /*
         First Sets the member status to inactive and then dispatches the rquest to Logout servlet.
          */
-        Member currentUser = (Member) request.getSession().getAttribute("currentUser");
+        Member currentUser = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
         String page = "/member/home.do";
 

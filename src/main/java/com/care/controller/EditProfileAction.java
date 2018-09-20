@@ -34,6 +34,8 @@ public class EditProfileAction extends Action {
 
         String page = "/member/home.do";
         EditProfileForm editProfileForm = (EditProfileForm)form;
+        editProfileForm.setMemberType(memberType.name());
+
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);

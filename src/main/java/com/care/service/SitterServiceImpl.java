@@ -1,5 +1,6 @@
 package com.care.service;
 
+import com.care.exception.InvalidIdException;
 import com.care.form.ApplicationForm;
 import com.care.model.*;
 import com.care.dao.*;
@@ -30,7 +31,7 @@ public class SitterServiceImpl implements SitterService {
         return new ArrayList<>(allJobs);
     }
     /*
-    Only the ACTIVE OR EXPIRED not closed.
+    Only the ACTIVE OR EXPIRED not closed.[todo] may throw some exception.
      */
     public List<Application> listAllApplications(Member sitter) {
         ApplicationDAO applicationDAO= DAOFactory.get(HApplicationDAOImpl.class);
@@ -44,6 +45,9 @@ public class SitterServiceImpl implements SitterService {
         return new ArrayList<>(applications);
     }
 
+    /*
+    Throw appropriate exception.[todo] NoJobFoundException
+     */
     public Job getJob(long jobId) {
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         Job job = Job.emptyJob();
@@ -66,6 +70,9 @@ public class SitterServiceImpl implements SitterService {
         return sitter;
     }
 
+    /*
+    Throw appropriate Exception[todo] SitterNotFoundException
+     */
     public List<Sitter> getSittersByEmail(String email) {
         Set<Sitter> sitters = Collections.emptySet();
         logger.info("Fetching sitters by email" + email);
@@ -91,17 +98,12 @@ public class SitterServiceImpl implements SitterService {
         ObjectMapper.mapObject(applicationForm, application, true);
         logger.info(application + " AFTER MAPPING");
         try {
-            /*
-            Get Job and sitter refrences before saving.
-             */
             Job job = jobDAO.getJob(Long.valueOf(applicationForm.getJobId()));
             Sitter sitter = sitterDAO.getSitter(Long.valueOf(applicationForm.getSitterId()));
 
             application.setJob(job);
             application.setSitter(sitter);
-            int val = applicationDAO.addApplication(application);
-
-            if (val == 1){
+            if (applicationDAO.addApplication(application) == 1){
                 operationStatus = OperationStatus.SUCCESS;
             }
         } catch (Exception e) {
@@ -111,20 +113,29 @@ public class SitterServiceImpl implements SitterService {
         return operationStatus;
     }
 
-    public OperationStatus deleteApplication(Member sitter, long applicationId) {
+    private boolean checkApplicationOwner(Member sitter, long applicationId) throws Exception {
+        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
+        for (Application application : applicationDAO.getAllApplications(sitter.getId())){
+            if (applicationId == application.getId()){
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public OperationStatus deleteApplication(Member sitter, long applicationId) throws InvalidIdException {
         OperationStatus operationStatus = OperationStatus.FAILURE;
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         logger.info("APPLICATion being deleted : " + applicationId + "BYY" + sitter.getId());
         try {
-            //[todo] check if belongs to sitter otherwise throw exception.
-            int val = applicationDAO.setApplicationStatus(applicationId,Status.CLOSED );
-            if (val == 1){
-                operationStatus = OperationStatus.SUCCESS;
+            if (checkApplicationOwner(sitter, applicationId)){
+                if (applicationDAO.setApplicationStatus(applicationId, Status.CLOSED ) == 1){
+                    operationStatus = OperationStatus.SUCCESS;
+                }
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Error Closing application", e);
-            operationStatus = OperationStatus.FAILURE;
+            throw new InvalidIdException(e);
         }
         return operationStatus;
     }

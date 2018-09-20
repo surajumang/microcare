@@ -14,6 +14,9 @@ public class EntityManager {
      */
     private static final Map<Class<?>, Object> OBJECT_CACHE = new HashMap<Class<?>, Object>();
 
+    /*
+    EntityCreationException[todo]
+     */
     private static <T> T create(Class<T> classType){
         T returnValue = null;
         try {

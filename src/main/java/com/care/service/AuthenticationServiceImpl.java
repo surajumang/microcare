@@ -34,7 +34,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             logger.log(Level.SEVERE, "Can't fetch member for LoginAction", e);
             status = OperationStatus.FAILURE;
         }
-
         if(member != null){
             logger.info("Member Exists " + member);
 
@@ -51,7 +50,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         //CommonUtil.removeLoggedInUser();
         return false;
     }
-
+    /*
+    InvalidTokenException[todo]
+     */
     public OperationStatus updatePasswordWithToken(PasswordForm passwordForm) {
         logger.info("Updating Password");
         OperationStatus status = OperationStatus.FAILURE;
@@ -100,11 +101,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
 
         try {
-            //double check
-//            Member newMember = new Member();
-//            ObjectMapper.mapObject(passwordForm, newMember, true);
-//            logger.info(member + "Only password");
-//
             Member existingMember = memberDAO.getMember(member.getId());
             String currentPasswordHash = Hash.createHash(passwordForm.getCurrentPassword());
             logger.info(currentPasswordHash);
@@ -120,7 +116,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (value == 1){
             status = OperationStatus.SUCCESS;
         }
-
         logger.info(status.name() + "STATUS");
         return status;
     }

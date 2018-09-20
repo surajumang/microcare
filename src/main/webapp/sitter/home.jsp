@@ -15,10 +15,29 @@
     </head>
     <body>
      <jsp:include page="/member/header.jsp"/>
+
+     <c:choose>
+         <c:when test="${param.login eq 'true'}">
+            <h2></h2>
+         </c:when>
+         <c:when test="${param.delete eq 'true'}">
+             <h2>Application Deleted</h2>
+         </c:when>
+         <c:when test="${param.pass eq 'true'}">
+             <h2></h2>
+         </c:when>
+         <c:otherwise>
+
+         </c:otherwise>
+     </c:choose>
+        <h2>${param.login}<h2>
+        <h2>${param.delete}</h2>
+        <h2>${param.pass}</h2>
+
         <h2>${SUCCESS}</h2>
-                <h2>${FAILURE}</h2>
-                <h2>${INVALID}</h2>
-                <h2>${ACCOUNT_STATUS}</h2>
+        <h2>${FAILURE}</h2>
+        <h2>${INVALID}</h2>
+        <h2>${ACCOUNT_STATUS}</h2>
 
 
       <form action="${pageContext.request.contextPath}/sitter/showJobs.do" method="post">

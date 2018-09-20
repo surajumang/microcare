@@ -67,7 +67,7 @@ public class LoginAction extends Action {
             }
             else if (member != Member.emptyMember() && member.getStatus() == Status.CLOSED){
                 request.setAttribute("STATUS", member.getStatus().name());
-                request.getSession().setAttribute("closedUser", member);
+                request.getSession().setAttribute(ControllerUtil.CLOSED_USER, member);
                 logger.info("CLosed user trying to log in");
                 page="closed";
             }

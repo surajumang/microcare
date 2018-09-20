@@ -78,7 +78,7 @@
                     </tr>
                 </c:if>
                 </table>
-                <html:hidden property="memberType" />
+
 
                 <center><html:submit property="" value="Submit"/> </center>
 

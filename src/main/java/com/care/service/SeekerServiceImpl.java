@@ -1,6 +1,6 @@
 package com.care.service;
 
-import com.care.exception.IllegalApplicationAccessException;
+import com.care.exception.InvalidApplicationException;
 import com.care.exception.JobNotPostedByUserException;
 import com.care.model.*;
 import com.care.dao.*;
@@ -54,7 +54,8 @@ public class SeekerServiceImpl implements SeekerService {
                 throw new JobNotPostedByUserException("INvalid request to get Job");
             }
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "exception Getting a single job", e);
+            logger.log(Level.SEVERE, "While getting a job", e);
+            throw new JobNotPostedByUserException(e);
         }
         return job;
     }
@@ -74,7 +75,6 @@ public class SeekerServiceImpl implements SeekerService {
             Seeker seeker = seekerDAO.getSeeker(member.getId());
             job.setStatus(Status.ACTIVE);
             job.setSeeker(seeker);
-
             val = jobDAO.addJob(job);
             if (val != 1){
                 status = OperationStatus.FAILURE;
@@ -84,7 +84,6 @@ public class SeekerServiceImpl implements SeekerService {
             logger.log(Level.SEVERE, "Posting Job", e);
             status = OperationStatus.FAILURE;
         }
-
         return status;
     }
 
@@ -101,19 +100,17 @@ public class SeekerServiceImpl implements SeekerService {
         return new ArrayList<>(memberJobs);
     }
 
-    public List<Application> getApplications(Member member, long jobId) throws IllegalApplicationAccessException {
+    public List<Application> getApplications(Member member, long jobId) throws InvalidApplicationException {
         Set<Application> applications;
         logger.info("ListApplications");
-
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         logger.info(member + "MEMBER");
         try {
             if (verifyJobBelongsToMember(member, jobId)){
                 applications = applicationDAO.getAllApplicationsOnJob(jobId);
             }else {
-                throw new IllegalApplicationAccessException();
+                throw new InvalidApplicationException();
             }
-
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't fetch All Applications on Job", e);
             applications = Collections.emptySet();
@@ -134,24 +131,24 @@ public class SeekerServiceImpl implements SeekerService {
         }
         return status;
     }
-
+    /*
+    Can't edit an expired or a closed Job or a job not posted by him.
+     */
     public OperationStatus editJob(Member member, JobForm jobForm){
         int status = 1;
+        OperationStatus operationStatus = OperationStatus.SUCCESS;
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         Job job = new Job();
         try{
+             if (verifyJobBelongsToMember(member, Long.valueOf(jobForm.getId())))
              job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
              ObjectMapper.mapObject(jobForm, job, true);
              jobDAO.editJob(job);
         }catch (Exception e){
             logger.log(Level.SEVERE, "Getting a job", e);
             //throw e;
+            operationStatus = OperationStatus.FAILURE;
         }
-        OperationStatus operationStatus = OperationStatus.SUCCESS;
-        //modify the values.
-
-        // saveOrUpdate
-
         logger.info("------- " +status + "-------- ");
         return operationStatus;
     }

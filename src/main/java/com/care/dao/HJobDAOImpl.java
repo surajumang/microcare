@@ -12,9 +12,7 @@ public class HJobDAOImpl implements JobDAO {
     @Override
     public int addJob(Job job) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-
         session.save(job);
-
         return 1;
     }
 

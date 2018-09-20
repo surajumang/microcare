@@ -31,7 +31,7 @@ public class LoginClosedMember extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Member member = (Member)request.getSession().getAttribute("closedUser");
+        Member member = (Member)request.getSession().getAttribute(ControllerUtil.CLOSED_USER);
         String page = "failure";
         OperationStatus operationStatus = OperationStatus.FAILURE;
         String userResponse = request.getParameter("response");
@@ -50,7 +50,7 @@ public class LoginClosedMember extends Action {
 
             page = "success";
         }else {
-            request.getSession().setAttribute("closedUser", null);
+            request.getSession().setAttribute(ControllerUtil.CLOSED_USER, null);
         }
 
         return mapping.findForward(page);

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CloseApplication extends Action {
@@ -32,15 +33,19 @@ public class CloseApplication extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "failure";
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        long applicationToBeClosed = CommonUtil.getIdFromRequest(request, "id");
+
 
 
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
         logger.info("Called CloseApplication for Sitter" + currentMember);
-
-        operationStatus = sitterService.deleteApplication(currentMember, applicationToBeClosed);
+        try {
+            long applicationToBeClosed = CommonUtil.getIdFromRequest(request, "id");
+            operationStatus = sitterService.deleteApplication(currentMember, applicationToBeClosed);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Can't delete", e);
+        }
 
         if (operationStatus == OperationStatus.SUCCESS){
             page = "success";

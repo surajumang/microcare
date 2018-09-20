@@ -40,29 +40,23 @@ public class ShowJobToEdit extends Action {
         Get parameter from the request to refer to the job to be edited.
          */
         String page = "/member/home.do";
-
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        long id = CommonUtil.getIdFromRequest(request, "id");
-
-        if (id >= 0){
-            logger.info("Editing job with id " + id );
-            Member member = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
-            SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-            Job job = null;
-            JobForm jobForm = (JobForm)form;
-            try {
-                job = seekerService.getJob(member, id);
-                //ObjectMapper.mapObject();
-                mapJob(job, jobForm);
-                if (job.getStatus() != Status.EXPIRED && job.getStatus() != Status.CLOSED){
-                    operationStatus = OperationStatus.SUCCESS;
-                    page = "/seeker/showAndEditJob.jsp";
-                    request.setAttribute("editJob", jobForm);
-                }
-            } catch (JobNotPostedByUserException e) {
-                logger.log(Level.SEVERE, "Can't Edit an expired job", e);
+        Member member = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
+        SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
+        Job job = null;
+        JobForm jobForm = (JobForm)form;
+        try {
+            long id = CommonUtil.getIdFromRequest(request, "id");
+            job = seekerService.getJob(member, id);
+            mapJob(job, jobForm);
+            if (job.getStatus() != Status.EXPIRED && job.getStatus() != Status.CLOSED){
+                operationStatus = OperationStatus.SUCCESS;
+                page = "/seeker/showAndEditJob.jsp";
+                request.setAttribute("editJob", jobForm);
             }
-            logger.info(job + "-- >>> job here********************************");
+        } catch (JobNotPostedByUserException e) {
+            logger.log(Level.SEVERE, "Can't Edit an expired job", e);
+        } catch (IllegalArgumentException e){
         }
         logger.info("Dispatching to ---" + page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));

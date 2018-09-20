@@ -22,7 +22,6 @@ public class AccountServiceImpl implements AccountService {
     public AccountServiceImpl() {  }
 
     public OperationStatus enroll(RegistrationForm registrationForm) throws MemberAlreadyRegisteredException {
-
         OperationStatus status = OperationStatus.FAILURE;
         int val = -1;
         logger.info("Called enroll  " + registrationForm);
@@ -48,7 +47,9 @@ public class AccountServiceImpl implements AccountService {
         }
         return status;
     }
-
+    /*
+    This case has been handled in Validation. Exception not required.
+     */
     private int addSeeker(Seeker seeker) throws MemberAlreadyRegisteredException{
         SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
         logger.info(seeker.toString());
@@ -77,7 +78,9 @@ public class AccountServiceImpl implements AccountService {
         }
         return status;
     }
-
+    /*
+    MemberNotFoundException[todo]
+     */
     public Member getMember(String email) {
         MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
         Member member;
@@ -92,6 +95,9 @@ public class AccountServiceImpl implements AccountService {
         return member;
     }
 
+    /*
+    TokenNotFoundException[todo]
+     */
     @Override
     public Token getToken(String token) {
         MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
@@ -101,7 +107,6 @@ public class AccountServiceImpl implements AccountService {
             logger.info(token1 + "found using Token" + token);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error fetching token. Doesn't exist", e);
-
         }
         return token1;
     }
@@ -120,9 +125,10 @@ public class AccountServiceImpl implements AccountService {
         }
         return operationStatus;
     }
-
+    /*
+    EMailNotSentException[todo]
+     */
     public OperationStatus mailPasswordResetToken(String email, String contextPath) {
-
         OperationStatus operationStatus = OperationStatus.FAILURE;
         //getting the member stored in database.
         Member member = getMember(email);
@@ -160,16 +166,11 @@ public class AccountServiceImpl implements AccountService {
                 logger.info("A SEEKer was deleted");
                 Seeker seeker = seekerDAO.getSeeker(member.getId());
                 seeker.closeAccount();
-//                applicationDAO.setAllApplicationsOnJobsPostedBy(member.getId(), Status.EXPIRED);
-//                jobDAO.setAllJobsStatus(member.getId(), Status.EXPIRED);
             }else {
                 logger.info("A sitter was deleted");
                 Sitter sitter = sitterDAO.getSitter(member.getId());
                 sitter.closeAccount();
-//                applicationDAO.setAllApplicationsStatusBySitter(member.getId(),Status.EXPIRED );
             }
-//            memberDAO.setMemberStatus(member.getId(), Status.CLOSED);
-
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error Deleting member", e);
             status = OperationStatus.FAILURE;
@@ -246,6 +247,9 @@ public class AccountServiceImpl implements AccountService {
         return status;
     }
 
+    /*
+    [todo] Throw EmailNotSentException
+     */
     public void sendMail(String email, String token) {
 
             final String username = "sjkumar@apostek.com";

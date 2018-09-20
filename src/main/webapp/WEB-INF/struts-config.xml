@@ -42,8 +42,8 @@
 
         <action path="/member/home"
                 type="com.care.controller.HomeAction">
-            <forward name="seeker" path="/seeker/home.do"/>
-            <forward name="sitter" path="/sitter/home.do"/>
+            <forward name="seeker" path="/seeker/home.do" />
+            <forward name="sitter" path="/sitter/home.do" />
         </action>
 
         <action path="/visitor/captureLogin"
@@ -52,14 +52,16 @@
                 validate="true"
                 scope="request"
                 input="/visitor/login.do">
-            <forward name="success" path="/member/home.do"/>
-            <forward name="failure" path="/visitor/login.do"/>
+            <forward name="success" path="/member/home.do?login=true" redirect="true"/>
+            <!--set parameter for redirect[todo]-->
+            <forward name="failure" path="/visitor/login.do?login=false" redirect="true"/>
             <forward name="closed" path="/visitor/closedMember.jsp"/>
         </action>
 
         <action path="/visitor/closedMember"
                 type="com.care.controller.LoginClosedMember">
-            <forward name="success" path="/member/home.do"/>
+            <forward name="success" path="/member/home.do" redirect="true"/>
+            <forward name="failure" path="/visitor/login.do?login=false" redirect="true"/>
         </action>
 
         <action path="/visitor/register"
@@ -67,7 +69,7 @@
                 validate="false"
                 parameter="/visitor/registration.jsp">
         </action>
-
+        <!--Sets the member type field to default and sends to Registration page Forward required-->
         <action path="/visitor/registration"
                 type="com.care.controller.Registration"
                 name="registrationForm"
@@ -81,8 +83,9 @@
                 name="registrationForm"
                 validate="true"
                 scope="request"
-                input="/visitor/registration.jsp">
-            <forward name="success" path="/visitor/login.do"/>
+                input="/visitor/registration.do">
+            <!--Show message [todo]-->
+            <forward name="success" path="/member/home.do?login=true" redirect="true"/>
         </action>
 
         <action path="/member/search"
@@ -113,7 +116,8 @@
                 validate="true"
                 scope="request"
                 input="/seeker/postJob.do">
-            <forward name="success" path="/member/home.do"/>
+            <!--[todo] Message to show-->
+            <forward name="success" path="/member/home.do?post=true" redirect="true"/>
         </action>
 
         <action path="/seeker/editJob"
@@ -137,15 +141,16 @@
                 validate="true"
                 scope="request"
                 input="/seeker/editJob.do">
-            <forward name="success" path="/seeker/showJobs.do"/>
+            <!--[todo] show message-->
+            <forward name="success" path="/seeker/showJobs.do?edit=true" redirect="true"/>
         </action>
         <!-- This will not directly call the jsp rather it will user the ForwardAction class -->
 
 
         <action path="/seeker/deleteJob"
                 type="com.care.controller.seeker.CloseJob">
-            <forward name="success" path="/seeker/showJobs.do"/>
-            <forward name="failure" path="/member/home.do"/>
+            <forward name="success" path="/seeker/showJobs.do?delete=true" redirect="true"/>
+            <forward name="failure" path="/member/home.do" redirect="true"/>
         </action>
 
         <!-- Both of them belong together*************START***********-->
@@ -198,7 +203,7 @@
                 scope="request"
                 validate="true"
                 input="/member/profile.do">
-            <forward name="success" path="/member/home.do"/>
+            <forward name="success" path="/member/home.do?edit=true" redirect="true"/>
         </action>
 
         <!--The three of them belong together*************END*****************-->
@@ -216,7 +221,7 @@
                 validate="true"
                 input="/member/resetPassword.do">
             <forward name="failure" path="/member/resetPassword.do"/>
-            <forward name="success" path="/member/home.do"/>
+            <forward name="success" path="/member/home.do?pass=true" redirect="true"/>
         </action>
         <!-- Both of them belong together*************END*****************-->
 
@@ -228,7 +233,7 @@
         </action>
         <action path="/visitor/captureEmail"
                 type="com.care.controller.GeneratePasswordResetToken">
-            <forward name="success" path="/visitor/login.do"/>
+            <forward name="success" path="/visitor/login.do?pass=true" redirect="true"/>
             <forward name="failure" path="/visitor/forgotPassword.do"/>
         </action>
         <!-- Both of them belong together*************END***********-->
@@ -243,7 +248,7 @@
         <action path="/visitor/captureResetPassword"
                 type="com.care.controller.ResetPassword"
                 scope="request">
-            <forward name="success" path="/visitor/login.do"/>
+            <forward name="success" path="/visitor/login.do?pass" redirect="true"/>
             <!--<forward name="failure" path="/visitor/up"-->
         </action>
 
@@ -251,19 +256,19 @@
         <action path="/visitor/captureToken"
                 type="com.care.controller.VerifyToken">
             <forward name="success" path="/visitor/updatePassword.do"/>
-            <forward name="failure" path="/visitor/login.do"/>
+            <forward name="failure" path="/visitor/login.do" redirect="true"/>
         </action>
 
         <!-- Both of them belong together*************START***********-->
 
         <action path="/member/closeAccount"
                 type="com.care.controller.CloseAccount">
-            <forward name="success" path="/visitor/login.do"/>
+            <forward name="success" path="/visitor/login.do" redirect="true"/>
         </action>
 
         <action path="/member/logout"
                 type="com.care.controller.LogOut">
-            <forward name="success" path="/visitor/login.do"/>
+            <forward name="success" path="/visitor/login.do" redirect="true"/>
         </action>
 
         <!-- Both of them belong together*************START***********-->
@@ -307,7 +312,7 @@
                 scope="request"
                 validate="true"
                 input="/sitter/showJobToApply.do">
-            <forward name="success" path="/sitter/showJobs.do"/>
+            <forward name="success" path="/sitter/showJobs.do" redirect="true"/>
         </action>
         <!--Simply shows all the jobs available to the user( excludes already applied active jobs)-->
         <action path="/sitter/showAllJobs"
@@ -318,7 +323,7 @@
         <action path="/sitter/showJobs"
                 type="com.care.controller.sitter.ShowJobs">
             <forward name="success" path="/sitter/showAllJobs.do"/>
-            <forward name="failure" path="/member/home.do"/>
+            <forward name="failure" path="/member/home.do" redirect="true"/>
         </action>
 
         <!-- Both of them belong together*************START***********-->
@@ -337,8 +342,8 @@
         </action>
         <action path="/sitter/deleteApplication"
                 type="com.care.controller.sitter.CloseApplication">
-            <forward name="success" path="/sitter/showApplications.do"/>
-            <forward name="failure" path="/member/home.do"/>
+            <forward name="success" path="/sitter/showApplications.do" redirect="true"/>
+            <forward name="failure" path="/member/home.do" redirect="true"/>
         </action>
 
         <!-- Both of them belong together*************START***********-->

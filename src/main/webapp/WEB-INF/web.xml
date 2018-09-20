@@ -69,6 +69,17 @@
     </listener>
 
     <filter>
+        <filter-name>VisitorFilter</filter-name> <!-- mandatory -->
+        <filter-class>com.care.filter.VisitorFilter</filter-class> <!-- mandatory -->
+    </filter>
+    <filter-mapping>
+        <filter-name>VisitorFilter</filter-name> <!-- mandatory -->
+        <url-pattern>/visitor/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
+        <servlet-name>VisitorFilter</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
+    <filter>
         <filter-name>SitterFilter</filter-name> <!-- mandatory -->
         <filter-class>com.care.filter.SitterFilter</filter-class> <!-- mandatory -->
     </filter>

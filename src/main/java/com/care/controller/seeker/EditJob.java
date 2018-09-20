@@ -35,9 +35,7 @@ public class EditJob extends Action {
         String page = "/seeker/showAndEditJob.jsp";
         JobForm jobForm = (JobForm)form;
         jobForm.setSeekerId(String.valueOf(currentUser.getId()));
-
         OperationStatus operationStatus = OperationStatus.FAILURE;
-
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
 
         operationStatus = seekerService.editJob(currentUser, jobForm);

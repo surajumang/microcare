@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.dao.MemberDAO;
 import com.care.exception.MemberAlreadyRegisteredException;
 import com.care.form.RegistrationForm;
 import com.care.service.AccountService;
@@ -34,12 +35,14 @@ public class CaptureRegistration extends Action {
         RegistrationForm registrationDetails = (RegistrationForm) form;
         logger.info(registrationDetails + " " );
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-
         logger.info(registrationDetails + "");
         page = "/login.jsp";
 
         try {
             operationStatus = accountService.enroll(registrationDetails);
+            if (operationStatus == OperationStatus.SUCCESS){
+                request.getSession().setAttribute(ControllerUtil.CURRENT_USER, accountService.getMember(registrationDetails.getEmail()));
+            }
         }catch (MemberAlreadyRegisteredException e){
             operationStatus = OperationStatus.OTHER;
         }

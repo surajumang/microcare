@@ -21,6 +21,9 @@ public class ObjectMapper {
         WRAPPER_TYPE.put(long.class, Long.class);
     }
 
+    /*
+    MappingException[todo]
+     */
     public static void mapObject(Object src, Object dest, boolean strict ){
 
         srcGetterMethods = new HashMap<String, Method>();

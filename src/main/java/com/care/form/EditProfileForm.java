@@ -136,14 +136,18 @@ public class EditProfileForm extends  FormBean {
         } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, "While validating", e);
         }
-
-        if (MemberType.valueOf(memberType) == MemberType.SITTER){
-            if (! expectedPay.matches("\\d{1,3}(\\.\\d{0,2})?")){
-                errors.add("expectedPay", new ActionMessage("errors.amount"));
+        //[todo] put inside try catch
+        try {
+            if (MemberType.valueOf(memberType) == MemberType.SITTER){
+                if (! expectedPay.matches("\\d{1,3}(\\.\\d{0,2})?")){
+                    errors.add("expectedPay", new ActionMessage("errors.amount"));
+                }
+                if (! experience.matches("\\d{1,2}")){
+                    errors.add("experience", new ActionMessage("errors.experience"));
+                }
             }
-            if (! experience.matches("\\d{1,2}")){
-                errors.add("experience", new ActionMessage("errors.experience"));
-            }
+        } catch (Exception e) {
+            errors.add("memberType", new ActionMessage("errors.invalid"));
         }
         if (numberOfChildren != null && numberOfChildren.equals("") && errors.isEmpty()){
             numberOfChildren="0";

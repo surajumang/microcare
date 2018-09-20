@@ -11,7 +11,7 @@
                 }
 </script>
 
-        <h2>Welcome ${currentUser.email}</h2>
+        <h2>Welcome ${CURRENT_USER.email}</h2>
         <div class="left">
             <form class="" action="${pageContext.request.contextPath}/member/home.do" method="post">
                  <input type="submit" name="home" value="Home"/>

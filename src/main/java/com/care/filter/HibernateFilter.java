@@ -39,7 +39,7 @@ public class HibernateFilter implements Filter {
             if (disconnectedSession == null) {
                 logger.info(">>> New conversation");
                 currentSession = sf.openSession();
-                currentSession.setFlushMode(FlushMode.MANUAL);
+                currentSession.setFlushMode(FlushMode.AUTO);
             } else {
                 logger.info("< Continuing conversation");
                 currentSession = disconnectedSession;

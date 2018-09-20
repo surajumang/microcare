@@ -41,6 +41,17 @@
         <body>
 
          <jsp:include page="./header.jsp"/>
+         <c:choose>
+             <c:when test="${param.edit eq 'true'}">
+                <h2>Edit Successful</h2>
+             </c:when>
+             <c:when test="${param.delete eq 'true'}">
+                <h2>Delete Successful</h2>
+             </c:when>
+         </c:choose>
+         <h2>${param.edit}</h2>
+         <h2>${param.delete}</h2>
+
          <h2>${SUCCESS}</h2>
          <h2>${FAILURE}</h2>
          <h2>${INVALID}</h2>

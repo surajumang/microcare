@@ -22,11 +22,35 @@
 
 
       <jsp:include page="/member/header.jsp"/>
+      <c:choose>
+          <c:when test="${param.login eq 'true'}">
+                <h2>Login Successful</h2>
+          </c:when>
+          <c:when test="${param.post eq 'true'}">
+              <h2>Job posted successfully </h2>
+          </c:when>
+          <c:when test="${param.delete eq 'true'}">
+              <h2>Job Deleted</h2>
+          </c:when>
+          <c:when test="${param.pass eq 'true'}">
+                <h2>Password updated</h2>
+          </c:when>
+          <c:when test="${param.profile eq 'true'}">
+              <h2>Profile updated</h2>
+          </c:when>
+      </c:choose>
+
+      <h2>${param.login}</h2>
+      <h2>${param.post}</h2>
+      <h2>${param.delete}</h2>
+      <h2>${param.pass}</h2>
+
       <h2>${SUCCESS}</h2>
-              <h2>${FAILURE}</h2>
-              <h2>${UNAUTHORIZED}</h2>
-              <h2>${INVALID}</h2>
-              <h2>${ACCOUNT_STATUS}</h2>
+      <h2>${FAILURE}</h2>
+      <h2>${UNAUTHORIZED}</h2>
+      <h2>${INVALID}</h2>
+      <h2>${ACCOUNT_STATUS}</h2>
+
         <html:errors />
       <div class="seeker">
           <form class="" action="${pageContext.request.contextPath}/seeker/postJob.do" method="post">
