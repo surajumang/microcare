@@ -147,6 +147,7 @@ public class EditProfileForm extends  FormBean {
                 }
             }
         } catch (Exception e) {
+            // this property is not being printed as error.
             errors.add("memberType", new ActionMessage("errors.invalid"));
         }
         if (numberOfChildren != null && numberOfChildren.equals("") && errors.isEmpty()){

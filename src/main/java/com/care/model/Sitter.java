@@ -54,7 +54,9 @@ public class Sitter extends Member {
 
         public int closeAllApplications(){
             for(Application application : getApplications()){
-                application.setStatus(Status.EXPIRED);
+                if (application.getStatus() == Status.ACTIVE){
+                    application.setStatus(Status.EXPIRED);
+                }
             }
             return 1;
         }

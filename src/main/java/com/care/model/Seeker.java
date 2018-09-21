@@ -60,7 +60,9 @@ public class Seeker extends Member{
 
     public int closeAllJobs(){
         for(Job job : jobs){
-            job.close();
+            if (job.getStatus() == Status.ACTIVE){
+                job.close();
+            }
         }
         return 1;
     }

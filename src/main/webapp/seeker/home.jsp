@@ -32,6 +32,9 @@
           <c:when test="${param.delete eq 'true'}">
               <h2>Job Deleted</h2>
           </c:when>
+          <c:when test="${param.jobedit eq 'true'}">
+               <h2>Job Edited</h2>
+          </c:when>
           <c:when test="${param.pass eq 'true'}">
                 <h2>Password updated</h2>
           </c:when>
@@ -39,12 +42,6 @@
               <h2>Profile updated</h2>
           </c:when>
       </c:choose>
-
-      <h2>${param.login}</h2>
-      <h2>${param.post}</h2>
-      <h2>${param.delete}</h2>
-      <h2>${param.pass}</h2>
-
       <h2>${SUCCESS}</h2>
       <h2>${FAILURE}</h2>
       <h2>${UNAUTHORIZED}</h2>

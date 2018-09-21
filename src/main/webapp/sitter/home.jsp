@@ -24,16 +24,15 @@
              <h2>Application Deleted</h2>
          </c:when>
          <c:when test="${param.pass eq 'true'}">
-             <h2></h2>
+             <h2>Password updated</h2>
+         </c:when>
+         <c:when test="${param.profile eq 'true'}">
+             <h2>Profile updated</h2>
          </c:when>
          <c:otherwise>
 
          </c:otherwise>
      </c:choose>
-        <h2>${param.login}<h2>
-        <h2>${param.delete}</h2>
-        <h2>${param.pass}</h2>
-
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${INVALID}</h2>

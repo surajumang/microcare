@@ -29,7 +29,7 @@ public class PutProfileInfo extends Action {
         MemberType memberType = currentUser.getMemberType();
         String page = "failure";
         EditProfileForm editProfileForm = (EditProfileForm)form;
-
+        editProfileForm.setMemberType(memberType.name());
         if (memberType == MemberType.SEEKER){
 
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);

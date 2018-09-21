@@ -1,6 +1,7 @@
 package com.care.controller.sitter;
 
 import com.care.controller.ControllerUtil;
+import com.care.filter.HibernateFilter;
 import com.care.form.ApplicationForm;
 import com.care.model.Application;
 import com.care.model.Member;
@@ -58,6 +59,7 @@ public class ApplyToJob extends Action {
             if (operationStatus == OperationStatus.SUCCESS){
                 page = "success";
                 request.setAttribute("APPSUCCESS", "Applied successfully");
+                request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
             }
         }
 

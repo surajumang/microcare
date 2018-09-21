@@ -25,6 +25,7 @@
     <h1>Enter Your Details</h1>
 
         <div class="">
+            <font color="red"> <html:errors property="memberType" /> </font>
             <html:form  action="/member/editProfile" method="post">
                 <table align="center">
                 <tr>
@@ -79,7 +80,7 @@
                 </c:if>
                 </table>
 
-
+                <input type="hidden" name="memberType" value="SEEKER">
                 <center><html:submit property="" value="Submit"/> </center>
 
             </html:form>

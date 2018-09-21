@@ -43,7 +43,7 @@ public class CloseAccount extends Action {
         // take to login page when closed.
         if (operationStatus == OperationStatus.SUCCESS){
             page="/login.jsp";
-            request.getSession().setAttribute("currentUser", null);
+            request.getSession().setAttribute(ControllerUtil.CURRENT_USER, null);
             request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }
         request.setAttribute(operationStatus.name(), message.get(operationStatus));

@@ -40,7 +40,14 @@
         <body>
 
         <jsp:include page="./header.jsp"/>
-
+        <c:choose>
+             <c:when test="${param.login eq 'true'}">
+                <h2></h2>
+             </c:when>
+             <c:when test="${param.delete eq 'true'}">
+                 <h2>Application Deleted</h2>
+             </c:when>
+         </c:choose>
 
        <h2>${DELSUCCESS}</h2>
        <h2>${SUCCESS}</h2>

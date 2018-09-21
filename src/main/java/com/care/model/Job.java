@@ -109,7 +109,9 @@ public class Job {
     public void close(){
         this.setStatus(Status.CLOSED);
         for (Application application : getApplications()){
-            application.setStatus(Status.EXPIRED);
+            if (application.getStatus() == Status.ACTIVE){
+                application.setStatus(Status.EXPIRED);
+            }
         }
     }
 

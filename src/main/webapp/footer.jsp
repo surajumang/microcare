@@ -12,7 +12,7 @@
 
 <div class="footer">
     <p>
-        About us:
+        contact: contactus@caregivers.com
     </p>
 
 </div>

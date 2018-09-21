@@ -33,6 +33,14 @@
         <body>
 
         <jsp:include page="./header.jsp"/>
+        <c:choose>
+              <c:when test="${param.apply eq 'true'}">
+                  <h2>Applied successfully </h2>
+              </c:when>
+              <c:when test="${param.delete eq 'true'}">
+                  <h2>Job Deleted</h2>
+              </c:when>
+        </c:choose>
         <h2>${SUCCESS}</h2>
         <h2>${FAILURE}</h2>
         <h2>${INVALID}</h2>
