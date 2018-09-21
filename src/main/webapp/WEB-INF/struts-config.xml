@@ -24,6 +24,7 @@
 
     </form-beans>
     <global-forwards>
+        <forward name="badRequest" path="/badRequest.jsp"/>
 
     </global-forwards>
     <action-mappings>

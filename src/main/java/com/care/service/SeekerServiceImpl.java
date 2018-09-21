@@ -1,6 +1,7 @@
 package com.care.service;
 
 import com.care.exception.InvalidApplicationException;
+import com.care.exception.InvalidIdException;
 import com.care.exception.JobNotPostedByUserException;
 import com.care.model.*;
 import com.care.dao.*;
@@ -99,21 +100,24 @@ public class SeekerServiceImpl implements SeekerService {
         logger.info("Size of list-----" + memberJobs.size());
         return new ArrayList<>(memberJobs);
     }
-
+    //[todo] throws InvalidIdException
     public List<Application> getApplications(Member member, long jobId) throws InvalidApplicationException {
         Set<Application> applications;
         logger.info("ListApplications");
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         logger.info(member + "MEMBER");
         try {
             if (verifyJobBelongsToMember(member, jobId)){
                 applications = applicationDAO.getAllApplicationsOnJob(jobId);
+                //check if job is Active.
             }else {
                 throw new InvalidApplicationException();
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't fetch All Applications on Job", e);
-            applications = Collections.emptySet();
+
+            throw new InvalidApplicationException();
         }
         return new ArrayList<>(applications);
     }
@@ -134,20 +138,23 @@ public class SeekerServiceImpl implements SeekerService {
     /*
     Can't edit an expired or a closed Job or a job not posted by him.
      */
-    public OperationStatus editJob(Member member, JobForm jobForm){
+    public OperationStatus editJob(Member member, JobForm jobForm) throws InvalidIdException{
         int status = 1;
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         Job job = new Job();
         try{
-             if (verifyJobBelongsToMember(member, Long.valueOf(jobForm.getId())))
-             job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
-             ObjectMapper.mapObject(jobForm, job, true);
-             jobDAO.editJob(job);
+             if (verifyJobBelongsToMember(member, Long.valueOf(jobForm.getId()))){
+                 job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
+                 ObjectMapper.mapObject(jobForm, job, true);
+                 jobDAO.editJob(job);
+             }else {
+                 throw new InvalidIdException();
+             }
+
         }catch (Exception e){
             logger.log(Level.SEVERE, "Getting a job", e);
-            //throw e;
-            operationStatus = OperationStatus.FAILURE;
+            throw new InvalidIdException();
         }
         logger.info("------- " +status + "-------- ");
         return operationStatus;
@@ -156,7 +163,7 @@ public class SeekerServiceImpl implements SeekerService {
     /*
     Check if member is the owner.
      */
-    public OperationStatus closeJob(Member member, long jobId) throws JobNotPostedByUserException {
+    public OperationStatus closeJob(Member member, long jobId) throws InvalidIdException {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
@@ -172,6 +179,7 @@ public class SeekerServiceImpl implements SeekerService {
         }catch (Exception e){
             logger.log(Level.SEVERE, "Can't delete Job", e);
             operationStatus = OperationStatus.FAILURE;
+            throw new InvalidIdException(e);
         }
 
         return operationStatus;

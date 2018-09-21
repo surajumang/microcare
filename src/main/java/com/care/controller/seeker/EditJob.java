@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditJob extends Action {
@@ -32,20 +33,27 @@ public class EditJob extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Member currentUser = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
-        String page = "/seeker/showAndEditJob.jsp";
+        String page = "success";
         JobForm jobForm = (JobForm)form;
         jobForm.setSeekerId(String.valueOf(currentUser.getId()));
         OperationStatus operationStatus = OperationStatus.FAILURE;
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
 
-        operationStatus = seekerService.editJob(currentUser, jobForm);
+        try {
+            operationStatus = seekerService.editJob(currentUser, jobForm);
+            if (operationStatus == OperationStatus.SUCCESS){
+                page = "success";
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Editing Job", e);
+            page="badRequest";
+        }
         logger.info("job status is " + operationStatus);
-        page = "/seeker/home.jsp";
 
         request.setAttribute("editJob", jobForm);
         request.setAttribute("EDITSUCCESS", message.get(operationStatus));
         request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
 
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 }

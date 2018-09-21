@@ -39,29 +39,36 @@ public class ShowJobToEdit extends Action {
         /*
         Get parameter from the request to refer to the job to be edited.
          */
-        String page = "/member/home.do";
+
         OperationStatus operationStatus = OperationStatus.FAILURE;
         Member member = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         Job job = null;
         JobForm jobForm = (JobForm)form;
+        String page ="success";
         try {
             long id = CommonUtil.getIdFromRequest(request, "id");
             job = seekerService.getJob(member, id);
             mapJob(job, jobForm);
+            //expired applications should also throw exception.
             if (job.getStatus() != Status.EXPIRED && job.getStatus() != Status.CLOSED){
                 operationStatus = OperationStatus.SUCCESS;
-                page = "/seeker/showAndEditJob.jsp";
+                //page = "/seeker/showAndEditJob.jsp";
+                page = "success";
+                //not required anymore[todo]
                 request.setAttribute("editJob", jobForm);
+            }else {
+                //[todo] JobExpiredException.
+                throw new Exception();
             }
-        } catch (JobNotPostedByUserException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't Edit an expired job", e);
-        } catch (IllegalArgumentException e){
+            //send to global forward [todo]
+            page = "badRequest";
         }
         logger.info("Dispatching to ---" + page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 
     private void mapJob(Job job, JobForm jobForm){

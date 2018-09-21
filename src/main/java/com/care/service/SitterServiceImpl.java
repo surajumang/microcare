@@ -47,6 +47,9 @@ public class SitterServiceImpl implements SitterService {
 
     /*
     Throw appropriate exception.[todo] NoJobFoundException
+    should also have a Current Member reference and check if the User is the owner of the Exception.
+    This is the method which gets called for the Sitter to get A job to apply on.
+    This should not be EXPIRED OR CLOSED.
      */
     public Job getJob(long jobId) {
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
@@ -132,6 +135,9 @@ public class SitterServiceImpl implements SitterService {
                 if (applicationDAO.setApplicationStatus(applicationId, Status.CLOSED ) == 1){
                     operationStatus = OperationStatus.SUCCESS;
                 }
+            }
+            else {
+                throw new Exception();
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Error Closing application", e);

@@ -11,7 +11,7 @@ public class CommonUtil {
     private static Logger logger = Logger.getLogger("CommonUtil");
 
     public static Member getCurrentUserFromSession(HttpSession httpSession){
-        return (Member)httpSession.getAttribute("currentUser");
+        return (Member)httpSession.getAttribute(ControllerUtil.CURRENT_USER);
     }
 
     public static long getIdFromRequest(HttpServletRequest request, String id){

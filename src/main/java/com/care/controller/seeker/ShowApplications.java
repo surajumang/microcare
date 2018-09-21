@@ -33,30 +33,30 @@ public class ShowApplications extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/seeker/viewApplications.jsp";
+        String page = "success";
         OperationStatus operationStatus = OperationStatus.FAILURE;
-        long jobIdToViewApplications = CommonUtil.getIdFromRequest(request, "id" );
-
         List<Application> applications = Collections.emptyList();
 
-        if (jobIdToViewApplications >= 0){
+        try{
+            long jobIdToViewApplications = CommonUtil.getIdFromRequest(request, "id" );
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
             Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
             logger.info("Called SeekerService listAppOnJob");
-            try {
-                applications = seekerService.getApplications(currentMember, jobIdToViewApplications);
-            } catch (InvalidApplicationException e) {
-                logger.log(Level.SEVERE, "Not allowed to see application", e);
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            }
+            //Applications can be seen only if the Job is Active.
+            applications = seekerService.getApplications(currentMember, jobIdToViewApplications);
             if (applications != null && !applications.isEmpty()){
                 operationStatus = OperationStatus.SUCCESS;
+                page = "success";
             }
+        }catch (Exception e){
+            //redirect to global forward config which will send it to
+            logger.log(Level.SEVERE, "Not allowed to see application", e);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            page="badRequest";
         }
-
         request.setAttribute("getApplications", applications);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 }

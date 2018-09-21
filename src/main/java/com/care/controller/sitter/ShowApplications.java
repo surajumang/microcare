@@ -48,6 +48,6 @@ public class ShowApplications extends Action {
         logger.info("Dispatching to Page" + page);
 
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 }

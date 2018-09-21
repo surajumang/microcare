@@ -33,27 +33,27 @@ public class CloseApplication extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "failure";
         OperationStatus operationStatus = OperationStatus.FAILURE;
-
-
-
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
         logger.info("Called CloseApplication for Sitter" + currentMember);
         try {
             long applicationToBeClosed = CommonUtil.getIdFromRequest(request, "id");
+            //throws exception
             operationStatus = sitterService.deleteApplication(currentMember, applicationToBeClosed);
+            if (operationStatus == OperationStatus.SUCCESS){
+                page = "success";
+                request.setAttribute("DELSUCCESS", "Successfully deleted");
+                request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
+            }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't delete", e);
+            //todo send to global forward
+            page = "badRequest";
         }
 
-        if (operationStatus == OperationStatus.SUCCESS){
-            page = "success";
-            request.setAttribute("DELSUCCESS", "Successfully deleted");
-            request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
-        }
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 }

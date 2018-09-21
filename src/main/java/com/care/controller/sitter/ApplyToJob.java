@@ -37,22 +37,18 @@ public class ApplyToJob extends Action {
         JobID not required from scope now. It can be fetched from the applicationForm.
          */
         //long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
-
         ApplicationForm applicationForm = (ApplicationForm)form;
-        long jobToApplyOn = Long.valueOf(applicationForm.getJobId());
-
         OperationStatus operationStatus = OperationStatus.FAILURE;
-
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
-
         logger.info(applicationForm + "**********");
         logger.info("Called ApplyToJob");
-
-        if (jobToApplyOn >=0 ){
-//            applicationForm.setJobId(String.valueOf(jobToApplyOn));
+        //            applicationForm.setJobId(String.valueOf(jobToApplyOn));
 //            applicationForm.setSitterId(String.valueOf(currentMember.getId()));
-
+        try {
+            long jobToApplyOn = Long.valueOf(applicationForm.getJobId());
+            //applicationForm.setJobId(String.valueOf(jobToApplyOn));
+            applicationForm.setSitterId(String.valueOf(currentMember.getId()));
             operationStatus = sitterService.applyToJob(applicationForm);
             logger.info("Status okay " + operationStatus);
 
@@ -61,11 +57,12 @@ public class ApplyToJob extends Action {
                 request.setAttribute("APPSUCCESS", "Applied successfully");
                 request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
             }
+        }catch (Exception e){
+            page = "badRequest";
         }
-
         logger.info(page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
         request.setAttribute("applicationForm", applicationForm);
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 }

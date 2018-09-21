@@ -1,6 +1,5 @@
 package com.care.controller.seeker;
 
-import com.care.exception.JobNotPostedByUserException;
 import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
@@ -14,11 +13,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -44,18 +40,18 @@ public class CloseJob extends Action {
         logger.info("Called CloseApplication  " + currentMember);
         try {
             long jobToBeClosed = CommonUtil.getIdFromRequest(request, "id" );
+            //throws exception
             operationStatus = seekerService.closeJob(currentMember, jobToBeClosed);
             if (operationStatus == OperationStatus.SUCCESS){
                 request.setAttribute("DELSUCCESS", "Successfully deleted");
                 page = "success";
                 request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
             }
-        } catch (JobNotPostedByUserException e) {
+        } catch (Exception e) {
             logger.log(Level.SEVERE, "Job not deleted", e);
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            operationStatus = OperationStatus.UNAUTHORISED;
-        }catch (IllegalArgumentException e){
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            //It is required to throw the caught exception, if operations are to be rolled back.
+            page = "badRequest";
         }
 
         request.setAttribute(operationStatus.name(), messege.get(operationStatus));

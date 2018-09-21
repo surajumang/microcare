@@ -140,7 +140,9 @@ public class AccountServiceImpl implements AccountService {
             MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
            try {
                if (memberDAO.addToken(token) == 1){
-                   sendMail(email, contextPath + "/visitor/captureToken.do?token=" + token.getToken());
+                   String message = "localhost:8080/"+contextPath + "/visitor/captureToken.do?token=" + token.getToken();
+                   String anchorMessage = "<a href=\"" + message + "\">" + message + "</a>";
+                   sendMail(email, anchorMessage);
                    logger.info("mail sent");
                    operationStatus = OperationStatus.SUCCESS;
                }
