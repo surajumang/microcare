@@ -1,7 +1,8 @@
 package com.care.controller;
 
 import com.care.filter.HibernateFilter;
-import com.care.form.PasswordForm;
+import com.care.form.PasswordResetForm;
+import com.care.form.PasswordUpdateForm;
 import com.care.model.Member;
 import com.care.service.AuthenticationService;
 import com.care.service.AuthenticationServiceImpl;
@@ -28,12 +29,12 @@ public class ChangePasswordAction extends Action {
         Member member = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
         String page = "success";
-        PasswordForm passwordForm = (PasswordForm) form;
-        passwordForm.setId(String.valueOf(member.getId()));
+        PasswordUpdateForm passwordUpdateForm = (PasswordUpdateForm) form;
+        passwordUpdateForm.setId(String.valueOf(member.getId()));
 
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
         OperationStatus operationStatus  =
-                authenticationService.updatePassword(member, passwordForm);
+                authenticationService.updatePassword(member, passwordUpdateForm);
         if (operationStatus == OperationStatus.SUCCESS){
             request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }

@@ -3,6 +3,7 @@ package com.care.form;
 import com.care.annotation.Name;
 import com.care.annotation.NotNull;
 import com.care.validation.FormValidator;
+import com.mysql.jdbc.StringUtils;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
 
@@ -10,23 +11,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PasswordForm extends FormBean {
-    private Logger logger = Logger.getLogger("PasswordForm");
+public class PasswordResetForm extends FormBean {
+    private Logger logger = Logger.getLogger("PasswordResetForm");
 
-    private String currentPassword;
     private String password;
     private String password2;
     private String id;
     private String token;
-
-    @NotNull
-    public String getCurrentPassword() {
-        return currentPassword;
-    }
-
-    public void setCurrentPassword(String currentPassword) {
-        this.currentPassword = currentPassword;
-    }
 
     @NotNull
     @Name(regex = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]{5,}", required = true, message = "errors.password")
@@ -65,8 +56,7 @@ public class PasswordForm extends FormBean {
 
     @Override
     public String toString() {
-        return "PasswordForm{" +
-                "currentPassword='" + currentPassword + '\'' +
+        return "PasswordResetForm{" +
                 ", password='" + password + '\'' +
                 ", password2='" + password2 + '\'' +
                 ", id='" + id + '\'' +
@@ -84,7 +74,9 @@ public class PasswordForm extends FormBean {
         } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, "While validating", e);
         }
-
+        // if token is empty then It means it is a password update from the logged in user.
+        // if I need to check for the validity of the current password then I need the currently Logged in member.
+        // may throw Null pointer exception
         if(! password.equals(password2)){
             errors.add("password2", new ActionMessage("errors.password.mismatch"));
         }

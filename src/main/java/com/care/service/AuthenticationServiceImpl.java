@@ -2,7 +2,8 @@ package com.care.service;
 
 import com.care.dao.HMemberDAOImpl;
 import com.care.form.LoginForm;
-import com.care.form.PasswordForm;
+import com.care.form.PasswordResetForm;
+import com.care.form.PasswordUpdateForm;
 import com.care.model.Member;
 import com.care.dao.DAOFactory;
 import com.care.dao.MemberDAO;
@@ -10,7 +11,6 @@ import com.care.model.Status;
 import com.care.model.Token;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,30 +53,30 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     /*
     InvalidTokenException[todo]
      */
-    public OperationStatus updatePasswordWithToken(PasswordForm passwordForm) {
+    public OperationStatus updatePasswordWithToken(PasswordResetForm passwordResetForm) {
         logger.info("Updating Password");
         OperationStatus status = OperationStatus.FAILURE;
         int value = -1;
-        passwordForm.setPassword(Hash.createHash(passwordForm.getPassword()));
+        passwordResetForm.setPassword(Hash.createHash(passwordResetForm.getPassword()));
 
         MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
 
         try {
             //double check
-            Member member = memberDAO.getMember(Long.valueOf(passwordForm.getId()));
+            Member member = memberDAO.getMember(Long.valueOf(passwordResetForm.getId()));
             if (member == Member.emptyMember()){
                 //[todo] throw some
             }
-            logger.info(passwordForm + "PASSSWORD");
-            ObjectMapper.mapObject(passwordForm, member, true);
-            Token existingToken = memberDAO.getToken(passwordForm.getToken());
+            logger.info(passwordResetForm + "PASSSWORD");
+            ObjectMapper.mapObject(passwordResetForm, member, true);
+            Token existingToken = memberDAO.getToken(passwordResetForm.getToken());
 
             if (existingToken != Token.emptyToken() && existingToken.getMember().getId() == member.getId()){
                 if (existingToken.getStatus() == Status.ACTIVE &&
                         existingToken.getExpirationDate().after(new Timestamp(System.currentTimeMillis()))){
 
                     if(memberDAO.updatePassword(member) == 1){
-                        value = memberDAO.invalidateToken(passwordForm.getToken());
+                        value = memberDAO.invalidateToken(passwordResetForm.getToken());
                     }
                 }
             }
@@ -93,20 +93,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public OperationStatus updatePassword(Member member, PasswordForm passwordForm) {
+    public OperationStatus updatePassword(Member member, PasswordUpdateForm passwordUpdateForm) {
         logger.info("Updating Password with current Password");
         OperationStatus status = OperationStatus.FAILURE;
         int value = -1;
-        passwordForm.setPassword(Hash.createHash(passwordForm.getPassword()));
+        passwordUpdateForm.setPassword(Hash.createHash(passwordUpdateForm.getPassword()));
         MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
 
         try {
             Member existingMember = memberDAO.getMember(member.getId());
-            String currentPasswordHash = Hash.createHash(passwordForm.getCurrentPassword());
+            String currentPasswordHash = Hash.createHash(passwordUpdateForm.getCurrentPassword());
             logger.info(currentPasswordHash);
 
             if (existingMember.getPassword().equals(currentPasswordHash) ){
-                existingMember.setPassword(passwordForm.getPassword());
+                existingMember.setPassword(passwordUpdateForm.getPassword());
                 value = memberDAO.updatePassword(existingMember);
             }
         } catch (Exception e) {

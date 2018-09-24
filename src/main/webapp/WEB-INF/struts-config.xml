@@ -10,12 +10,13 @@
                    type="com.care.form.JobForm"/>
         <form-bean name="applicationForm"
                    type="com.care.form.ApplicationForm"/>
-        <form-bean name="passwordForm"
-                   type="com.care.form.PasswordForm"/>
+        <form-bean name="passwordResetForm"
+                   type="com.care.form.PasswordResetForm"/>
+        <form-bean name="passwordUpdateForm" type="com.care.form.PasswordUpdateForm"/>
         <form-bean name="registrationForm"
                    type="com.care.form.RegistrationForm"/>
-        <form-bean name="searchCriteria"
-                   type="com.care.form.SearchCriteria"/>
+        <form-bean name="searchForm"
+                   type="com.care.form.SearchForm"/>
         <form-bean name="profileForm"
                    type="com.care.form.EditProfileForm"/>
 
@@ -96,7 +97,7 @@
 
         <action path="/member/captureSearch"
                 type="com.care.controller.SearchAction"
-                name="searchCriteria"
+                name="searchForm"
                 validate="true"
                 scope="request"
                 input="/member/search.do">
@@ -216,7 +217,7 @@
         </action>
         <action path="/member/captureResetPassword"
                 type="com.care.controller.ChangePasswordAction"
-                name="passwordForm"
+                name="passwordUpdateForm"
                 scope="request"
                 validate="true"
                 input="/member/resetPassword.do">
@@ -233,7 +234,7 @@
         </action>
         <action path="/visitor/captureEmail"
                 type="com.care.controller.GeneratePasswordResetToken">
-            <forward name="success" path="/visitor/login.do?pass=true" redirect="true"/>
+            <forward name="success" path="/visitor/login.do?mail=true" redirect="true"/>
             <forward name="failure" path="/visitor/forgotPassword.do"/>
         </action>
         <!-- Both of them belong together*************END***********-->
@@ -247,14 +248,21 @@
 
         <action path="/visitor/captureResetPassword"
                 type="com.care.controller.ResetPassword"
-                scope="request">
+                name="passwordResetForm"
+                scope="request"
+                validate="true"
+                input="/visitor/updatePassword.do">
             <forward name="success" path="/visitor/login.do?pass=true" redirect="true"/>
+            <forward name="failure" path="/visitor/login.do?pass=failed" redirect="true"/>
             <!--<forward name="failure" path="/visitor/up"-->
         </action>
 
 
         <action path="/visitor/captureToken"
-                type="com.care.controller.VerifyToken">
+                type="com.care.controller.VerifyToken"
+                name="passwordResetForm"
+                scope="request"
+                validate="false">
             <forward name="success" path="/visitor/updatePassword.do"/>
             <forward name="failure" path="/visitor/login.do" redirect="true"/>
         </action>
@@ -279,7 +287,7 @@
         <!--</action>-->
         <!--<action path="/member/captureUpdatePassword"-->
                 <!--type="com.care.controller.ChangePasswordAction"-->
-                <!--name="passwordForm"-->
+                <!--name="passwordResetForm"-->
                 <!--validate="true"-->
                 <!--input="/member/updatePassword">-->
             <!--<forward name="failure" path="/member/updatePassword.do"/>-->

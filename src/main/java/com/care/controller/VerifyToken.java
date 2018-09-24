@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.form.PasswordResetForm;
 import com.care.model.Member;
 import com.care.model.Status;
 import com.care.model.Token;
@@ -30,22 +31,29 @@ public class VerifyToken extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String page = "failure";
         String token = request.getParameter("token");
-        String page = "/visitor/updatePassword.jsp";
+//        String page = "/visitor/updatePassword.jsp";
         OperationStatus operationStatus = OperationStatus.FAILURE;
+        PasswordResetForm passwordResetForm = (PasswordResetForm) form;
 
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
         Token token1 = accountService.getToken(token);
 
         if (token1 != Token.emptyToken() && token1.getStatus()== Status.ACTIVE){
+
             request.setAttribute("id", token1.getMember().getId());
             request.setAttribute("token", token);
+
+            passwordResetForm.setId(String.valueOf(token1.getMember().getId()));
+            passwordResetForm.setToken(token);
             logger.info("member's password resetting");
 
             operationStatus = OperationStatus.SUCCESS;
+            page = "success";
         }
-        logger.info("Dispatching to ===" + page);
+        logger.info("Dispatching to " + page);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 }

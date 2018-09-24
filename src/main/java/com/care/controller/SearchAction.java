@@ -1,6 +1,6 @@
 package com.care.controller;
 
-import com.care.form.SearchCriteria;
+import com.care.form.SearchForm;
 import com.care.model.Member;
 import com.care.model.MemberType;
 import com.care.model.Seeker;
@@ -29,7 +29,7 @@ public class SearchAction extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        SearchCriteria searchCriteria = (SearchCriteria) form;
+        SearchForm searchForm = (SearchForm) form;
         Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
@@ -37,7 +37,7 @@ public class SearchAction extends Action {
 
         if(member.getMemberType() == MemberType.SITTER){
             SeekerService seekerService= ServiceFactory.get(SeekerServiceImpl.class);
-            List<Seeker> seekers = seekerService.getSeekersByEmail(searchCriteria.getEmail());
+            List<Seeker> seekers = seekerService.getSeekersByEmail(searchForm.getEmail());
             logger.info("Fetched Seekers " + seekers);
             if (!seekers.isEmpty()){
                 operationStatus = OperationStatus.SUCCESS;
@@ -46,7 +46,7 @@ public class SearchAction extends Action {
         }
         else {
             SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-            List<Sitter> sitters = sitterService.getSittersByEmail(searchCriteria.getEmail());
+            List<Sitter> sitters = sitterService.getSittersByEmail(searchForm.getEmail());
             logger.info("Fetched sitters");
             if (!sitters.isEmpty()){
                 operationStatus = OperationStatus.SUCCESS;

@@ -3,6 +3,7 @@ package com.care.controller;
 import com.care.annotation.Email;
 import com.care.model.Member;
 import com.care.service.*;
+import com.mysql.jdbc.StringUtils;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,28 +29,37 @@ public class GeneratePasswordResetToken extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "/visitor/forgotPassword.jsp";
+        String page = "failure";
         String email = request.getParameter("email");
-        String regex = "\\w+@([a-z])+(\\.[a-z])+";
+        String emailError = "This field is required";
+        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
         logger.info("Request recieved" + email);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
 
         // check if email exist.
-        boolean match = true;
+        boolean match = StringUtils.isEmptyOrWhitespaceOnly(email);
+
         Member member = null;
         logger.info(match + "email status");
-        if (match){
-            if (accountService.getMember(email) != Member.emptyMember()){
+        if (! match){
+            if (! email.matches(regex)){
+                emailError = "Must be a Valid email";
+            }
+            else if (accountService.getMember(email) != Member.emptyMember()){
                 logger.info("Member exist for the email "+ email);
                 operationStatus = accountService.mailPasswordResetToken(email, request.getContextPath());
                 if (operationStatus == OperationStatus.SUCCESS){
-                    page = "/login.jsp";
+                    page = "success";
                 }
             }
+            else {
+                emailError = "Email doesn't exist";
+            }
         }
+        request.setAttribute("emailError", emailError);
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
-        return mapping.findForward("success");
+        return mapping.findForward(page);
     }
 }

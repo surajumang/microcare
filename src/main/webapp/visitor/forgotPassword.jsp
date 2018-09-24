@@ -29,7 +29,7 @@
 
         <form action="${pageContext.request.contextPath}/visitor/captureEmail.do" method="get">
             <label>Email </label>
-            <input type="text" name="email" value="">
+            <input type="text" name="email" value="${email}">
             <c:out value="${emailError}"/>
             <input type="submit" value="Submit">
         </form>

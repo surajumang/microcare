@@ -35,9 +35,16 @@
                 <c:when test="${param.login eq 'false'}">
                     <h2>Invalid credentials</h2>
                 </c:when>
-                <c:when test="${param.pass eq 'false'}">
+                <c:when test="${param.pass eq 'true'}">
                     <h2>Password reset successful</h2>
                 </c:when>
+                <c:when test="${param.mail eq 'true'}">
+                    <h2>Password reset link sent</h2>
+                </c:when>
+                <c:when test="${param.pass eq 'failed'}">
+                    <h2>Password reset Failed</h2>
+                </c:when>
+
 
             </c:choose>
 

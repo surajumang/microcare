@@ -21,26 +21,27 @@
         <h2>Password can be reset from here</h2>
         <c:out value="${FAILURE}"/>
 
-        <c:if test="${SUCCESS eq 'VERIFIED'}">
-            <form action="${pageContext.request.contextPath}/visitor/captureResetPassword.do" method="post">
-                <table>
+
+        <c:if test="${not empty passwordResetForm.token}">
+            <html:form action="/visitor/captureResetPassword" method="post">
+                <table align="center">
                     <tr>
                         <td><label>Enter Password</label></td>
                         <td><input type="password" name="password" value=""></td>
-                        <td><c:out value="${errors.password}"/></td>
+                        <td><font color="red"> <html:errors property="password" /> </font></td>
                     </tr>
                     <tr>
                         <td><label>Re-enter Password</label></td>
-                        <td><input type="password" name="password2" value=""></td>
-                        <td><c:out value="${errors.password2}"/></td>
+                        <td><input type="password" name="password2" value="" ></td>
+                        <td><font color="red"> <html:errors property="password2" /> </font></td>
                     </tr>
 
                 </table>
 
-                 <input type="hidden" name="id" value="${id}">
-                <input type="hidden" name="token" value="${token}">
-                <input type="submit" value="Submit">
-            </form>
+                 <html:hidden property="id" />
+                <html:hidden property="token" />
+                <html:submit value="Submit"/>
+            </html:form>
         </c:if>
 
     </body>

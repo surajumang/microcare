@@ -8,8 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SearchCriteria extends FormBean {
-    private Logger logger = Logger.getLogger("SearchCriteria");
+public class SearchForm extends FormBean {
+    private Logger logger = Logger.getLogger("SearchForm");
 
     private String email;
     @Name(regex = "(.)+", message = "errors.required")
