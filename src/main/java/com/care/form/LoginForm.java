@@ -1,7 +1,7 @@
 package com.care.form;
 
 import com.care.annotation.Email;
-import com.care.validation.FormBean;
+import com.care.annotation.NotNull;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
 
@@ -11,6 +11,7 @@ public class LoginForm extends FormBean{
     private String email;
     private String password;
 
+    @NotNull
     @Email
     public String getEmail() {
         return email;
@@ -20,6 +21,7 @@ public class LoginForm extends FormBean{
         this.email = email;
     }
 
+    @NotNull
     public String getPassword() {
         return password;
     }

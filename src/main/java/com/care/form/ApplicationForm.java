@@ -1,7 +1,7 @@
 package com.care.form;
 
+import com.care.annotation.NotNull;
 import com.care.annotation.Number;
-import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
 
@@ -32,6 +32,7 @@ public class ApplicationForm extends FormBean {
         this.sitterId = sitterId;
     }
 
+    @NotNull
     @Number(required = true, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "errors.amount")
     public String getExpectedPay() {
         return expectedPay;

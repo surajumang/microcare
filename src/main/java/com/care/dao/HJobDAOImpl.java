@@ -73,9 +73,9 @@ public class HJobDAOImpl implements JobDAO {
     @Override
     public List<Job> getAllJobs(long postedBy) throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Query query = session.createQuery("from Job where seeker.id = :seekerId and status = :status ");
+        Query query = session.createQuery("from Job where seeker.id = :seekerId and status != :status ");
         query.setLong("seekerId", postedBy);
-        query.setString("status", Status.ACTIVE.name());
+        query.setString("status", Status.CLOSED.name());
         List<Job> jobList = query.list();
         return jobList;
     }

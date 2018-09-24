@@ -35,6 +35,7 @@
                 <tr>
                      <td><label>Start Date(Time)</label></td>
                      <td><html:text property="startDate"  /></td>
+
                      <td><font color="red"> <html:errors property="startDate" /> </font></td>
                 </tr>
                 <tr>

@@ -1,22 +1,14 @@
 package com.care.form;
 
-import com.care.annotation.Email;
 import com.care.annotation.Name;
-import com.care.annotation.Number;
+import com.care.annotation.NotNull;
 import com.care.dao.DAOFactory;
 import com.care.dao.HMemberDAOImpl;
 import com.care.dao.MemberDAO;
 import com.care.model.Member;
-import com.care.validation.FormBean;
-import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RegistrationForm extends EditProfileForm {
@@ -26,6 +18,7 @@ public class RegistrationForm extends EditProfileForm {
     private String password;
     private String password2;
 
+    @NotNull
     @Name(regex = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]{5,}", message = "errors.password")
     public String getPassword() {
         return password;
@@ -34,7 +27,7 @@ public class RegistrationForm extends EditProfileForm {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @NotNull
     public String getPassword2() {
         return password2;
     }

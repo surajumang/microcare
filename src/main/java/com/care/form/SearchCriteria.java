@@ -1,13 +1,9 @@
 package com.care.form;
 
 import com.care.annotation.Name;
-import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

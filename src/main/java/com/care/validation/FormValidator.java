@@ -2,6 +2,7 @@ package com.care.validation;
 
 import com.care.annotation.*;
 import com.care.annotation.Number;
+import com.care.form.FormBean;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
 
@@ -27,6 +28,7 @@ public class FormValidator {
         ANNOTATION_PROCESSOR_MAP.put(Email.class, new EmailProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Name.class, new NameProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Number.class, new NumberProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(NotNull.class, new NotNullProcessor());
     }
 
     public static void  validate(FormBean form, ActionErrors errors )
@@ -54,6 +56,7 @@ public class FormValidator {
                     if (! v.isValid(value)){
                         errors.add(fieldName, new ActionMessage(v.getMessage()));
                         logger.info("NOTOKAY" + fieldName);
+                        break;
                     }
                     //logger.info(method.getName() + "done");
                 }

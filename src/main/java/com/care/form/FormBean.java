@@ -1,4 +1,4 @@
-package com.care.validation;
+package com.care.form;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;

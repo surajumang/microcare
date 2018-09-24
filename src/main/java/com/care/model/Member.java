@@ -2,7 +2,6 @@
 package com.care.model;
 
 import java.sql.Timestamp;
-import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 

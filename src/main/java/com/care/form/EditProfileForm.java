@@ -1,17 +1,13 @@
 package com.care.form;
 
-import com.care.annotation.Email;
 import com.care.annotation.Name;
+import com.care.annotation.NotNull;
 import com.care.annotation.Number;
 import com.care.model.MemberType;
-import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,6 +69,7 @@ public class EditProfileForm extends  FormBean {
         this.numberOfChildren = numberOfChildren;
     }
 
+    @NotNull
     @Name
     public String getFirstName() {
         return firstName;
@@ -82,6 +79,7 @@ public class EditProfileForm extends  FormBean {
         this.firstName = firstName;
     }
 
+    @NotNull
     @Name
     public String getLastName() {
         return lastName;
@@ -91,6 +89,7 @@ public class EditProfileForm extends  FormBean {
         this.lastName = lastName;
     }
 
+    @NotNull
     @Number(regex = "\\d{6}", message = "errors.number.zipcode")
     public String getZipCode() {
         return zipCode;
@@ -108,6 +107,7 @@ public class EditProfileForm extends  FormBean {
         this.memberType = memberType;
     }
 
+    @NotNull
     public String getAddress() {
         return address;
     }
@@ -116,6 +116,7 @@ public class EditProfileForm extends  FormBean {
         this.address = address;
     }
 
+    @NotNull
     @Number(regex = "\\d{10}", message = "errors.number.phone")
     public String getPhone() {
         return phone;

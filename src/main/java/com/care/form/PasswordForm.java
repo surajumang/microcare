@@ -1,17 +1,12 @@
 package com.care.form;
 
 import com.care.annotation.Name;
-import com.care.service.Hash;
-import com.care.validation.FormBean;
+import com.care.annotation.NotNull;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +19,7 @@ public class PasswordForm extends FormBean {
     private String id;
     private String token;
 
+    @NotNull
     public String getCurrentPassword() {
         return currentPassword;
     }
@@ -32,6 +28,7 @@ public class PasswordForm extends FormBean {
         this.currentPassword = currentPassword;
     }
 
+    @NotNull
     @Name(regex = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]{5,}", required = true, message = "errors.password")
     public String getPassword() {
         return password;
@@ -41,6 +38,7 @@ public class PasswordForm extends FormBean {
         this.password = password;
     }
 
+    @NotNull
     public String getPassword2() {
         return password2;
     }

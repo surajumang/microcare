@@ -1,5 +1,7 @@
 package com.care.validation;
 
+import com.care.form.FormBean;
+
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

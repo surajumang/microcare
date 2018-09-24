@@ -1,15 +1,13 @@
 package com.care.form;
 
 import com.care.annotation.Name;
+import com.care.annotation.NotNull;
 import com.care.annotation.Number;
 import com.care.annotation.StringDate;
-import com.care.validation.FormBean;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
@@ -41,6 +39,7 @@ public class JobForm extends FormBean {
         this.id = id;
     }
 
+    @NotNull
     public String getTitle() {
         return title;
     }
@@ -48,7 +47,7 @@ public class JobForm extends FormBean {
     public void setTitle(String title) {
         this.title = title;
     }
-
+    @NotNull
     @Number(regex = "\\d{1,3}(\\.\\d{0,2})?", message = "errors.amount")
     public String getHourlyPay() {
         return hourlyPay;
@@ -58,6 +57,7 @@ public class JobForm extends FormBean {
         this.hourlyPay = hourlyPay;
     }
 
+    @NotNull
     @StringDate
     public String getStartDate() {
         return startDate;
@@ -66,6 +66,8 @@ public class JobForm extends FormBean {
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
+
+    @NotNull
     @StringDate
     public String getEndDate() {
         return endDate;
@@ -92,13 +94,13 @@ public class JobForm extends FormBean {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             Timestamp startTime = Timestamp.valueOf(startDate + ":00");
             Timestamp endTime = Timestamp.valueOf(endDate + ":00");
-
+            // both are not getting executed.
             if (startTime.before(currentTime)){
-                errors.add("currentDate", new ActionMessage("errors.startdate.greater",  "CurrentDate"));
+                errors.add("startDate", new ActionMessage("errors.startdate.greater",  "CurrentDate"));
                 flag = false;
             }
             if (endTime.before(startTime)){
-                errors.add("startDate", new ActionMessage("errors.startdate.less", "EndDate"));
+                errors.add("endDate", new ActionMessage("errors.startdate.less", "EndDate"));
                 flag = false;
             }
         }catch (Exception e){

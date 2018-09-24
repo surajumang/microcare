@@ -49,9 +49,11 @@
             <html:form action="/visitor/captureLogin" method="post">
                 <label>Email</label>
                 <html:text property="email"/><br>
+                <font color="red"> <html:errors property="email" /> </font>
 
                 <label>Password</label>
                 <html:password property="password"/><br>
+                <font color="red"> <html:errors property="password" /> </font>
                 <html:submit property="submit" value="Submit"/>
 
             </html:form>
