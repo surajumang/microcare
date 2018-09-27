@@ -7,21 +7,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html"
            prefix="html" %>
 <!DOCTYPE html>
-    <style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-    </style>
+
 <html lang="en" dir="ltr">
         <head>
             <meta charset="utf-8">
@@ -39,72 +25,73 @@
         </head>
         <body>
 
-         <jsp:include page="/member/header.jsp"/>
-         <c:choose>
-             <c:when test="${param.jobedit eq 'true'}">
-                <h2>Edit Successful</h2>
-             </c:when>
-             <c:when test="${param.delete eq 'true'}">
-                <h2>Delete Successful</h2>
-             </c:when>
-         </c:choose>
+             <jsp:include page="/member/header.jsp"/>
 
-         <h2>${SUCCESS}</h2>
-         <h2>${FAILURE}</h2>
-         <h2>${INVALID}</h2>
-         <h2>${DELSUCCESS}</h2>
-         <h2>${EDITSUCCESS}</h2>
+             <div class="container">
+             <c:choose>
+                 <c:when test="${param.jobedit eq 'true'}">
+                    <h2>Edit Successful</h2>
+                 </c:when>
+                 <c:when test="${param.delete eq 'true'}">
+                    <h2>Delete Successful</h2>
+                 </c:when>
+             </c:choose>
 
-    <c:if test="${fn:length(myJobs) > 0}">
-        <table>
-            <thead>
-                <tr>
-                    <td>Title</td>
-                    <td>Status</td>
-                    <td>Start Date</td>
-                    <td>End Date</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </thead>
-            <c:forEach var="job" items="${myJobs}">
-            <tr>
-                <td>${job.title}</td>
-                <td>${job.status}</td>
-                <fmt:formatDate var="startDate" value="${job.startDate}" pattern="yyyy-MM-dd hh:mm"/>
-                <td>${startDate}</td>
-                <fmt:formatDate var="endDate" value="${job.endDate}" pattern="yyyy-MM-dd hh:mm"/>
-                <td>${endDate}</td>
-                <td>
-                    <c:if test="${job.status != 'EXPIRED'}">
-                    <form action="${pageContext.request.contextPath}/seeker/showJobToEdit.do" method="get">
-                        <input type="hidden" name="id" value="${job.id}">
-                        <input type="submit" name="" value="Edit">
-                    </form>
-                    </c:if>
-                </td>
-                <td>
+             <h2>${SUCCESS}</h2>
+             <h2>${FAILURE}</h2>
+             <h2>${INVALID}</h2>
+             <h2>${DELSUCCESS}</h2>
+             <h2>${EDITSUCCESS}</h2>
 
-                    <form action="${pageContext.request.contextPath}/seeker/deleteJob.do" method="get">
-                        <input type="hidden" name="id" value="${job.id}">
-                        <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
-                    </form>
+            <c:if test="${fn:length(myJobs) > 0}">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>Title</td>
+                            <td>Status</td>
+                            <td>Start Date</td>
+                            <td>End Date</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <c:forEach var="job" items="${myJobs}">
+                    <tr>
+                        <td>${job.title}</td>
+                        <td>${job.status}</td>
+                        <fmt:formatDate var="startDate" value="${job.startDate}" pattern="yyyy-MM-dd hh:mm"/>
+                        <td>${startDate}</td>
+                        <fmt:formatDate var="endDate" value="${job.endDate}" pattern="yyyy-MM-dd hh:mm"/>
+                        <td>${endDate}</td>
+                        <td>
+                            <c:if test="${job.status != 'EXPIRED'}">
+                            <form action="${pageContext.request.contextPath}/seeker/showJobToEdit.do" method="get">
+                                <input type="hidden" name="id" value="${job.id}">
+                                <input type="submit" name="" value="Edit">
+                            </form>
+                            </c:if>
+                        </td>
+                        <td>
+                            <form action="${pageContext.request.contextPath}/seeker/deleteJob.do" method="get">
+                                <input type="hidden" name="id" value="${job.id}">
+                                <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
+                            </form>
 
-                </td>
-                <td>
-                   <c:if test="${job.status != 'EXPIRED'}">
-                    <form action="${pageContext.request.contextPath}/seeker/viewApplications.do" method="get">
-                        <input type="hidden" name="id" value="${job.id}">
-
-                        <input type="submit" name="" value="View Applications">
-                    </form>
-                    </c:if>
-                </td>
-            </tr>
-        </c:forEach>
-        </table>
-    </c:if>
+                        </td>
+                        <td>
+                           <c:if test="${job.status != 'EXPIRED'}">
+                            <form action="${pageContext.request.contextPath}/seeker/viewApplications.do" method="get">
+                                <input type="hidden" name="id" value="${job.id}">
+                                <input type="submit" name="" value="View Applications">
+                            </form>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </table>
+            </c:if>
+</div>
         </body>
-        <jsp:include page="/footer.jsp"/>
+        <%-- <jsp:include page="/footer.jsp"/> --%>
 </html>

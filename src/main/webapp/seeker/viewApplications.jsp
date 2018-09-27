@@ -14,53 +14,38 @@
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-    </style>
-
 </head>
     <body>
 
     <jsp:include page="/member/header.jsp"/>
-    <h2>${SUCCESS}</h2>
-                <h2>${FAILURE}</h2>
-                <h2>${INVALID}</h2>
+        <div class="container">
 
+        <h2>${SUCCESS}</h2>
+        <h2>${FAILURE}</h2>
+        <h2>${INVALID}</h2>
 
-    <c:if test="${fn:length(getApplications) > 0}">
-        <center><h2>${getApplications[0].job.title}</h2></center>
-
-        <table>
-            <thead>
-                <tr>
-                    <td>First Name</td>
-                    <td>Last Name</td>
-                    <td>Status</td>
-                    <td>Expected Pay</td>
-                </tr>
-            </thead>
-            <c:forEach var="app" items="${getApplications}">
-            <tr>
-                <td>${app.sitter.firstName}</td>
-                <td>${app.sitter.lastName}</td>
-                <td>${app.status}</td>
-                <td>${app.expectedPay}</td>
-            </tr>
-        </c:forEach>
-        </table>
-    </c:if>
+        <c:if test="${fn:length(getApplications) > 0}">
+            <center><h2>${getApplications[0].job.title}</h2></center>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                        <td>Status</td>
+                        <td>Expected Pay</td>
+                    </tr>
+                </thead>
+                <c:forEach var="app" items="${getApplications}">
+                    <tr>
+                        <td>${app.sitter.firstName}</td>
+                        <td>${app.sitter.lastName}</td>
+                        <td>${app.status}</td>
+                        <td>${app.expectedPay}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
+        </div>
     </body>
-    <jsp:include page="/footer.jsp"/>
+    <%-- <jsp:include page="/footer.jsp"/> --%>
 </html>

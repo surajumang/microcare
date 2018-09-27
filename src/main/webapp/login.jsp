@@ -11,22 +11,19 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title></title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <style type="text/css">
-            form {
-                text-align: center;
-            }
-            input {
-                width: 100px;
-            }
             .right{
                 float:right;
             }
         </style>
     </head>
     <body>
-        <div class="form1" al>
+        <div class="container" style="max-width:500px">
             <h1>Welcome to Home Job Marketplace</h1>
             <c:choose>
                 <c:when test="${param.closed eq 'true'}">
@@ -44,8 +41,9 @@
                 <c:when test="${param.pass eq 'failed'}">
                     <h2>Password reset Failed</h2>
                 </c:when>
-
-
+                <c:when test="${param.token eq 'invalid'}">
+                    <h2>Invalid Token</h2>
+                </c:when>
             </c:choose>
 
             <h2>${SUCCESS}</h2>
@@ -54,25 +52,26 @@
 
             <h2>${message}</h2>
             <html:form action="/visitor/captureLogin" method="post">
-                <label>Email</label>
-                <html:text property="email"/><br>
-                <font color="red"> <html:errors property="email" /> </font>
-
-                <label>Password</label>
-                <html:password property="password"/><br>
-                <font color="red"> <html:errors property="password" /> </font>
-                <html:submit property="submit" value="Submit"/>
-
+                <div class="form-group">
+                    <label>Email</label>
+                    <html:text property="email" styleClass="form-control" /><br>
+                    <font color="red"> <html:errors property="email" /> </font>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <html:password property="password" styleClass="form-control" /><br>
+                    <font color="red"> <html:errors property="password" /> </font>
+                </div>
+                <html:submit property="submit" styleClass="form-control" value="Submit"/>
             </html:form>
-
         </div>
 
         <div class="right">
         <br>
-                    New User
-                    <a href="${pageContext.request.contextPath}/visitor/registration.do">Register Here</a>
-                    <br>
-                    <a href="${pageContext.request.contextPath}/visitor/forgotPassword.jsp">Forgot Passwod</a>
+            New User
+            <a href="${pageContext.request.contextPath}/visitor/registration.do">Register Here</a>
+            <br>
+            <a href="${pageContext.request.contextPath}/visitor/forgotPassword.jsp">Forgot Passwod</a>
         </div>
     </body>
 </html>

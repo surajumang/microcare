@@ -44,24 +44,7 @@
       <h2>${INVALID}</h2>
       <h2>${ACCOUNT_STATUS}</h2>
 
-        <html:errors />
-      <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/seeker/postJob.do" method="post">
-                <input type="submit" name="PostJob" value="Post Job"/>
-          </form>
-      </div>
 
-      <div class="seeker">
-          <form class="" action="${pageContext.request.contextPath}/seeker/showJobs.do" method="post">
-                <input type="submit" name="ViewJobs" value="My Jobs"/>
-          </form>
-      </div>
-
-      <div class="seeker">
-                <form action="${pageContext.request.contextPath}/member/search.do" method="post">
-                      <input type="submit" name="search" value="Search Sitters"/>
-                </form>
-      </div>
-      <jsp:include page="/footer.jsp"/>
+      <%-- <jsp:include page="/footer.jsp"/> --%>
     </body>
 </html>

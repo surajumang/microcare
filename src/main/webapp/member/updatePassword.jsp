@@ -16,32 +16,31 @@
     </head>
     <body>
         <jsp:include page="/member/header.jsp"/>
-        <h3></h3>
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${OTHER}</h2>
+        <div class="container" style="max-width:500px">
+            <h2>${SUCCESS}</h2>
+            <h2>${FAILURE}</h2>
+            <h2>${OTHER}</h2>
 
-        <html:form action="/member/captureResetPassword" method="post">
-            <table align="center">
-                <tr>
-                    <td><label>Current Password</label></td>
-                    <td><input type="password" name="currentPassword" /></td>
-                    <td><font color="red"> <html:errors property="currentPassword" /> </font></td>
-                </tr>
-                <tr>
-                    <td><label>New Password</label></td>
-                    <td><input type="password" name="password"/></td>
-                    <td><font color="red"> <html:errors property="password" /> </font></td>
-                </tr>
-                <tr>
-                    <td><label>Re-Enter Password</label></td>
-                    <td><input type="password" name="password2" /></td>
-                    <td><font color="red"> <html:errors property="password2" /> </font></td>
-                </tr>
-            </table>
-            <center> <html:submit value="Submit"/> </center>
-        </html:form>
+            <html:form action="/member/captureResetPassword" method="post">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" name="currentPassword" class="form-control"/>
+                        <font color="red"> <html:errors property="currentPassword" /> </font>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" name="password" class="form-control"/>
+                        <font color="red"> <html:errors property="password" /> </font>
+                    </div>
+                    <div class="form-group">
+                        <label>Re-Enter Password</label>
+                        <input type="password" name="password2" class="form-control"/>
+                        <font color="red"> <html:errors property="password2" /> </font>
+                    </div>
 
+                    <html:submit value="Submit" styleClass="form-control"/>
+            </html:form>
+        </div>
     </body>
-    <jsp:include page="/footer.jsp"/>
+    <%-- <jsp:include page="/footer.jsp"/> --%>
 </html>

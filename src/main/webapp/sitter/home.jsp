@@ -41,6 +41,6 @@
         <h2>${INVALID}</h2>
         <h2>${ACCOUNT_STATUS}</h2>
 
-      <jsp:include page="/footer.jsp"/>
+      <%-- <jsp:include page="/footer.jsp"/> --%>
     </body>
 </html>

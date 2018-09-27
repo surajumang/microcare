@@ -10,7 +10,7 @@
 }
 </style>
 
-<div class="footer">
+<div class="container footer">
     <p>
         contact: contactus@caregivers.com
     </p>

@@ -9,31 +9,34 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title></title>
-        <style type="text/css">
-            form {
-                text-align: center;
-            }
-        </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h2>Password reset link will be sent to your mail</h2><br>
-        <h3>Please enter your email to continue </h3>
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${OTHER}</h2>
+        <div class="container" style="max-width:500px">
+            <h2>Password reset link will be sent to your mail</h2><br>
+            <h3>Please enter your email to continue </h3>
+            <h2>${SUCCESS}</h2>
+            <h2>${FAILURE}</h2>
+            <h2>${OTHER}</h2>
 
-        <form action="${pageContext.request.contextPath}/visitor/login.do" method="get">
-             <input type="submit" name="home" value="Home">
-        </form>
+            <div class="btn btn-info" role="button">
+              <html:link action="/visitor/login">Login</html:link>
+            </div>
 
-        <form action="${pageContext.request.contextPath}/visitor/captureEmail.do" method="get">
-            <label>Email </label>
-            <input type="text" name="email" value="${email}">
-            <c:out value="${emailError}"/>
-            <input type="submit" value="Submit">
-        </form>
+            <form action="${pageContext.request.contextPath}/visitor/captureEmail.do" method="get">
+                <div class="form-group">
+                    <label>Email </label>
+                    <input type="text" name="email" value="${email}" class="form-control">
+                    <c:out value="${emailError}"/>
+                </div>
+                <input type="submit" value="Submit" class="form-control">
+            </form>
+
+        </div>
 
     </body>
-    <jsp:include page="/footer.jsp"/>
+    <%-- <jsp:include page="/footer.jsp"/> --%>
 </html>
