@@ -12,6 +12,7 @@ public class SearchForm extends FormBean {
     private Logger logger = Logger.getLogger("SearchForm");
 
     private String email;
+
     @Name(regex = "(.)+", message = "errors.required")
     public String getEmail() {
         return email;

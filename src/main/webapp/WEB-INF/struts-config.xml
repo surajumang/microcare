@@ -19,6 +19,8 @@
                    type="com.care.form.SearchForm"/>
         <form-bean name="profileForm"
                    type="com.care.form.EditProfileForm"/>
+        <form-bean name="emailForm"
+                   type="com.care.form.EmailForm"/>
 
     </form-beans>
     <global-forwards>
@@ -233,7 +235,11 @@
                 parameter="/visitor/forgotPassword.jsp">
         </action>
         <action path="/visitor/captureEmail"
-                type="com.care.controller.GeneratePasswordResetToken">
+                type="com.care.controller.GeneratePasswordResetToken"
+                name="emailForm"
+                scope="request"
+                validate="true"
+                input="/visitor/forgotPassword.do">
             <forward name="success" path="/visitor/login.do?mail=true" redirect="true"/>
             <forward name="failure" path="/visitor/forgotPassword.do"/>
         </action>

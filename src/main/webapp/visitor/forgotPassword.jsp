@@ -26,14 +26,14 @@
               <html:link action="/visitor/login">Login</html:link>
             </div>
 
-            <form action="${pageContext.request.contextPath}/visitor/captureEmail.do" method="get">
+            <html:form action="/visitor/captureEmail" method="get">
                 <div class="form-group">
                     <label>Email </label>
-                    <input type="text" name="email" value="${email}" class="form-control">
-                    <font color="red"> <c:out value="${emailError}"/> </font>
+                    <html:text property="email" styleClass="form-control" />
+                    <font color="red"> <html:errors property="email" /> </font>
                 </div>
-                <input type="submit" value="Submit" class="form-control">
-            </form>
+                <html:submit styleClass="form-control"/>
+            </html:form>
 
         </div>
 
