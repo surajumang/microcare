@@ -90,23 +90,29 @@ public class JobForm extends FormBean {
         logger.info(errors+ "");
         boolean flag = true;
         // If the dates are not okay then a parse exception will be generated and that will be handled here.
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+
         try {
-            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             Timestamp startTime = Timestamp.valueOf(startDate + ":00");
-            Timestamp endTime = Timestamp.valueOf(endDate + ":00");
-            // both are not getting executed.
             if (startTime.before(currentTime)){
                 errors.add("startDate", new ActionMessage("errors.startdate.greater",  "CurrentDate"));
                 flag = false;
             }
+        }catch (Exception e){
+            logger.log(Level.SEVERE, "Exception while validating Time values", e);
+            errors.add("startDate", new ActionMessage("errors.date.format"));
+            flag = false;
+        }
+        try{
+            Timestamp endTime = Timestamp.valueOf(endDate + ":00");
+            Timestamp startTime = Timestamp.valueOf(startDate + ":00");
             if (endTime.before(startTime)){
-                errors.add("endDate", new ActionMessage("errors.startdate.less", "EndDate"));
+                errors.add("endDate", new ActionMessage("errors.enddate.greater"));
                 flag = false;
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Exception while validating Time values", e);
-            errors.add("dateFormat", new ActionMessage("errors.date.format"));
-
+            errors.add("endDate", new ActionMessage("errors.date.format"));
             flag = false;
         }
         if (flag && errors.isEmpty()){
