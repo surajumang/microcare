@@ -6,7 +6,7 @@ package com.care.model;
 
 import java.sql.Timestamp;
 
-public class Application {
+public class Application extends BaseModel{
 
         private long id;
         private double expectedPay;

@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Member {
+public class Member extends BaseModel{
         private long id;
         private String firstName;
         private String lastName;

@@ -3,7 +3,7 @@ package com.care.model;
 import java.sql.Timestamp;
 
 
-public class Token {
+public class Token extends BaseModel{
     private long id;
     private Member member;
     private String token;

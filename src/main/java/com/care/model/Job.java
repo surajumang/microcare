@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Job {
+public class Job extends BaseModel{
     private long id;
     private String title;
     private double hourlyPay;
