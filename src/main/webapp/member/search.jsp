@@ -24,7 +24,7 @@
             <html:form action="/member/captureSearch" method="post">
                 <div class="form-group">
                     <label>Email</label>
-                    <html:text property = "email" styleClass="form-control"/>
+                    <input type="text" name="email" <c:if test="${email != '%'}">value="${email}" </c:if> class="form-control"/>
                     <font color="red" ><html:errors property="email" /></font>
                 </div>
                 <html:submit value = "GO" styleClass="form-control"/>

@@ -1,7 +1,9 @@
 package com.care.form;
 
 import com.care.annotation.Name;
+import com.care.annotation.NotNull;
 import com.care.validation.FormValidator;
+import com.mysql.jdbc.StringUtils;
 import org.apache.struts.action.ActionErrors;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,18 +15,22 @@ public class SearchForm extends FormBean {
 
     private String email;
 
-    @Name(regex = "(.)+", message = "errors.required")
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (StringUtils.isEmptyOrWhitespaceOnly(email)){
+            this.email = "%";
+        }else{
+            this.email = email;
+        }
     }
 
     @Override
     public ActionErrors validateCustom() {
         ActionErrors errors = new ActionErrors();
+
         try {
             FormValidator.validate(this, errors);
         } catch (InvocationTargetException e) {

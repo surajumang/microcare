@@ -34,6 +34,7 @@ public class SearchAction extends Action {
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         String page = "found";
+        request.setAttribute("email", searchForm.getEmail());
 
         if(member.getMemberType() == MemberType.SITTER){
             SeekerService seekerService= ServiceFactory.get(SeekerServiceImpl.class);

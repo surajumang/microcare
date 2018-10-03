@@ -34,7 +34,6 @@
                 </div>
                 <html:submit styleClass="form-control"/>
             </html:form>
-
         </div>
 
     </body>

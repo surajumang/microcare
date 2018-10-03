@@ -100,9 +100,7 @@
         <action path="/member/captureSearch"
                 type="com.care.controller.SearchAction"
                 name="searchForm"
-                validate="true"
-                scope="request"
-                input="/member/search.do">
+                scope="request">
             <forward name="success" path="/member/search.do"/>
         </action>
 
