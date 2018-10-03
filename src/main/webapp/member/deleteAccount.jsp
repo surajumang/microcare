@@ -15,20 +15,20 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       
-        <script type="text/javascript">
-                        function confirmDeletion(form) {
-                            if(window.confirm("Are you sure you want to Delete this Job")){
-                                form.submit();
-                            }
-                        }
-         </script>
+      <script type="text/javascript">
+        function confirmDeletion(form) {
+            if(window.confirm("Are you sure you want to Delete this Job")){
+                form.submit();
+            }
+        }
+      </script>
     </head>
     <body>
     <jsp:include page="/header.jsp"/>
 
         <p>Are you Sure you want to Delete your Account.</p>
 
-        <input type="button" name="delete" value="Delete" onclick=""/>
+        <input type="button" name="delete" value="Delete" onclick="confirmDeletion"/>
         <input type="button" name="cancel" value="Cancel" onclick=""/>
 
     </body>

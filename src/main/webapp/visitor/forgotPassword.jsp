@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <label>Email </label>
                     <input type="text" name="email" value="${email}" class="form-control">
-                    <c:out value="${emailError}"/>
+                    <font color="red"> <c:out value="${emailError}"/> </font>
                 </div>
                 <input type="submit" value="Submit" class="form-control">
             </form>

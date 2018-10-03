@@ -44,7 +44,7 @@
                               </div>
 
                               <div class="btn btn-info" role="button">
-                                <html:link action="/member/closeAccount">Close Account</html:link>
+                                <html:link action="/member/closeAccount" onclick="return confirm('Do you really want to Close Your Account')">Close Account</html:link>
                               </div>
 
                               <div class="btn btn-info" role="button">
@@ -52,14 +52,14 @@
                               </div>
 
                               <div class="btn btn-info" role="button">
-                                <html:link action="/member/logout">Log Out</html:link>
+                                <html:link action="/member/logout" onclick="return confirm('Do you want to Logout')" >Log Out</html:link>
                               </div>
 
                         </div>
                   </nav>
              </c:if>
 
-             <c:if test="${CURRENT_USER.memberType eq 'SITTER'}">
+            <c:if test="${CURRENT_USER.memberType eq 'SITTER'}">
                  <nav class="navbar navbar-default">
                        <div class="container-fluid">
                            <div class="btn btn-info" role="button">
@@ -83,7 +83,7 @@
                              </div>
 
                              <div class="btn btn-info" role="button">
-                               <html:link action="/member/closeAccount">Close Account</html:link>
+                               <html:link action="/member/closeAccount" onclick=" return confirm('Do you really want to Close Your Account')">Close Account</html:link>
                              </div>
 
                              <div class="btn btn-info" role="button">
@@ -91,7 +91,7 @@
                              </div>
 
                              <div class="btn btn-info" role="button">
-                               <html:link action="/member/logout">Log Out</html:link>
+                               <html:link action="/member/logout" onclick="return confirm('Do you want to Logout')">Log Out</html:link>
                              </div>
 
                        </div>
