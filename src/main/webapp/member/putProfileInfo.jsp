@@ -29,6 +29,11 @@
 
             <html:form  action="/member/editProfile" method="post">
                 <div class="form-group">
+                    <label for="email">Email</label>
+                    <html:text property="email" styleClass="form-control" />
+                    <font color="red"> <html:errors property="email" /> </font>
+                </div>
+                <div class="form-group">
                     <label for="fname">First Name</label>
                     <html:text property="firstName" styleClass="form-control" />
                     <font color="red"> <html:errors property="firstName" /> </font>
@@ -80,6 +85,7 @@
                 </c:if>
 
                 <input type="hidden" name="memberType" value="SEEKER">
+                <html:hidden property="id" />
                 <html:submit property="" styleClass="form-control" value="Submit"/>
 
             </html:form>

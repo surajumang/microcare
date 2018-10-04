@@ -1,9 +1,14 @@
 package com.care.form;
 
+import com.care.annotation.Email;
 import com.care.annotation.Name;
 import com.care.annotation.NotNull;
 import com.care.annotation.Number;
+import com.care.model.Member;
 import com.care.model.MemberType;
+import com.care.service.AccountService;
+import com.care.service.AccountServiceImpl;
+import com.care.service.ServiceFactory;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
@@ -26,7 +31,10 @@ public class EditProfileForm extends  FormBean {
     private String numberOfChildren;
     private String expectedPay;
     private String experience;
+    private String id;
 
+    @NotNull
+    @Email
     public String getEmail() {
         return email;
     }
@@ -126,6 +134,14 @@ public class EditProfileForm extends  FormBean {
         this.phone = phone;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     //[TODO] write custom error check for optional fields
     @Override
     public ActionErrors validateCustom() {
@@ -150,6 +166,28 @@ public class EditProfileForm extends  FormBean {
         } catch (Exception e) {
             // this property is not being printed as error.
             errors.add("memberType", new ActionMessage("errors.invalid"));
+        }
+        /*
+        Check if the email entered is already in use
+         */
+        AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
+       // errors.properties()
+        // if Id is null then assume it is for Registration.
+        if (errors.isEmpty()){
+            Member member = accountService.getMember(getEmail());
+            // Only if there is already a member registered.
+            if (member != Member.emptyMember()){
+                // it is for registration.
+                String ID = String.valueOf(member.getId());
+                if (getId() == null){
+                    errors.add("email", new ActionMessage("errors.email.exist"));
+                }
+
+                //This will take care of Edit Email, Checks if the emailId is unchanged.
+                else if( !ID.equals(getId())){
+                    errors.add("email", new ActionMessage("errors.email.exist"));
+                }
+            }
         }
         if (numberOfChildren != null && numberOfChildren.equals("") && errors.isEmpty()){
             numberOfChildren="0";

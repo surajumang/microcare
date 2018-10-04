@@ -30,8 +30,8 @@ public class PutProfileInfo extends Action {
         String page = "failure";
         EditProfileForm editProfileForm = (EditProfileForm)form;
         editProfileForm.setMemberType(memberType.name());
-        if (memberType == MemberType.SEEKER){
 
+        if (memberType == MemberType.SEEKER){
             SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
             Seeker profileInfo = seekerService.getSeeker(currentUser.getId());
             page = "success";

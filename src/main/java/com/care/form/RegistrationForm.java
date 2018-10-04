@@ -45,19 +45,6 @@ public class RegistrationForm extends EditProfileForm {
         if(! password.equals(password2)){
             errors.add("password2", new ActionMessage("errors.password.mismatch"));
         }
-        if(! getEmail().matches("^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$")){
-            errors.add("email", new ActionMessage("errors.email"));
-        }
-        else {
-            try {
-                Member member = memberDAO.getMember(getEmail());
-                if (member != null){
-                    errors.add("email", new ActionMessage("errors.email.exist"));
-                }
-            } catch (Exception e) {
-                // more than one row exist for the email. {should never happen}
-            }
-        }
 
         return errors;
     }
