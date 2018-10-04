@@ -20,12 +20,6 @@ import java.util.logging.Logger;
 
 public class CaptureRegistration extends Action {
     Logger logger = Logger.getLogger("Registration");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Unable to Register");
-        message.put(OperationStatus.OTHER, "ALready Registered Try Forgot password");
-        message.put(OperationStatus.SUCCESS, "Successful Registered, Now you can Log in");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -47,8 +41,6 @@ public class CaptureRegistration extends Action {
             operationStatus = OperationStatus.OTHER;
         }
         logger.info("Back at servlet");
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
-
         request.setAttribute("formErrors", registrationDetails);
         return mapping.findForward("success");
 

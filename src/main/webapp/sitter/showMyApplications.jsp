@@ -32,9 +32,9 @@
                      <h2>Application Deleted</h2>
                  </c:when>
              </c:choose>
-           <h2>${DELSUCCESS}</h2>
-           <h2>${SUCCESS}</h2>
-           <h2>${FAILURE}</h2>
+             <c:if test="${fn:length(allMyApplications) <= 0}">
+                <h2>No Applications to Show</h2>
+             </c:if>
        </font>
            <c:if test="${fn:length(allMyApplications) > 0}">
                <table class="table table-striped">

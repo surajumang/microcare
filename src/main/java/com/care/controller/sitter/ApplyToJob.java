@@ -23,28 +23,17 @@ import java.util.logging.Logger;
 
 public class ApplyToJob extends Action {
     private Logger logger = Logger.getLogger("ApplyToJob");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Unable to Apply");
-        message.put(OperationStatus.SUCCESS, "");
-        message.put(OperationStatus.INVALID, "Invalid jobID");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String page = "failure";
-        /*
-        JobID not required from scope now. It can be fetched from the applicationForm.
-         */
-        //long jobToApplyOn = CommonUtil.getIdFromRequest(request, "id" );
         ApplicationForm applicationForm = (ApplicationForm)form;
         OperationStatus operationStatus = OperationStatus.FAILURE;
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         logger.info(applicationForm + "**********");
         logger.info("Called ApplyToJob");
-        //            applicationForm.setJobId(String.valueOf(jobToApplyOn));
-//            applicationForm.setSitterId(String.valueOf(currentMember.getId()));
+
         try {
             long jobToApplyOn = Long.valueOf(applicationForm.getJobId());
             //applicationForm.setJobId(String.valueOf(jobToApplyOn));
@@ -61,7 +50,6 @@ public class ApplyToJob extends Action {
             page = "badRequest";
         }
         logger.info(page);
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         request.setAttribute("applicationForm", applicationForm);
         return mapping.findForward(page);
     }

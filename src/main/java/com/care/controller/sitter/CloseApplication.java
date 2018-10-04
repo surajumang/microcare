@@ -22,12 +22,6 @@ import java.util.logging.Logger;
 
 public class CloseApplication extends Action {
     Logger logger = Logger.getLogger("CloseJobSitter");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
-    static {
-        message.put(OperationStatus.FAILURE, "Can't Edit Job");
-        message.put(OperationStatus.SUCCESS, "Successfully Deleted");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -53,7 +47,6 @@ public class CloseApplication extends Action {
         }
 
         logger.info(page);
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(page);
     }
 }

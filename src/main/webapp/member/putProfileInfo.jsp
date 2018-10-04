@@ -22,10 +22,7 @@
     <jsp:include page="/member/header.jsp"/>
 
     <div class="container" style="max-width:500px">
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${INVALID}</h2>
-        <h1>Enter Your Details</h1>
+            <h1>Enter Your Details</h1>
 
             <html:form  action="/member/editProfile" method="post">
                 <div class="form-group">

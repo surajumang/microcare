@@ -19,9 +19,7 @@
     <body>
         <div class="container" style="max-width:500px">
 
-
             <h2>Password can be reset from here</h2>
-            <c:out value="${FAILURE}"/>
 
             <div class="btn btn-info" role="button">
               <html:link action="/visitor/login">Login</html:link>

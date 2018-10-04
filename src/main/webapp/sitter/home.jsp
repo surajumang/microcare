@@ -36,10 +36,6 @@
 
          </c:otherwise>
      </c:choose>
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${INVALID}</h2>
-        <h2>${ACCOUNT_STATUS}</h2>
 
         </font>
 

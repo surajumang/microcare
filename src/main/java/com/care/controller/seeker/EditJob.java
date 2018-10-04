@@ -22,12 +22,6 @@ import java.util.logging.Logger;
 
 public class EditJob extends Action {
     private Logger logger = Logger.getLogger("EditJob");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
-    static {
-        message.put(OperationStatus.FAILURE, "Can't Edit this Job");
-        message.put(OperationStatus.SUCCESS, "Edit Successful");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -49,9 +43,7 @@ public class EditJob extends Action {
             page="badRequest";
         }
         logger.info("job status is " + operationStatus);
-
         request.setAttribute("editJob", jobForm);
-        request.setAttribute("EDITSUCCESS", message.get(operationStatus));
         request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
 
         return mapping.findForward(page);

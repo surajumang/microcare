@@ -19,10 +19,9 @@
 
     <jsp:include page="/member/header.jsp"/>
         <div class="container">
-
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${INVALID}</h2>
+        <c:if test="${fn:length(getApplications) <= 0}">
+            <font color="red" > <h2>No Application on Job</h2> </font>
+        </c:if>
 
         <c:if test="${fn:length(getApplications) > 0}">
             <center><h2>${getApplications[0].job.title}</h2></center>

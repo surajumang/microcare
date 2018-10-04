@@ -24,11 +24,6 @@ import java.util.logging.Logger;
 
 public class ShowApplications extends Action {
     private Logger logger = Logger.getLogger("ShowApplicationsSitter");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "No applications to show");
-        message.put(OperationStatus.SUCCESS, "");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -36,18 +31,15 @@ public class ShowApplications extends Action {
 
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-        OperationStatus operationStatus = OperationStatus.FAILURE;
         List<Application> allMyApplications = sitterService.listAllApplications(currentMember);
 
         if (allMyApplications != null && !allMyApplications.isEmpty()){
             page = "success";
-            operationStatus = OperationStatus.SUCCESS;
             request.setAttribute("allMyApplications", allMyApplications);
         }
         logger.info(allMyApplications.toString());
         logger.info("Dispatching to Page" + page);
 
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(page);
     }
 }

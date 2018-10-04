@@ -41,13 +41,6 @@
     </head>
 
     <body onload="displayMemberType()">
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${INVALID}</h2>
-
-
-
-
         <center> <h1>Enter Your Details</h1></center>
         <hr>
             <div class="container" style="max-width:500px">

@@ -20,11 +20,6 @@ import java.util.logging.Logger;
 
 public class SearchAction extends Action {
     Logger logger = Logger.getLogger("SearchingMembers");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Couldn't find any Match");
-        message.put(OperationStatus.SUCCESS, "Matches Found");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -32,7 +27,6 @@ public class SearchAction extends Action {
         SearchForm searchForm = (SearchForm) form;
         Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         OperationStatus operationStatus = OperationStatus.FAILURE;
-
         String page = "found";
         request.setAttribute("email", searchForm.getEmail());
 
@@ -40,22 +34,14 @@ public class SearchAction extends Action {
             SeekerService seekerService= ServiceFactory.get(SeekerServiceImpl.class);
             List<Seeker> seekers = seekerService.getSeekersByEmail(searchForm.getEmail());
             logger.info("Fetched Seekers " + seekers);
-            if (!seekers.isEmpty()){
-                operationStatus = OperationStatus.SUCCESS;
-            }
             request.setAttribute("members", seekers);
         }
         else {
             SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
             List<Sitter> sitters = sitterService.getSittersByEmail(searchForm.getEmail());
             logger.info("Fetched sitters");
-            if (!sitters.isEmpty()){
-                operationStatus = OperationStatus.SUCCESS;
-            }
             request.setAttribute("members", sitters);
         }
-
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward("success");
     }
 }

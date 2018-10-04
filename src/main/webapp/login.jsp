@@ -26,32 +26,26 @@
         <div class="container" style="max-width:500px">
             <h1>Welcome to Home Job Marketplace</h1>
             <font color="red">
-            <c:choose>
-                <c:when test="${param.closed eq 'true'}">
-                   <h2>Account Closed</h2>
-                </c:when>
-                <c:when test="${param.login eq 'false'}">
-                    <h2>Invalid credentials</h2>
-                </c:when>
-                <c:when test="${param.pass eq 'true'}">
-                    <h2>Password reset successful</h2>
-                </c:when>
-                <c:when test="${param.mail eq 'true'}">
-                    <h2>Password reset link sent</h2>
-                </c:when>
-                <c:when test="${param.pass eq 'failed'}">
-                    <h2>Password reset Failed</h2>
-                </c:when>
-                <c:when test="${param.token eq 'invalid'}">
-                    <h2>Invalid Token</h2>
-                </c:when>
-            </c:choose>
-
-            <h2>${SUCCESS}</h2>
-            <h2>${FAILURE}</h2>
-            <h2>${OTHER}</h2>
-            <h2>${message}</h2>
-
+                <c:choose>
+                    <c:when test="${param.closed eq 'true'}">
+                       <h2>Account Closed</h2>
+                    </c:when>
+                    <c:when test="${param.login eq 'false'}">
+                        <h2>Invalid credentials</h2>
+                    </c:when>
+                    <c:when test="${param.pass eq 'true'}">
+                        <h2>Password reset successful</h2>
+                    </c:when>
+                    <c:when test="${param.mail eq 'true'}">
+                        <h2>Password reset link sent</h2>
+                    </c:when>
+                    <c:when test="${param.pass eq 'failed'}">
+                        <h2>Password reset Failed</h2>
+                    </c:when>
+                    <c:when test="${param.token eq 'invalid'}">
+                        <h2>Invalid Token</h2>
+                    </c:when>
+                </c:choose>
             </font>
             <html:form action="/visitor/captureLogin" method="post">
                 <div class="form-group">

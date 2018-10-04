@@ -23,11 +23,6 @@ import java.util.logging.Logger;
 public class VerifyToken extends Action {
 
     private Logger logger = Logger.getLogger("ResetPassword");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Invalid Token");
-        message.put(OperationStatus.SUCCESS, "VERIFIED");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -41,19 +36,15 @@ public class VerifyToken extends Action {
         Token token1 = accountService.getToken(token);
 
         if (token1 != Token.emptyToken() && token1.getStatus()== Status.ACTIVE){
-
             request.setAttribute("id", token1.getMember().getId());
             request.setAttribute("token", token);
-
             passwordResetForm.setId(String.valueOf(token1.getMember().getId()));
             passwordResetForm.setToken(token);
             logger.info("member's password resetting");
-
             operationStatus = OperationStatus.SUCCESS;
             page = "success";
         }
         logger.info("Dispatching to " + page);
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(page);
     }
 }

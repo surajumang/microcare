@@ -22,12 +22,6 @@ import java.util.logging.Logger;
 
 public class CloseAccount extends Action {
     Logger logger = Logger.getLogger("CloseAccount");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
-    static {
-        message.put(OperationStatus.FAILURE, "Couldn't Close");
-        message.put(OperationStatus.SUCCESS, "Successfully Closed Account");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -46,7 +40,6 @@ public class CloseAccount extends Action {
             request.getSession().setAttribute(ControllerUtil.CURRENT_USER, null);
             request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward("success");
     }
 }

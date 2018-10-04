@@ -26,19 +26,9 @@ import java.util.logging.Logger;
 public class ShowJobToEdit extends Action {
 
     private Logger logger = Logger.getLogger("ShowJobsToEdit");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
-    static {
-        message.put(OperationStatus.FAILURE, " You Can't Edit this Job");
-        message.put(OperationStatus.SUCCESS, "");
-        message.put(OperationStatus.INVALID, "Invalid Job ");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        /*
-        Get parameter from the request to refer to the job to be edited.
-         */
 
         OperationStatus operationStatus = OperationStatus.FAILURE;
         Member member = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
@@ -67,7 +57,6 @@ public class ShowJobToEdit extends Action {
             page = "badRequest";
         }
         logger.info("Dispatching to ---" + page);
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(page);
     }
 

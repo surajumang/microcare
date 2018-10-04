@@ -18,11 +18,6 @@ import java.util.logging.Logger;
 
 public class ChangePasswordAction extends Action {
     Logger logger = Logger.getLogger("ChangePasswordAction");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Invalid Password");
-        message.put(OperationStatus.SUCCESS, "Password Updated Successfully");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -38,8 +33,6 @@ public class ChangePasswordAction extends Action {
         if (operationStatus == OperationStatus.SUCCESS){
             request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }
-
-        //request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(operationStatus.name().toLowerCase());
     }
 }

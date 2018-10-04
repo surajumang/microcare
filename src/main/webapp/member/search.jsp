@@ -32,8 +32,7 @@
         </div>
 
         <div class="container">
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
+        
         <c:if test="${fn:length(members) > 0}">
             <table class="table table-striped">
                 <c:if test="${members[0].memberType eq 'SITTER'}">

@@ -21,12 +21,6 @@ import java.util.logging.Logger;
 
 public class GeneratePasswordResetToken extends Action {
     private Logger logger = Logger.getLogger(this.getClass().getName());
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Couldn't send mail.");
-        message.put(OperationStatus.SUCCESS, "Password reset link sent to your Email");
-        message.put(OperationStatus.OTHER, "Enter a Valid Email");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -35,17 +29,16 @@ public class GeneratePasswordResetToken extends Action {
         EmailForm emailForm = (EmailForm)form;
         String email = request.getParameter("email");
 
-        OperationStatus operationStatus = OperationStatus.FAILURE;
+
         logger.info("Request recieved" + emailForm.getEmail());
 
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-        operationStatus = accountService.mailPasswordResetToken(emailForm.getEmail(), request.getContextPath());
+        OperationStatus operationStatus =
+                accountService.mailPasswordResetToken(emailForm.getEmail(), request.getContextPath());
 
         if (operationStatus == OperationStatus.SUCCESS){
             page = "success";
         }
-
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(page);
     }
 }

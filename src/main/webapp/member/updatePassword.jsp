@@ -17,11 +17,6 @@
     <body>
         <jsp:include page="/member/header.jsp"/>
         <div class="container" style="max-width:500px">
-
-            <h2>${SUCCESS}</h2>
-            <h2>${FAILURE}</h2>
-            <h2>${OTHER}</h2>
-
             <html:form action="/member/captureResetPassword" method="post">
                     <div class="form-group">
                         <label>Current Password</label>

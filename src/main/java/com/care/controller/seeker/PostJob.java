@@ -18,11 +18,6 @@ import java.util.logging.Logger;
 
 public class PostJob extends Action {
     Logger logger = Logger.getLogger("PostJob");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Can't Post Job");
-        message.put(OperationStatus.SUCCESS, "Job Posted successfully");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -45,7 +40,6 @@ public class PostJob extends Action {
         if (operationStatus == OperationStatus.SUCCESS){
             page = "/member/home.do";
         }
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
         return mapping.findForward("success");
 

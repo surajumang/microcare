@@ -22,13 +22,6 @@ import java.util.logging.Logger;
 
 public class CloseJob extends Action {
     private Logger logger = Logger.getLogger(this.getClass().getName());
-    private static final Map<OperationStatus, String> messege = new HashMap<OperationStatus, String>();
-    static {
-        messege.put(OperationStatus.SUCCESS, "Successfully Closed");
-        messege.put(OperationStatus.FAILURE, "No records exist");
-        messege.put(OperationStatus.UNAUTHORISED, "You are not authorised to perform this Operation ");
-        messege.put(OperationStatus.INVALID, "Invalid JobId");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -53,8 +46,6 @@ public class CloseJob extends Action {
             //It is required to throw the caught exception, if operations are to be rolled back.
             page = "badRequest";
         }
-
-        request.setAttribute(operationStatus.name(), messege.get(operationStatus));
         logger.info(page);
         return mapping.findForward(page);
     }

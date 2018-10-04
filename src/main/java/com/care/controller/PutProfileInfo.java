@@ -22,7 +22,6 @@ public class PutProfileInfo extends Action {
 
     Logger logger = Logger.getLogger("PutProfileInfo");
 
-
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Member currentUser = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
@@ -48,7 +47,6 @@ public class PutProfileInfo extends Action {
             request.getSession().setAttribute("profileInfo", profileInfo);
            // request.getRequestDispatcher(page).forward(request,response);
         }
-
         return mapping.findForward(page);
     }
 }

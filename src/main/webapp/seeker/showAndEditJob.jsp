@@ -19,12 +19,6 @@
     <body>
     <jsp:include page="/member/header.jsp"/>
     <div class="container" style="max-width:500px">
-
-
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${INVALID}</h2>
-
         <html:form action="/seeker/captureEditJob" method="post">
                 <div class="form-group">
                      <label>Job Title</label>

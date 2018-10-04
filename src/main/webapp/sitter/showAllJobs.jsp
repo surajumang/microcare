@@ -28,10 +28,6 @@
               <h2>Job Deleted</h2>
           </c:when>
     </c:choose>
-    <h2>${SUCCESS}</h2>
-    <h2>${FAILURE}</h2>
-    <h2>${INVALID}</h2>
-    <h2>${APPSUCCESS}</h2>
     </font>
 
     <c:if test="${fn:length(allJobs) > 0}">

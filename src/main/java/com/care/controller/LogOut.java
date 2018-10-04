@@ -24,7 +24,6 @@ public class LogOut extends Action {
         logger.info(member + "to be logged out");
         request.getSession().setAttribute(ControllerUtil.CURRENT_USER, null);
         request.setAttribute("stat", member);
-
         request.setAttribute(OperationStatus.SUCCESS.name(), "Successfully Logged Out");
 
         return mapping.findForward("success");

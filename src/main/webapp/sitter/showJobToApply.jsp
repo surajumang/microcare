@@ -27,9 +27,6 @@
 
     <jsp:include page="/member/header.jsp"/>
     <div class="container">
-        <h2>${SUCCESS}</h2>
-        <h2>${FAILURE}</h2>
-        <h2>${INVALID}</h2>
             <table class="table table-striped">
                 <thead>
                     <tr>

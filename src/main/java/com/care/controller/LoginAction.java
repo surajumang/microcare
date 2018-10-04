@@ -23,21 +23,6 @@ import java.util.logging.Logger;
 
 public class LoginAction extends Action {
     Logger logger = Logger.getLogger("LoginServlet");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Invalid credentials");
-        message.put(OperationStatus.SUCCESS, "");
-    }
-
-    private String setMemberPage(MemberType memberType){
-        String page = "";
-        if (memberType == MemberType.SEEKER){
-            page += "seeker";
-        }else{
-            page += "sitter";
-        }
-        return page;
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -46,23 +31,19 @@ public class LoginAction extends Action {
 
         String page = "failure";
         OperationStatus status = OperationStatus.FAILURE;
-
         AuthenticationService authenticationService = ServiceFactory.get(AuthenticationServiceImpl.class);
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-
         status = authenticationService.loginUser(userLoginForm);
 
         if (status == OperationStatus.SUCCESS){
             Member member = accountService.getMember(userLoginForm.getEmail());
-            if (member != Member.emptyMember() && member.getStatus() == Status.ACTIVE){
 
+            if (member != Member.emptyMember() && member.getStatus() == Status.ACTIVE){
                 request.getSession().setAttribute(ControllerUtil.CURRENT_USER ,member);
                 logger.info("Member set to sesion" + member);
                 String memberType = member.getMemberType().name().toLowerCase();
-
                 request.getSession().setAttribute("memberType" , memberType);
                 logger.info("Back at LoginServlet");
-
                 page = "success";
             }
             else if (member != Member.emptyMember() && member.getStatus() == Status.CLOSED){
@@ -72,8 +53,6 @@ public class LoginAction extends Action {
                 page="closed";
             }
         }
-
-        request.setAttribute(status.name(), message.get(status));
         request.setAttribute("loginDetails", userLoginForm);
         logger.info("Dispatching to" + page);
 

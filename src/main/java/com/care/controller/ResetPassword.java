@@ -21,14 +21,7 @@ public class ResetPassword extends Action {
     /*
     It will reset password after verifying that the user got the link in their mail.
      */
-
     private Logger logger = Logger.getLogger("ResetPassword");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-
-    static {
-        message.put(OperationStatus.FAILURE, "Password Reset Failed");
-        message.put(OperationStatus.SUCCESS, "Password Reset Successful, You can now log in");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -50,7 +43,6 @@ public class ResetPassword extends Action {
             Token token1 = accountService.getToken(token);
             if (token1 != Token.emptyToken() && token1.getStatus() != Status.EXPIRED){
                 passwordResetForm.setId(String.valueOf(token1.getMember().getId()));
-
                 operationStatus =
                         authenticationService.updatePasswordWithToken(passwordResetForm);
                 if (operationStatus == OperationStatus.SUCCESS){
@@ -58,12 +50,9 @@ public class ResetPassword extends Action {
                     request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
                 }
             }
-
         }catch (Exception e){
             logger.log(Level.SEVERE, "Exception while Resetting password using token.", e);
         }
-
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(page);
     }
 }

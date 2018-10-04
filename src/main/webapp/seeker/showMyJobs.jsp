@@ -29,21 +29,14 @@
 
              <div class="container">
              <font color="red">
-             <c:choose>
-                 <c:when test="${param.jobedit eq 'true'}">
-                    <h2>Edit Successful</h2>
-                 </c:when>
-                 <c:when test="${param.delete eq 'true'}">
-                    <h2>Delete Successful</h2>
-                 </c:when>
-             </c:choose>
-
-             <h2>${SUCCESS}</h2>
-             <h2>${FAILURE}</h2>
-             <h2>${INVALID}</h2>
-             <h2>${DELSUCCESS}</h2>
-             <h2>${EDITSUCCESS}</h2>
-
+                 <c:choose>
+                     <c:when test="${param.jobedit eq 'true'}">
+                        <h2>Edit Successful</h2>
+                     </c:when>
+                     <c:when test="${param.delete eq 'true'}">
+                        <h2>Delete Successful</h2>
+                     </c:when>
+                 </c:choose>
              </font>
 
             <c:if test="${fn:length(myJobs) > 0}">

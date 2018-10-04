@@ -25,11 +25,6 @@ import java.util.logging.Logger;
 
 public class ShowApplications extends Action {
     Logger logger = Logger.getLogger("ShowApplicationsSeeker");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "No Applications on Job");
-        message.put(OperationStatus.SUCCESS, "All applications on this Job");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -56,7 +51,6 @@ public class ShowApplications extends Action {
             page="badRequest";
         }
         request.setAttribute("getApplications", applications);
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(page);
     }
 }
