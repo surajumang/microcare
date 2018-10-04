@@ -22,6 +22,10 @@ public class JobForm extends FormBean {
     private String hourlyPay;
     private String startDate;
     private String endDate;
+    private String startTime;
+    private String endTime;
+    private String startDateTime;
+    private String endDateTime;
 
     public String getSeekerId() {
         return seekerId;
@@ -77,6 +81,42 @@ public class JobForm extends FormBean {
         this.endDate = endDate;
     }
 
+    @NotNull
+    @Name(regex = "\\d{2}:\\d{2}")
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    @NotNull
+    @Name(regex = "\\d{2}:\\d{2}")
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getStartDateTime() {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(String startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public String getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setEndDateTime(String endDateTime) {
+        this.endDateTime = endDateTime;
+    }
+
     @Override
     public ActionErrors validateCustom() {
         ActionErrors errors = new ActionErrors();
@@ -92,8 +132,9 @@ public class JobForm extends FormBean {
         // If the dates are not okay then a parse exception will be generated and that will be handled here.
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
+        // try only if there are no validation errors [todo]
         try {
-            Timestamp startTime = Timestamp.valueOf(startDate + ":00");
+            Timestamp startTime = Timestamp.valueOf(getStartDate() + " " + getStartTime() + ":00");
             if (startTime.before(currentTime)){
                 errors.add("startDate", new ActionMessage("errors.startdate.greater",  "CurrentDate"));
                 flag = false;
@@ -104,8 +145,8 @@ public class JobForm extends FormBean {
             flag = false;
         }
         try{
-            Timestamp endTime = Timestamp.valueOf(endDate + ":00");
-            Timestamp startTime = Timestamp.valueOf(startDate + ":00");
+            Timestamp endTime = Timestamp.valueOf(getEndDate() + " " + getEndTime() + ":00");
+            Timestamp startTime = Timestamp.valueOf(getStartDate() + " " + getStartTime() + ":00");
             if (endTime.before(startTime)){
                 errors.add("endDate", new ActionMessage("errors.enddate.greater"));
                 flag = false;
@@ -116,8 +157,12 @@ public class JobForm extends FormBean {
             flag = false;
         }
         if (flag && errors.isEmpty()){
-            startDate += ":00";
-            endDate += ":00";
+//            startDate += ":00";
+//            endDate += ":00";
+            //set startDateTime value such that it passes the ObjectMapper.
+            setStartDateTime(getStartDate() + " " + getStartTime() + ":00");
+            setEndDateTime(getEndDate() + " " + getEndTime() + ":00");
+
         }
         logger.info("Done with validation" + errors);
         return errors;

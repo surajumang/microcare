@@ -14,11 +14,11 @@
             <column name="TITLE" length="100" not-null="true" />
         </property>
 
-        <property name="startDate" type="timestamp">
+        <property name="startDateTime" type="timestamp">
             <column name="START_DATE"  not-null="true" />
         </property>
 
-        <property name="endDate" type="timestamp">
+        <property name="endDateTime" type="timestamp">
             <column name="END_DATE"/>
         </property>
 

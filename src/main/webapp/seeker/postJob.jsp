@@ -31,14 +31,24 @@
                  <font color="red"> <html:errors property="hourlyPay" /> </font>
             </div>
             <div class="form-group">
-                 <label>Start Date(YYYY-MM-DD HH:MM)* </label>
-                 <html:text property="startDate"  styleClass="form-control"/>
+                 <label>Start Date*</label>
+                 <input type="date" name="startDate" class="form-control"/>
                  <font color="red"> <html:errors property="startDate" /> </font>
             </div>
             <div class="form-group">
-                 <label>End Date(YYYY-MM-DD HH:MM)* </label>
-                 <html:text property="endDate" styleClass="form-control"/>
+                 <label>Start Time*</label>
+                 <input type="time" name="startTime" class="form-control"/>
+                 <font color="red"> <html:errors property="startTime" /> </font>
+            </div>
+            <div class="form-group">
+                 <label>End Date*</label>
+                 <input type="date" name="endDate" class="form-control"/>
                  <font color="red"> <html:errors property="endDate" /> </font>
+            </div>
+            <div class="form-group">
+                 <label>End Time*</label>
+                 <input type="time" name="endTime" class="form-control"/>
+                 <font color="red"> <html:errors property="endTime" /> </font>
             </div>
          <html:submit property="submit" styleClass="form-control" value="Submit"/>
      </html:form>

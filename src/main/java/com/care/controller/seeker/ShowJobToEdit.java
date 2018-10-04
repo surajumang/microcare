@@ -43,7 +43,6 @@ public class ShowJobToEdit extends Action {
             //expired applications should also throw exception.
             if (job.getStatus() != Status.EXPIRED && job.getStatus() != Status.CLOSED){
                 operationStatus = OperationStatus.SUCCESS;
-                //page = "/seeker/showAndEditJob.jsp";
                 page = "success";
                 //not required anymore[todo]
                 request.setAttribute("editJob", jobForm);
@@ -63,14 +62,21 @@ public class ShowJobToEdit extends Action {
     private void mapJob(Job job, JobForm jobForm){
         ObjectMapper.mapObject(job, jobForm, false);
 
+        // Change the fields to proper format after retrieving from DB.
+        // split will be a good choice here.
+        String[] endDate = jobForm.getEndDateTime().split(" ");
 
-        String endDate = jobForm.getEndDate();
-        endDate = endDate.substring(0, endDate.length() - 5);
-        String startDate = jobForm.getStartDate();
-        startDate = startDate.substring(0, startDate.length() - 5);
+        String endTime= endDate[1].substring(0, 5);
 
-        jobForm.setEndDate(endDate);
-        jobForm.setStartDate(startDate);
+        String[] startDate = jobForm.getStartDateTime().split(" ");
+
+        String startTime= startDate[1].substring(0, 5);
+
+        jobForm.setEndDate(endDate[0]);
+        jobForm.setStartDate(startDate[0]);
+        jobForm.setStartTime(startTime);
+        jobForm.setEndTime(endTime);
+
 //        jobForm.setHourlyPay(String.valueOf(job.getHourlyPay()));
 //        jobForm.setSeekerId(String.valueOf(job.getSeekerId()));
 //        jobForm.setTitle(job.getTitle());

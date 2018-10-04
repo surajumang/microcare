@@ -9,8 +9,8 @@ public class Job extends BaseModel{
     private long id;
     private String title;
     private double hourlyPay;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private Timestamp startDateTime;
+    private Timestamp endDateTime;
     private Status status = Status.ACTIVE;
     private Timestamp dateCreated;
     private Timestamp lastModified;
@@ -62,20 +62,20 @@ public class Job extends BaseModel{
         this.title = title;
     }
 
-    public Timestamp getStartDate() {
-        return startDate;
+    public Timestamp getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
+    public void setStartDateTime(Timestamp startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public Timestamp getEndDate() {
-        return endDate;
+    public Timestamp getEndDateTime() {
+        return endDateTime;
     }
 
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
+    public void setEndDateTime(Timestamp endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public Status getStatus() {

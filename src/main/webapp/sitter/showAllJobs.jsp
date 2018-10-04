@@ -45,9 +45,9 @@
                 <tr>
                     <td>${job.title}</td>
                     <td>${job.hourlyPay}</td>
-                    <fmt:formatDate var="startDate" value="${job.startDate}" pattern="yyyy-MM-dd hh:mm"/>
+                    <fmt:formatDate var="startDate" value="${job.startDateTime}" pattern="yyyy-MM-dd hh:mm"/>
                     <td>${startDate}</td>
-                    <fmt:formatDate var="endDate" value="${job.endDate}" pattern="yyyy-MM-dd hh:mm"/>
+                    <fmt:formatDate var="endDate" value="${job.endDateTime}" pattern="yyyy-MM-dd hh:mm"/>
                     <td>${endDate}</td>
                     <td>
                         <%-- Send it to a form so that relevant input can be accepted --%>
