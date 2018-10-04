@@ -95,6 +95,20 @@ public class AccountServiceImpl implements AccountService {
         return member;
     }
 
+    public Member getMember(long id) {
+        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
+        Member member;
+        try {
+            member = memberDAO.getMember(id);
+            logger.info(member.toString());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error fetching member", e);
+            //[No member exist for the given email]todo
+            member = Member.emptyMember();
+        }
+        return member;
+    }
+
     /*
     TokenNotFoundException[todo]
      */

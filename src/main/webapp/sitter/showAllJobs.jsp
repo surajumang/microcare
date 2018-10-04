@@ -19,6 +19,7 @@
 
     <jsp:include page="/member/header.jsp"/>
     <div class="container" >
+    <font color="red">
     <c:choose>
           <c:when test="${param.apply eq 'true'}">
               <h2>Applied successfully </h2>
@@ -31,6 +32,7 @@
     <h2>${FAILURE}</h2>
     <h2>${INVALID}</h2>
     <h2>${APPSUCCESS}</h2>
+    </font>
 
     <c:if test="${fn:length(allJobs) > 0}">
         <table class="table table-striped">

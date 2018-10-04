@@ -18,7 +18,7 @@
     </head>
     <body>
      <jsp:include page="/member/header.jsp"/>
-
+     <font color="red">
      <c:choose>
          <c:when test="${param.login eq 'true'}">
             <h2></h2>
@@ -40,6 +40,8 @@
         <h2>${FAILURE}</h2>
         <h2>${INVALID}</h2>
         <h2>${ACCOUNT_STATUS}</h2>
+
+        </font>
 
       <%-- <jsp:include page="/footer.jsp"/> --%>
     </body>

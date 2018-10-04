@@ -42,6 +42,7 @@ public class EditProfileAction extends Action {
         int status = accountService.editMember(currentUser.getId(), editProfileForm);
         if (status == 1){
             operationStatus = OperationStatus.SUCCESS;
+            request.getSession().setAttribute(ControllerUtil.CURRENT_USER, accountService.getMember(currentUser.getId()));
             request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }
 

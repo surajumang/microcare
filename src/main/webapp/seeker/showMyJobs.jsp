@@ -28,6 +28,7 @@
              <jsp:include page="/member/header.jsp"/>
 
              <div class="container">
+             <font color="red">
              <c:choose>
                  <c:when test="${param.jobedit eq 'true'}">
                     <h2>Edit Successful</h2>
@@ -42,6 +43,8 @@
              <h2>${INVALID}</h2>
              <h2>${DELSUCCESS}</h2>
              <h2>${EDITSUCCESS}</h2>
+
+             </font>
 
             <c:if test="${fn:length(myJobs) > 0}">
                 <table class="table table-striped">

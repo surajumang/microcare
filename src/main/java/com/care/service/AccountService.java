@@ -13,6 +13,8 @@ public interface AccountService extends Service {
 
     Member getMember(String email);
 
+    Member getMember(long id);
+
     Token getToken(String token);
 
     OperationStatus setMemberStatus(Member member, Status status);

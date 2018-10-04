@@ -26,17 +26,16 @@
     <jsp:include page="/member/header.jsp"/>
 
     <div class="container">
-        <c:choose>
-             <c:when test="${param.login eq 'true'}">
-                <h2></h2>
-             </c:when>
-             <c:when test="${param.delete eq 'true'}">
-                 <h2>Application Deleted</h2>
-             </c:when>
-         </c:choose>
-       <h2>${DELSUCCESS}</h2>
-       <h2>${SUCCESS}</h2>
-       <h2>${FAILURE}</h2>
+        <font color="red">
+            <c:choose>
+                 <c:when test="${param.delete eq 'true'}">
+                     <h2>Application Deleted</h2>
+                 </c:when>
+             </c:choose>
+           <h2>${DELSUCCESS}</h2>
+           <h2>${SUCCESS}</h2>
+           <h2>${FAILURE}</h2>
+       </font>
            <c:if test="${fn:length(allMyApplications) > 0}">
                <table class="table table-striped">
                     <thead>
