@@ -28,6 +28,7 @@
     <body>
         <div class="form1" al>
             <h1>Bad Request</h1>
+            <a href="${pageContext.request.contextPath}/member/home.do">Click here to go back</a>
         </div>
     </body>
 </html>
