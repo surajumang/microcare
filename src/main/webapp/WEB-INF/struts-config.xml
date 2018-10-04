@@ -12,7 +12,8 @@
                    type="com.care.form.ApplicationForm"/>
         <form-bean name="passwordResetForm"
                    type="com.care.form.PasswordResetForm"/>
-        <form-bean name="passwordUpdateForm" type="com.care.form.PasswordUpdateForm"/>
+        <form-bean name="passwordUpdateForm"
+                   type="com.care.form.PasswordUpdateForm"/>
         <form-bean name="registrationForm"
                    type="com.care.form.RegistrationForm"/>
         <form-bean name="searchForm"
@@ -222,7 +223,7 @@
                 scope="request"
                 validate="true"
                 input="/member/resetPassword.do">
-            <forward name="failure" path="/member/resetPassword.do"/>
+            <forward name="failure" path="/member/resetPassword.do?invalid=true" redirect="true"/>
             <forward name="success" path="/member/home.do?pass=true" redirect="true"/>
         </action>
         <!-- Both of them belong together*************END*****************-->

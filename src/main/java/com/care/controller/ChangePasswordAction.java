@@ -39,7 +39,7 @@ public class ChangePasswordAction extends Action {
             request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }
 
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
+        //request.setAttribute(operationStatus.name(), message.get(operationStatus));
         return mapping.findForward(operationStatus.name().toLowerCase());
     }
 }

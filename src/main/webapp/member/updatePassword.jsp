@@ -17,6 +17,7 @@
     <body>
         <jsp:include page="/member/header.jsp"/>
         <div class="container" style="max-width:500px">
+
             <h2>${SUCCESS}</h2>
             <h2>${FAILURE}</h2>
             <h2>${OTHER}</h2>
@@ -26,6 +27,13 @@
                         <label>Current Password</label>
                         <input type="password" name="currentPassword" class="form-control"/>
                         <font color="red"> <html:errors property="currentPassword" /> </font>
+                        <font color="red">
+                            <c:choose>
+                                  <c:when test="${param.invalid eq 'true'}">
+                                       Incorrect Current Password
+                                  </c:when>
+                            </c:choose>
+                        </font>
                     </div>
                     <div class="form-group">
                         <label>New Password</label>
