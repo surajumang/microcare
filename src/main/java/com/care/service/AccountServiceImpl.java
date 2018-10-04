@@ -155,8 +155,7 @@ public class AccountServiceImpl implements AccountService {
            try {
                if (memberDAO.addToken(token) == 1){
                    String message = "localhost:8080/"+contextPath + "/visitor/captureToken.do?token=" + token.getToken();
-                   String anchorMessage = "<a href=\"" + message + "\">" + message + "</a>";
-                   sendMail(email, anchorMessage);
+                   sendMail(email, message);
                    logger.info("mail sent");
                    operationStatus = OperationStatus.SUCCESS;
                }
@@ -291,7 +290,9 @@ public class AccountServiceImpl implements AccountService {
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(email));
                 message.setSubject("Password reset token");
-                message.setText(token);
+                String anchorMessage = "<a href=\"" + token + "\">" + token + "</a>";
+                logger.info(anchorMessage);
+                message.setContent(anchorMessage, "text/html; charset=utf-8");
 
                 Transport.send(message);
 

@@ -37,53 +37,53 @@ public class HibernateFilter implements Filter {
         try {
             // Start a new conversation or in the middle?  
             if (disconnectedSession == null) {
-                logger.info(">>> New conversation");
+                //logger.info(">>> New conversation");
                 currentSession = sf.openSession();
                 currentSession.setFlushMode(FlushMode.AUTO);
             } else {
-                logger.info("< Continuing conversation");
+                //logger.info("< Continuing conversation");
                 currentSession = disconnectedSession;
             }
 
-            logger.info("Binding the current Session");
+            //logger.info("Binding the current Session");
             ManagedSessionContext.bind(currentSession);
 
-            logger.info("Starting a database transaction");
+           // logger.info("Starting a database transaction");
             currentSession.beginTransaction();
 
-            logger.info("Processing the event");
+            //logger.info("Processing the event");
             chain.doFilter(request, response);
 
-            logger.info("Unbinding Session after processing");
+            //logger.info("Unbinding Session after processing");
             currentSession = ManagedSessionContext.unbind(sf);
 
             // End or continue the long-running conversation?  
             if (request.getAttribute(END_OF_CONVERSATION_FLAG) != null ||
                     request.getParameter(END_OF_CONVERSATION_FLAG) != null) {
 
-                logger.info("Flushing Session");
+                //logger.info("Flushing Session");
                 currentSession.flush();
 
-                logger.info("Committing the database transaction");
+                //logger.info("Committing the database transaction");
                 currentSession.getTransaction().commit();
 
-                logger.info("Closing the Session");
+                //logger.info("Closing the Session");
                 currentSession.close();
 
-                logger.info("Cleaning Session from HttpSession");
+                //logger.info("Cleaning Session from HttpSession");
                 httpSession.setAttribute(HIBERNATE_SESSION_KEY, null);
 
-                logger.info("<<< End of conversation");
+                //logger.info("<<< End of conversation");
 
             } else {
 
-                logger.info("Committing database transaction");
+                //logger.info("Committing database transaction");
                 currentSession.getTransaction().commit();
 
-                logger.info("Storing Session in the HttpSession");
+               // logger.info("Storing Session in the HttpSession");
                 httpSession.setAttribute(HIBERNATE_SESSION_KEY, currentSession);
 
-                logger.info("> Returning to user in conversation");
+                //logger.info("> Returning to user in conversation");
             }
 
         } catch (StaleObjectStateException staleEx) {
