@@ -177,7 +177,7 @@ public class AccountServiceImpl implements AccountService {
         SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
 
         try {
-            if (member.getMemberType() == MemberType.SEEKER){
+            if (member.isSeeker()){
                 logger.info("A SEEKer was deleted");
                 Seeker seeker = seekerDAO.getSeeker(member.getId());
                 seeker.closeAccount();

@@ -9,6 +9,6 @@ public class DAOFactory {
     private static Logger logger = Logger.getLogger("DAOFactory");
 
     public static <T extends DAO> T get(Class<T> clazz){
-        return EntityManager.createObject(clazz);
+        return EntityManager.get(clazz);
     }
 }

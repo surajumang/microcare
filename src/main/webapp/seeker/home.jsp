@@ -18,10 +18,10 @@
 
 
       <jsp:include page="/member/header.jsp"/>
-      <font color="red">
+      <font color="green">
       <c:choose>
           <c:when test="${param.login eq 'true'}">
-                <h2>Login Successful</h2>
+
           </c:when>
           <c:when test="${param.post eq 'true'}">
               <h2>Job posted successfully </h2>
@@ -39,11 +39,7 @@
               <h2>Profile updated</h2>
           </c:when>
       </c:choose>
-      <h2>${SUCCESS}</h2>
-      <h2>${FAILURE}</h2>
-      <h2>${UNAUTHORIZED}</h2>
-      <h2>${INVALID}</h2>
-      <h2>${ACCOUNT_STATUS}</h2>
+
 
         </font>
 

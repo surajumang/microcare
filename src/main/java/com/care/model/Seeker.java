@@ -70,6 +70,7 @@ public class Seeker extends Member{
     public int closeAccount(){
         closeAllJobs();
         this.setStatus(Status.CLOSED);
+        this.setEmail(getEmail() + "CLOSED" + getId());
         return 1;
     }
 

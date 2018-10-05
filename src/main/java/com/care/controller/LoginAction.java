@@ -38,7 +38,7 @@ public class LoginAction extends Action {
         if (status == OperationStatus.SUCCESS){
             Member member = accountService.getMember(userLoginForm.getEmail());
 
-            if (member != Member.emptyMember() && member.getStatus() == Status.ACTIVE){
+            if (! member.isEmpty() && member.isActive()){
                 request.getSession().setAttribute(ControllerUtil.CURRENT_USER ,member);
                 logger.info("Member set to sesion" + member);
                 String memberType = member.getMemberType().name().toLowerCase();
@@ -46,12 +46,13 @@ public class LoginAction extends Action {
                 logger.info("Back at LoginServlet");
                 page = "success";
             }
-            else if (member != Member.emptyMember() && member.getStatus() == Status.CLOSED){
-                request.setAttribute("STATUS", member.getStatus().name());
-                request.getSession().setAttribute(ControllerUtil.CLOSED_USER, member);
-                logger.info("CLosed user trying to log in");
-                page="closed";
-            }
+            //closed user can't log in.
+//            else if (member != Member.emptyMember() && member.getStatus() == Status.CLOSED){
+//                request.setAttribute("STATUS", member.getStatus().name());
+//                request.getSession().setAttribute(ControllerUtil.CLOSED_USER, member);
+//                logger.info("CLosed user trying to log in");
+//                page="closed";
+//            }
         }
         request.setAttribute("loginDetails", userLoginForm);
         logger.info("Dispatching to" + page);

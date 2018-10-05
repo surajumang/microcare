@@ -32,22 +32,22 @@
             </div>
             <div class="form-group">
                  <label>Start Date*</label>
-                 <input type="date" name="startDate" class="form-control"/>
+                 <input type="date" name="startDate" value="${jobForm.startDate}" class="form-control"/>
                  <font color="red"> <html:errors property="startDate" /> </font>
             </div>
             <div class="form-group">
                  <label>Start Time*</label>
-                 <input type="time" name="startTime" class="form-control"/>
+                 <input type="time" name="startTime" value="${jobForm.startTime}" class="form-control"/>
                  <font color="red"> <html:errors property="startTime" /> </font>
             </div>
             <div class="form-group">
                  <label>End Date*</label>
-                 <input type="date" name="endDate" class="form-control"/>
+                 <input type="date" name="endDate" value="${jobForm.endDate}" class="form-control"/>
                  <font color="red"> <html:errors property="endDate" /> </font>
             </div>
             <div class="form-group">
                  <label>End Time*</label>
-                 <input type="time" name="endTime" class="form-control"/>
+                 <input type="time" name="endTime" value="${jobForm.endTime}" class="form-control"/>
                  <font color="red"> <html:errors property="endTime" /> </font>
             </div>
          <html:submit property="submit" styleClass="form-control" value="Submit"/>

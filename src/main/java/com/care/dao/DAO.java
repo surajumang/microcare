@@ -1,4 +1,6 @@
 package com.care.dao;
 
-public interface DAO {
+import com.care.service.Entity;
+
+public interface DAO extends Entity {
 }

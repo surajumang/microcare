@@ -19,14 +19,12 @@
 
     <jsp:include page="/member/header.jsp"/>
     <div class="container" >
-    <font color="red">
+    <font color="green">
     <c:choose>
           <c:when test="${param.apply eq 'true'}">
               <h2>Applied successfully </h2>
           </c:when>
-          <c:when test="${param.delete eq 'true'}">
-              <h2>Job Deleted</h2>
-          </c:when>
+
     </c:choose>
     </font>
 

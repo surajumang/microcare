@@ -18,7 +18,7 @@
     </head>
     <body>
      <jsp:include page="/member/header.jsp"/>
-     <font color="red">
+     <font color="green">
      <c:choose>
          <c:when test="${param.login eq 'true'}">
             <h2></h2>

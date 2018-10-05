@@ -33,7 +33,7 @@ public class EntityManager {
         return returnValue;
     }
 
-    public static <T> T createObject(Class<T> classType){
+    public static <T extends Entity> T get(Class<T> classType){
         T returnvalue = null;
         if (OBJECT_CACHE.containsKey(classType)){
             returnvalue = (T) OBJECT_CACHE.get(classType);

@@ -28,7 +28,7 @@
              <jsp:include page="/member/header.jsp"/>
 
              <div class="container">
-             <font color="red">
+             <font color="green">
                  <c:choose>
                      <c:when test="${param.jobedit eq 'true'}">
                         <h2>Edit Successful</h2>
