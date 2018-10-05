@@ -22,10 +22,10 @@
   version="4.0"
   metadata-complete="true">
 
-    <description>
-      Servlet and JSP Examples.
-    </description>
-    <display-name>Servlet and JSP Examples</display-name>
+    <!--<description>-->
+      <!--Servlet and JSP Examples.-->
+    <!--</description>-->
+    <!--<display-name>Servlet and JSP Examples</display-name>-->
 
     <!-- Standard Action Servlet Configuration (with debugging) -->
     <servlet>

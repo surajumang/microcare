@@ -35,7 +35,7 @@ public class VerifyToken extends Action {
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
         Token token1 = accountService.getToken(token);
 
-        if (token1 != Token.emptyToken() && token1.getStatus()== Status.ACTIVE){
+        if (! token1.isEmpty() && !token1.isExpired() && token1.isActive()){
             request.setAttribute("id", token1.getMember().getId());
             request.setAttribute("token", token);
             passwordResetForm.setId(String.valueOf(token1.getMember().getId()));

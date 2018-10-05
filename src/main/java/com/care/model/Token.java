@@ -59,4 +59,16 @@ public class Token extends BaseModel{
         return EMPTY_TOKEN;
     }
 
+    public boolean isExpired(){
+        return expirationDate.before(new Timestamp(System.currentTimeMillis()));
+    }
+
+    public boolean isActive(){
+        return status == Status.ACTIVE;
+    }
+
+    public boolean isEmpty(){
+        return this == EMPTY_TOKEN;
+    }
+
 }
