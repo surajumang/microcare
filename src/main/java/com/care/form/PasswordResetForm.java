@@ -77,6 +77,9 @@ public class PasswordResetForm extends FormBean {
         // if token is empty then It means it is a password update from the logged in user.
         // if I need to check for the validity of the current password then I need the currently Logged in member.
         // may throw Null pointer exception
+        if (! errors.isEmpty()){
+            return errors;
+        }
         if(! password.equals(password2)){
             errors.add("password2", new ActionMessage("errors.password.mismatch"));
         }

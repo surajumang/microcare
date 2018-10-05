@@ -31,7 +31,7 @@
                        <h2>Account Closed</h2>
                     </c:when>
                     <c:when test="${param.login eq 'false'}">
-                        <h2>Invalid credentials</h2>
+                        <h2>Incorrect Email or password</h2>
                     </c:when>
                     <c:when test="${param.pass eq 'true'}">
                         <h2>Password reset successful</h2>

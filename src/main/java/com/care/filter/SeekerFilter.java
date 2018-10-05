@@ -43,7 +43,7 @@ public class SeekerFilter implements Filter {
         else {
             logger.info("Member not logged in-------------->>>>>>>>>>");
             request.setAttribute("message", "You must log in to view this content");
-            servletContext.getRequestDispatcher("/visitor/login.do").forward(request, response);
+            servletContext.getRequestDispatcher("/member/home.do").forward(request, response);
             //response.sendRedirect(appContext+"/login.jsp");
         }
     }

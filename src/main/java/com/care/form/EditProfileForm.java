@@ -153,7 +153,10 @@ public class EditProfileForm extends  FormBean {
         } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, "While validating", e);
         }
-        //[todo] put inside try catch
+
+        if (! errors.isEmpty()){
+            return errors;
+        }
         try {
             if (MemberType.valueOf(memberType) == MemberType.SITTER){
                 if (! expectedPay.matches("\\d{1,3}(\\.\\d{0,2})?")){

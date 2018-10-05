@@ -127,7 +127,11 @@ public class JobForm extends FormBean {
         } catch (IllegalAccessException e) {
             logger.log(Level.SEVERE, "Invok", e);
         }
-        logger.info(errors+ "");
+        logger.info(errors + "");
+
+        if (! errors.isEmpty()){
+            return errors;
+        }
         boolean flag = true;
         // If the dates are not okay then a parse exception will be generated and that will be handled here.
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
@@ -139,30 +143,27 @@ public class JobForm extends FormBean {
                 errors.add("startDate", new ActionMessage("errors.startdate.greater",  "CurrentDate"));
                 flag = false;
             }
+            try{
+                Timestamp endTime = Timestamp.valueOf(getEndDate() + " " + getEndTime() + ":00");
+                if (endTime.before(startTime)){
+                    errors.add("endDate", new ActionMessage("errors.enddate.greater"));
+                    flag = false;
+                }
+            }catch (Exception e){
+                logger.log(Level.SEVERE, "Exception while validating Time values", e);
+                errors.add("endDate", new ActionMessage("errors.date.format"));
+                flag = false;
+            }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Exception while validating Time values", e);
             errors.add("startDate", new ActionMessage("errors.date.format"));
             flag = false;
         }
-        try{
-            Timestamp endTime = Timestamp.valueOf(getEndDate() + " " + getEndTime() + ":00");
-            Timestamp startTime = Timestamp.valueOf(getStartDate() + " " + getStartTime() + ":00");
-            if (endTime.before(startTime)){
-                errors.add("endDate", new ActionMessage("errors.enddate.greater"));
-                flag = false;
-            }
-        }catch (Exception e){
-            logger.log(Level.SEVERE, "Exception while validating Time values", e);
-            errors.add("endDate", new ActionMessage("errors.date.format"));
-            flag = false;
-        }
+
         if (flag && errors.isEmpty()){
-//            startDate += ":00";
-//            endDate += ":00";
             //set startDateTime value such that it passes the ObjectMapper.
             setStartDateTime(getStartDate() + " " + getStartTime() + ":00");
             setEndDateTime(getEndDate() + " " + getEndTime() + ":00");
-
         }
         logger.info("Done with validation" + errors);
         return errors;

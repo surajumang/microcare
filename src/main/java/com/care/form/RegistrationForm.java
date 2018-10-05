@@ -38,10 +38,11 @@ public class RegistrationForm extends EditProfileForm {
 
     @Override
     public ActionErrors validateCustom() {
-        ActionErrors errors = new ActionErrors();
-        errors = super.validateCustom();
+        ActionErrors errors = super.validateCustom();
 
-        MemberDAO memberDAO =DAOFactory.get(HMemberDAOImpl.class);
+        if (! errors.isEmpty()){
+            return errors;
+        }
         if(! password.equals(password2)){
             errors.add("password2", new ActionMessage("errors.password.mismatch"));
         }
