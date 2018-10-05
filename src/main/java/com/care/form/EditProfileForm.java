@@ -42,8 +42,8 @@ public class EditProfileForm extends  FormBean {
     }
 
 
-    @Number
     @DecimalNumber
+    @Size(min=1, max = 6, message = "error.expectedpay.size")
     public String getExpectedPay() {
         return expectedPay;
     }

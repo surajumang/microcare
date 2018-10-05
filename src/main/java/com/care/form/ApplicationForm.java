@@ -1,5 +1,6 @@
 package com.care.form;
 
+import com.care.annotation.DecimalNumber;
 import com.care.annotation.NotNull;
 import com.care.annotation.Number;
 import com.care.validation.FormValidator;
@@ -33,7 +34,7 @@ public class ApplicationForm extends FormBean {
     }
 
     @NotNull
-    @Number(message = "errors.amount")
+    @DecimalNumber(message = "errors.amount")
     public String getExpectedPay() {
         return expectedPay;
     }
