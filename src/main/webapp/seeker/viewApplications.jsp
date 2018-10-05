@@ -19,31 +19,33 @@
 
     <jsp:include page="/member/header.jsp"/>
         <div class="container">
-        <c:if test="${fn:length(getApplications) <= 0}">
-            <font color="red" > <h2>No Application on Job</h2> </font>
-        </c:if>
 
-        <c:if test="${fn:length(getApplications) > 0}">
-            <center><h2>${getApplications[0].job.title}</h2></center>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <td>First Name</td>
-                        <td>Last Name</td>
-                        <td>Status</td>
-                        <td>Expected Pay</td>
-                    </tr>
-                </thead>
-                <c:forEach var="app" items="${getApplications}">
-                    <tr>
-                        <td>${app.sitter.firstName}</td>
-                        <td>${app.sitter.lastName}</td>
-                        <td>${app.status}</td>
-                        <td>${app.expectedPay}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:if>
+        <c:choose>
+            <c:when test="${fn:length(getApplications) > 0}">
+                <center><h2>${getApplications[0].job.title}</h2></center>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                            <td>Status</td>
+                            <td>Expected Pay</td>
+                        </tr>
+                    </thead>
+                    <c:forEach var="app" items="${getApplications}">
+                        <tr>
+                            <td>${app.sitter.firstName}</td>
+                            <td>${app.sitter.lastName}</td>
+                            <td>${app.status}</td>
+                            <td>${app.expectedPay}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </c:when>
+            <c:otherwise>
+                <font color="red"> <h3>No Applications to Show</h3> </font>
+            </c:otherwise>
+        </c:choose>
         </div>
     </body>
     <%-- <jsp:include page="/footer.jsp"/> --%>

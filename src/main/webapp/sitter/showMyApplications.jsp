@@ -32,12 +32,10 @@
                      <h2>Application Deleted</h2>
                  </c:when>
              </c:choose>
-             <c:if test="${fn:length(allMyApplications) <= 0}">
-                <h2>No Applications to Show</h2>
-             </c:if>
        </font>
-           <c:if test="${fn:length(allMyApplications) > 0}">
-               <table class="table table-striped">
+       <c:choose>
+            <c:when test="${fn:length(allMyApplications) > 0}">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <td>Title</td>
@@ -62,7 +60,11 @@
                         </tr>
                     </c:forEach>
                 </table>
-           </c:if>
+            </c:when>
+            <c:otherwise>
+                <font color="red"> <h3>No Application to Show</h3> </font>
+            </c:otherwise>
+       </c:choose>
        </div>
     </body>
     <%-- <jsp:include page="/footer.jsp"/> --%>

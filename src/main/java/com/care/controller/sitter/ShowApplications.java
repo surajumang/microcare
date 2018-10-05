@@ -33,7 +33,7 @@ public class ShowApplications extends Action {
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         List<Application> allMyApplications = sitterService.listAllApplications(currentMember);
 
-        if (allMyApplications != null && !allMyApplications.isEmpty()){
+        if (allMyApplications != null ){
             page = "success";
             request.setAttribute("allMyApplications", allMyApplications);
         }

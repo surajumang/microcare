@@ -30,36 +30,41 @@
     </c:choose>
     </font>
 
-    <c:if test="${fn:length(allJobs) > 0}">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <td>Title</td>
-                    <td>Pay per Hour</td>
-                    <td>Start Date</td>
-                    <td>End Date</td>
-                    <td>Apply</td>
-                </tr>
-            </thead>
-            <c:forEach var="job" items="${allJobs}">
-                <tr>
-                    <td>${job.title}</td>
-                    <td>${job.hourlyPay}</td>
-                    <fmt:formatDate var="startDate" value="${job.startDateTime}" pattern="yyyy-MM-dd hh:mm"/>
-                    <td>${startDate}</td>
-                    <fmt:formatDate var="endDate" value="${job.endDateTime}" pattern="yyyy-MM-dd hh:mm"/>
-                    <td>${endDate}</td>
-                    <td>
-                        <%-- Send it to a form so that relevant input can be accepted --%>
-                        <form action="${pageContext.request.contextPath}/sitter/jobForApplication.do" method="get">
-                            <input type="hidden" name="id" value="${job.id}">
-                            <input type="submit" name="" value="Apply">
-                        </form>
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
-    </c:if>
+    <c:choose>
+          <c:when test="${fn:length(allJobs) > 0}">
+              <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>Title</td>
+                            <td>Pay per Hour</td>
+                            <td>Start Date</td>
+                            <td>End Date</td>
+                            <td>Apply</td>
+                        </tr>
+                    </thead>
+                    <c:forEach var="job" items="${allJobs}">
+                        <tr>
+                            <td>${job.title}</td>
+                            <td>${job.hourlyPay}</td>
+                            <fmt:formatDate var="startDate" value="${job.startDateTime}" pattern="yyyy-MM-dd hh:mm"/>
+                            <td>${startDate}</td>
+                            <fmt:formatDate var="endDate" value="${job.endDateTime}" pattern="yyyy-MM-dd hh:mm"/>
+                            <td>${endDate}</td>
+                            <td>
+                                <%-- Send it to a form so that relevant input can be accepted --%>
+                                <form action="${pageContext.request.contextPath}/sitter/jobForApplication.do" method="get">
+                                    <input type="hidden" name="id" value="${job.id}">
+                                    <input type="submit" name="" value="Apply">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+               </table>
+          </c:when>
+          <c:otherwise>
+              <font color="red"> <h3>No jobs to Show</h3> </font>
+          </c:otherwise>
+    </c:choose>
     </div>
     </body>
     <%-- <jsp:include page="/footer.jsp"/> --%>

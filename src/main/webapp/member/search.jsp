@@ -32,30 +32,31 @@
         </div>
 
         <div class="container">
-        
-        <c:if test="${fn:length(members) > 0}">
-            <table class="table table-striped">
+
+        <c:choose>
+            <c:when test="${fn:length(members) > 0}">
+                <table class="table table-striped">
                 <c:if test="${members[0].memberType eq 'SITTER'}">
-                <thead>
-                     <tr>
-                     <td>First Name</td>
-                     <td>Last Name</td>
-                     <td>Email</td>
-                     <td>Experience</td>
-                     <td>Expected Pay</td>
-                     <td>Phone</td>
-                     </tr>
-                </thead>
-                <c:forEach var ="member" items="${members}">
-                    <tr>
-                        <td>${member.firstName}</td>
-                        <td>${member.lastName}</td>
-                        <td>${member.email}</td>
-                        <td>${member.experience}</td>
-                        <td>${member.expectedPay}</td>
-                        <td>${member.phone}</td>
-                    </tr>
-                </c:forEach>
+                    <thead>
+                         <tr>
+                         <td>First Name</td>
+                         <td>Last Name</td>
+                         <td>Email</td>
+                         <td>Experience</td>
+                         <td>Expected Pay</td>
+                         <td>Phone</td>
+                         </tr>
+                    </thead>
+                    <c:forEach var ="member" items="${members}">
+                        <tr>
+                            <td>${member.firstName}</td>
+                            <td>${member.lastName}</td>
+                            <td>${member.email}</td>
+                            <td>${member.experience}</td>
+                            <td>${member.expectedPay}</td>
+                            <td>${member.phone}</td>
+                        </tr>
+                    </c:forEach>
                 </c:if>
 
                 <c:if test="${members[0].memberType eq 'SEEKER'}">
@@ -80,8 +81,13 @@
                         </tr>
                     </c:forEach>
                  </c:if>
-            </table>
-        </c:if>
+                </table>
+            </c:when>
+            <c:when test="${fn:length(members) <= 0}">
+
+            </c:when>
+        </c:choose>
+
         </div>
 
 

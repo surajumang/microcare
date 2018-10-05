@@ -38,56 +38,63 @@
                      </c:when>
                  </c:choose>
              </font>
+             <c:choose>
+                <c:when test="${fn:length(myJobs) > 0}">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Title</td>
+                                <td>Status</td>
+                                <td>Hourly Pay</td>
+                                <td>Start Date</td>
+                                <td>End Date</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <c:forEach var="job" items="${myJobs}">
+                        <tr>
+                            <td>${job.title}</td>
+                            <td>${job.status}</td>
+                            <td>${job.hourlyPay}</td>
+                            <fmt:formatDate var="startDate" value="${job.startDateTime}" pattern="yyyy-MM-dd hh:mm"/>
+                            <td>${startDate}</td>
+                            <fmt:formatDate var="endDate" value="${job.endDateTime}" pattern="yyyy-MM-dd hh:mm"/>
+                            <td>${endDate}</td>
+                            <td>
+                                <c:if test="${job.status != 'EXPIRED'}">
+                                <form action="${pageContext.request.contextPath}/seeker/showJobToEdit.do" method="get">
+                                    <input type="hidden" name="id" value="${job.id}">
+                                    <input type="submit" name="" value="Edit">
+                                </form>
+                                </c:if>
+                            </td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/seeker/deleteJob.do" method="get">
+                                    <input type="hidden" name="id" value="${job.id}">
+                                    <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
+                                </form>
+                            </td>
+                            <td>
+                               <c:if test="${job.status != 'EXPIRED'}">
+                                <form action="${pageContext.request.contextPath}/seeker/viewApplications.do" method="get">
+                                    <input type="hidden" name="id" value="${job.id}">
+                                    <input type="submit" name="" value="View Applications">
+                                </form>
+                                </c:if>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    <font color="red"> <h3>No jobs to Show</h3> </font>
+                </c:otherwise>
+             </c:choose>
 
             <c:if test="${fn:length(myJobs) > 0}">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td>Title</td>
-                            <td>Status</td>
-                            <td>Hourly Pay</td>
-                            <td>Start Date</td>
-                            <td>End Date</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <c:forEach var="job" items="${myJobs}">
-                    <tr>
-                        <td>${job.title}</td>
-                        <td>${job.status}</td>
-                        <td>${job.hourlyPay}</td>
-                        <fmt:formatDate var="startDate" value="${job.startDateTime}" pattern="yyyy-MM-dd hh:mm"/>
-                        <td>${startDate}</td>
-                        <fmt:formatDate var="endDate" value="${job.endDateTime}" pattern="yyyy-MM-dd hh:mm"/>
-                        <td>${endDate}</td>
-                        <td>
-                            <c:if test="${job.status != 'EXPIRED'}">
-                            <form action="${pageContext.request.contextPath}/seeker/showJobToEdit.do" method="get">
-                                <input type="hidden" name="id" value="${job.id}">
-                                <input type="submit" name="" value="Edit">
-                            </form>
-                            </c:if>
-                        </td>
-                        <td>
-                            <form action="${pageContext.request.contextPath}/seeker/deleteJob.do" method="get">
-                                <input type="hidden" name="id" value="${job.id}">
-                                <input type="button" name="" value="Delete" onclick="confirmDeletion(this.form)">
-                            </form>
 
-                        </td>
-                        <td>
-                           <c:if test="${job.status != 'EXPIRED'}">
-                            <form action="${pageContext.request.contextPath}/seeker/viewApplications.do" method="get">
-                                <input type="hidden" name="id" value="${job.id}">
-                                <input type="submit" name="" value="View Applications">
-                            </form>
-                            </c:if>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </table>
             </c:if>
 </div>
         </body>
