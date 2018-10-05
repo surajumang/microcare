@@ -7,6 +7,8 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Number {
-    String message() default "errors.number";
+public @interface Size {
+    int min();
+    int max();
+    String message() default "errors.size";
 }

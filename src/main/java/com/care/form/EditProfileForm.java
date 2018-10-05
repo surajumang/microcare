@@ -1,8 +1,6 @@
 package com.care.form;
 
-import com.care.annotation.Email;
-import com.care.annotation.Name;
-import com.care.annotation.NotNull;
+import com.care.annotation.*;
 import com.care.annotation.Number;
 import com.care.model.Member;
 import com.care.model.MemberType;
@@ -43,6 +41,9 @@ public class EditProfileForm extends  FormBean {
         this.email = email;
     }
 
+
+    @Number
+    @DecimalNumber
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -51,6 +52,9 @@ public class EditProfileForm extends  FormBean {
         this.expectedPay = expectedPay;
     }
 
+
+    @Number
+    @Size(min = 0, max = 2, message = "errors.experience.size")
     public String getExperience() {
         return experience;
     }
@@ -59,7 +63,7 @@ public class EditProfileForm extends  FormBean {
         this.experience = experience;
     }
 
-    @Name(required = false)
+    @Name
     public String getSpouseName() {
         return spouseName;
     }
@@ -68,7 +72,8 @@ public class EditProfileForm extends  FormBean {
         this.spouseName = spouseName;
     }
 
-    @Number(required = false, regex = "\\d{0,2}", message = "errors.number.children")
+    @Number
+    @Size(min=0, max=2, message = "errors.children.size")
     public String getNumberOfChildren() {
         return numberOfChildren;
     }
@@ -98,7 +103,8 @@ public class EditProfileForm extends  FormBean {
     }
 
     @NotNull
-    @Number(regex = "\\d{6}", message = "errors.number.zipcode")
+    @Number
+    @Size(min = 6, max=6, message = "errors.zipcode.size")
     public String getZipCode() {
         return zipCode;
     }
@@ -125,7 +131,8 @@ public class EditProfileForm extends  FormBean {
     }
 
     @NotNull
-    @Number(regex = "\\d{10}", message = "errors.number.phone")
+    @Number
+    @Size(min = 10, max = 10, message = "errors.phone.size")
     public String getPhone() {
         return phone;
     }
@@ -142,7 +149,7 @@ public class EditProfileForm extends  FormBean {
         this.id = id;
     }
 
-    //[TODO] write custom error check for optional fields
+
     @Override
     public ActionErrors validateCustom() {
         ActionErrors errors = new ActionErrors();
@@ -157,6 +164,7 @@ public class EditProfileForm extends  FormBean {
         if (! errors.isEmpty()){
             return errors;
         }
+        // The below lines may not be required. Removal required [todo]
         try {
             if (MemberType.valueOf(memberType) == MemberType.SITTER){
                 if (! expectedPay.matches("\\d{1,3}(\\.\\d{0,2})?")){

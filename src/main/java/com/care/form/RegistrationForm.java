@@ -2,6 +2,8 @@ package com.care.form;
 
 import com.care.annotation.Name;
 import com.care.annotation.NotNull;
+import com.care.annotation.Password;
+import com.care.annotation.Size;
 import com.care.dao.DAOFactory;
 import com.care.dao.HMemberDAOImpl;
 import com.care.dao.MemberDAO;
@@ -19,7 +21,8 @@ public class RegistrationForm extends EditProfileForm {
     private String password2;
 
     @NotNull
-    @Name(regex = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]{5,}", message = "errors.password")
+    @Password(message = "errors.password")
+    @Size(min=5, max=100, message = "errors.password.size")
     public String getPassword() {
         return password;
     }
@@ -27,6 +30,7 @@ public class RegistrationForm extends EditProfileForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
     @NotNull
     public String getPassword2() {
         return password2;

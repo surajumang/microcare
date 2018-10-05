@@ -2,6 +2,7 @@ package com.care.form;
 
 import com.care.annotation.Name;
 import com.care.annotation.NotNull;
+import com.care.annotation.Password;
 import com.care.validation.FormValidator;
 import com.mysql.jdbc.StringUtils;
 import org.apache.struts.action.ActionErrors;
@@ -20,7 +21,7 @@ public class PasswordResetForm extends FormBean {
     private String token;
 
     @NotNull
-    @Name(regex = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^-]{5,}", required = true, message = "errors.password")
+    @Password(message = "errors.password")
     public String getPassword() {
         return password;
     }

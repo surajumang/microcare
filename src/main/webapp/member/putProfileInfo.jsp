@@ -81,7 +81,7 @@
                     </div>
                 </c:if>
 
-                <input type="hidden" name="memberType" value="SEEKER">
+                <input type="hidden" name="memberType" value="${CURRENT_USER.memberType}">
                 <html:hidden property="id" />
                 <html:submit property="" styleClass="form-control" value="Submit"/>
 

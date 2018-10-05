@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Number {
-    String message() default "errors.number";
+public @interface Time {
+    String message() default "errors.time.format";
 }

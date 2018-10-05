@@ -9,6 +9,6 @@ public class StringDateProcessor extends AnnotationProcessor {
     @Override
     public <T extends Annotation> Validator create(T annotation) {
         StringDate date = (StringDate)annotation;
-        return new StringDateValidator(date.regex(), date.required(), date.message());
+        return new StringDateValidator(date.message());
     }
 }

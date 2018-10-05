@@ -1,9 +1,7 @@
 package com.care.form;
 
-import com.care.annotation.Name;
-import com.care.annotation.NotNull;
+import com.care.annotation.*;
 import com.care.annotation.Number;
-import com.care.annotation.StringDate;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
@@ -38,7 +36,7 @@ public class JobForm extends FormBean {
     public String getId() {
         return id;
     }
-    @Name
+
     public void setId(String id) {
         this.id = id;
     }
@@ -51,8 +49,10 @@ public class JobForm extends FormBean {
     public void setTitle(String title) {
         this.title = title;
     }
+
     @NotNull
-    @Number(regex = "\\d{1,3}(\\.\\d{0,2})?", message = "errors.amount")
+    @Number
+    @DecimalNumber(message = "errors.amount")
     public String getHourlyPay() {
         return hourlyPay;
     }
@@ -82,7 +82,7 @@ public class JobForm extends FormBean {
     }
 
     @NotNull
-    @Name(regex = "\\d{2}:\\d{2}")
+    @Time
     public String getStartTime() {
         return startTime;
     }
@@ -92,7 +92,7 @@ public class JobForm extends FormBean {
     }
 
     @NotNull
-    @Name(regex = "\\d{2}:\\d{2}")
+    @Time
     public String getEndTime() {
         return endTime;
     }

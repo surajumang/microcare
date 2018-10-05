@@ -29,6 +29,12 @@ public class FormValidator {
         ANNOTATION_PROCESSOR_MAP.put(Name.class, new NameProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Number.class, new NumberProcessor());
         ANNOTATION_PROCESSOR_MAP.put(NotNull.class, new NotNullProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Regex.class, new RegexProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Password.class, new PasswordProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(DecimalNumber.class, new DecimalNumberProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Size.class, new SizeProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Time.class, new TimeProcessor());
+
     }
 
     public static void  validate(FormBean form, ActionErrors errors )

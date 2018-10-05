@@ -33,7 +33,7 @@ public class ApplicationForm extends FormBean {
     }
 
     @NotNull
-    @Number(required = true, regex = "\\d{1,3}(\\.\\d{1,2})?", message = "errors.amount")
+    @Number(message = "errors.amount")
     public String getExpectedPay() {
         return expectedPay;
     }

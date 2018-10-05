@@ -9,7 +9,6 @@ public class NotNullProcessor extends AnnotationProcessor {
     @Override
     public <T extends Annotation> Validator create(T annotation) {
         NotNull notNull = (NotNull)annotation;
-
         return new NotNullValidator(notNull.message());
     }
 }

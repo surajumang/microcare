@@ -4,35 +4,23 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class StringDateValidator extends Validator {
+/*StringDateValidator is a RegexValidator but it is also required that it uses the DateValidator
+ */
+public class StringDateValidator extends RegexValidator {
 
-    private boolean required;
-    private String regex;
-    private String message;
+    private static final String regex = "\\d{4}-\\d{2}-\\d{2}";
+    DateValidator dateValidator = new DateValidator();
 
-    public StringDateValidator(String regex, boolean required, String message){
-        this.required = required;
-        this.regex = regex;
-        this.message = message;
+    public StringDateValidator(String message){
+        super(regex, message);
     }
 
     @Override
     public <T> boolean isValid(T value) {
-        String val = (String)value;
-        boolean result = false;
-
-        if (!required){
-            result = true;
+        boolean validity = super.isValid(value);
+        if (validity){
+            validity = dateValidator.isValid(value);
         }
-        if (val != null ){
-            result = val.matches(regex);
-        }
-
-        return result;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
+        return validity;
     }
 }

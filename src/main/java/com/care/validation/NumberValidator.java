@@ -1,34 +1,16 @@
 package com.care.validation;
 
 
-public class NumberValidator extends Validator {
+public class NumberValidator extends RegexValidator {
 
-    String regex;
-    boolean required;
-    String message;
+    //The choice of at least one digit is appropriate.
+    private static final String regex = "\\d+";
 
-    public NumberValidator(String regex, boolean required, String message) {
-        this.regex = regex;
-        this.required = required;
-        this.message = message;
+    public NumberValidator(String message) {
+        super(regex, message);
     }
 
-    @Override
-    public <T> boolean isValid(T value) {
-        String val = (String)value;
-        boolean result = false;
-        if (! required){
-            result = true;
-        }
-        if (val != null ){
-            result = val.matches(regex);
-        }
-
-        return result;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
+    public NumberValidator(String regex, String message){
+        super(regex, message);
     }
 }
