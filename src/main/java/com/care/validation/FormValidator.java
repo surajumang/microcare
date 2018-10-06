@@ -34,6 +34,7 @@ public class FormValidator {
         ANNOTATION_PROCESSOR_MAP.put(DecimalNumber.class, new DecimalNumberProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Size.class, new SizeProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Time.class, new TimeProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(PositiveNumber.class, new PositiveNumberProcessor());
 
     }
 

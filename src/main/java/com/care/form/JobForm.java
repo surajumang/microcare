@@ -55,6 +55,7 @@ public class JobForm extends FormBean {
 
     @NotNull
     @DecimalNumber(message = "errors.amount")
+    @PositiveNumber
     public String getHourlyPay() {
         return hourlyPay;
     }
