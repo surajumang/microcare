@@ -55,7 +55,7 @@ public class JobForm extends FormBean {
 
     @NotNull
     @DecimalNumber
-    @PositiveNumber
+    @Range(min=1, max = 1000)
     public String getHourlyPay() {
         return hourlyPay;
     }

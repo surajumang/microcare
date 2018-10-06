@@ -48,8 +48,7 @@ public class EditProfileForm extends  FormBean {
 
 
     @DecimalNumber
-    @PositiveNumber
-    @Size(min=0, max = 6, message = "error.expectedpay.size")
+    @Range(min=1, max = 1000, message = "errors.amount.size")
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -59,8 +58,7 @@ public class EditProfileForm extends  FormBean {
     }
 
     @Number
-    @PositiveNumber
-    @Size(min = 0, max = 2, message = "errors.experience.size")
+    @Range(min = 0, max = 100, message = "errors.experience.size")
     public String getExperience() {
         return experience;
     }
@@ -79,8 +77,7 @@ public class EditProfileForm extends  FormBean {
     }
 
     @Number
-    @PositiveNumber
-    @Size(min=0, max=2, message = "errors.children.size")
+    @Range(min = 0, max = 100, message = "errors.children.size")
     public String getNumberOfChildren() {
         return numberOfChildren;
     }

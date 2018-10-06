@@ -35,6 +35,8 @@ public class FormValidator {
         ANNOTATION_PROCESSOR_MAP.put(Size.class, new SizeProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Time.class, new TimeProcessor());
         ANNOTATION_PROCESSOR_MAP.put(PositiveNumber.class, new PositiveNumberProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Phone.class, new PhoneProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Range.class, new RangeProcessor());
 
     }
 
