@@ -30,6 +30,9 @@
                     <c:when test="${param.closed eq 'true'}">
                        <h2>Account Closed</h2>
                     </c:when>
+                    <c:when test="${param.login eq 'not'}">
+                       <h2>You must log in first</h2>
+                    </c:when>
                     <c:when test="${param.login eq 'false'}">
                         <h2>Incorrect Email or password</h2>
                     </c:when>

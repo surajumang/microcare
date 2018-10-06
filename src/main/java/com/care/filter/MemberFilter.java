@@ -44,7 +44,7 @@ public class MemberFilter implements Filter {
         else {
             logger.info("Member not logged in-------------->>>>>>>>>>");
             request.setAttribute("message", "You must log in first");
-            servletContext.getRequestDispatcher("/visitor/login.do").forward(request, response);
+            servletContext.getRequestDispatcher("/visitor/login.do?login=not").forward(request, response);
             //response.sendRedirect(appContext+"/login.jsp");
         }
     }

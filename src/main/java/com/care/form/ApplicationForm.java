@@ -2,12 +2,13 @@ package com.care.form;
 
 import com.care.annotation.DecimalNumber;
 import com.care.annotation.NotNull;
-import com.care.annotation.Number;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class ApplicationForm extends FormBean {
 
@@ -44,7 +45,7 @@ public class ApplicationForm extends FormBean {
     }
 
     @Override
-    public ActionErrors validateCustom() {
+    public ActionErrors validateCustom(HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);

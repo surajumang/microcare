@@ -2,18 +2,23 @@ package com.care.form;
 
 import com.care.annotation.*;
 import com.care.annotation.Number;
+import com.care.controller.ControllerUtil;
 import com.care.model.Member;
 import com.care.model.MemberType;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.ServiceFactory;
 import com.care.validation.FormValidator;
+import com.mysql.jdbc.StringUtils;
+
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class EditProfileForm extends  FormBean {
     private Logger logger = Logger.getLogger("PutProfileInfo");
@@ -43,7 +48,7 @@ public class EditProfileForm extends  FormBean {
 
 
     @DecimalNumber
-    @Size(min=1, max = 6, message = "error.expectedpay.size")
+    @Size(min=0, max = 6, message = "error.expectedpay.size")
     public String getExpectedPay() {
         return expectedPay;
     }
@@ -151,7 +156,8 @@ public class EditProfileForm extends  FormBean {
 
 
     @Override
-    public ActionErrors validateCustom() {
+    public ActionErrors validateCustom(HttpServletRequest request) {
+        Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);
@@ -166,12 +172,12 @@ public class EditProfileForm extends  FormBean {
         }
         // The below lines may not be required. Removal required [todo]
         try {
-            if (MemberType.valueOf(memberType) == MemberType.SITTER){
-                if (! expectedPay.matches("\\d{1,3}(\\.\\d{0,2})?")){
-                    errors.add("expectedPay", new ActionMessage("errors.amount"));
+            if (memberType.equals(MemberType.SITTER.name())){
+                if (StringUtils.isEmptyOrWhitespaceOnly(expectedPay)){
+                    errors.add("expectedPay", new ActionMessage("errors.notnull"));
                 }
-                if (! experience.matches("\\d{1,2}")){
-                    errors.add("experience", new ActionMessage("errors.experience"));
+                if (StringUtils.isEmptyOrWhitespaceOnly(experience)){
+                    errors.add("experience", new ActionMessage("errors.notnull"));
                 }
             }
         } catch (Exception e) {
@@ -185,22 +191,24 @@ public class EditProfileForm extends  FormBean {
        // errors.properties()
         // if Id is null then assume it is for Registration.
         if (errors.isEmpty()){
-            Member member = accountService.getMember(getEmail());
+
+            Member member1 = accountService.getMember(getEmail());
             // Only if there is already a member registered.
-            if (member != Member.emptyMember()){
+            if (! member1.isEmpty()){
                 // it is for registration.
-                String ID = String.valueOf(member.getId());
+                //String ID = String.valueOf(member1.getId());
                 if (getId() == null){
                     errors.add("email", new ActionMessage("errors.email.exist"));
                 }
 
                 //This will take care of Edit Email, Checks if the emailId is unchanged.
-                else if( !ID.equals(getId())){
+                //equals method should be used.
+                else if( member1.getId() != member.getId()){
                     errors.add("email", new ActionMessage("errors.email.exist"));
                 }
             }
         }
-        if (numberOfChildren != null && numberOfChildren.equals("") && errors.isEmpty()){
+        if (StringUtils.isEmptyOrWhitespaceOnly(numberOfChildren) && errors.isEmpty()){
             numberOfChildren="0";
         }
         return errors;

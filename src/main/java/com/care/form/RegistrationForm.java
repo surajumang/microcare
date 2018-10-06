@@ -1,17 +1,15 @@
 package com.care.form;
 
-import com.care.annotation.Name;
 import com.care.annotation.NotNull;
 import com.care.annotation.Password;
 import com.care.annotation.Size;
-import com.care.dao.DAOFactory;
-import com.care.dao.HMemberDAOImpl;
-import com.care.dao.MemberDAO;
-import com.care.model.Member;
+
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
 
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class RegistrationForm extends EditProfileForm {
 
@@ -41,8 +39,8 @@ public class RegistrationForm extends EditProfileForm {
     }
 
     @Override
-    public ActionErrors validateCustom() {
-        ActionErrors errors = super.validateCustom();
+    public ActionErrors validateCustom(HttpServletRequest request) {
+        ActionErrors errors = super.validateCustom(request);
 
         if (! errors.isEmpty()){
             return errors;

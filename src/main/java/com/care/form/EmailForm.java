@@ -14,6 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class EmailForm extends FormBean {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
@@ -30,7 +32,7 @@ public class EmailForm extends FormBean {
     }
 
     @Override
-    public ActionErrors validateCustom() {
+    public ActionErrors validateCustom(HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);

@@ -1,16 +1,20 @@
 package com.care.form;
 
-import com.care.annotation.Name;
 import com.care.annotation.NotNull;
 import com.care.annotation.Password;
+import com.care.controller.ControllerUtil;
+import com.care.model.Member;
+import com.care.service.Hash;
 import com.care.validation.FormValidator;
-import com.mysql.jdbc.StringUtils;
+
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class PasswordResetForm extends FormBean {
     private Logger logger = Logger.getLogger("PasswordResetForm");
@@ -66,7 +70,8 @@ public class PasswordResetForm extends FormBean {
     }
 
     @Override
-    public ActionErrors validateCustom() {
+    public ActionErrors validateCustom(HttpServletRequest request) {
+        Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);
@@ -81,8 +86,11 @@ public class PasswordResetForm extends FormBean {
         if (! errors.isEmpty()){
             return errors;
         }
+
         if(! password.equals(password2)){
             errors.add("password2", new ActionMessage("errors.password.mismatch"));
+        }else if (Hash.createHash(password).equals(member.getPassword())){
+            errors.add("password", new ActionMessage("errors.password.same"));
         }
         return errors;
     }

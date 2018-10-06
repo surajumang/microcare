@@ -35,8 +35,10 @@ public class SitterFilter implements Filter {
             currentUser = (Member) session.getAttribute(ControllerUtil.CURRENT_USER);
         }
 
-
-        if (currentUser != null && currentUser.getMemberType() == MemberType.SITTER){
+        if (currentUser == null){
+            servletContext.getRequestDispatcher("/visitor/login.do?login=not").forward(request, response);
+        }
+        else if (currentUser.isSitter()){
             logger.info("Member logged in-------------->>>>>>>>>");
             filterChain.doFilter(servletRequest, servletResponse);
         }

@@ -7,6 +7,8 @@ import org.apache.struts.action.ActionErrors;
 
 import java.lang.reflect.InvocationTargetException;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class LoginForm extends FormBean{
     private String email;
     private String password;
@@ -39,7 +41,7 @@ public class LoginForm extends FormBean{
     }
 
     @Override
-    public ActionErrors validateCustom() {
+    public ActionErrors validateCustom(HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);

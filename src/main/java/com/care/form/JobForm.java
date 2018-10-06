@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class JobForm extends FormBean {
 
     private Logger logger = Logger.getLogger("JobForm");
@@ -42,6 +44,7 @@ public class JobForm extends FormBean {
     }
 
     @NotNull
+    @Name
     public String getTitle() {
         return title;
     }
@@ -51,7 +54,6 @@ public class JobForm extends FormBean {
     }
 
     @NotNull
-    @Number
     @DecimalNumber(message = "errors.amount")
     public String getHourlyPay() {
         return hourlyPay;
@@ -118,7 +120,7 @@ public class JobForm extends FormBean {
     }
 
     @Override
-    public ActionErrors validateCustom() {
+    public ActionErrors validateCustom(HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);
@@ -136,7 +138,6 @@ public class JobForm extends FormBean {
         // If the dates are not okay then a parse exception will be generated and that will be handled here.
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
-        // try only if there are no validation errors [todo]
         try {
             Timestamp startTime = Timestamp.valueOf(getStartDate() + " " + getStartTime() + ":00");
             if (startTime.before(currentTime)){

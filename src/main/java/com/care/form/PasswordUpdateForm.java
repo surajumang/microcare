@@ -1,13 +1,17 @@
 package com.care.form;
 
 import com.care.annotation.NotNull;
+import com.care.controller.ControllerUtil;
+import com.care.model.Member;
+import com.care.service.Hash;
+
 import org.apache.struts.action.ActionErrors;
-import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class PasswordUpdateForm extends PasswordResetForm {
-    String currentPassword;
+    private String currentPassword;
 
     @NotNull
     public String getCurrentPassword() {
@@ -19,8 +23,16 @@ public class PasswordUpdateForm extends PasswordResetForm {
     }
 
     @Override
-    public ActionErrors validateCustom() {
-        return super.validateCustom();
+    public ActionErrors validateCustom(HttpServletRequest request) {
+        Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
+        ActionErrors errors =  super.validateCustom(request);
+        if (! errors.isEmpty()){
+            return errors;
+        }
+        if (! Hash.createHash(currentPassword).equals(member.getPassword())){
+            errors.add("currentPassword", new ActionMessage("errors.password.incorrect"));
+        }
         // write code to check if the password is correct or not.
+        return errors;
     }
 }

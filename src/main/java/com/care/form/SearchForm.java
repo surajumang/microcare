@@ -1,7 +1,5 @@
 package com.care.form;
 
-import com.care.annotation.Name;
-import com.care.annotation.NotNull;
 import com.care.validation.FormValidator;
 import com.mysql.jdbc.StringUtils;
 import org.apache.struts.action.ActionErrors;
@@ -9,6 +7,8 @@ import org.apache.struts.action.ActionErrors;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class SearchForm extends FormBean {
     private Logger logger = Logger.getLogger("SearchForm");
@@ -28,7 +28,7 @@ public class SearchForm extends FormBean {
     }
 
     @Override
-    public ActionErrors validateCustom() {
+    public ActionErrors validateCustom(HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
 
         try {
