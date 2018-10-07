@@ -1,5 +1,6 @@
 package com.care.controller.sitter;
 
+import com.care.filter.HibernateFilter;
 import com.care.model.Application;
 import com.care.model.Member;
 import com.care.controller.ControllerUtil;
@@ -38,6 +39,7 @@ public class ShowApplications extends Action {
             request.setAttribute("allMyApplications", allMyApplications);
         }
         logger.info(allMyApplications.toString());
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
         logger.info("Dispatching to Page" + page);
 
         return mapping.findForward(page);

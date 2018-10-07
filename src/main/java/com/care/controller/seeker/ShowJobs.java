@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.filter.HibernateFilter;
 import com.care.model.Job;
 import com.care.model.Member;
 import com.care.controller.ControllerUtil;
@@ -36,9 +37,7 @@ public class ShowJobs extends Action {
         List<Job> myJobs = seekerService.listJobs(currentMember);
         logger.info(myJobs.size() + "--------");
 
-        if (myJobs != null && !myJobs.isEmpty()){
-            status = OperationStatus.SUCCESS;
-        }
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
         request.setAttribute("myJobs", myJobs);
         logger.info("Dispatching to Page" + page);
         return mapping.findForward("success");

@@ -83,8 +83,8 @@
                  </c:if>
                 </table>
             </c:when>
-            <c:when test="${fn:length(members) <= 0}">
-
+            <c:when test="${Empty eq 'true'}">
+                <font color="red"> <h3>No Matches Found</h3> </font>
             </c:when>
         </c:choose>
 

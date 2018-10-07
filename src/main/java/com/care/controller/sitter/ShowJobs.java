@@ -1,5 +1,6 @@
 package com.care.controller.sitter;
 
+import com.care.filter.HibernateFilter;
 import com.care.model.Job;
 import com.care.model.Member;
 import com.care.service.*;
@@ -45,6 +46,7 @@ public class ShowJobs extends Action {
         }
         logger.info(allJobs.toString());
         logger.info("Dispatching to Page" + page);
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
         request.setAttribute(operationStatus.name(), message.get(operationStatus));
 
         return mapping.findForward("success");

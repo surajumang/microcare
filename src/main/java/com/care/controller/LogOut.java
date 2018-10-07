@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.service.OperationStatus;
 import org.apache.struts.action.Action;
@@ -24,6 +25,7 @@ public class LogOut extends Action {
         logger.info(member + "to be logged out");
         request.getSession().setAttribute(ControllerUtil.CURRENT_USER, null);
         request.setAttribute("stat", member);
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
         request.setAttribute(OperationStatus.SUCCESS.name(), "Successfully Logged Out");
 
         return mapping.findForward("success");

@@ -34,12 +34,18 @@ public class SearchAction extends Action {
             SeekerService seekerService= ServiceFactory.get(SeekerServiceImpl.class);
             List<Seeker> seekers = seekerService.getSeekersByEmail(searchForm.getEmail());
             logger.info("Fetched Seekers " + seekers);
+            if (seekers.isEmpty()){
+                request.setAttribute("Empty", "true");
+            }
             request.setAttribute("members", seekers);
         }
         else {
             SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
             List<Sitter> sitters = sitterService.getSittersByEmail(searchForm.getEmail());
             logger.info("Fetched sitters");
+            if (sitters.isEmpty()){
+                request.setAttribute("Empty", "true");
+            }
             request.setAttribute("members", sitters);
         }
         return mapping.findForward("success");

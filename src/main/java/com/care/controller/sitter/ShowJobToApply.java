@@ -1,6 +1,7 @@
 package com.care.controller.sitter;
 
 import com.care.controller.CommonUtil;
+import com.care.filter.HibernateFilter;
 import com.care.form.ApplicationForm;
 import com.care.model.Job;
 import com.care.controller.ControllerUtil;
@@ -25,12 +26,6 @@ import java.util.logging.Logger;
 
 public class ShowJobToApply extends Action {
     private Logger logger = Logger.getLogger("ShowJobToApply");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "Unable to Get Job for Application");
-        message.put(OperationStatus.SUCCESS, "Apply to Job");
-        message.put(OperationStatus.INVALID, "Invalid jobID");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -62,7 +57,7 @@ public class ShowJobToApply extends Action {
             logger.info("Sitter Show job to Apply ");
             page = "badRequest";
         }
-        request.setAttribute(operationStatus.name(), message.get(operationStatus) );
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
         return mapping.findForward(page);
     }
 
