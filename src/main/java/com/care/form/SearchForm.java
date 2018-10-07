@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class SearchForm extends FormBean {
+public class SearchForm extends BaseForm {
     private Logger logger = Logger.getLogger("SearchForm");
 
     private String email;

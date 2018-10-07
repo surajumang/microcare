@@ -9,11 +9,11 @@ public class Member extends BaseModel {
     private long id;
     private String firstName;
     private String lastName;
-    private long phone;
+    private String phone;
     private MemberType memberType;
     private String email;
     private String address;
-    private long zipCode;
+    private String zipCode;
     private Status status = Status.ACTIVE;
     private Timestamp lastModified;
     private String password;
@@ -48,11 +48,11 @@ public class Member extends BaseModel {
         this.lastName = lastName;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -80,11 +80,11 @@ public class Member extends BaseModel {
         this.address = address;
     }
 
-    public long getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(long zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

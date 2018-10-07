@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ApplicationForm extends FormBean {
+public class ApplicationForm extends BaseForm {
 
     Logger logger = Logger.getLogger("ApplicationForm");
 

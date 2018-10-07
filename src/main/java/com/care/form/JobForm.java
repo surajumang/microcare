@@ -1,7 +1,6 @@
 package com.care.form;
 
 import com.care.annotation.*;
-import com.care.annotation.Number;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
@@ -13,7 +12,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class JobForm extends FormBean {
+public class JobForm extends BaseForm {
 
     private Logger logger = Logger.getLogger("JobForm");
     private String id;

@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class LoginForm extends FormBean{
+public class LoginForm extends BaseForm {
     private String email;
     private String password;
 

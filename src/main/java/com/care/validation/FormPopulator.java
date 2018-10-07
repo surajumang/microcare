@@ -1,6 +1,6 @@
 package com.care.validation;
 
-import com.care.form.FormBean;
+import com.care.form.BaseForm;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
@@ -8,11 +8,11 @@ import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
 public class FormPopulator {
-    public static <T extends FormBean> T populate(HttpServletRequest request, Class<T> form){
+    public static <T extends BaseForm> T populate(HttpServletRequest request, Class<T> form){
         /*
             Go through the methods/fields of form and find the same in the request scope.
          */
-        FormBean ret = null;
+        BaseForm ret = null;
         try {
             ret = form.newInstance();
         }catch (InstantiationException e){

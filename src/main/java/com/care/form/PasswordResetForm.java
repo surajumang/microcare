@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class PasswordResetForm extends FormBean {
+public class PasswordResetForm extends BaseForm {
     private Logger logger = Logger.getLogger("PasswordResetForm");
 
     private String password;

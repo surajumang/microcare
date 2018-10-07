@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class EmailForm extends FormBean {
+public class EmailForm extends BaseForm {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private String email;

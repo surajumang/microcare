@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class EditProfileForm extends  FormBean {
+public class EditProfileForm extends BaseForm {
     private Logger logger = Logger.getLogger("PutProfileInfo");
 
     private String email;
@@ -107,9 +107,7 @@ public class EditProfileForm extends  FormBean {
     }
 
     @NotNull
-    @Number
-    @PositiveNumber
-    @Size(min = 6, max=6, message = "errors.zipcode.size")
+    @Zipcode
     public String getZipCode() {
         return zipCode;
     }
@@ -136,9 +134,7 @@ public class EditProfileForm extends  FormBean {
     }
 
     @NotNull
-    @Number
-    @PositiveNumber
-    @Size(min = 10, max = 10, message = "errors.phone.size")
+    @Phone
     public String getPhone() {
         return phone;
     }

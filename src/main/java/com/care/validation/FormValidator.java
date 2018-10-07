@@ -2,7 +2,7 @@ package com.care.validation;
 
 import com.care.annotation.*;
 import com.care.annotation.Number;
-import com.care.form.FormBean;
+import com.care.form.BaseForm;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
 
@@ -37,10 +37,11 @@ public class FormValidator {
         ANNOTATION_PROCESSOR_MAP.put(PositiveNumber.class, new PositiveNumberProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Phone.class, new PhoneProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Range.class, new RangeProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(Zipcode.class, new ZipcodeProcessor());
 
     }
 
-    public static void  validate(FormBean form, ActionErrors errors )
+    public static void  validate(BaseForm form, ActionErrors errors )
             throws InvocationTargetException, IllegalAccessException {
 
         logger.info("*****************STaRTING VALIDATION *****************");
@@ -63,7 +64,7 @@ public class FormValidator {
                     String value = (String)method.invoke(form);
                     logger.info("" + value);
                     if (! v.isValid(value)){
-                        errors.add(fieldName, new ActionMessage(v.getMessage()));
+                        errors.add(fieldName, new ActionMessage(v.getMessage(), fieldName));
                         logger.info("NOTOKAY" + fieldName);
                         break;
                     }

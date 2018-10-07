@@ -6,7 +6,7 @@ import org.apache.struts.action.ActionMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
-public abstract class FormBean extends ActionForm {
+public abstract class BaseForm extends ActionForm {
     public abstract ActionErrors validateCustom(HttpServletRequest request);
 
     @Override

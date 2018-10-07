@@ -24,7 +24,7 @@
         </property>
 
         <property name="phone">
-            <column name="phone" length="10" />
+            <column name="phone" length="20" />
         </property>
 
         <property name="address" type="string" >
@@ -32,7 +32,7 @@
         </property>
 
         <property name="zipCode">
-            <column name="ZIPCODE" />
+            <column name="ZIPCODE" length="20"/>
         </property>
 
         <property name="lastModified" type="timestamp">
