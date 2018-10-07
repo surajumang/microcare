@@ -106,6 +106,16 @@ public class Job extends BaseModel{
         return EMPTY_JOB;
     }
 
+    public boolean isActive(){
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        return status == Status.ACTIVE && startDateTime.after(now);
+    }
+
+    public boolean isExpired(){
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        return  !isActive() || startDateTime.after(now);
+    }
+
     public void close(){
         this.setStatus(Status.CLOSED);
         for (Application application : getApplications()){

@@ -7,10 +7,12 @@ import com.care.dao.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class SitterServiceImpl implements SitterService {
 
@@ -28,7 +30,11 @@ public class SitterServiceImpl implements SitterService {
             logger.log(Level.SEVERE, "Getting all Available Jobs" , e);
             allJobs = Collections.emptyList();
         }
-        return new ArrayList<>(allJobs);
+        return allJobs
+                .stream()
+                .filter(Job::isActive)
+                .sorted(Comparator.comparing(Job::getHourlyPay).reversed()) //highest pay first.
+                .collect(Collectors.toList());
     }
     /*
     Only the ACTIVE OR EXPIRED not closed.[todo] may throw some exception.
@@ -42,7 +48,11 @@ public class SitterServiceImpl implements SitterService {
             logger.log(Level.SEVERE , "All getApplications for Sitter", e);
             applications = Collections.emptyList();
         }
-        return new ArrayList<>(applications);
+        return applications
+                .stream()
+                .filter(application -> ! application.isClosed())
+                .sorted(Comparator.comparing(Application::getDateCreated))
+                .collect(Collectors.toList());
     }
 
     /*
@@ -86,7 +96,11 @@ public class SitterServiceImpl implements SitterService {
             logger.log(Level.SEVERE, "ads", e);
         }
         logger.info(" " + sitters);
-        return new ArrayList<>(sitters);
+        return sitters
+                .stream()
+                .filter(Sitter::isActive)
+                .sorted(Comparator.comparing(Sitter::getExpectedPay))   //lowest expectedPay first.
+                .collect(Collectors.toList());
     }
 
 

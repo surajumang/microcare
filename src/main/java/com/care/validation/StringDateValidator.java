@@ -9,7 +9,7 @@ import java.util.Date;
 public class StringDateValidator extends RegexValidator {
 
     private static final String regex = "\\d{4}-\\d{2}-\\d{2}";
-    DateValidator dateValidator = new DateValidator();
+    private DateValidator dateValidator = new DateValidator();
 
     public StringDateValidator(String message){
         super(regex, message);

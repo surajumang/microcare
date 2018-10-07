@@ -7,12 +7,15 @@ import com.care.model.*;
 import com.care.dao.*;
 import com.care.form.JobForm;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class SeekerServiceImpl implements SeekerService {
 
@@ -41,7 +44,10 @@ public class SeekerServiceImpl implements SeekerService {
             logger.log(Level.SEVERE, "fs", e);
         }
         logger.info(seekers.size() + " ");
-        return new ArrayList<>(seekers);
+        return seekers
+                .stream()
+                .sorted(Comparator.comparing(Seeker::getId))
+                .collect(Collectors.toList());
     }
 
 
@@ -98,7 +104,11 @@ public class SeekerServiceImpl implements SeekerService {
             memberJobs = Collections.emptyList();
         }
         logger.info("Size of list-----" + memberJobs.size());
-        return new ArrayList<>(memberJobs);
+        return memberJobs
+                .stream()
+                .filter(Job::isActive)
+                .sorted(Comparator.comparing(Job::getStartDateTime))
+                .collect(Collectors.toList());
     }
     //[todo] throws InvalidIdException
     public List<Application> getApplications(Member member, long jobId) throws InvalidApplicationException {
@@ -119,7 +129,10 @@ public class SeekerServiceImpl implements SeekerService {
 
             throw new InvalidApplicationException();
         }
-        return new ArrayList<>(applications);
+        return applications
+                .stream()
+                .sorted(Comparator.comparingDouble(Application::getExpectedPay))
+                .collect(Collectors.toList());
     }
 
     private boolean verifyJobBelongsToMember(Member member, long jobId){

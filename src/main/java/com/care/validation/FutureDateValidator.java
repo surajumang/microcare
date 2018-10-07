@@ -16,9 +16,22 @@ public class FutureDateValidator extends DateValidator {
     @Override
     public <T> boolean isValid(T value) {
         boolean validity = super.isValid(value);
-        if (validity){
+        if (! validity){
+            return validity;
+        }
+        String userValue = (String) value;
+        try {
             Date currentDate = new Date(System.currentTimeMillis());
+            Date userDate = Date.valueOf(userValue);
+            validity = compareDateWithoutTime(currentDate, userDate);
+
+        }catch (Exception e){
+            validity = false;
         }
         return validity;
+    }
+
+    private boolean compareDateWithoutTime(Date now, Date start){
+        return start.before(now);
     }
 }

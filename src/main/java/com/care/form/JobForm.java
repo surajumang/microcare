@@ -54,7 +54,7 @@ public class JobForm extends BaseForm {
 
     @NotNull
     @DecimalNumber
-    @Range(min=1, max = 1000)
+    @Range(min=1, max = 1000, message = "errors.hourlypay.range")
     public String getHourlyPay() {
         return hourlyPay;
     }

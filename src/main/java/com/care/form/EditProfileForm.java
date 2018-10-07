@@ -171,10 +171,10 @@ public class EditProfileForm extends BaseForm {
         try {
             if (memberType.equals(MemberType.SITTER.name())){
                 if (StringUtils.isEmptyOrWhitespaceOnly(expectedPay)){
-                    errors.add("expectedPay", new ActionMessage("errors.notnull"));
+                    errors.add("expectedPay", new ActionMessage("errors.notnull", "expectedPay"));
                 }
                 if (StringUtils.isEmptyOrWhitespaceOnly(experience)){
-                    errors.add("experience", new ActionMessage("errors.notnull"));
+                    errors.add("experience", new ActionMessage("errors.notnull", "experience"));
                 }
             }
         } catch (Exception e) {
@@ -195,13 +195,13 @@ public class EditProfileForm extends BaseForm {
                 // it is for registration.
                 //String ID = String.valueOf(member1.getId());
                 if (getId() == null){
-                    errors.add("email", new ActionMessage("errors.email.exist"));
+                    errors.add("email", new ActionMessage("errors.email.exist", "Email"));
                 }
 
                 //This will take care of Edit Email, Checks if the emailId is unchanged.
                 //equals method should be used.
                 else if( member1.getId() != member.getId()){
-                    errors.add("email", new ActionMessage("errors.email.exist"));
+                    errors.add("email", new ActionMessage("errors.email.exist", "Email"));
                 }
             }
         }
