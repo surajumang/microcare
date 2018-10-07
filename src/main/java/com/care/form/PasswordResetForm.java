@@ -71,7 +71,6 @@ public class PasswordResetForm extends BaseForm {
 
     @Override
     public ActionErrors validateCustom(HttpServletRequest request) {
-        Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         ActionErrors errors = new ActionErrors();
         try {
             FormValidator.validate(this, errors);
@@ -89,8 +88,6 @@ public class PasswordResetForm extends BaseForm {
 
         if(! password.equals(password2)){
             errors.add("password2", new ActionMessage("errors.password.mismatch"));
-        }else if (Hash.createHash(password).equals(member.getPassword())){
-            errors.add("password", new ActionMessage("errors.password.same"));
         }
         return errors;
     }

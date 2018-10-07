@@ -24,7 +24,6 @@ public class SeekerFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        response.setContentType("text/html");
 
         String appContext = request.getContextPath();
         String URI = request.getRequestURI();

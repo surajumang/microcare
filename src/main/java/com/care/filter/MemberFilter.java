@@ -26,7 +26,6 @@ public class MemberFilter implements Filter {
          */
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        response.setContentType("text/html");
 
         String appContext = request.getContextPath();
         String URI = request.getRequestURI();

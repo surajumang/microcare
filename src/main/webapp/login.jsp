@@ -25,31 +25,31 @@
     <body>
         <div class="container" style="max-width:500px">
             <h1>Welcome to Home Job Marketplace</h1>
-            <font color="red">
+
                 <c:choose>
                     <c:when test="${param.closed eq 'true'}">
-                       <h2>Account Closed</h2>
+                       <font color="green"><h2>Account Closed</h2></font>
                     </c:when>
                     <c:when test="${param.login eq 'not'}">
-                       <h2>You must log in first</h2>
+                       <font color="red"> <h2>You must log in first</h2></font>
                     </c:when>
                     <c:when test="${param.login eq 'false'}">
-                        <h2>Incorrect Email or password</h2>
+                        <font color="red"><h2>Incorrect Email or password</h2></font>
                     </c:when>
                     <c:when test="${param.pass eq 'true'}">
-                        <h2>Password reset successful</h2>
+                        <font color="green"><h2>Password reset successful</h2></font>
                     </c:when>
                     <c:when test="${param.mail eq 'true'}">
-                        <h2>Password reset link sent</h2>
+                        <font color="green"><h2>Password reset link sent</h2></font>
                     </c:when>
                     <c:when test="${param.pass eq 'failed'}">
-                        <h2>Password reset Failed</h2>
+                        <font color="red"><h2>Password reset Failed</h2></font>
                     </c:when>
                     <c:when test="${param.token eq 'invalid'}">
-                        <h2>Invalid Token</h2>
+                        <font color="red"><h2>Invalid Token</h2></font>
                     </c:when>
                 </c:choose>
-            </font>
+
             <html:form action="/visitor/captureLogin" method="post">
                 <div class="form-group">
                     <label>Email</label>
