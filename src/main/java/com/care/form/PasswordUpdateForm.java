@@ -32,7 +32,6 @@ public class PasswordUpdateForm extends PasswordResetForm {
         if (! Hash.createHash(currentPassword).equals(member.getPassword())){
             errors.add("currentPassword", new ActionMessage("errors.password.incorrect"));
         }
-        // write code to check if the password is correct or not.
         return errors;
     }
 }

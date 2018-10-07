@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.care.exception.JobNotPostedByUserException;
+
 public class Job extends BaseModel{
     private long id;
     private String title;
@@ -104,6 +106,10 @@ public class Job extends BaseModel{
 
     public static Job emptyJob(){
         return EMPTY_JOB;
+    }
+
+    public boolean isEmpty(){
+        return this == EMPTY_JOB;
     }
 
     public boolean isActive(){

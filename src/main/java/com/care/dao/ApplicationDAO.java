@@ -1,5 +1,7 @@
 package com.care.dao;
 
+import com.care.exception.DataReadException;
+import com.care.exception.DataWriteException;
 import com.care.model.Application;
 import com.care.model.Status;
 
@@ -8,19 +10,11 @@ import java.util.Set;
 
 public interface ApplicationDAO extends DAO {
 
-    int addApplication(Application application) throws Exception;
+    int addApplication(Application application) ;
 
-    Application getApplication(long applicationId) throws Exception;
+    Application getApplication(long applicationId) ;
 
-    List<Application> getAllApplications(long sitterId) throws Exception;
+    List<Application> getAllApplications(long sitterId) ;
 
-    Set<Application> getAllApplicationsOnJob(long jobId) throws Exception;
-
-    int setApplicationStatus(long applicationId, Status status) throws Exception;
-
-    int setAllApplicationsStatusBySitter(long sitterId, Status status) throws Exception;
-
-    int setAllApplicationStatusByJob(long jobId, Status status) throws Exception;
-
-    int setAllApplicationsOnJobsPostedBy(long postedBy, Status status) throws Exception;
+    Set<Application> getAllApplicationsOnJob(long jobId);
 }

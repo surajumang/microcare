@@ -1,5 +1,7 @@
 package com.care.dao;
 
+import com.care.exception.DataReadException;
+import com.care.exception.DataWriteException;
 import com.care.model.Job;
 import com.care.model.Seeker;
 import com.care.model.Status;
@@ -10,43 +12,16 @@ import java.util.*;
 
 public class HJobDAOImpl implements JobDAO {
     @Override
-    public int addJob(Job job) throws Exception {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.save(job);
+    public int addJob(Job job) {
+        try{
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.save(job);
+        }catch (Exception e){
+            throw new DataWriteException(e);
+        }
         return 1;
     }
 
-    @Override
-    public int setJobStatus(long jobId, Status status) throws Exception {
-        int operationStatus = -1;
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Job job = (Job)session.get(Job.class, jobId);
-        if (job != null){
-            job.setStatus(status);
-            operationStatus = 1;
-        }
-        return operationStatus;
-    }
-
-    @Override
-    public int setAllJobsStatus(long postedBy, Status status) throws Exception {
-        int operationStatus = -1;
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        /*
-        We are required to first fetch all the jobs posted by the given seeker, And then update their status to the
-        given status.
-         */
-        Seeker seeker = (Seeker) session.get(Seeker.class, postedBy);
-        if (seeker != null){
-            operationStatus = 1;
-            Set<Job> jobs = seeker.getJobs();
-            for (Job job: jobs) {
-                job.setStatus(status);
-            }
-        }
-
-        return operationStatus;
-    }
 
     @Override
     public int expireStaleJobs() throws Exception {
@@ -54,20 +29,28 @@ public class HJobDAOImpl implements JobDAO {
     }
 
     @Override
-    public int editJob(Job job) throws Exception {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.saveOrUpdate(job);
+    public int editJob(Job job) throws DataWriteException {
+        try{
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.saveOrUpdate(job);
+        }
+        catch (Exception e){
+            throw new DataWriteException(e);
+        }
         return 1;
     }
 
     @Override
-    public Job getJob(long jobId) throws Exception {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        Job job = (Job) session.get(Job.class, jobId);
-        if (job == null){
-            job = Job.emptyJob();
+    public Job getJob(long jobId) throws DataReadException{
+        Job job = Job.emptyJob();
+        try{
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            job = (Job) session.get(Job.class, jobId);
+        }catch (Exception e){
+            throw new DataReadException(e);
         }
         return job;
+
     }
 
     @Override

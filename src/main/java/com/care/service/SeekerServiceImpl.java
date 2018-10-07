@@ -1,8 +1,12 @@
 package com.care.service;
 
+import com.care.exception.DataReadException;
 import com.care.exception.InvalidApplicationException;
 import com.care.exception.InvalidIdException;
+import com.care.exception.JobExpiredException;
+import com.care.exception.JobNotFoundException;
 import com.care.exception.JobNotPostedByUserException;
+import com.care.exception.UnauthorizedJobAccessException;
 import com.care.model.*;
 import com.care.dao.*;
 import com.care.form.JobForm;
@@ -50,20 +54,26 @@ public class SeekerServiceImpl implements SeekerService {
                 .collect(Collectors.toList());
     }
 
-
-    public Job getJob(Member member, long jobId) throws JobNotPostedByUserException {
+    /*
+    Check if Job is Active or NOT, and also if it is posted by the given member or not.
+     */
+    public Job getJob(Member member, long jobId) {
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         Job job = Job.emptyJob();
         try {
-            if (verifyJobBelongsToMember(member, jobId)){
                 job = jobDAO.getJob(jobId);
-            }else {
-                throw new JobNotPostedByUserException("INvalid request to get Job");
-            }
-        } catch (Exception e) {
+                if (job.getSeeker().getId() != member.getId()){
+                    throw new JobNotPostedByUserException();
+                }
+                if (!job.isActive()){
+                    throw new JobExpiredException("Seeker fetching an Expired Job");
+                }
+        } catch (DataReadException e) {
             logger.log(Level.SEVERE, "While getting a job", e);
-            throw new JobNotPostedByUserException(e);
+            throw new JobNotFoundException(e);
         }
+        // There was a successful fetch from the DB.
+
         return job;
     }
 
@@ -111,20 +121,22 @@ public class SeekerServiceImpl implements SeekerService {
                 .collect(Collectors.toList());
     }
     //[todo] throws InvalidIdException
-    public List<Application> getApplications(Member member, long jobId) throws InvalidApplicationException {
+    public List<Application> getApplications(Member member, long jobId) {
         Set<Application> applications;
         logger.info("ListApplications");
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         logger.info(member + "MEMBER");
         try {
-            if (verifyJobBelongsToMember(member, jobId)){
-                applications = applicationDAO.getAllApplicationsOnJob(jobId);
-                //check if job is Active.
-            }else {
-                throw new InvalidApplicationException();
+            Job job = jobDAO.getJob(jobId);
+            if (! verifyJobBelongsToMember(member, jobId)){
+                throw new UnauthorizedJobAccessException();
             }
-        } catch (Exception e) {
+            if (! job.isActive()){
+                throw new JobExpiredException("getting applications");
+            }
+            applications = applicationDAO.getAllApplicationsOnJob(jobId);
+        } catch (DataReadException e) {
             logger.log(Level.SEVERE, "Can't fetch All Applications on Job", e);
 
             throw new InvalidApplicationException();
@@ -137,16 +149,9 @@ public class SeekerServiceImpl implements SeekerService {
 
     private boolean verifyJobBelongsToMember(Member member, long jobId){
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
-        boolean status = false;
-        try{
-            Job job = jobDAO.getJob(jobId);
-            logger.info(job + " ");
-            //[todo] check if job is not null
-            status = job.getSeeker().getId() == member.getId();
-        }catch (Exception e){
-            status = false;
-        }
-        return status;
+        Job job = jobDAO.getJob(jobId);
+        logger.info(job + " ");
+        return job.getSeeker().getId() == member.getId();
     }
     /*
     Can't edit an expired or a closed Job or a job not posted by him.
@@ -157,17 +162,21 @@ public class SeekerServiceImpl implements SeekerService {
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         Job job = new Job();
         try{
-             if (verifyJobBelongsToMember(member, Long.valueOf(jobForm.getId()))){
-                 job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
-                 ObjectMapper.mapObject(jobForm, job, true);
-                 jobDAO.editJob(job);
-             }else {
-                 throw new InvalidIdException();
+             job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
+             if (!verifyJobBelongsToMember(member, Long.valueOf(jobForm.getId()))){
+                throw new UnauthorizedJobAccessException("edit");
+             }
+             if (! job.isActive()){
+                 throw new JobExpiredException("Can't edit expired job");
              }
 
-        }catch (Exception e){
+             job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
+             ObjectMapper.mapObject(jobForm, job, true);
+             jobDAO.editJob(job);
+
+        }catch (DataReadException e){
             logger.log(Level.SEVERE, "Getting a job", e);
-            throw new InvalidIdException();
+            throw new JobNotFoundException(e);
         }
         logger.info("------- " +status + "-------- ");
         return operationStatus;
@@ -176,23 +185,22 @@ public class SeekerServiceImpl implements SeekerService {
     /*
     Check if member is the owner.
      */
-    public OperationStatus closeJob(Member member, long jobId) throws InvalidIdException {
+    public OperationStatus closeJob(Member member, long jobId) {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
-        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         try{
             Job job = jobDAO.getJob(jobId);
             logger.info(job + " ");
-            if (job.getSeeker().getId() == member.getId()){
-                job.close();
-            }else {
-                operationStatus = OperationStatus.UNAUTHORISED;
-                throw new  JobNotPostedByUserException("Can;t close job");
+            if (job.getSeeker().getId() != member.getId()){
+                throw new UnauthorizedJobAccessException("Can't close job");
             }
-        }catch (Exception e){
+            if (! job.isActive()){
+                throw new JobExpiredException("can't delete expired job");
+            }
+            job.close();
+        }catch (DataReadException e){
             logger.log(Level.SEVERE, "Can't delete Job", e);
-            operationStatus = OperationStatus.FAILURE;
-            throw new InvalidIdException(e);
+            throw new JobNotFoundException(e);
         }
 
         return operationStatus;

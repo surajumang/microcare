@@ -1,5 +1,7 @@
 package com.care.dao;
 
+import com.care.exception.DataReadException;
+import com.care.exception.DataWriteException;
 import com.care.model.Job;
 import com.care.model.Status;
 
@@ -8,15 +10,11 @@ import java.util.List;
 public interface JobDAO extends DAO {
     int addJob(Job job) throws Exception;
 
-    int setJobStatus(long jobId, Status status) throws Exception;
-
-    int setAllJobsStatus(long postedBy, Status status) throws Exception;
-
     int expireStaleJobs() throws Exception;
 
-    int editJob(Job job) throws Exception;
+    int editJob(Job job) throws DataWriteException;
 
-    Job getJob(long jobId) throws Exception;
+    Job getJob(long jobId) throws DataReadException;
 
     List<Job> getAllJobs(long postedBy) throws Exception;
 

@@ -7,13 +7,13 @@ import java.util.Set;
 public interface SitterDAO extends DAO {
     // jobId needs to be existing
 
-    int addSitter(Sitter sitter) throws Exception;
+    int addSitter(Sitter sitter) ;
 
-    int editSitter(long sitterId, Sitter sitter) throws Exception;
+    int editSitter(long sitterId, Sitter sitter) ;
 
-    Sitter getSitter(long sitterId) throws Exception;
+    Sitter getSitter(long sitterId) ;
 
-    Set<Sitter> getSitterByEmail(String email) throws Exception;
+    Set<Sitter> getSitterByEmail(String email) ;
 
     /*
     Sitter close job may be added here.

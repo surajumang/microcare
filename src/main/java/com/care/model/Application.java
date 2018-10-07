@@ -94,5 +94,9 @@ public class Application extends BaseModel {
         return status == Status.ACTIVE;
     }
 
+    public void close(){
+        status = Status.CLOSED;
+    }
+
 
 }

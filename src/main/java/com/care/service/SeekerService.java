@@ -17,15 +17,15 @@ public interface SeekerService extends Service {
 
     List<Seeker> getSeekersByEmail(String email);
 
-    Job getJob(Member member, long jobId) throws JobNotPostedByUserException;
+    Job getJob(Member member, long jobId) ;
 
     OperationStatus postJob(Member member, JobForm jobForm);
 
     List<Job> listJobs(Member member);
 
-    List<Application> getApplications(Member member, long jobId) throws InvalidApplicationException;
+    List<Application> getApplications(Member member, long jobId) ;
 
     OperationStatus editJob(Member member, JobForm jobForm);
 
-    OperationStatus closeJob(Member member, long jobId) throws InvalidIdException;
+    OperationStatus closeJob(Member member, long jobId) ;
 }

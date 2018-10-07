@@ -1,6 +1,13 @@
 package com.care.service;
 
+import com.care.exception.ApplicationNotFoundException;
+import com.care.exception.DataReadException;
+import com.care.exception.DataWriteException;
+import com.care.exception.ExpiredApplicationException;
 import com.care.exception.InvalidIdException;
+import com.care.exception.JobExpiredException;
+import com.care.exception.JobNotFoundException;
+import com.care.exception.UnauthorizedApplicationAccessException;
 import com.care.form.ApplicationForm;
 import com.care.model.*;
 import com.care.dao.*;
@@ -60,15 +67,23 @@ public class SitterServiceImpl implements SitterService {
     should also have a Current Member reference and check if the User is the owner of the Exception.
     This is the method which gets called for the Sitter to get A job to apply on.
     This should not be EXPIRED OR CLOSED.
+    Dao should either throw an Exception or give a Job from the DB, there shouldn't be anything related to
+    EMPTY job.
      */
     public Job getJob(long jobId) {
         JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
         Job job = Job.emptyJob();
         try {
-            job = jobDAO.getJob(jobId);
-        } catch (Exception e){
+                job = jobDAO.getJob(jobId);
+                if (! job.isActive()){
+                    throw new JobExpiredException("Sitter can't apply to expired Job");
+                }
+
+        } catch (DataReadException e){
             logger.log(Level.SEVERE, "While getting a Job", e);
+            throw new JobNotFoundException(e);
         }
+
         return job;
     }
 
@@ -123,39 +138,36 @@ public class SitterServiceImpl implements SitterService {
             if (applicationDAO.addApplication(application) == 1){
                 operationStatus = OperationStatus.SUCCESS;
             }
-        } catch (Exception e) {
+        } catch (DataWriteException e) {
             logger.log(Level.SEVERE, "While Applying", e);
-            operationStatus = OperationStatus.FAILURE;
+            throw e;
         }
         return operationStatus;
     }
 
-    private boolean checkApplicationOwner(Member sitter, long applicationId) throws Exception {
+    private boolean checkApplicationOwner(Member sitter, long applicationId) {
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
-        for (Application application : applicationDAO.getAllApplications(sitter.getId())){
-            if (applicationId == application.getId()){
-                return true;
-            }
-        }
-        return false;
+        Application application = applicationDAO.getApplication(applicationId);
+        return application.getSitter().getId() == sitter.getId();
     }
-
+    // Move this logic to application Model[todo]
     public OperationStatus deleteApplication(Member sitter, long applicationId) throws InvalidIdException {
         OperationStatus operationStatus = OperationStatus.FAILURE;
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         logger.info("APPLICATion being deleted : " + applicationId + "BYY" + sitter.getId());
         try {
-            if (checkApplicationOwner(sitter, applicationId)){
-                if (applicationDAO.setApplicationStatus(applicationId, Status.CLOSED ) == 1){
-                    operationStatus = OperationStatus.SUCCESS;
-                }
+            Application application = applicationDAO.getApplication(applicationId);
+            if (application.getSitter().getId() != sitter.getId()){
+                new UnauthorizedApplicationAccessException("While deleting");
             }
-            else {
-                throw new Exception();
+            if (! application.isActive()){
+                throw new ExpiredApplicationException("While deleting");
             }
-        }catch (Exception e){
+            application.close();
+
+        }catch (DataReadException e){
             logger.log(Level.SEVERE, "Error Closing application", e);
-            throw new InvalidIdException(e);
+            throw new ApplicationNotFoundException(e);
         }
         return operationStatus;
     }

@@ -45,6 +45,7 @@ public class ShowJobToApply extends Action {
             long id = CommonUtil.getIdFromRequest(request, "id" );
             Job job = sitterService.getJob(id);
             // the job must not be CLOSED OR EXPIRED.
+            // the service will either throw an exception or a proper job Nothing related to EMPty job.
             if (job != null && job != Job.emptyJob()){
                 operationStatus = OperationStatus.SUCCESS;
                 request.getSession().setAttribute("job", job);

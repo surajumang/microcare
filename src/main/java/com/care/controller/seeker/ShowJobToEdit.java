@@ -30,7 +30,6 @@ public class ShowJobToEdit extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        OperationStatus operationStatus = OperationStatus.FAILURE;
         Member member = (Member)request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
         Job job = null;
@@ -40,16 +39,6 @@ public class ShowJobToEdit extends Action {
             long id = CommonUtil.getIdFromRequest(request, "id");
             job = seekerService.getJob(member, id);
             mapJob(job, jobForm);
-            //expired applications should also throw exception.
-            if (job.getStatus() != Status.EXPIRED && job.getStatus() != Status.CLOSED){
-                operationStatus = OperationStatus.SUCCESS;
-                page = "success";
-                //not required anymore[todo]
-                request.setAttribute("editJob", jobForm);
-            }else {
-                //[todo] JobExpiredException.
-                throw new Exception();
-            }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't Edit an expired job", e);
             //send to global forward [todo]
