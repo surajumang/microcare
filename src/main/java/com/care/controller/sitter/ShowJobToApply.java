@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShowJobToApply extends Action {
@@ -55,7 +56,7 @@ public class ShowJobToApply extends Action {
                 page = "success";
             }
         }catch (Exception e){
-            logger.info("Sitter Show job to Apply ");
+            logger.log(Level.SEVERE, "Sitter Show job to Apply ", e);
             page = "badRequest";
         }
         request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");

@@ -152,7 +152,7 @@ public class SitterServiceImpl implements SitterService {
     }
     // Move this logic to application Model[todo]
     public OperationStatus deleteApplication(Member sitter, long applicationId) throws InvalidIdException {
-        OperationStatus operationStatus = OperationStatus.FAILURE;
+        OperationStatus operationStatus = OperationStatus.SUCCESS;
         ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
         logger.info("APPLICATion being deleted : " + applicationId + "BYY" + sitter.getId());
         try {
@@ -160,7 +160,7 @@ public class SitterServiceImpl implements SitterService {
             if (application.getSitter().getId() != sitter.getId()){
                 new UnauthorizedApplicationAccessException("While deleting");
             }
-            if (! application.isActive()){
+            if (application.isClosed()){
                 throw new ExpiredApplicationException("While deleting");
             }
             application.close();
