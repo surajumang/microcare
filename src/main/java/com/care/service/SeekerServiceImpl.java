@@ -11,8 +11,6 @@ import com.care.model.*;
 import com.care.dao.*;
 import com.care.form.JobForm;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +26,7 @@ public class SeekerServiceImpl implements SeekerService {
     public SeekerServiceImpl(){    }
 
     public Seeker getSeeker(long seekerId) {
-        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         Seeker seeker = Seeker.emptySeeker();
         try{
             seeker = seekerDAO.getSeeker(seekerId);
@@ -40,7 +38,7 @@ public class SeekerServiceImpl implements SeekerService {
 
     public List<Seeker> getSeekersByEmail(String email) {
         logger.info("Fetching seekers by Email");
-        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         Set<Seeker> seekers = Collections.emptySet();
         try {
             seekers = seekerDAO.getSeekerByEmail(email);
@@ -58,7 +56,7 @@ public class SeekerServiceImpl implements SeekerService {
     Check if Job is Active or NOT, and also if it is posted by the given member or not.
      */
     public Job getJob(Member member, long jobId) {
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = Job.emptyJob();
         try {
                 job = jobDAO.getJob(jobId);
@@ -79,8 +77,8 @@ public class SeekerServiceImpl implements SeekerService {
 
     public OperationStatus postJob(Member member, JobForm jobForm)  {
         logger.info("Post job called by" + member.getId());
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
-        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
 
         Job job = new Job();
         OperationStatus status = OperationStatus.SUCCESS;
@@ -105,7 +103,7 @@ public class SeekerServiceImpl implements SeekerService {
     }
 
     public List<Job> listJobs(Member member) {
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         List<Job> memberJobs ;
         try {
             memberJobs = jobDAO.getAllJobs(member.getId());
@@ -124,8 +122,8 @@ public class SeekerServiceImpl implements SeekerService {
     public List<Application> getApplications(Member member, long jobId) {
         Set<Application> applications;
         logger.info("ListApplications");
-        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         logger.info(member + "MEMBER");
         try {
             Job job = jobDAO.getJob(jobId);
@@ -148,7 +146,7 @@ public class SeekerServiceImpl implements SeekerService {
     }
 
     private boolean verifyJobBelongsToMember(Member member, long jobId){
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = jobDAO.getJob(jobId);
         logger.info(job + " ");
         return job.getSeeker().getId() == member.getId();
@@ -159,7 +157,7 @@ public class SeekerServiceImpl implements SeekerService {
     public OperationStatus editJob(Member member, JobForm jobForm) throws InvalidIdException{
         int status = 1;
         OperationStatus operationStatus = OperationStatus.SUCCESS;
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = new Job();
         try{
              job = jobDAO.getJob(Long.valueOf(jobForm.getId()));
@@ -187,7 +185,7 @@ public class SeekerServiceImpl implements SeekerService {
      */
     public OperationStatus closeJob(Member member, long jobId) {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         try{
             Job job = jobDAO.getJob(jobId);
             logger.info(job + " ");

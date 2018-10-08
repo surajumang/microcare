@@ -1,5 +1,6 @@
 package com.care.controller.sitter;
 
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
@@ -25,8 +26,7 @@ public class CloseApplication extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "failure";
-        OperationStatus operationStatus = OperationStatus.FAILURE;
+        String page = "success";
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
@@ -34,18 +34,14 @@ public class CloseApplication extends Action {
         try {
             long applicationToBeClosed = CommonUtil.getIdFromRequest(request, "id");
             //throws exception
-            operationStatus = sitterService.deleteApplication(currentMember, applicationToBeClosed);
-            if (operationStatus == OperationStatus.SUCCESS){
-                page = "success";
-                request.setAttribute("DELSUCCESS", "Successfully deleted");
-                request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
-            }
+            sitterService.deleteApplication(currentMember, applicationToBeClosed);
+
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't delete", e);
-            //todo send to global forward
-            page = "badRequest";
+//            page = "badRequest";
+            throw new BadRequestException(e);
         }
-
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
         logger.info(page);
         return mapping.findForward(page);
     }

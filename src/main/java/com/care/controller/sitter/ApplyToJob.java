@@ -1,6 +1,7 @@
 package com.care.controller.sitter;
 
 import com.care.controller.ControllerUtil;
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.form.ApplicationForm;
 import com.care.model.Application;
@@ -26,13 +27,12 @@ public class ApplyToJob extends Action {
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "failure";
+        String page = "success";
         ApplicationForm applicationForm = (ApplicationForm)form;
         OperationStatus operationStatus = OperationStatus.FAILURE;
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
-        logger.info(applicationForm + "**********");
-        logger.info("Called ApplyToJob");
+        logger.info(applicationForm + "Called ApplyToJob");
 
         try {
             long jobToApplyOn = Long.valueOf(applicationForm.getJobId());
@@ -41,14 +41,11 @@ public class ApplyToJob extends Action {
             operationStatus = sitterService.applyToJob(applicationForm);
             logger.info("Status okay " + operationStatus);
 
-            if (operationStatus == OperationStatus.SUCCESS){
-                page = "success";
-                request.setAttribute("APPSUCCESS", "Applied successfully");
-                request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
-            }
         }catch (Exception e){
             page = "badRequest";
+            throw  new BadRequestException(e);
         }
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG,"True");
         logger.info(page);
         request.setAttribute("applicationForm", applicationForm);
         return mapping.findForward(page);

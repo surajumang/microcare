@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.form.JobForm;
 import com.care.model.Member;
@@ -35,12 +36,9 @@ public class EditJob extends Action {
 
         try {
             operationStatus = seekerService.editJob(currentUser, jobForm);
-            if (operationStatus == OperationStatus.SUCCESS){
-                page = "success";
-            }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Editing Job", e);
-            page="badRequest";
+            throw new BadRequestException(e);
         }
         logger.info("job status is " + operationStatus);
         request.setAttribute("editJob", jobForm);

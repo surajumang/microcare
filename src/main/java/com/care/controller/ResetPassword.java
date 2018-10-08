@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.form.PasswordResetForm;
 import com.care.model.Status;
@@ -52,6 +53,7 @@ public class ResetPassword extends Action {
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Exception while Resetting password using token.", e);
+            throw new BadRequestException(e);
         }
         return mapping.findForward(page);
     }

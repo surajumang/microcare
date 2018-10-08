@@ -22,33 +22,19 @@ import java.util.logging.Logger;
 
 public class ShowJobs extends Action {
     Logger logger = Logger.getLogger("ShowJobs To Sitter");
-    private static final Map<OperationStatus, String> message = new HashMap<OperationStatus, String>();
-    static {
-        message.put(OperationStatus.FAILURE, "No jobs to Show");
-        message.put(OperationStatus.SUCCESS, "All jobs available for you");
-    }
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String page = "failure";
-
+        String page = "success";
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-        OperationStatus operationStatus = OperationStatus.FAILURE;
 
         List<Job> allJobs = sitterService.listAllAvailableJobs(currentMember);
 
-        logger.info(allJobs.size() + " ");
-        if (allJobs != null && !allJobs.isEmpty()){
-            page = "success";
-            request.setAttribute("allJobs", allJobs);
-            operationStatus = OperationStatus.SUCCESS;
-        }
+        request.setAttribute("allJobs", allJobs);
         logger.info(allJobs.toString());
         logger.info("Dispatching to Page" + page);
         request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
-        request.setAttribute(operationStatus.name(), message.get(operationStatus));
-
         return mapping.findForward("success");
     }
 }

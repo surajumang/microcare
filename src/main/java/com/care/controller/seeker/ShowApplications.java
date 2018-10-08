@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.exception.BadRequestException;
 import com.care.exception.InvalidApplicationException;
 import com.care.model.Application;
 import com.care.model.Member;
@@ -38,17 +39,12 @@ public class ShowApplications extends Action {
             Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
 
             logger.info("Called SeekerService listAppOnJob");
-            //Applications can be seen only if the Job is Active.
             applications = seekerService.getApplications(currentMember, jobIdToViewApplications);
-            if (applications != null && !applications.isEmpty()){
-                operationStatus = OperationStatus.SUCCESS;
-                page = "success";
-            }
         }catch (Exception e){
             //redirect to global forward config which will send it to
             logger.log(Level.SEVERE, "Not allowed to see application", e);
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            page="badRequest";
+            throw new BadRequestException(e);
         }
         request.setAttribute("getApplications", applications);
         return mapping.findForward(page);

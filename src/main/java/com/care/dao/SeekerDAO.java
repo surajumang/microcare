@@ -8,18 +8,10 @@ import java.util.Set;
 
 public interface SeekerDAO extends DAO {
 
-    int addSeeker(Seeker seeker) throws Exception;
+    int addSeeker(Seeker seeker) ;
 
-    Seeker getSeeker(long seekerId) throws Exception;
-    /*
-    Used to implement the Search features
-     */
-    Set<Seeker> getSeekerByEmail(String email) throws Exception;
+    Seeker getSeeker(long seekerId) ;
 
-    int editSeeker(long seekerId, Seeker seeker) throws Exception;
-
-    Set<Job> listAllMyJobs(long seekerId) throws Exception;
-
-    Set<Application> listAllApplicationsOnMyJob(long jobId) throws Exception;
+    Set<Seeker> getSeekerByEmail(String email);
 
 }

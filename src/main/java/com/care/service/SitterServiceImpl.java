@@ -12,7 +12,6 @@ import com.care.form.ApplicationForm;
 import com.care.model.*;
 import com.care.dao.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +27,7 @@ public class SitterServiceImpl implements SitterService {
     public SitterServiceImpl(){ }
 
     public List<Job> listAllAvailableJobs(Member sitter) {
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         List<Job> allJobs;
 
         try{
@@ -47,7 +46,7 @@ public class SitterServiceImpl implements SitterService {
     Only the ACTIVE OR EXPIRED not closed.[todo] may throw some exception.
      */
     public List<Application> listAllApplications(Member sitter) {
-        ApplicationDAO applicationDAO= DAOFactory.get(HApplicationDAOImpl.class);
+        ApplicationDAO applicationDAO= DAOFactory.get(ApplicationDAOImpl.class);
         List<Application> applications ;
         try{
             applications = applicationDAO.getAllApplications(sitter.getId());
@@ -71,7 +70,7 @@ public class SitterServiceImpl implements SitterService {
     EMPTY job.
      */
     public Job getJob(long jobId) {
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
         Job job = Job.emptyJob();
         try {
                 job = jobDAO.getJob(jobId);
@@ -88,7 +87,7 @@ public class SitterServiceImpl implements SitterService {
     }
 
     public Sitter getSitter(long sitterId) {
-        SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         Sitter sitter = Sitter.emptySitter();
         try {
             sitter = sitterDAO.getSitter(sitterId);
@@ -104,7 +103,7 @@ public class SitterServiceImpl implements SitterService {
     public List<Sitter> getSittersByEmail(String email) {
         Set<Sitter> sitters = Collections.emptySet();
         logger.info("Fetching sitters by email" + email);
-        SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         try {
             sitters = sitterDAO.getSitterByEmail(email);
         }catch (Exception e){
@@ -120,9 +119,9 @@ public class SitterServiceImpl implements SitterService {
 
 
     public OperationStatus applyToJob(ApplicationForm applicationForm) {
-        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
-        JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
-        SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
+        JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
 
         Application application = new Application();
         OperationStatus operationStatus = OperationStatus.FAILURE;
@@ -146,14 +145,14 @@ public class SitterServiceImpl implements SitterService {
     }
 
     private boolean checkApplicationOwner(Member sitter, long applicationId) {
-        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
         Application application = applicationDAO.getApplication(applicationId);
         return application.getSitter().getId() == sitter.getId();
     }
     // Move this logic to application Model[todo]
     public OperationStatus deleteApplication(Member sitter, long applicationId) throws InvalidIdException {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
-        ApplicationDAO applicationDAO = DAOFactory.get(HApplicationDAOImpl.class);
+        ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
         logger.info("APPLICATion being deleted : " + applicationId + "BYY" + sitter.getId());
         try {
             Application application = applicationDAO.getApplication(applicationId);

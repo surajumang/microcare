@@ -18,8 +18,6 @@ public class HomeAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         MemberType memberType = member.getMemberType();
-
-
         return mapping.findForward(memberType.name().toLowerCase());
     }
 }

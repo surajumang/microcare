@@ -24,6 +24,11 @@
                    type="com.care.form.EmailForm"/>
 
     </form-beans>
+    <global-exceptions>
+        <exception key="errors.badrequest" type="com.care.exception.BadRequestException"
+                   path="/badRequest.jsp"/>
+    </global-exceptions>
+
     <global-forwards>
         <forward name="badRequest" path="/badRequest.jsp"/>
 
@@ -61,12 +66,6 @@
             <!--set parameter for redirect[todo]-->
             <forward name="failure" path="/visitor/login.do?login=false" redirect="true"/>
             <forward name="closed" path="/visitor/closedMember.jsp"/>
-        </action>
-
-        <action path="/visitor/closedMember"
-                type="com.care.controller.LoginClosedMember">
-            <forward name="success" path="/member/home.do" redirect="true"/>
-            <forward name="failure" path="/visitor/login.do?login=false" redirect="true"/>
         </action>
 
         <action path="/visitor/register"

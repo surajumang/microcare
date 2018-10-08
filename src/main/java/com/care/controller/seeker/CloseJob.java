@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.controller.CommonUtil;
@@ -44,7 +45,7 @@ public class CloseJob extends Action {
             logger.log(Level.SEVERE, "Job not deleted", e);
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             //It is required to throw the caught exception, if operations are to be rolled back.
-            page = "badRequest";
+            throw new BadRequestException(e);
         }
         logger.info(page);
         return mapping.findForward(page);

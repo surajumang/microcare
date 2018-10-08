@@ -1,6 +1,7 @@
 package com.care.controller.seeker;
 
 import com.care.controller.CommonUtil;
+import com.care.exception.BadRequestException;
 import com.care.exception.JobNotPostedByUserException;
 import com.care.form.JobForm;
 import com.care.model.Job;
@@ -41,8 +42,7 @@ public class ShowJobToEdit extends Action {
             mapJob(job, jobForm);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't Edit an expired job", e);
-            //send to global forward [todo]
-            page = "badRequest";
+            throw new BadRequestException(e);
         }
         logger.info("Dispatching to ---" + page);
         return mapping.findForward(page);

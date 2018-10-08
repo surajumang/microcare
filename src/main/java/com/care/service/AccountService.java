@@ -17,8 +17,6 @@ public interface AccountService extends Service {
 
     Token getToken(String token);
 
-    OperationStatus setMemberStatus(Member member, Status status);
-
     OperationStatus mailPasswordResetToken(String email, String contextPath);
 
     OperationStatus deleteMember(Member member);

@@ -169,7 +169,7 @@ public class EditProfileForm extends BaseForm {
         }
         // The below lines may not be required. Removal required [todo]
         try {
-            if (memberType.equals(MemberType.SITTER.name())){
+            if (member != null && member.isSitter()){
                 if (StringUtils.isEmptyOrWhitespaceOnly(expectedPay)){
                     errors.add("expectedPay", new ActionMessage("errors.notnull", "expectedPay"));
                 }
@@ -188,13 +188,17 @@ public class EditProfileForm extends BaseForm {
        // errors.properties()
         // if Id is null then assume it is for Registration.
         if (errors.isEmpty()){
-
-            Member member1 = accountService.getMember(getEmail());
+            Member member1 ;
+            try {
+                member1 = accountService.getMember(getEmail());
+            } catch (Exception e) {
+                member1 = Member.emptyMember();
+            }
             // Only if there is already a member registered.
             if (! member1.isEmpty()){
                 // it is for registration.
                 //String ID = String.valueOf(member1.getId());
-                if (getId() == null){
+                if (member == null){
                     errors.add("email", new ActionMessage("errors.email.exist", "Email"));
                 }
 

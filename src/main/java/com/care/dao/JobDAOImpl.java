@@ -10,7 +10,7 @@ import org.hibernate.Session;
 
 import java.util.*;
 
-public class HJobDAOImpl implements JobDAO {
+public class JobDAOImpl implements JobDAO {
     @Override
     public int addJob(Job job) {
         try{
@@ -24,12 +24,12 @@ public class HJobDAOImpl implements JobDAO {
 
 
     @Override
-    public int expireStaleJobs() throws Exception {
+    public int expireStaleJobs()  {
         return 0;
     }
 
     @Override
-    public int editJob(Job job) throws DataWriteException {
+    public int editJob(Job job)  {
         try{
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.saveOrUpdate(job);
@@ -41,7 +41,7 @@ public class HJobDAOImpl implements JobDAO {
     }
 
     @Override
-    public Job getJob(long jobId) throws DataReadException{
+    public Job getJob(long jobId) {
         Job job = Job.emptyJob();
         try{
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -54,7 +54,7 @@ public class HJobDAOImpl implements JobDAO {
     }
 
     @Override
-    public List<Job> getAllJobs(long postedBy) throws Exception {
+    public List<Job> getAllJobs(long postedBy) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Query query = session.createQuery("from Job where seeker.id = :seekerId and status != :status ");
         query.setLong("seekerId", postedBy);
@@ -68,7 +68,7 @@ public class HJobDAOImpl implements JobDAO {
         CLOSED application.
      */
     @Override
-    public List<Job> getAllAvailableJobs(long sitterId) throws Exception {
+    public List<Job> getAllAvailableJobs(long sitterId)  {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Query query = session.createQuery("from Job j where j.id not in (select job.id from Application where sitter.id = :sitterId and status = :appStatus) and status = :jobStatus");
         query.setLong("sitterId", sitterId);

@@ -14,7 +14,7 @@ import javax.xml.crypto.Data;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-public class HApplicationDAOImpl implements ApplicationDAO {
+public class ApplicationDAOImpl implements ApplicationDAO {
     @Override
     public int addApplication(Application application)  {
         /*

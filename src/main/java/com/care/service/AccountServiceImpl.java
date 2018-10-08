@@ -1,12 +1,14 @@
 package com.care.service;
 
 import com.care.dao.*;
+import com.care.exception.DataReadException;
+import com.care.exception.MemberNotFoundException;
+import com.care.exception.TokenNotFoundException;
 import com.care.form.EditProfileForm;
 import com.care.exception.MemberAlreadyRegisteredException;
 import com.care.form.RegistrationForm;
 import com.care.model.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,14 +53,14 @@ public class AccountServiceImpl implements AccountService {
     This case has been handled in Validation. Exception not required.
      */
     private int addSeeker(Seeker seeker) throws MemberAlreadyRegisteredException{
-        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         logger.info(seeker.toString());
         int status = -1;
         try {
             status = seekerDAO.addSeeker(seeker);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Can't add", e);
-            // throw exception.
+            // [todo]this is never being thrown
             throw new MemberAlreadyRegisteredException("Already Registered");
         }
         return status;
@@ -66,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
 
     private int addSitter(Sitter sitter) throws MemberAlreadyRegisteredException{
 
-        SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         logger.info(sitter.toString());
         int status = -1;
 
@@ -82,29 +84,27 @@ public class AccountServiceImpl implements AccountService {
     MemberNotFoundException[todo]
      */
     public Member getMember(String email) {
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member member;
         try {
             member = memberDAO.getMember(email);
             logger.info(member.toString());
-        } catch (Exception e) {
+        } catch (DataReadException e) {
            logger.log(Level.SEVERE, "Error fetching member", e);
-           //[No member exist for the given email]todo
-           member = Member.emptyMember();
+           throw new MemberNotFoundException(e);
         }
         return member;
     }
 
     public Member getMember(long id) {
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member member;
         try {
             member = memberDAO.getMember(id);
             logger.info(member.toString());
-        } catch (Exception e) {
+        } catch (DataReadException e) {
             logger.log(Level.SEVERE, "Error fetching member", e);
-            //[No member exist for the given email]todo
-            member = Member.emptyMember();
+            throw new MemberNotFoundException(e);
         }
         return member;
     }
@@ -114,67 +114,46 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public Token getToken(String token) {
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
-        Token token1 = Token.emptyToken();
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        Token token1;
         try {
             token1 = memberDAO.getToken(token);
             logger.info(token1 + "found using Token" + token);
-        } catch (Exception e) {
+        } catch (DataReadException e) {
             logger.log(Level.SEVERE, "Error fetching token. Doesn't exist", e);
+            throw new TokenNotFoundException(e);
         }
         return token1;
     }
 
-    @Override
-    public OperationStatus setMemberStatus(Member member, Status status) {
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
-        OperationStatus operationStatus = OperationStatus.FAILURE;
-        try {
-            if (memberDAO.setMemberStatus(member.getId(), Status.ACTIVE) == 1){
-                operationStatus = OperationStatus.SUCCESS;
-            }
-        }catch (Exception e){
-            logger.log(Level.SEVERE, "CAN't set member status", e);
-            operationStatus = OperationStatus.FAILURE;
-        }
-        return operationStatus;
-    }
     /*
     EMailNotSentException[todo]
      */
     public OperationStatus mailPasswordResetToken(String email, String contextPath) {
         OperationStatus operationStatus = OperationStatus.FAILURE;
         //getting the member stored in database.
-        Member member = getMember(email);
-
-        if (member != Member.emptyMember()){
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        try {
+            Member member = getMember(email);
             logger.info("Member okay" + member);
             Token token = generatePasswordResetToken(member);
             //set token to DB.
-            MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
-           try {
-               if (memberDAO.addToken(token) == 1){
-                   String message = "localhost:8080/"+contextPath + "/visitor/captureToken.do?token=" + token.getToken();
-                   sendMail(email, message);
-                   logger.info("mail sent");
-                   operationStatus = OperationStatus.SUCCESS;
-               }
-           }catch (Exception e){
-               operationStatus = OperationStatus.FAILURE;
-           }
+            if (memberDAO.addToken(token) == 1){
+                String message = "localhost:8080/"+contextPath + "/visitor/captureToken.do?token=" + token.getToken();
+                sendMail(email, message);
+                logger.info("mail sent");
+                operationStatus = OperationStatus.SUCCESS;
+            }
+        }catch (DataReadException e){
+            throw new MemberNotFoundException(e);
         }
         return operationStatus;
     }
 
-    /*
-    Write code related to authorization here.
-    Deleting member requires all jobs and application deletion as well based on the member type..
-    [TODO] Move it to model class.
-     */
     public OperationStatus deleteMember(Member member) {
         OperationStatus status = OperationStatus.SUCCESS;
-        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
-        SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
 
         try {
             if (member.isSeeker()){
@@ -209,7 +188,7 @@ public class AccountServiceImpl implements AccountService {
 
     private OperationStatus setToken(Token token){
         OperationStatus operationStatus=OperationStatus.SUCCESS;
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         try{
             memberDAO.addToken(token);
         }catch(Exception e){
@@ -234,30 +213,30 @@ public class AccountServiceImpl implements AccountService {
 
     private int editSeeker(long seekerId, EditProfileForm newSeeker) {
 
-        SeekerDAO seekerDAO = DAOFactory.get(HSeekerDAOImpl.class);
+        SeekerDAO seekerDAO = DAOFactory.get(SeekerDAOImpl.class);
         logger.info(newSeeker.toString());
         int status = 1;
         try {
             Seeker seeker = seekerDAO.getSeeker(seekerId);
             ObjectMapper.mapObject(newSeeker, seeker, true);
-        } catch (Exception e) {
+        } catch (DataReadException e) {
             logger.log(Level.SEVERE, "Can't edit ", e);
-            status = -1;
+            throw new MemberNotFoundException(e);
         }
         return status;
     }
 
     private int editSitter(long sitterId, EditProfileForm newSitter){
-        SitterDAO sitterDAO = DAOFactory.get(HSitterDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         logger.info(newSitter.toString());
         int status = 1;
         try {
             Sitter sitter = sitterDAO.getSitter(sitterId);
             ObjectMapper.mapObject(newSitter, sitter, true);
             //status = sitterDAO.editSitter(sitterId, sitter);
-        } catch (Exception e) {
+        } catch (DataReadException e) {
             logger.log(Level.SEVERE, "Can't edit", e);
-            status = -1;
+            throw new MemberNotFoundException(e);
         }
         return status;
     }

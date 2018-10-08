@@ -1,5 +1,6 @@
 package com.care.controller.seeker;
 
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.model.Job;
 import com.care.model.Member;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShowJobs extends Action {
@@ -33,8 +35,13 @@ public class ShowJobs extends Action {
         Member currentMember = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
 
-        OperationStatus status = OperationStatus.FAILURE;
-        List<Job> myJobs = seekerService.listJobs(currentMember);
+        List<Job> myJobs = null;
+        try {
+            myJobs = seekerService.listJobs(currentMember);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Can't show jobs", e);
+            throw new BadRequestException(e);
+        }
         logger.info(myJobs.size() + "--------");
 
         request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");

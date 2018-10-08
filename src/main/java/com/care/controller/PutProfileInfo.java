@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PutProfileInfo extends Action {
@@ -26,27 +27,28 @@ public class PutProfileInfo extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Member currentUser = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         MemberType memberType = currentUser.getMemberType();
-        String page = "failure";
+
         EditProfileForm editProfileForm = (EditProfileForm)form;
         editProfileForm.setMemberType(memberType.name());
 
-        if (memberType == MemberType.SEEKER){
-            SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
-            Seeker profileInfo = seekerService.getSeeker(currentUser.getId());
-            page = "success";
-            //Map the Seeker to a EditProfileForm. No need to attach to a request scope.
-            ObjectMapper.mapObject(profileInfo, editProfileForm, false);
-            request.getSession().setAttribute("profileInfo", profileInfo);
-            //request.getRequestDispatcher(page).forward(request,response);
-        }else {
-            SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-            Sitter profileInfo = sitterService.getSitter(currentUser.getId());
+        try {
+            if (currentUser.isSeeker()){
+                SeekerService seekerService = ServiceFactory.get(SeekerServiceImpl.class);
+                Seeker profileInfo = seekerService.getSeeker(currentUser.getId());
 
-            page = "success";
-            ObjectMapper.mapObject(profileInfo, editProfileForm, false);
-            request.getSession().setAttribute("profileInfo", profileInfo);
-           // request.getRequestDispatcher(page).forward(request,response);
+                //Map the Seeker to a EditProfileForm. No need to attach to a request scope.
+                ObjectMapper.mapObject(profileInfo, editProfileForm, false);
+                request.getSession().setAttribute("profileInfo", profileInfo);
+            }else {
+                SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
+                Sitter profileInfo = sitterService.getSitter(currentUser.getId());
+
+                ObjectMapper.mapObject(profileInfo, editProfileForm, false);
+                request.getSession().setAttribute("profileInfo", profileInfo);
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "showing profile for edit", e);
         }
-        return mapping.findForward(page);
+        return mapping.findForward("success");
     }
 }

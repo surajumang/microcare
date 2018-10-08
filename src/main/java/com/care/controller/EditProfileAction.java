@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.form.EditProfileForm;
 import com.care.model.Member;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class EditProfileAction extends Action {
@@ -34,11 +36,13 @@ public class EditProfileAction extends Action {
         OperationStatus operationStatus = OperationStatus.FAILURE;
 
         AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
-        int status = accountService.editMember(currentUser.getId(), editProfileForm);
-        if (status == 1){
-            operationStatus = OperationStatus.SUCCESS;
+        try{
+            accountService.editMember(currentUser.getId(), editProfileForm);
             request.getSession().setAttribute(ControllerUtil.CURRENT_USER, accountService.getMember(currentUser.getId()));
             request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
+        }catch (Exception e){
+            logger.log(Level.SEVERE, "While editing", e);
+            throw new BadRequestException(e);
         }
 
         return mapping.findForward("success");

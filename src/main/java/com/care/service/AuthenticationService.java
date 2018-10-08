@@ -9,14 +9,7 @@ public interface AuthenticationService extends Service {
 
     OperationStatus loginUser(LoginForm loginForm);
 
-    boolean logout();
-
     OperationStatus updatePasswordWithToken(PasswordResetForm passwordResetForm);
 
     OperationStatus updatePassword(Member member, PasswordUpdateForm passwordUpdateForm);
-
-    int forgotPassword();
-
-    boolean isLoggedIn(long userId);
-
 }

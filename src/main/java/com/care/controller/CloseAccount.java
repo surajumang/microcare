@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.service.AccountService;
@@ -33,10 +34,14 @@ public class CloseAccount extends Action {
         String page = "/member/home.do";
 
         logger.info("Member deleted successfully");
-        OperationStatus operationStatus = accountService.deleteMember(currentUser);
+        OperationStatus operationStatus = null;
+        try {
+            operationStatus = accountService.deleteMember(currentUser);
+        } catch (Exception e) {
+            throw new BadRequestException(e);
+        }
         // take to login page when closed.
         if (operationStatus == OperationStatus.SUCCESS){
-            page="/login.jsp";
             request.getSession().setAttribute(ControllerUtil.CURRENT_USER, null);
             request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         }

@@ -23,10 +23,10 @@ public class LogOut extends Action {
         logger.info("called logout");
         Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         logger.info(member + "to be logged out");
+
         request.getSession().setAttribute(ControllerUtil.CURRENT_USER, null);
         request.setAttribute("stat", member);
         request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
-        request.setAttribute(OperationStatus.SUCCESS.name(), "Successfully Logged Out");
 
         return mapping.findForward("success");
 

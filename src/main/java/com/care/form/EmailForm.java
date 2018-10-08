@@ -39,8 +39,9 @@ public class EmailForm extends BaseForm {
             // validate if the email exist in the DB.
             AccountService accountService = ServiceFactory.get(AccountServiceImpl.class);
             if (errors.isEmpty()){
-                if (accountService.getMember(email) == Member.emptyMember()){
-                    //error
+                try{
+                    accountService.getMember(email);
+                }catch (Exception e){
                     errors.add("email", new ActionMessage("errors.email.notexist"));
                 }
             }

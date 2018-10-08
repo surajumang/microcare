@@ -2,10 +2,6 @@ package com.care.service;
 
 import com.care.dao.*;
 
-import javax.servlet.Filter;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,8 +29,8 @@ public class BackOfficeProcess  {
         public void run() {
             while (true){
                 logger.info("BackOffice run");
-                JobDAO jobDAO = DAOFactory.get(HJobDAOImpl.class);
-                MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
+                JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+                MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
 
                 try {
                     int job = jobDAO.expireStaleJobs();

@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class HSitterDAOImpl implements SitterDAO {
+public class SitterDAOImpl implements SitterDAO {
     /*
     Both member and sitter needs to be updated.
      */
@@ -27,13 +27,6 @@ public class HSitterDAOImpl implements SitterDAO {
             throw new DataWriteException(e);
         }
 
-        return 1;
-    }
-
-    @Override
-    public int editSitter(long sitterId, Sitter sitter)  {
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.saveOrUpdate(sitter);
         return 1;
     }
 

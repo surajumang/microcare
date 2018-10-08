@@ -51,10 +51,10 @@ public class HibernateFilter implements Filter {
            // logger.info("Starting a database transaction");
             currentSession.beginTransaction();
 
-            //logger.info("Processing the event");
+            logger.info("Processing the event");
             chain.doFilter(request, response);
 
-            //logger.info("Unbinding Session after processing");
+            logger.info("Unbinding Session after processing");
             currentSession = ManagedSessionContext.unbind(sf);
 
             // End or continue the long-running conversation?  

@@ -1,6 +1,7 @@
 package com.care.controller.sitter;
 
 import com.care.controller.CommonUtil;
+import com.care.exception.BadRequestException;
 import com.care.filter.HibernateFilter;
 import com.care.form.ApplicationForm;
 import com.care.model.Job;
@@ -33,22 +34,16 @@ public class ShowJobToApply extends Action {
         /*
         Fetch the job from the database and show it to the user, also collect the expectedPay.
          */
-        String page = "failure";
+        String page = "success";
         Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         SitterService sitterService = ServiceFactory.get(SitterServiceImpl.class);
-        OperationStatus operationStatus = OperationStatus.FAILURE;
 
-        /*
-        [todo Fetch a Job Attach it to Session. Fill an application form [jobId, sitterId] ]
-        Not needed as it is being handled by hibernate.
-         */
         try{
             long id = CommonUtil.getIdFromRequest(request, "id" );
             Job job = sitterService.getJob(id);
             // the job must not be CLOSED OR EXPIRED.
             // the service will either throw an exception or a proper job Nothing related to EMPty job.
             if (job != null && job != Job.emptyJob()){
-                operationStatus = OperationStatus.SUCCESS;
                 request.getSession().setAttribute("job", job);
                 ApplicationForm applicationForm = (ApplicationForm)form;
                 applicationForm.setJobId(String.valueOf(job.getId()));
@@ -57,13 +52,10 @@ public class ShowJobToApply extends Action {
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Sitter Show job to Apply ", e);
-            page = "badRequest";
+//            page = "badRequest";
+            throw new BadRequestException(e);
         }
         request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "End");
         return mapping.findForward(page);
-    }
-
-    private void createApplication(Job job, ApplicationForm applicationForm){
-
     }
 }

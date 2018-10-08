@@ -1,6 +1,9 @@
 package com.care.service;
 
-import com.care.dao.HMemberDAOImpl;
+import com.care.dao.MemberDAOImpl;
+import com.care.exception.DataReadException;
+import com.care.exception.MemberNotFoundException;
+import com.care.exception.TokenNotFoundException;
 import com.care.form.LoginForm;
 import com.care.form.PasswordResetForm;
 import com.care.form.PasswordUpdateForm;
@@ -25,48 +28,36 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         logger.info("User trying to Log in");
         OperationStatus status = OperationStatus.FAILURE;
 
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
-        Member member = null;
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
+        Member member;
         try {
             member = memberDAO.getMember(loginForm.getEmail());
             logger.info(member + " ");
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Can't fetch member for LoginAction", e);
-            status = OperationStatus.FAILURE;
-        }
-        if(member != null){
             logger.info("Member Exists " + member);
-
             if (Hash.createHash(loginForm.getPassword()).equals(member.getPassword())){
                 status =OperationStatus.SUCCESS;
                 logger.info("LoginAction success");
             }
+        } catch (DataReadException e) {
+            logger.log(Level.SEVERE, "Can't fetch member for LoginAction", e);
+            throw new MemberNotFoundException(e);
         }
         logger.info(status.name() + "STATUS");
         return status;
     }
 
-    public boolean logout() {
-        //CommonUtil.removeLoggedInUser();
-        return false;
-    }
     /*
     InvalidTokenException[todo]
      */
     public OperationStatus updatePasswordWithToken(PasswordResetForm passwordResetForm) {
         logger.info("Updating Password");
-        OperationStatus status = OperationStatus.FAILURE;
+        OperationStatus status = OperationStatus.SUCCESS;
         int value = -1;
         passwordResetForm.setPassword(Hash.createHash(passwordResetForm.getPassword()));
-
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
-
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         try {
             //double check
             Member member = memberDAO.getMember(Long.valueOf(passwordResetForm.getId()));
-            if (member == Member.emptyMember()){
-                //[todo] throw some
-            }
             logger.info(passwordResetForm + "PASSSWORD");
             ObjectMapper.mapObject(passwordResetForm, member, true);
             Token existingToken = memberDAO.getToken(passwordResetForm.getToken());
@@ -80,14 +71,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (DataReadException e) {
             logger.log(Level.SEVERE, "Can't update password", e);
+            throw new TokenNotFoundException(e);
+        }
+        if (value != 1){
             status = OperationStatus.FAILURE;
         }
-        if (value == 1){
-            status = OperationStatus.SUCCESS;
-        }
-
         logger.info(status.name() + "STATUS");
         return status;
     }
@@ -95,10 +85,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public OperationStatus updatePassword(Member member, PasswordUpdateForm passwordUpdateForm) {
         logger.info("Updating Password with current Password");
-        OperationStatus status = OperationStatus.FAILURE;
+        OperationStatus status = OperationStatus.SUCCESS;
         int value = -1;
         passwordUpdateForm.setPassword(Hash.createHash(passwordUpdateForm.getPassword()));
-        MemberDAO memberDAO = DAOFactory.get(HMemberDAOImpl.class);
+        MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
 
         try {
             Member existingMember = memberDAO.getMember(member.getId());
@@ -109,23 +99,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 existingMember.setPassword(passwordUpdateForm.getPassword());
                 value = memberDAO.updatePassword(existingMember);
             }
-        } catch (Exception e) {
+        } catch (DataReadException e) {
             logger.log(Level.SEVERE, "Can't update password", e);
-            status = OperationStatus.FAILURE;
+            throw new MemberNotFoundException(e);
         }
-        if (value == 1){
-            status = OperationStatus.SUCCESS;
+        if (value != 1){
+            status = OperationStatus.FAILURE;
         }
         logger.info(status.name() + "STATUS");
         return status;
-    }
-
-    public int forgotPassword() {
-        return 0;
-    }
-
-    public boolean isLoggedIn(long userId) {
-        //return userId == CommonUtil.getLoggedInUserFromSession().getJobId();
-        return false;
     }
 }

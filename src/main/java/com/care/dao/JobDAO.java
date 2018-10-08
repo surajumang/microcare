@@ -8,16 +8,16 @@ import com.care.model.Status;
 import java.util.List;
 
 public interface JobDAO extends DAO {
-    int addJob(Job job) throws Exception;
+    int addJob(Job job) ;
 
-    int expireStaleJobs() throws Exception;
+    int expireStaleJobs() ;
 
-    int editJob(Job job) throws DataWriteException;
+    int editJob(Job job) ;
 
-    Job getJob(long jobId) throws DataReadException;
+    Job getJob(long jobId) ;
 
-    List<Job> getAllJobs(long postedBy) throws Exception;
+    List<Job> getAllJobs(long postedBy);
 
-    List<Job> getAllAvailableJobs(long sitterId) throws Exception;
+    List<Job> getAllAvailableJobs(long sitterId) ;
 
 }
