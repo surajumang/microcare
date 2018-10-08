@@ -53,6 +53,13 @@ public class Sitter extends Member {
         return EMPTY_SITTER;
     }
 
+    public boolean hasApplied(long jobId) {
+        return applications
+                .stream()
+                .anyMatch(application -> application.getJob().getId() == jobId);
+
+    }
+
     public int closeAllApplications() {
         for (Application application : getApplications()) {
             if (application.getStatus() == Status.ACTIVE) {

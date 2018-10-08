@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.filter.HibernateFilter;
 import com.care.model.Member;
 import com.care.model.MemberType;
 import org.apache.struts.action.Action;
@@ -18,6 +19,7 @@ public class HomeAction extends Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Member member = (Member) request.getSession().getAttribute(ControllerUtil.CURRENT_USER);
         MemberType memberType = member.getMemberType();
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         return mapping.findForward(memberType.name().toLowerCase());
     }
 }

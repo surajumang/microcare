@@ -62,9 +62,9 @@
                 validate="true"
                 scope="request"
                 input="/visitor/login.do">
-            <forward name="success" path="/member/home.do" redirect="true"/>
+            <forward name="success" path="/member/home.do"/>
             <!--set parameter for redirect[todo]-->
-            <forward name="failure" path="/visitor/login.do?login=false" redirect="true"/>
+            <forward name="failure" path="/visitor/login.do?login=false" />
             <forward name="closed" path="/visitor/closedMember.jsp"/>
         </action>
 

@@ -1,5 +1,6 @@
 package com.care.controller;
 
+import com.care.filter.HibernateFilter;
 import com.care.form.EditProfileForm;
 import com.care.model.Member;
 import com.care.model.MemberType;
@@ -49,6 +50,7 @@ public class PutProfileInfo extends Action {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "showing profile for edit", e);
         }
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         return mapping.findForward("success");
     }
 }

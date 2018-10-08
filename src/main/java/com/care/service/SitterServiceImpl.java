@@ -1,13 +1,6 @@
 package com.care.service;
 
-import com.care.exception.ApplicationNotFoundException;
-import com.care.exception.DataReadException;
-import com.care.exception.DataWriteException;
-import com.care.exception.ExpiredApplicationException;
-import com.care.exception.InvalidIdException;
-import com.care.exception.JobExpiredException;
-import com.care.exception.JobNotFoundException;
-import com.care.exception.UnauthorizedApplicationAccessException;
+import com.care.exception.*;
 import com.care.form.ApplicationForm;
 import com.care.model.*;
 import com.care.dao.*;
@@ -69,14 +62,19 @@ public class SitterServiceImpl implements SitterService {
     Dao should either throw an Exception or give a Job from the DB, there shouldn't be anything related to
     EMPTY job.
      */
-    public Job getJob(long jobId) {
+    public Job getJob(long sitterId, long jobId) {
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
+        SitterDAO sitterDAO = DAOFactory.get(SitterDAOImpl.class);
         Job job = Job.emptyJob();
         try {
-                job = jobDAO.getJob(jobId);
-                if (! job.isActive()){
-                    throw new JobExpiredException("Sitter can't apply to expired Job");
-                }
+            Sitter sitter = sitterDAO.getSitter(sitterId);
+            if (sitter.hasApplied(jobId)){
+                throw new UnauthorizedJobAccessException("Already applied to job");
+            }
+            job = jobDAO.getJob(jobId);
+            if (! job.isActive()){
+                throw new JobExpiredException("Sitter can't apply to expired Job");
+            }
 
         } catch (DataReadException e){
             logger.log(Level.SEVERE, "While getting a Job", e);
@@ -129,11 +127,15 @@ public class SitterServiceImpl implements SitterService {
         ObjectMapper.mapObject(applicationForm, application, true);
         logger.info(application + " AFTER MAPPING");
         try {
-            Job job = jobDAO.getJob(Long.valueOf(applicationForm.getJobId()));
             Sitter sitter = sitterDAO.getSitter(Long.valueOf(applicationForm.getSitterId()));
 
+            if (sitter.hasApplied(Long.valueOf(applicationForm.getJobId()))){
+                throw new UnauthorizedJobAccessException("Already applied to job");
+            }
+            Job job = jobDAO.getJob(Long.valueOf(applicationForm.getJobId()));
             application.setJob(job);
             application.setSitter(sitter);
+
             if (applicationDAO.addApplication(application) == 1){
                 operationStatus = OperationStatus.SUCCESS;
             }

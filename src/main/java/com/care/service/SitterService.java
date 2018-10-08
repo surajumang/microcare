@@ -14,7 +14,7 @@ public interface SitterService extends Service{
 
     List<Application> listAllApplications(Member sitter);
 
-    Job getJob(long jobId);
+    Job getJob(long sitterId, long jobId);
 
     Sitter getSitter(long sitterId);
 

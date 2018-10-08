@@ -42,7 +42,7 @@ public class EmailForm extends BaseForm {
                 try{
                     accountService.getMember(email);
                 }catch (Exception e){
-                    errors.add("email", new ActionMessage("errors.email.notexist"));
+                    errors.add("email", new ActionMessage("errors.email.notexist", "Email"));
                 }
             }
 

@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <html:password property="password" styleClass="form-control" /><br>
+                    <input type="password" name="password" class="form-control" /><br>
                     <font color="red"> <html:errors property="password" /> </font>
                 </div>
                 <html:submit property="submit" styleClass="form-control" value="Submit"/>

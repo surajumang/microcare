@@ -48,13 +48,13 @@ public class ResetPassword extends Action {
                         authenticationService.updatePasswordWithToken(passwordResetForm);
                 if (operationStatus == OperationStatus.SUCCESS){
                     page = "success";
-                    request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
                 }
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Exception while Resetting password using token.", e);
             throw new BadRequestException(e);
         }
+        request.setAttribute(HibernateFilter.END_OF_CONVERSATION_FLAG, "True");
         return mapping.findForward(page);
     }
 }
