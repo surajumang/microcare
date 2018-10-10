@@ -135,13 +135,18 @@
     </error-page>
 
     <error-page>
+        <exception-type>com.care.exception.BadRequestException</exception-type>
+        <location>/badRequest.jsp</location>
+    </error-page>
+
+    <error-page>
         <exception-type>java.lang.Throwable</exception-type>
         <location>/errors.jsp</location>
     </error-page>
 
     <welcome-file-list>
         <welcome-file>
-            /login.jsp
+            /index.jsp
         </welcome-file>
     </welcome-file-list>
 

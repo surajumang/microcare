@@ -24,10 +24,10 @@
                    type="com.care.form.EmailForm"/>
 
     </form-beans>
-    <global-exceptions>
-        <exception key="errors.badrequest" type="com.care.exception.BadRequestException"
-                   path="/badRequest.jsp"/>
-    </global-exceptions>
+    <!--<global-exceptions>-->
+        <!--<exception key="errors.badrequest" type="com.care.exception.BadRequestException"-->
+                   <!--path="/badRequest.jsp"/>-->
+    <!--</global-exceptions>-->
 
     <global-forwards>
         <forward name="badRequest" path="/badRequest.jsp"/>
