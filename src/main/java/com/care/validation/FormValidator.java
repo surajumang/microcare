@@ -38,6 +38,7 @@ public class FormValidator {
         ANNOTATION_PROCESSOR_MAP.put(Phone.class, new PhoneProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Range.class, new RangeProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Zipcode.class, new ZipcodeProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(FlowCheck.class, new FlowCheckProcessor());
 
     }
 
@@ -57,7 +58,7 @@ public class FormValidator {
                 for (Annotation annotation : method.getDeclaredAnnotations()) {
 
                     //logger.info(annotation.toString());
-                    Validator v = ANNOTATION_PROCESSOR_MAP.get(annotation.annotationType()).create(annotation);
+                    Validator v = ANNOTATION_PROCESSOR_MAP.get(annotation.annotationType()).create(annotation, form);
 
                     //logger.info(v.getClass().getSimpleName());
 

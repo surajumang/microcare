@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Flow(flowId = "getMemberType")
 public class EditProfileForm extends BaseForm {
     private Logger logger = Logger.getLogger("PutProfileInfo");
 
@@ -47,6 +48,8 @@ public class EditProfileForm extends BaseForm {
     }
 
 
+    @FlowCheck(memberType = "SITTER")
+    @NotNull
     @DecimalNumber
     @Range(min=1, max = 1000, message = "errors.amount.size")
     public String getExpectedPay() {
@@ -57,6 +60,8 @@ public class EditProfileForm extends BaseForm {
         this.expectedPay = expectedPay;
     }
 
+    @FlowCheck(memberType = "SITTER")
+    @NotNull
     @Number
     @Range(min = 0, max = 100, message = "errors.experience.size")
     public String getExperience() {

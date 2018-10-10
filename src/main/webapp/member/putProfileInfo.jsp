@@ -83,6 +83,7 @@
 
 
                 <html:hidden property="id" />
+                <html:hidden property="memberType" />
                 <html:submit property="" styleClass="form-control" value="Submit"/>
 
             </html:form>
