@@ -21,4 +21,9 @@ public class FlowCheckValidator extends Validator {
     public <T> boolean isValid(T value) {
         return srcMemberType.equals(destMemberType);
     }
+
+    @Override
+    public boolean addErrorMessage() {
+        return false;
+    }
 }

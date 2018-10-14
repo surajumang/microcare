@@ -65,7 +65,9 @@ public class FormValidator {
                     String value = (String)method.invoke(form);
                     logger.info("" + value);
                     if (! v.isValid(value)){
-                        errors.add(fieldName, new ActionMessage(v.getMessage(), fieldName));
+                        if (v.addErrorMessage()){
+                            errors.add(fieldName, new ActionMessage(v.getMessage(), fieldName));
+                        }
                         logger.info("NOTOKAY" + fieldName);
                         break;
                     }

@@ -15,4 +15,8 @@ public abstract class Validator {
     public String getMessage(){
         return message;
     }
+
+    public boolean addErrorMessage(){
+        return true;
+    }
 }
