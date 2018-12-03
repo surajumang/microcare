@@ -5,14 +5,12 @@ import com.mysql.jdbc.StringUtils;
 public class RangeValidator extends Validator {
     private long min;
     private long max;
-    private String message;
 
     public RangeValidator(long min, long max, String message) {
         super(message);
         this.min = min;
         this.max = max;
     }
-
 
     @Override
     public <T> boolean isValid(T value) {
@@ -27,7 +25,6 @@ public class RangeValidator extends Validator {
             if (number >= min && number <= max){
                 validity = true;
             }
-
         }catch (Exception e){
 
         }

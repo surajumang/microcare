@@ -15,11 +15,9 @@ public class PositiveNumberValidator extends NumberValidator {
      */
     @Override
     public <T> boolean isValid(T value) {
+        if (! super.isValid(value))
+            return false;
         String userValue = (String) value;
-        if (StringUtils.isEmptyOrWhitespaceOnly(userValue)){
-            return true;
-        }
-
         boolean validity = false;
         try{
             double number = Double.parseDouble(userValue);

@@ -5,15 +5,14 @@ import com.mysql.jdbc.StringUtils;
 public class RegexValidator extends Validator {
 
     private String regex;
-    private String message;
 
     public RegexValidator(String regex) {
         this.regex = regex;
     }
 
     public RegexValidator(String regex, String message) {
+        super(message);
         this.regex = regex;
-        this.message = message;
     }
 
     @Override
@@ -25,12 +24,6 @@ public class RegexValidator extends Validator {
         if (StringUtils.isEmptyOrWhitespaceOnly(userValue)){
             return true;
         }
-
         return userValue.matches(regex);
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 }

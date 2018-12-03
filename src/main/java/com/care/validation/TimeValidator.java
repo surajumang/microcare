@@ -7,9 +7,4 @@ public class TimeValidator extends RegexValidator {
     public TimeValidator(String message) {
         super(regex, message);
     }
-
-    @Override
-    public <T> boolean isValid(T value) {
-        return super.isValid(value);
-    }
 }

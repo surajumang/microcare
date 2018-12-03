@@ -19,4 +19,11 @@ public abstract class Validator {
     public boolean addErrorMessage(){
         return true;
     }
+
+    public static class EmptyValidator extends Validator{
+
+        @Override public <T> boolean isValid(T value) {
+            return true;
+        }
+    }
 }

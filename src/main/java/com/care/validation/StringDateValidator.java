@@ -1,9 +1,5 @@
 package com.care.validation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /*StringDateValidator is a RegexValidator but it is also required that it uses the DateValidator
  */
 public class StringDateValidator extends RegexValidator {

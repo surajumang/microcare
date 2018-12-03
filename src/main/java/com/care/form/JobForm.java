@@ -147,17 +147,17 @@ public class JobForm extends BaseForm {
             try{
                 Timestamp endTime = Timestamp.valueOf(getEndDate() + " " + getEndTime() + ":00");
                 if (endTime.before(startTime)){
-                    errors.add("endDate", new ActionMessage("errors.enddate.greater"));
+                    errors.add("endDate", new ActionMessage("errors.enddate.greater", "EndDate"));
                     flag = false;
                 }
             }catch (Exception e){
                 logger.log(Level.SEVERE, "Exception while validating Time values", e);
-                errors.add("endDate", new ActionMessage("errors.date.format"));
+                errors.add("endDate", new ActionMessage("errors.date.format", "EndDate"));
                 flag = false;
             }
         }catch (Exception e){
             logger.log(Level.SEVERE, "Exception while validating Time values", e);
-            errors.add("startDate", new ActionMessage("errors.date.format"));
+            errors.add("startDate", new ActionMessage("errors.date.format", "StartDate"));
             flag = false;
         }
 
