@@ -1,7 +1,6 @@
 package com.care.controller.seeker;
 
 import com.care.exception.BadRequestException;
-import com.care.exception.InvalidApplicationException;
 import com.care.model.Application;
 import com.care.model.Member;
 import com.care.controller.ControllerUtil;
@@ -18,9 +17,7 @@ import org.apache.struts.action.ActionMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

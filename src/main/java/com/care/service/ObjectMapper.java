@@ -1,5 +1,7 @@
 package com.care.service;
 
+import com.care.exception.ObjectMappingException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -51,22 +53,17 @@ public class ObjectMapper {
             }else {
                 simpleMapping(src, dest);
             }
-        } catch (InvocationTargetException e) {
-            logger.log(Level.SEVERE, "INvok", e);
-        } catch (IllegalAccessException e) {
-            logger.log(Level.SEVERE, "Illegal Access", e);
-        } catch (NoSuchMethodException e) {
-            logger.log(Level.SEVERE, "NoSuchMethod", e);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Exception while Mapping classes", e);
+            throw new ObjectMappingException(e);
         }
 
     }
-
     /*
         Maps a model class to a form or a DTO. from exact data types to String.
         It will use the static method String.valueOf to do the mapping.
      */
-    private static void simpleMapping(Object src, Object dest) throws IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException {
+    private static void simpleMapping(Object src, Object dest) throws Exception {
         /*
         If there is a setter in dest and a corrosponding getter in src. Then do the mapping
          */
@@ -103,8 +100,7 @@ public class ObjectMapper {
         }
     }
 
-    private static void strictMapping(Object src, Object dest) throws InvocationTargetException,
-            IllegalAccessException, NoSuchMethodException{
+    private static void strictMapping(Object src, Object dest) throws Exception{
         /*
         Go ahead only if you have a getter in the src and a corresponding setter in the dest.
         Invoking involves a static method.

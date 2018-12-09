@@ -16,10 +16,6 @@ public abstract class Validator {
         return message;
     }
 
-    public boolean addErrorMessage(){
-        return true;
-    }
-
     public static class EmptyValidator extends Validator{
 
         @Override public <T> boolean isValid(T value) {

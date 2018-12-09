@@ -43,7 +43,7 @@ public class LoginAction extends Action {
                     request.getSession().setAttribute(ControllerUtil.CURRENT_USER ,member);
                     logger.info("Member set to sesion" + member);
                     String memberType = member.getMemberType().name().toLowerCase();
-                    request.getSession().setAttribute("memberType" , memberType);
+                    request.getSession().setAttribute("flow" , memberType);
                     logger.info("Back at LoginServlet");
                     page = "success";
                 }

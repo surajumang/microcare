@@ -1,8 +1,12 @@
 package com.care.validation;
 
-import com.mysql.jdbc.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RangeValidator extends Validator {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
     private long min;
     private long max;
 
@@ -17,7 +21,7 @@ public class RangeValidator extends Validator {
         boolean validity = false;
 
         String userValue = (String) value;
-        if (StringUtils.isEmptyOrWhitespaceOnly(userValue)){
+        if (StringUtils.isBlank(userValue)){
             return true;
         }
         try {
@@ -26,7 +30,7 @@ public class RangeValidator extends Validator {
                 validity = true;
             }
         }catch (Exception e){
-
+            logger.log(Level.INFO, "Invalid value for Number", e);
         }
         return validity;
     }

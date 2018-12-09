@@ -1,8 +1,5 @@
 package com.care.service;
 
-import com.care.exception.InvalidApplicationException;
-import com.care.exception.InvalidIdException;
-import com.care.exception.JobNotPostedByUserException;
 import com.care.form.JobForm;
 import com.care.model.Application;
 import com.care.model.Job;

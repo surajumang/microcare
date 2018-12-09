@@ -55,7 +55,7 @@ public class SitterServiceImpl implements SitterService {
     }
 
     /*
-    Throw appropriate exception.[todo] NoJobFoundException
+    Throw appropriate exception.JobNotFoundException
     should also have a Current Member reference and check if the User is the owner of the Exception.
     This is the method which gets called for the Sitter to get A job to apply on.
     This should not be EXPIRED OR CLOSED.
@@ -90,7 +90,7 @@ public class SitterServiceImpl implements SitterService {
         try {
             sitter = sitterDAO.getSitter(sitterId);
         }catch (Exception e){
-            logger.log(Level.SEVERE, "While fetching Sitter", e);
+            logger.log(Level.SEVERE, "While fetching Sitter using ID", e);
         }
         return sitter;
     }
@@ -105,7 +105,7 @@ public class SitterServiceImpl implements SitterService {
         try {
             sitters = sitterDAO.getSitterByEmail(email);
         }catch (Exception e){
-            logger.log(Level.SEVERE, "ads", e);
+            logger.log(Level.SEVERE, "Can't get Sitter using Email", e);
         }
         logger.info(" " + sitters);
         return sitters
@@ -152,7 +152,7 @@ public class SitterServiceImpl implements SitterService {
         return application.getSitter().getId() == sitter.getId();
     }
     // Move this logic to application Model[todo]
-    public OperationStatus deleteApplication(Member sitter, long applicationId) throws InvalidIdException {
+    public OperationStatus deleteApplication(Member sitter, long applicationId) {
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         ApplicationDAO applicationDAO = DAOFactory.get(ApplicationDAOImpl.class);
         logger.info("APPLICATion being deleted : " + applicationId + "BYY" + sitter.getId());

@@ -32,7 +32,7 @@ public class FormValidator {
         ANNOTATION_PROCESSOR_MAP.put(Email.class, new EmailProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Name.class, new NameProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Number.class, new NumberProcessor());
-        ANNOTATION_PROCESSOR_MAP.put(NotNull.class, new NotNullProcessor());
+        ANNOTATION_PROCESSOR_MAP.put(NotEmpty.class, new NotNullProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Regex.class, new RegexProcessor());
         ANNOTATION_PROCESSOR_MAP.put(Password.class, new PasswordProcessor());
         ANNOTATION_PROCESSOR_MAP.put(DecimalNumber.class, new DecimalNumberProcessor());
@@ -56,11 +56,12 @@ public class FormValidator {
         if (form.getClass().getAnnotation(Flow.class) != null){
             logger.info("Validating using FlowId");
             validate(FormProcessor.getApplicableMethods(form), form, errors);
-        } else{
-            logger.info("Usual Validation");
-            validate(new HashSet<>(Arrays.asList(form.getClass().getMethods())),
-              form, errors);
+            return;
         }
+
+        logger.info("Usual Validation");
+        Arrays.asList(form.getClass().getMethods())
+                .forEach(method -> validateAndAddErrors(method, form, errors));
 
 //        for(Method method : form.getClass().getMethods()){
 //            if(method.getName().startsWith("get")){
@@ -96,14 +97,14 @@ public class FormValidator {
 
     private static void validate (Set<Method> fields, BaseForm form, ActionErrors errors){
         fields
-            .forEach(method -> testAndAddErrors(method, form, errors));
+            .forEach(method -> validateAndAddErrors(method, form, errors));
     }
 
     /*
     Since we are working with getters only, the methods will not take any arguents.
      */
 
-    private static void testAndAddErrors(Method method, BaseForm form, ActionErrors errors){
+    private static void validateAndAddErrors(Method method, BaseForm form, ActionErrors errors){
         if (!method.getName().startsWith("get")){
             return;
         }
@@ -114,11 +115,7 @@ public class FormValidator {
         logger.info("Method getting validated " + fieldName);
         try {
             tempValue = (String)method.invoke(form);
-        } catch (IllegalAccessException e) {
-            logger.info("can't invoke " + method);
-        } catch (InvocationTargetException e) {
-            logger.info("can't invoke " + method + e);
-        } catch (Exception e){
+        } catch (Exception e) {
             logger.info("can't invoke " + method);
         }
         logger.info("Value to be Validated " + tempValue + " -----");

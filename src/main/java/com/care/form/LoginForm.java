@@ -1,7 +1,7 @@
 package com.care.form;
 
 import com.care.annotation.Email;
-import com.care.annotation.NotNull;
+import com.care.annotation.NotEmpty;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
 
@@ -13,7 +13,7 @@ public class LoginForm extends BaseForm {
     private String email;
     private String password;
 
-    @NotNull
+    @NotEmpty
     @Email
     public String getEmail() {
         return email;
@@ -23,7 +23,7 @@ public class LoginForm extends BaseForm {
         this.email = email;
     }
 
-    @NotNull
+    @NotEmpty
     public String getPassword() {
         return password;
     }

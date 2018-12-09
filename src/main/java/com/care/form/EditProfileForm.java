@@ -4,12 +4,11 @@ import com.care.annotation.*;
 import com.care.annotation.Number;
 import com.care.controller.ControllerUtil;
 import com.care.model.Member;
-import com.care.model.MemberType;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.ServiceFactory;
 import com.care.validation.FormValidator;
-import com.mysql.jdbc.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMessage;
@@ -37,7 +36,7 @@ public class EditProfileForm extends BaseForm {
     private String experience;
     private String id;
 
-    @NotNull
+    @NotEmpty
     @Email
     public String getEmail() {
         return email;
@@ -48,8 +47,8 @@ public class EditProfileForm extends BaseForm {
     }
 
 
-    @FlowCheck(memberType = "SITTER")
-    @NotNull
+    @FlowCheck(flow = "SITTER")
+    @NotEmpty
     @DecimalNumber
     @Range(min=1, max = 1000, message = "errors.amount.size")
     public String getExpectedPay() {
@@ -60,8 +59,8 @@ public class EditProfileForm extends BaseForm {
         this.expectedPay = expectedPay;
     }
 
-    @FlowCheck(memberType = "SITTER")
-    @NotNull
+    @FlowCheck(flow = "SITTER")
+    @NotEmpty
     @Number
     @Range(min = 0, max = 100, message = "errors.experience.size")
     public String getExperience() {
@@ -91,7 +90,7 @@ public class EditProfileForm extends BaseForm {
         this.numberOfChildren = numberOfChildren;
     }
 
-    @NotNull
+    @NotEmpty
     @Name
     public String getFirstName() {
         return firstName;
@@ -101,7 +100,7 @@ public class EditProfileForm extends BaseForm {
         this.firstName = firstName;
     }
 
-    @NotNull
+    @NotEmpty
     @Name
     public String getLastName() {
         return lastName;
@@ -111,7 +110,7 @@ public class EditProfileForm extends BaseForm {
         this.lastName = lastName;
     }
 
-    @NotNull
+    @NotEmpty
     @Zipcode
     public String getZipCode() {
         return zipCode;
@@ -129,7 +128,7 @@ public class EditProfileForm extends BaseForm {
         this.memberType = memberType;
     }
 
-    @NotNull
+    @NotEmpty
     public String getAddress() {
         return address;
     }
@@ -138,7 +137,7 @@ public class EditProfileForm extends BaseForm {
         this.address = address;
     }
 
-    @NotNull
+    @NotEmpty
     @Phone
     public String getPhone() {
         return phone;
@@ -175,16 +174,16 @@ public class EditProfileForm extends BaseForm {
         // The below lines may not be required. Removal required [todo]
         try {
             if (member != null && member.isSitter()){
-                if (StringUtils.isEmptyOrWhitespaceOnly(expectedPay)){
+                if (StringUtils.isBlank(expectedPay)){
                     errors.add("expectedPay", new ActionMessage("errors.notnull", "expectedPay"));
                 }
-                if (StringUtils.isEmptyOrWhitespaceOnly(experience)){
+                if (StringUtils.isBlank(experience)){
                     errors.add("experience", new ActionMessage("errors.notnull", "experience"));
                 }
             }
         } catch (Exception e) {
             // this property is not being printed as error.
-            errors.add("memberType", new ActionMessage("errors.invalid"));
+            errors.add("flow", new ActionMessage("errors.invalid"));
         }
         /*
         Check if the email entered is already in use
@@ -214,7 +213,7 @@ public class EditProfileForm extends BaseForm {
                 }
             }
         }
-        if (StringUtils.isEmptyOrWhitespaceOnly(numberOfChildren) && errors.isEmpty()){
+        if (StringUtils.isBlank(numberOfChildren) && errors.isEmpty()){
             numberOfChildren="0";
         }
         return errors;

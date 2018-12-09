@@ -1,6 +1,6 @@
 package com.care.form;
 
-import com.care.annotation.NotNull;
+import com.care.annotation.NotEmpty;
 import com.care.controller.ControllerUtil;
 import com.care.model.Member;
 import com.care.service.Hash;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PasswordUpdateForm extends PasswordResetForm {
     private String currentPassword;
 
-    @NotNull
+    @NotEmpty
     public String getCurrentPassword() {
         return currentPassword;
     }

@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
+// todo Change the flowId to accept a field name rather than methodName.
 public @interface Flow {
     String flowId();
 }

@@ -1,12 +1,6 @@
 package com.care.service;
 
-import com.care.exception.DataReadException;
-import com.care.exception.InvalidApplicationException;
-import com.care.exception.InvalidIdException;
-import com.care.exception.JobExpiredException;
-import com.care.exception.JobNotFoundException;
-import com.care.exception.JobNotPostedByUserException;
-import com.care.exception.UnauthorizedJobAccessException;
+import com.care.exception.*;
 import com.care.model.*;
 import com.care.dao.*;
 import com.care.form.JobForm;
@@ -118,7 +112,7 @@ public class SeekerServiceImpl implements SeekerService {
                 .sorted(Comparator.comparing(Job::getStartDateTime))
                 .collect(Collectors.toList());
     }
-    //[todo] throws InvalidIdException
+
     public List<Application> getApplications(Member member, long jobId) {
         Set<Application> applications;
         logger.info("ListApplications");
@@ -128,16 +122,16 @@ public class SeekerServiceImpl implements SeekerService {
         try {
             Job job = jobDAO.getJob(jobId);
             if (! verifyJobBelongsToMember(member, jobId)){
-                throw new UnauthorizedJobAccessException();
+                throw new UnauthorizedJobAccessException("Can't get Applications for jobID " + jobId);
             }
             if (! job.isActive()){
-                throw new JobExpiredException("getting applications");
+                throw new JobExpiredException("Getting applications for jobId " + jobId);
             }
             applications = applicationDAO.getAllApplicationsOnJob(jobId);
         } catch (DataReadException e) {
-            logger.log(Level.SEVERE, "Can't fetch All Applications on Job", e);
+            logger.log(Level.SEVERE, "Can't fetch All Applications on JobID " + jobId, e);
 
-            throw new InvalidApplicationException();
+            throw new ApplicationNotFoundException(e);
         }
         return applications
                 .stream()
@@ -154,7 +148,7 @@ public class SeekerServiceImpl implements SeekerService {
     /*
     Can't edit an expired or a closed Job or a job not posted by him.
      */
-    public OperationStatus editJob(Member member, JobForm jobForm) throws InvalidIdException{
+    public OperationStatus editJob(Member member, JobForm jobForm) {
         int status = 1;
         OperationStatus operationStatus = OperationStatus.SUCCESS;
         JobDAO jobDAO = DAOFactory.get(JobDAOImpl.class);
@@ -190,14 +184,14 @@ public class SeekerServiceImpl implements SeekerService {
             Job job = jobDAO.getJob(jobId);
             logger.info(job + " ");
             if (job.getSeeker().getId() != member.getId()){
-                throw new UnauthorizedJobAccessException("Can't close job");
+                throw new UnauthorizedJobAccessException("Can't close jobId " + jobId);
             }
             if (! job.isActive()){
-                throw new JobExpiredException("can't delete expired job");
+                throw new JobExpiredException("can't delete expired job ID " + jobId);
             }
             job.close();
         }catch (DataReadException e){
-            logger.log(Level.SEVERE, "Can't delete Job", e);
+            logger.log(Level.SEVERE, "Can't delete Job ID " + jobId , e);
             throw new JobNotFoundException(e);
         }
 

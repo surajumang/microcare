@@ -1,8 +1,7 @@
 package com.care.form;
 
 import com.care.annotation.Email;
-import com.care.annotation.NotNull;
-import com.care.model.Member;
+import com.care.annotation.NotEmpty;
 import com.care.service.AccountService;
 import com.care.service.AccountServiceImpl;
 import com.care.service.ServiceFactory;
@@ -21,7 +20,7 @@ public class EmailForm extends BaseForm {
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private String email;
 
-    @NotNull
+    @NotEmpty
     @Email
     public String getEmail() {
         return email;

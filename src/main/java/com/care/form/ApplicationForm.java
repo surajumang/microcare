@@ -1,7 +1,7 @@
 package com.care.form;
 
 import com.care.annotation.DecimalNumber;
-import com.care.annotation.NotNull;
+import com.care.annotation.NotEmpty;
 import com.care.annotation.Range;
 import com.care.validation.FormValidator;
 import org.apache.struts.action.ActionErrors;
@@ -35,7 +35,7 @@ public class ApplicationForm extends BaseForm {
         this.sitterId = sitterId;
     }
 
-    @NotNull
+    @NotEmpty
     @DecimalNumber
     @Range(min = 1, max = 1000, message = "errors.amount.size")
     public String getExpectedPay() {

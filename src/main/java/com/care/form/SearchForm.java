@@ -1,7 +1,7 @@
 package com.care.form;
 
 import com.care.validation.FormValidator;
-import com.mysql.jdbc.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts.action.ActionErrors;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,7 +20,7 @@ public class SearchForm extends BaseForm {
     }
 
     public void setEmail(String email) {
-        if (StringUtils.isEmptyOrWhitespaceOnly(email)){
+        if (StringUtils.isBlank(email)){
             this.email = "%";
         }else{
             this.email = email;

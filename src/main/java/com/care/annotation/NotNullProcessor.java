@@ -8,7 +8,7 @@ import java.lang.annotation.Annotation;
 public class NotNullProcessor extends AnnotationProcessor {
     @Override
     public <T extends Annotation> Validator create(T annotation) {
-        NotNull notNull = (NotNull)annotation;
+        NotEmpty notNull = (NotEmpty)annotation;
         return new NotNullValidator(notNull.message());
     }
 }

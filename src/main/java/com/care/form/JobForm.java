@@ -42,7 +42,7 @@ public class JobForm extends BaseForm {
         this.id = id;
     }
 
-    @NotNull
+    @NotEmpty
     @Name
     public String getTitle() {
         return title;
@@ -52,7 +52,7 @@ public class JobForm extends BaseForm {
         this.title = title;
     }
 
-    @NotNull
+    @NotEmpty
     @DecimalNumber
     @Range(min=1, max = 1000, message = "errors.hourlypay.range")
     public String getHourlyPay() {
@@ -63,7 +63,7 @@ public class JobForm extends BaseForm {
         this.hourlyPay = hourlyPay;
     }
 
-    @NotNull
+    @NotEmpty
     @StringDate
     public String getStartDate() {
         return startDate;
@@ -73,7 +73,7 @@ public class JobForm extends BaseForm {
         this.startDate = startDate;
     }
 
-    @NotNull
+    @NotEmpty
     @StringDate
     public String getEndDate() {
         return endDate;
@@ -83,7 +83,7 @@ public class JobForm extends BaseForm {
         this.endDate = endDate;
     }
 
-    @NotNull
+    @NotEmpty
     @Time
     public String getStartTime() {
         return startTime;
@@ -93,7 +93,7 @@ public class JobForm extends BaseForm {
         this.startTime = startTime;
     }
 
-    @NotNull
+    @NotEmpty
     @Time
     public String getEndTime() {
         return endTime;

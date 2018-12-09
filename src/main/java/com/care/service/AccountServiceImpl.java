@@ -1,11 +1,8 @@
 package com.care.service;
 
 import com.care.dao.*;
-import com.care.exception.DataReadException;
-import com.care.exception.MemberNotFoundException;
-import com.care.exception.TokenNotFoundException;
+import com.care.exception.*;
 import com.care.form.EditProfileForm;
-import com.care.exception.MemberAlreadyRegisteredException;
 import com.care.form.RegistrationForm;
 import com.care.model.*;
 
@@ -58,10 +55,10 @@ public class AccountServiceImpl implements AccountService {
         int status = -1;
         try {
             status = seekerDAO.addSeeker(seeker);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Can't add", e);
+        } catch (DataWriteException e) {
+            logger.log(Level.SEVERE, "Can't add a Seeker", e);
             // [todo]this is never being thrown
-            throw new MemberAlreadyRegisteredException("Already Registered");
+            throw new MemberAlreadyRegisteredException("Already Registered", e);
         }
         return status;
     }
@@ -74,15 +71,13 @@ public class AccountServiceImpl implements AccountService {
 
         try {
             status = sitterDAO.addSitter(sitter);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Can't add", e);
-            throw new MemberAlreadyRegisteredException("Already registered");
+        } catch (DataWriteException e) {
+            logger.log(Level.SEVERE, "Can't add a Sitter", e);
+            throw new MemberAlreadyRegisteredException("Already registered", e);
         }
         return status;
     }
-    /*
-    MemberNotFoundException[todo]
-     */
+
     public Member getMember(String email) {
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);
         Member member;
@@ -109,9 +104,7 @@ public class AccountServiceImpl implements AccountService {
         return member;
     }
 
-    /*
-    TokenNotFoundException[todo]
-     */
+
     @Override
     public Token getToken(String token) {
         MemberDAO memberDAO = DAOFactory.get(MemberDAOImpl.class);

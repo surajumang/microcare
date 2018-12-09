@@ -2,7 +2,11 @@ package com.care.validation;
 
 import com.mysql.jdbc.StringUtils;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class PositiveNumberValidator extends NumberValidator {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     private boolean includeZero;
     public PositiveNumberValidator(boolean includeZero, String message) {
@@ -22,8 +26,8 @@ public class PositiveNumberValidator extends NumberValidator {
         try{
             double number = Double.parseDouble(userValue);
             validity = includeZero ? number >= 0 : number > 0;
-        }catch (IllegalArgumentException e){
-
+        }catch (Exception e){
+            logger.log(Level.INFO, "Invalid value for number", e);
         }
         return validity;
     }

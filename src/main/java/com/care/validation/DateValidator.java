@@ -11,8 +11,11 @@ package com.care.validation;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DateValidator extends Validator {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     public DateValidator() {
     }
@@ -22,8 +25,8 @@ public class DateValidator extends Validator {
         try{
             Date date = Date.valueOf((String)value);
             validity = true;
-        }catch (IllegalArgumentException e){
-
+        }catch (Exception e){
+            logger.log(Level.WARNING, "Validation Failed", e);
         }
         return validity;
     }

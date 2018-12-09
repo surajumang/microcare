@@ -4,7 +4,6 @@ import com.care.annotation.Flow;
 import com.care.annotation.FlowCheck;
 import com.care.form.BaseForm;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -19,33 +18,29 @@ public class FormProcessor {
      * must not exist.
      */
     public static Set<Method> getApplicableMethods(BaseForm form){
-        String methodName = form.getClass().getAnnotation(Flow.class).flowId();
+        Class<? extends BaseForm> clazz = form.getClass();
+        String methodName = clazz.getAnnotation(Flow.class).flowId();
         String value = null;
         try {
-          value = (String)form.getClass().getMethod(methodName).invoke(form);
-        } catch (IllegalAccessException e) {
-          logger.info("Illegal Access" + methodName);
-        } catch (InvocationTargetException e) {
-          logger.info("Invocation" + methodName);
-        } catch (NoSuchMethodException e) {
-          logger.info("No Such Method" + methodName);
+          value = (String)clazz.getMethod(methodName).invoke(form);
+        } catch (Exception e) {
+            logger.info("Can't invoke method passed in Flow" + methodName);
         }
 
         String discriminant = value;
-        logger.info("Discriminant for the form " + form.getClass().getName() + " is " + discriminant);
-        return Stream.of(form.getClass().getMethods())
+        logger.info("Discriminant for the form " + clazz.getName() + " is " + discriminant);
+        return Stream.of(clazz.getMethods())
             .filter(method -> !method.getName().startsWith("get") && testFlow(method, discriminant))
             .collect(Collectors.toSet());
     }
 
     private static boolean testFlow(Method method, String discriminant){
-        boolean check = true;
         FlowCheck annotation = method.getAnnotation(FlowCheck.class);
         if(annotation != null){
-            String value = annotation.memberType();
-            check = discriminant.equals(value);
+            String value = annotation.flow();
+            return discriminant.equals(value);
         }
-        return  check;
+        return true;
     }
 
 }

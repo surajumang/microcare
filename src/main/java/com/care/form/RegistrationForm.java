@@ -1,7 +1,7 @@
 package com.care.form;
 
 import com.care.annotation.Flow;
-import com.care.annotation.NotNull;
+import com.care.annotation.NotEmpty;
 import com.care.annotation.Password;
 import com.care.annotation.Size;
 
@@ -19,7 +19,7 @@ public class RegistrationForm extends EditProfileForm {
     private String password;
     private String password2;
 
-    @NotNull
+    @NotEmpty
     @Password(message = "errors.password")
     @Size(min=5, max=100, message = "errors.password.size")
     public String getPassword() {
@@ -30,7 +30,7 @@ public class RegistrationForm extends EditProfileForm {
         this.password = password;
     }
 
-    @NotNull
+    @NotEmpty
     public String getPassword2() {
         return password2;
     }

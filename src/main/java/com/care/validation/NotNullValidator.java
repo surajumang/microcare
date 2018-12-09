@@ -1,6 +1,6 @@
 package com.care.validation;
 
-import com.mysql.jdbc.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class NotNullValidator extends Validator{
 
@@ -11,6 +11,6 @@ public class NotNullValidator extends Validator{
     @Override
     public <T> boolean isValid(T value) {
         String stringValue = (String)value;
-        return ! StringUtils.isEmptyOrWhitespaceOnly(stringValue);
+        return ! StringUtils.isBlank(stringValue);
     }
 }

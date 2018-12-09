@@ -1,6 +1,6 @@
 package com.care.form;
 
-import com.care.annotation.NotNull;
+import com.care.annotation.NotEmpty;
 import com.care.annotation.Password;
 import com.care.controller.ControllerUtil;
 import com.care.model.Member;
@@ -24,7 +24,7 @@ public class PasswordResetForm extends BaseForm {
     private String id;
     private String token;
 
-    @NotNull
+    @NotEmpty
     @Password(message = "errors.password")
     public String getPassword() {
         return password;
@@ -34,7 +34,7 @@ public class PasswordResetForm extends BaseForm {
         this.password = password;
     }
 
-    @NotNull
+    @NotEmpty
     public String getPassword2() {
         return password2;
     }
